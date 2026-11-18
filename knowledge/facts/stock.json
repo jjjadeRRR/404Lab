@@ -1,0 +1,4471 @@
+{
+ "facts": [
+  {
+   "id": "st.image.file",
+   "claim": "Stock APP1 5.52 is 2,652,672 bytes (0x287A00), SHA256 4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80. File offset 0 sits at flash 0x60080000. DOOM OS 0.7.2 (3,159,344 bytes) and 0.7.3 (3,162,016 bytes) keep the first 0x287A00 bytes as stock plus edits, then add their own block.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "file sizes and hashes of the three images in inputs"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x60080000",
+     "size": 8,
+     "sha256": "c214505fb662fd941de6a3ddebc064f6bfca5cb6c38728e923ebea2e0d29a9e8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60080000",
+     "size": 8,
+     "sha256": "c214505fb662fd941de6a3ddebc064f6bfca5cb6c38728e923ebea2e0d29a9e8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60080000",
+     "size": 8,
+     "sha256": "c214505fb662fd941de6a3ddebc064f6bfca5cb6c38728e923ebea2e0d29a9e8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60080000",
+     "size": 8,
+     "sha256": "c214505fb662fd941de6a3ddebc064f6bfca5cb6c38728e923ebea2e0d29a9e8"
+    }
+   ]
+  },
+  {
+   "id": "st.image.header",
+   "claim": "The words at file offset 0x80 and 0x84, plus 0x80, give start and end of the scatter table: 0x62C and 0x6EC on all three images, 12 rows of 16 bytes. Older DOOM OS 0.6.1 based images moved the table to the end of the file, so always read these words.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "0x60080080 on each image"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x60080080",
+     "size": 8,
+     "sha256": "09ab6a0ca7d151a5e531cf5085b16a342278728b1bc476f842c0c5a71e6b21d8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60080080",
+     "size": 8,
+     "sha256": "09ab6a0ca7d151a5e531cf5085b16a342278728b1bc476f842c0c5a71e6b21d8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60080080",
+     "size": 8,
+     "sha256": "09ab6a0ca7d151a5e531cf5085b16a342278728b1bc476f842c0c5a71e6b21d8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60080080",
+     "size": 8,
+     "sha256": "09ab6a0ca7d151a5e531cf5085b16a342278728b1bc476f842c0c5a71e6b21d8"
+    }
+   ]
+  },
+  {
+   "id": "st.image.scatter",
+   "claim": "Scatter rows, same on all three images: COPY 0x600806EC to 0x00000000 size 0x400 (vectors); COPY 0x60080AF0 to 0x00000400 size 0x1F800 (fast code); DECOMPRESS 0x600A0300 to 0x20000000 size 0x9180 (DTCM data); DECOMPRESS 0x600A0840 to 0x2023F000 size 0x7A250 (OCRAM data); COPY 0x600A1AC0 to 0x80000000 size 0x245740 (main code and constants); DECOMPRESS 0x602E7200 to 0x80245740 size 0xA20C0 (initialised data); COPY 0x60306E00 to 0x8383A30C size 0x118; DECOMPRESS 0x60307200 to 0x83FF0000 size 0x1800; ZERO 0x20009180 size 0x358; ZERO 0x202B9250 size 0x4DB8; ZERO 0x802E7800 size 0x3252B0C; ZERO 0x83FF1800 size 0xA758. Run `lab404 map` for any image.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "table at file offset 0x62C on each image"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008062C",
+     "size": 16,
+     "sha256": "ae5ea3fc43e62165009aad3eb03a08fb7486e9a6310b50d88092ecaa14c49e67"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008062C",
+     "size": 16,
+     "sha256": "ae5ea3fc43e62165009aad3eb03a08fb7486e9a6310b50d88092ecaa14c49e67"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008062C",
+     "size": 16,
+     "sha256": "ae5ea3fc43e62165009aad3eb03a08fb7486e9a6310b50d88092ecaa14c49e67"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008066C",
+     "size": 16,
+     "sha256": "4615130a9d648e8fb98ba41333bbc7351c97d5737f59652fa7b4bea04e7f9de6"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008066C",
+     "size": 16,
+     "sha256": "4615130a9d648e8fb98ba41333bbc7351c97d5737f59652fa7b4bea04e7f9de6"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008066C",
+     "size": 16,
+     "sha256": "4615130a9d648e8fb98ba41333bbc7351c97d5737f59652fa7b4bea04e7f9de6"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008062C",
+     "size": 16,
+     "sha256": "ae5ea3fc43e62165009aad3eb03a08fb7486e9a6310b50d88092ecaa14c49e67"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008066C",
+     "size": 16,
+     "sha256": "4615130a9d648e8fb98ba41333bbc7351c97d5737f59652fa7b4bea04e7f9de6"
+    }
+   ]
+  },
+  {
+   "id": "st.image.handlers",
+   "claim": "Row handlers: 0x600800E4 COPY, 0x60080100 ZERO, 0x60080088 DECOMPRESS. The dispatcher at 0x60080054 runs rows in table order, then jumps through 0x60080622 to 0x4CB in ITCM.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x60080054-0x60080072, 0x60080622"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x60080054",
+     "size": 8,
+     "sha256": "431dc59cd79c10cd822cb6a1083fb86706cb0de1aa5902da63ab5a8bec73926f"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60080054",
+     "size": 8,
+     "sha256": "431dc59cd79c10cd822cb6a1083fb86706cb0de1aa5902da63ab5a8bec73926f"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60080054",
+     "size": 8,
+     "sha256": "431dc59cd79c10cd822cb6a1083fb86706cb0de1aa5902da63ab5a8bec73926f"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x60080622",
+     "size": 8,
+     "sha256": "612a3a2d01c95df617e5b7e695f89a2799f9030943d095387ad6f5b80fbd221c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60080622",
+     "size": 8,
+     "sha256": "612a3a2d01c95df617e5b7e695f89a2799f9030943d095387ad6f5b80fbd221c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60080622",
+     "size": 8,
+     "sha256": "612a3a2d01c95df617e5b7e695f89a2799f9030943d095387ad6f5b80fbd221c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60080054",
+     "size": 8,
+     "sha256": "431dc59cd79c10cd822cb6a1083fb86706cb0de1aa5902da63ab5a8bec73926f"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60080622",
+     "size": 8,
+     "sha256": "612a3a2d01c95df617e5b7e695f89a2799f9030943d095387ad6f5b80fbd221c"
+    }
+   ]
+  },
+  {
+   "id": "st.image.offset",
+   "claim": "For the main code row, file offset = runtime address - 0x80000000 + 0x21AC0. Regions from DECOMPRESS rows have no single file offset: they cannot be patched in place, and that includes all initial data from 0x80245740 upward.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "fifth scatter row at flash 0x6008066C: load 0x600A1AC0, runtime 0x80000000"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008066C",
+     "size": 8,
+     "sha256": "9d0822d6bfd3833b6289ea975b20888cd61005a940d3a18e062ed7c037f3486e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008066C",
+     "size": 8,
+     "sha256": "9d0822d6bfd3833b6289ea975b20888cd61005a940d3a18e062ed7c037f3486e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008066C",
+     "size": 8,
+     "sha256": "9d0822d6bfd3833b6289ea975b20888cd61005a940d3a18e062ed7c037f3486e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008066C",
+     "size": 8,
+     "sha256": "9d0822d6bfd3833b6289ea975b20888cd61005a940d3a18e062ed7c037f3486e"
+    }
+   ]
+  },
+  {
+   "id": "st.boot.chain",
+   "claim": "Startup path: reset 0x60080001 runs MPU and cache setup and scatter, then ITCM. Task inittsk starts at 0x1103D (record at 0x1FA74) and goes 0x1103C, 0x11698, 0x101E2, 0x80000B08. There 0x80002260 makes the heap, the constructor list at 0x8383A30C runs, and finally 0x80000BF4 calls through veneer 0x800D2DD4 to 0x1CF78, where the task stays as the audio loop. A full boot has not been run on the stand.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1FA74, 0x80000B08-0x80000B44, 0x80000BF4, 0x800D2DD4"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80000BF4",
+     "size": 4,
+     "sha256": "68f6fc370ec4338222ec5db5a5977f039074f82f4b2004517870c6b9136b58db"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80000BF4",
+     "size": 4,
+     "sha256": "68f6fc370ec4338222ec5db5a5977f039074f82f4b2004517870c6b9136b58db"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80000BF4",
+     "size": 4,
+     "sha256": "68f6fc370ec4338222ec5db5a5977f039074f82f4b2004517870c6b9136b58db"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D2DD4",
+     "size": 8,
+     "sha256": "478a507ed7509e9b1a9aa237f555fde647ef286be46ce4e2e08dd229e2a0bf1b"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D2DD4",
+     "size": 8,
+     "sha256": "478a507ed7509e9b1a9aa237f555fde647ef286be46ce4e2e08dd229e2a0bf1b"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D2DD4",
+     "size": 8,
+     "sha256": "478a507ed7509e9b1a9aa237f555fde647ef286be46ce4e2e08dd229e2a0bf1b"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80000BF4",
+     "size": 4,
+     "sha256": "68f6fc370ec4338222ec5db5a5977f039074f82f4b2004517870c6b9136b58db"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D2DD4",
+     "size": 8,
+     "sha256": "478a507ed7509e9b1a9aa237f555fde647ef286be46ce4e2e08dd229e2a0bf1b"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.ctors",
+   "claim": "The small COPY row at 0x8383A30C, 0x118 bytes, is a list of 70 function pointers called in order at 0x80000B3C during start. Older notes called it a small data block.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80000B10-0x80000B44"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80000B3C",
+     "size": 6,
+     "sha256": "8a26ff1d6e7f6a1d3df074d540ed937859b78469ae8f37e29ae266f1bd365fc5"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80000B3C",
+     "size": 6,
+     "sha256": "8a26ff1d6e7f6a1d3df074d540ed937859b78469ae8f37e29ae266f1bd365fc5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80000B3C",
+     "size": 6,
+     "sha256": "8a26ff1d6e7f6a1d3df074d540ed937859b78469ae8f37e29ae266f1bd365fc5"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8383A30C",
+     "size": 8,
+     "sha256": "45c42ee38c19bbd86eb87b734e814ed7547b1ded198cc40a11ff626ecb5fadd9"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8383A30C",
+     "size": 8,
+     "sha256": "45c42ee38c19bbd86eb87b734e814ed7547b1ded198cc40a11ff626ecb5fadd9"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8383A30C",
+     "size": 8,
+     "sha256": "45c42ee38c19bbd86eb87b734e814ed7547b1ded198cc40a11ff626ecb5fadd9"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80000B3C",
+     "size": 6,
+     "sha256": "8a26ff1d6e7f6a1d3df074d540ed937859b78469ae8f37e29ae266f1bd365fc5"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8383A30C",
+     "size": 8,
+     "sha256": "45c42ee38c19bbd86eb87b734e814ed7547b1ded198cc40a11ff626ecb5fadd9"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.heap",
+   "claim": "The heap behind malloc is the 3 MB range 0x8353A30C-0x8383A30C. 0x80002260 creates a variable-size memory pool over it with a user buffer (tk_cre_mpl record, attribute 0x21) and keeps the id at 0x80245820. malloc 0x800E2C68 asks it for size+4 bytes without waiting. This range is in no scatter row. Older notes giving the heap as 0x8383A424-0x83F7A424 are wrong.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80002260-0x80002290 and 0x800E2C68-0x800E2C88"
+    },
+    {
+     "label": "DOC",
+     "source": "T-Kernel specification, T_CMPL layout, for the record fields"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80002268",
+     "size": 12,
+     "sha256": "240024faf1054b030d9239b78e5002fe10a58872631ac16c441006cde3548ad8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80002268",
+     "size": 12,
+     "sha256": "240024faf1054b030d9239b78e5002fe10a58872631ac16c441006cde3548ad8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80002268",
+     "size": 12,
+     "sha256": "240024faf1054b030d9239b78e5002fe10a58872631ac16c441006cde3548ad8"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800E2C6C",
+     "size": 8,
+     "sha256": "447dfc29264ee1c5ff16bb0f7ba3a8d991bc58fb49ab329029fca5db96b9f4b2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800E2C6C",
+     "size": 8,
+     "sha256": "447dfc29264ee1c5ff16bb0f7ba3a8d991bc58fb49ab329029fca5db96b9f4b2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800E2C6C",
+     "size": 8,
+     "sha256": "447dfc29264ee1c5ff16bb0f7ba3a8d991bc58fb49ab329029fca5db96b9f4b2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80002268",
+     "size": 12,
+     "sha256": "240024faf1054b030d9239b78e5002fe10a58872631ac16c441006cde3548ad8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800E2C6C",
+     "size": 8,
+     "sha256": "447dfc29264ee1c5ff16bb0f7ba3a8d991bc58fb49ab329029fca5db96b9f4b2"
+    }
+   ]
+  },
+  {
+   "id": "st.import.malloc-unchecked",
+   "claim": "Stock sample import can crash when the heap is short. The function at 0x80069F80, which prepares rate conversion for an imported file, asks malloc for a large block and, if that fails, for 0x21C68 bytes at 0x8006A01C; the result of the second request is stored and used without a test for zero, so the next writes go to a near-zero address. On one unit this showed as a bus fault at 0x8006A11A during import from SD, on a mod with its own fault screen; on stock it would look like a freeze. The code is stock and identical in DOOM OS 0.7.2 and 0.7.3. What had used up the heap that time is not known. A mod that allocates from the stock heap (st.mem.heap), directly or through stock file calls, makes this more likely.",
+   "topic": "stock",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: 0x8006A014-0x8006A026 (malloc call and store with no compare), malloc at 0x800E2C68"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-11, fault screen of the owner's private mod on DOOM OS 0.7.3: BUS FAULT, PC 8006A11A, during import from SD; seen more than once, cause of the shortage not found"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "owner's private mod work, DM-404: 40 imports in a row did not reproduce it, so the shortage needs a state the emulator run did not reach"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006A014",
+     "size": 16,
+     "sha256": "bece4da86157f484f4c99126835db06894901b4e5927104f7e8658ddfb2adbb5"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006A014",
+     "size": 16,
+     "sha256": "bece4da86157f484f4c99126835db06894901b4e5927104f7e8658ddfb2adbb5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006A014",
+     "size": 16,
+     "sha256": "bece4da86157f484f4c99126835db06894901b4e5927104f7e8658ddfb2adbb5"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.heap-measured",
+   "claim": "The stock malloc heap (3 MB, st.mem.heap) seen on a real unit with a project loaded and a mod's monitor open: about 2.2 MB free, lowest free about 2.19 MB, largest single piece about 2.19 MB. So in ordinary use the heap is mostly empty and not fragmented; a shortage (st.import.malloc-unchecked) needs something unusual. One unit, one moment.",
+   "topic": "stock",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-12, photo of the monitor screen of the owner's private mod (a per-pad filter on DOOM OS 0.7.3); one unit, one moment"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.gap-trap",
+   "claim": "A range missing from the scatter table is not free. The stock heap is the proof: it sits in the gap between ZERO rows. Check code references too, and treat absence of references as evidence, not proof.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "see st.mem.heap"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "a private mod with a memory pool beside this boundary had an effect that worked only sometimes on the owner's unit until the boundary changed, 2026-10-30; cause not proven"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.big-buffer",
+   "claim": "0x8383A424-0x83F7A424 (0x740000 bytes, 7.25 MB) is one large buffer owned by an object set up at 0x800459C6 and used at 0x8001C10A and 0x8001C1AC, which split it in half or quarters. Tallfree, which shrinks its end, calls it the looper and skip-back buffer. The role is not confirmed from stock code alone. It is not free memory.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800459C6-0x800459D2, 0x8001C10A-0x8001C11A, 0x8001C1AC-0x8001C1BC"
+    },
+    {
+     "label": "DOC",
+     "source": "Tallfree image/make_image.py at commit 2d44c6e5, for the name"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "role of the buffer"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8001C10A",
+     "size": 8,
+     "sha256": "5ae87fcf008d19ea8817320ae364669050fc53392e4a2f0141691773f4322ad3"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8001C10A",
+     "size": 8,
+     "sha256": "5ae87fcf008d19ea8817320ae364669050fc53392e4a2f0141691773f4322ad3"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8001C10A",
+     "size": 8,
+     "sha256": "5ae87fcf008d19ea8817320ae364669050fc53392e4a2f0141691773f4322ad3"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800459C6",
+     "size": 8,
+     "sha256": "e6d4c7960575b5c01f57b531992f8ac1100947a0aecc5789c31a9da63fb5028e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800459C6",
+     "size": 8,
+     "sha256": "e6d4c7960575b5c01f57b531992f8ac1100947a0aecc5789c31a9da63fb5028e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800459C6",
+     "size": 8,
+     "sha256": "e6d4c7960575b5c01f57b531992f8ac1100947a0aecc5789c31a9da63fb5028e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8001C10A",
+     "size": 8,
+     "sha256": "5ae87fcf008d19ea8817320ae364669050fc53392e4a2f0141691773f4322ad3"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800459C6",
+     "size": 8,
+     "sha256": "e6d4c7960575b5c01f57b531992f8ac1100947a0aecc5789c31a9da63fb5028e"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.free",
+   "claim": "0x83F7A424-0x83FF0000 (0x75BDC bytes, about 482 KB) has no row and no direct code references on stock 5.52, DOOM OS 0.7.2 or 0.7.3. Its only reference is the end value 0x83F7A424 of the buffer below it. It is cached, executable SDRAM and is not cleared at boot. Indirect use cannot be excluded from bytes alone.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "scan of movw/movt pairs and PC-relative literals in ITCM, main code and DOOM OS code on all three images"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "private test mods have run code and data at 0x83FD0000-0x83FEF000 on the owner's unit since 2026-10"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8001C116",
+     "size": 4,
+     "sha256": "7586d47c3c899204270c3772a3f31f9cb01cc62391e36a8413f34301d8ebb62d"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8001C116",
+     "size": 4,
+     "sha256": "7586d47c3c899204270c3772a3f31f9cb01cc62391e36a8413f34301d8ebb62d"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8001C116",
+     "size": 4,
+     "sha256": "7586d47c3c899204270c3772a3f31f9cb01cc62391e36a8413f34301d8ebb62d"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8001C116",
+     "size": 4,
+     "sha256": "7586d47c3c899204270c3772a3f31f9cb01cc62391e36a8413f34301d8ebb62d"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.samples",
+   "claim": "0x802E7800-0x8353A30C is the zeroed region of about 50 MB, believed to hold sample memory with other bss. The internal split has not been mapped.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "ZERO row at 0x802E7800, size 0x3252B0C"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no decode of the allocator for samples"
+    }
+   ]
+  },
+  {
+   "id": "st.mem.top",
+   "claim": "0x83FF0000-0x84000000 is non-cacheable: 0x1800 bytes of decompressed data, zeroed bss to 0x83FFBF58, plus transfer buffers such as 0x83FF0000, 0x83FF2020 and 0x83FFB400. Above 0x83FFBF58 about 16 KB has no row and no direct reference seen. Not advisable for code: uncached SDRAM reads are about 4 times slower by NXP figures.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 scatter rows; references at 0x8017D2F2, 0x8017D470, 0x800DCF4C"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP AN12437 i.MX RT Series Performance Optimization, Rev. 1, table 2-3, p.3"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8017D2F2",
+     "size": 4,
+     "sha256": "d00a4a7eca81913034befa5950d8439faf675527fcb94a69cea723738f9172cd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8017D2F2",
+     "size": 4,
+     "sha256": "d00a4a7eca81913034befa5950d8439faf675527fcb94a69cea723738f9172cd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8017D2F2",
+     "size": 4,
+     "sha256": "d00a4a7eca81913034befa5950d8439faf675527fcb94a69cea723738f9172cd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8017D2F2",
+     "size": 4,
+     "sha256": "d00a4a7eca81913034befa5950d8439faf675527fcb94a69cea723738f9172cd"
+    }
+   ]
+  },
+  {
+   "id": "st.flash.config",
+   "claim": "Stock uses the flash page at 0x603FF000 for its own data: it erases that 4 KB through FlexSPI at 0x800DCF18-0x800DCF2C and writes 256 byte records from 0x83FFB400, and reads it at 0x800469C0, 0x8005F55C, 0x80140D9A, 0x80140DF2. So 0x603FF000 is a real end of usable image space. Older notes called the limit unproven. What the page holds is not decoded.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800DCF18-0x800DCF60 and references to 0x603FF000"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800DCF1C",
+     "size": 12,
+     "sha256": "ff2e0d24a8ffc6b3d3ef81c210ca7e435234c64c1ab5529ad28a9b8e7af29036"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800DCF1C",
+     "size": 12,
+     "sha256": "ff2e0d24a8ffc6b3d3ef81c210ca7e435234c64c1ab5529ad28a9b8e7af29036"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800DCF1C",
+     "size": 12,
+     "sha256": "ff2e0d24a8ffc6b3d3ef81c210ca7e435234c64c1ab5529ad28a9b8e7af29036"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800DCF30",
+     "size": 4,
+     "sha256": "f2caad86c8c5fd250ecb0155ea6df8c2a795c42b8740dd462c9846e0217a4f25"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800DCF30",
+     "size": 4,
+     "sha256": "f2caad86c8c5fd250ecb0155ea6df8c2a795c42b8740dd462c9846e0217a4f25"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800DCF30",
+     "size": 4,
+     "sha256": "f2caad86c8c5fd250ecb0155ea6df8c2a795c42b8740dd462c9846e0217a4f25"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800DCF1C",
+     "size": 12,
+     "sha256": "ff2e0d24a8ffc6b3d3ef81c210ca7e435234c64c1ab5529ad28a9b8e7af29036"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800DCF30",
+     "size": 4,
+     "sha256": "f2caad86c8c5fd250ecb0155ea6df8c2a795c42b8740dd462c9846e0217a4f25"
+    }
+   ]
+  },
+  {
+   "id": "st.rtos",
+   "claim": "The OS is micro T-Kernel 2.00.44, on NXP MCUXpresso drivers by third-party notes. Lower task priority number means more urgent. Kernel calls go through a table of 10 byte veneers around 0x800D2D5C-0x800D3260, such as task create 0x800D31A8 and create memory pool 0x800D2DF2.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 string at 0x1FA50, veneers 0x800D31A8, 0x800D2DF2"
+    },
+    {
+     "label": "DOC",
+     "source": "micro T-Kernel / uT-Kernel 3 specification, task scheduling rules"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001FA51",
+     "size": 16,
+     "sha256": "599713241b3282093676c0de3d83028af7c47104909a8f7b92569b882a7f90e5"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001FA51",
+     "size": 16,
+     "sha256": "599713241b3282093676c0de3d83028af7c47104909a8f7b92569b882a7f90e5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001FA51",
+     "size": 16,
+     "sha256": "599713241b3282093676c0de3d83028af7c47104909a8f7b92569b882a7f90e5"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D31A8",
+     "size": 8,
+     "sha256": "f1a95d4e0c7f5ff66dfa48ea09adf069a7e559c14900a75fdd50926da027df95"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D31A8",
+     "size": 8,
+     "sha256": "f1a95d4e0c7f5ff66dfa48ea09adf069a7e559c14900a75fdd50926da027df95"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D31A8",
+     "size": 8,
+     "sha256": "f1a95d4e0c7f5ff66dfa48ea09adf069a7e559c14900a75fdd50926da027df95"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001FA51",
+     "size": 16,
+     "sha256": "599713241b3282093676c0de3d83028af7c47104909a8f7b92569b882a7f90e5"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D31A8",
+     "size": 8,
+     "sha256": "f1a95d4e0c7f5ff66dfa48ea09adf069a7e559c14900a75fdd50926da027df95"
+    }
+   ]
+  },
+  {
+   "id": "st.rtos.critical",
+   "claim": "Kernel critical sections raise BASEPRI to 0x60 (0x47D4-0x47DC), masking interrupts of priority value 0x60 and above, including audio DMA at 0x70. 0x800DED08 and 0x800DECF8 stop and restart task switching; while stopped even the audio task waits.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x47D4, 0x800DED08, 0x800DECF8"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x000047D4",
+     "size": 8,
+     "sha256": "e33074d1fa6c6f5a151f62b8566b046ee35a6ca65e69802ea6c9d375637cca96"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x000047D4",
+     "size": 8,
+     "sha256": "e33074d1fa6c6f5a151f62b8566b046ee35a6ca65e69802ea6c9d375637cca96"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x000047D4",
+     "size": 8,
+     "sha256": "e33074d1fa6c6f5a151f62b8566b046ee35a6ca65e69802ea6c9d375637cca96"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800DED08",
+     "size": 8,
+     "sha256": "ffcbc8edad34b23182e990f8733592c4c95b2b0cf82eb7abc18d40bc6c08e42c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800DED08",
+     "size": 8,
+     "sha256": "ffcbc8edad34b23182e990f8733592c4c95b2b0cf82eb7abc18d40bc6c08e42c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800DED08",
+     "size": 8,
+     "sha256": "ffcbc8edad34b23182e990f8733592c4c95b2b0cf82eb7abc18d40bc6c08e42c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x000047D4",
+     "size": 8,
+     "sha256": "e33074d1fa6c6f5a151f62b8566b046ee35a6ca65e69802ea6c9d375637cca96"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800DED08",
+     "size": 8,
+     "sha256": "ffcbc8edad34b23182e990f8733592c4c95b2b0cf82eb7abc18d40bc6c08e42c"
+    }
+   ]
+  },
+  {
+   "id": "st.tasks.list",
+   "claim": "Named tasks found, priority and stack, class constructor 0x80097490(this, name, priority, stack): inittsk (audio render) 1, 0x800; MIDI SYNC TASK 2, 0x7E2; SMPL END FROM INTERRUPT TASK 3, 0x1F88; AUDIO TASK 6, 0x3F10; SMPL TASK 6, 0x3F10; SMPL FROM INTERRUPT TASK 6, 0x3F10; SMPL PLAY START 6, 0x1F88; MIDI RX TASK 8, 0x1000; SMPL REC TASK 10, 0x2F4C; LOOPER TASK 12, 0x2000; PlayTask 13, 0x3F10; PrefTask 13, 0x3F10; SMPL CHARGE TASK 14, 0x3F10; SMPL CHARGE POLLING TASK 15, 0x3F10; FILEIF TASK 20, 0x2800; LOOPER BACKGROUND TASK 20, 0x1000; PANEL TASK 29, 0x8000 (two objects); CONSOLE TASK 29, 0x2000; PARAM TASK 31, 0x3F10; Sys task 32, 0x400. Initial values from the image, not a runtime snapshot.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 all direct calls of 0x80097490, plus 0x80001EE8 and 0x80001F60 for the two tasks named in the code, and the record at 0x1FA74"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80045F8E",
+     "size": 4,
+     "sha256": "fb1f08a291323412d615e6499672ae1b0fb1bbde5ba3cd70b24869703f5d0e32"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80045F8E",
+     "size": 4,
+     "sha256": "fb1f08a291323412d615e6499672ae1b0fb1bbde5ba3cd70b24869703f5d0e32"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80045F8E",
+     "size": 4,
+     "sha256": "fb1f08a291323412d615e6499672ae1b0fb1bbde5ba3cd70b24869703f5d0e32"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800464B6",
+     "size": 6,
+     "sha256": "5c127491865821e06b154e1abad9eba3810b49404ae81041228eb54d73176399"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800464B6",
+     "size": 6,
+     "sha256": "5c127491865821e06b154e1abad9eba3810b49404ae81041228eb54d73176399"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800464B6",
+     "size": 6,
+     "sha256": "5c127491865821e06b154e1abad9eba3810b49404ae81041228eb54d73176399"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80001EF6",
+     "size": 6,
+     "sha256": "6e36dfd8bb45755f2fe5c6d1ce7b2a2fe68a227101192c95a26919ebacc1e142"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80001EF6",
+     "size": 6,
+     "sha256": "6e36dfd8bb45755f2fe5c6d1ce7b2a2fe68a227101192c95a26919ebacc1e142"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80001EF6",
+     "size": 6,
+     "sha256": "6e36dfd8bb45755f2fe5c6d1ce7b2a2fe68a227101192c95a26919ebacc1e142"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001FA74",
+     "size": 16,
+     "sha256": "b9b5919cde5a1478a9975cb235b19af8eabc5d6d0dcede08043bae6ab2e5cee8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001FA74",
+     "size": 16,
+     "sha256": "b9b5919cde5a1478a9975cb235b19af8eabc5d6d0dcede08043bae6ab2e5cee8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001FA74",
+     "size": 16,
+     "sha256": "b9b5919cde5a1478a9975cb235b19af8eabc5d6d0dcede08043bae6ab2e5cee8"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80097490",
+     "size": 8,
+     "sha256": "d796cd737eb23f9b6f658b94c97bfd0c8b043186b5f6c6589f557c7cbeb1c655"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80097490",
+     "size": 8,
+     "sha256": "d796cd737eb23f9b6f658b94c97bfd0c8b043186b5f6c6589f557c7cbeb1c655"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80097490",
+     "size": 8,
+     "sha256": "d796cd737eb23f9b6f658b94c97bfd0c8b043186b5f6c6589f557c7cbeb1c655"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80045F8E",
+     "size": 4,
+     "sha256": "fb1f08a291323412d615e6499672ae1b0fb1bbde5ba3cd70b24869703f5d0e32"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800464B6",
+     "size": 6,
+     "sha256": "5c127491865821e06b154e1abad9eba3810b49404ae81041228eb54d73176399"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80001EF6",
+     "size": 6,
+     "sha256": "6e36dfd8bb45755f2fe5c6d1ce7b2a2fe68a227101192c95a26919ebacc1e142"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001FA74",
+     "size": 16,
+     "sha256": "b9b5919cde5a1478a9975cb235b19af8eabc5d6d0dcede08043bae6ab2e5cee8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80097490",
+     "size": 8,
+     "sha256": "d796cd737eb23f9b6f658b94c97bfd0c8b043186b5f6c6589f557c7cbeb1c655"
+    }
+   ]
+  },
+  {
+   "id": "st.tasks.others",
+   "claim": "There are 21 direct calls of task create 0x800D31A8. The record covers the named ones above. Entry points, queues and event flags of every task have not been listed.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 scan of callers of 0x800D31A8"
+    }
+   ]
+  },
+  {
+   "id": "st.rtos.fpu",
+   "claim": "Task attribute bit 0x1000 marks floating point tasks. PendSV 0xDD3C saves s16-s31 only when the incoming task has that bit, and keeps the last FPU owner lazily (0xDDA2-0xDDC4). inittsk has 0x1001, PlayTask and PrefTask 0x1041, wrapper 0x80005880 sets 0x1041 or 0x1061. Hardware saves s0-s15 at exceptions according to FPCCR. A task without the bit has no FPU state of its own.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0xDD9E-0xDDC4, 0x1FA74, 0x80001F04, 0x8000588A"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm ARMv7-M Architecture Reference Manual, DDI 0403E, B1.6 lazy FP context"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0000DD9E",
+     "size": 8,
+     "sha256": "59801b4a6fef5e5be33261b369629fe0374f7952545d8f26f81defdf92d65b40"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0000DD9E",
+     "size": 8,
+     "sha256": "59801b4a6fef5e5be33261b369629fe0374f7952545d8f26f81defdf92d65b40"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0000DD9E",
+     "size": 8,
+     "sha256": "59801b4a6fef5e5be33261b369629fe0374f7952545d8f26f81defdf92d65b40"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0000DDB8",
+     "size": 8,
+     "sha256": "dfabdf801a8eb01b188bec93a588db769cf3c103b2e1555dd0b12f8c66e73544"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0000DDB8",
+     "size": 8,
+     "sha256": "dfabdf801a8eb01b188bec93a588db769cf3c103b2e1555dd0b12f8c66e73544"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0000DDB8",
+     "size": 8,
+     "sha256": "dfabdf801a8eb01b188bec93a588db769cf3c103b2e1555dd0b12f8c66e73544"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0000DD9E",
+     "size": 8,
+     "sha256": "59801b4a6fef5e5be33261b369629fe0374f7952545d8f26f81defdf92d65b40"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0000DDB8",
+     "size": 8,
+     "sha256": "dfabdf801a8eb01b188bec93a588db769cf3c103b2e1555dd0b12f8c66e73544"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.chain",
+   "claim": "Audio chain: DMA3 interrupt 0x80003409 (registered at 0x1CFB4 with priority 7, NVIC value 0x70; DMA4 0x800034A9 likewise) signals the event flag whose id is at 0x80591D54 and updates music time through 0x80004F70. Task inittsk, priority 1, waits in the loop from 0x1CF78 and calls 0x1C2D0 at 0x1D096 to render one block. That is a separate thing from the task named AUDIO TASK.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1CF9C-0x1CFC8, 0x80003408-0x8000341C, 0x1D096"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001CFA0",
+     "size": 4,
+     "sha256": "03e52c3ea88bcaa99fd23ac3d4e6eef915db558ff9193a9e52ae23099c0f3876"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001CFA0",
+     "size": 4,
+     "sha256": "03e52c3ea88bcaa99fd23ac3d4e6eef915db558ff9193a9e52ae23099c0f3876"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001CFA0",
+     "size": 4,
+     "sha256": "03e52c3ea88bcaa99fd23ac3d4e6eef915db558ff9193a9e52ae23099c0f3876"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001D096",
+     "size": 4,
+     "sha256": "a98e838ff1e4a10991832d7b2b9cd8a90638ed53eb0e13c3c09886100e256c1b"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001D096",
+     "size": 4,
+     "sha256": "a98e838ff1e4a10991832d7b2b9cd8a90638ed53eb0e13c3c09886100e256c1b"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001D096",
+     "size": 4,
+     "sha256": "a98e838ff1e4a10991832d7b2b9cd8a90638ed53eb0e13c3c09886100e256c1b"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80003408",
+     "size": 8,
+     "sha256": "1e6c169f0e9f332a5c234e416e9b200d0e454609da7032414b5367beb663e3e0"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80003408",
+     "size": 8,
+     "sha256": "1e6c169f0e9f332a5c234e416e9b200d0e454609da7032414b5367beb663e3e0"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80003408",
+     "size": 8,
+     "sha256": "1e6c169f0e9f332a5c234e416e9b200d0e454609da7032414b5367beb663e3e0"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001CFA0",
+     "size": 4,
+     "sha256": "03e52c3ea88bcaa99fd23ac3d4e6eef915db558ff9193a9e52ae23099c0f3876"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001D096",
+     "size": 4,
+     "sha256": "a98e838ff1e4a10991832d7b2b9cd8a90638ed53eb0e13c3c09886100e256c1b"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80003408",
+     "size": 8,
+     "sha256": "1e6c169f0e9f332a5c234e416e9b200d0e454609da7032414b5367beb663e3e0"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.block",
+   "claim": "One block is 64 frames of 14 channels of int32 at 48 kHz: 750 blocks per second, 1.333 ms each. That period is the hard deadline for the whole render, stock work included. Mix values are clamped to the 20 bit range +/-0x7FFFF.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1C74E-0x1C750 (0x40, 0xE), 0x1C808, 0x1C812-0x1C816 (limits), mix clear size 0xE00 at 0x1C6D8"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 reference manual, specifications, 48 kHz"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C74E",
+     "size": 4,
+     "sha256": "bc86e204017901ebc2f9836a551823f81c656e52d003919949b60c75a54c4f15"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C74E",
+     "size": 4,
+     "sha256": "bc86e204017901ebc2f9836a551823f81c656e52d003919949b60c75a54c4f15"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C74E",
+     "size": 4,
+     "sha256": "bc86e204017901ebc2f9836a551823f81c656e52d003919949b60c75a54c4f15"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C6D8",
+     "size": 4,
+     "sha256": "cd27559856e4edf401850cf5b5fb8ade8748e8898a901bf202bb1b59e445e3cb"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C6D8",
+     "size": 4,
+     "sha256": "cd27559856e4edf401850cf5b5fb8ade8748e8898a901bf202bb1b59e445e3cb"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C6D8",
+     "size": 4,
+     "sha256": "cd27559856e4edf401850cf5b5fb8ade8748e8898a901bf202bb1b59e445e3cb"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C808",
+     "size": 4,
+     "sha256": "fcda790931fd844227533e5f1f624ac7079bfb94366f954f8f1f06d87588a08d"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C808",
+     "size": 4,
+     "sha256": "fcda790931fd844227533e5f1f624ac7079bfb94366f954f8f1f06d87588a08d"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C808",
+     "size": 4,
+     "sha256": "fcda790931fd844227533e5f1f624ac7079bfb94366f954f8f1f06d87588a08d"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C812",
+     "size": 4,
+     "sha256": "9b87b93977f4a09a2c593ef6f61c22ce682843746d97da6525221a740e284629"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C812",
+     "size": 4,
+     "sha256": "9b87b93977f4a09a2c593ef6f61c22ce682843746d97da6525221a740e284629"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C812",
+     "size": 4,
+     "sha256": "9b87b93977f4a09a2c593ef6f61c22ce682843746d97da6525221a740e284629"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C816",
+     "size": 4,
+     "sha256": "eaa7b7c94e1c4331bde946ce8b76b85a09410f63185c1c811e47e2d8a1adc42f"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C816",
+     "size": 4,
+     "sha256": "eaa7b7c94e1c4331bde946ce8b76b85a09410f63185c1c811e47e2d8a1adc42f"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C816",
+     "size": 4,
+     "sha256": "eaa7b7c94e1c4331bde946ce8b76b85a09410f63185c1c811e47e2d8a1adc42f"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C74E",
+     "size": 4,
+     "sha256": "bc86e204017901ebc2f9836a551823f81c656e52d003919949b60c75a54c4f15"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C6D8",
+     "size": 4,
+     "sha256": "cd27559856e4edf401850cf5b5fb8ade8748e8898a901bf202bb1b59e445e3cb"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C808",
+     "size": 4,
+     "sha256": "fcda790931fd844227533e5f1f624ac7079bfb94366f954f8f1f06d87588a08d"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C812",
+     "size": 4,
+     "sha256": "9b87b93977f4a09a2c593ef6f61c22ce682843746d97da6525221a740e284629"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C816",
+     "size": 4,
+     "sha256": "eaa7b7c94e1c4331bde946ce8b76b85a09410f63185c1c811e47e2d8a1adc42f"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.headroom",
+   "claim": "How much of the 1.333 ms stock leaves free is unknown. If the clock is 600 MHz a block is 800,000 cycles, but stock use has not been measured, and instruction counts from the stand cannot be divided into that figure. Measure with DWT on a unit.",
+   "topic": "stock",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "arithmetic on an unmeasured clock, see hw.cpu.clock and hw.cycles.cost"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.render",
+   "claim": "Block render 0x1C2D0-0x1CA74: clears mix buffer 0x202AD3A0 (0xE00 bytes). For 32 voice slots, 0x58 bytes each from 0x202AE1A0, it calls voice render at 0x1C71E. Then 0x1E248(0x82E0B71C, mix, 64, 14), then 0x1CB84(0x80249800, mix, 64, 14). Third-party source calls that last one the sound generator path. Then it clamps and packs, and returns 1 at 0x1CA74. The loop itself runs from ITCM, so that code does not depend on the cache.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1C6D4-0x1C73C, 0x1C754, 0x1C766, 0x1CA74"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C2D0",
+     "size": 8,
+     "sha256": "feb3b5bdbbe337c534696eddbcb9c3e38ecad7df37213cc9a271ad34b46f8ec2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C2D0",
+     "size": 8,
+     "sha256": "feb3b5bdbbe337c534696eddbcb9c3e38ecad7df37213cc9a271ad34b46f8ec2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C2D0",
+     "size": 8,
+     "sha256": "feb3b5bdbbe337c534696eddbcb9c3e38ecad7df37213cc9a271ad34b46f8ec2"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C738",
+     "size": 4,
+     "sha256": "10ff43e1b6f3e4882922c6f2475447085f530c840ce7a80dba62443724fc070a"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C738",
+     "size": 4,
+     "sha256": "10ff43e1b6f3e4882922c6f2475447085f530c840ce7a80dba62443724fc070a"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C738",
+     "size": 4,
+     "sha256": "10ff43e1b6f3e4882922c6f2475447085f530c840ce7a80dba62443724fc070a"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C754",
+     "size": 4,
+     "sha256": "af8fc9b0ba927f178e522bdba5628fa89bbe6a2d0224cb00743b747804543d55"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C754",
+     "size": 4,
+     "sha256": "af8fc9b0ba927f178e522bdba5628fa89bbe6a2d0224cb00743b747804543d55"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C754",
+     "size": 4,
+     "sha256": "af8fc9b0ba927f178e522bdba5628fa89bbe6a2d0224cb00743b747804543d55"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C766",
+     "size": 4,
+     "sha256": "37b8311b99c33beb016717d826ceb9cbd682f43314dbd62e27cb044964fb3fd9"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C766",
+     "size": 4,
+     "sha256": "37b8311b99c33beb016717d826ceb9cbd682f43314dbd62e27cb044964fb3fd9"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C766",
+     "size": 4,
+     "sha256": "37b8311b99c33beb016717d826ceb9cbd682f43314dbd62e27cb044964fb3fd9"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001CA74",
+     "size": 8,
+     "sha256": "a4783f2e65c0d12bce92eb1832762b42f4b0f69d50a99e365518e29761ed2ce3"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001CA74",
+     "size": 8,
+     "sha256": "a4783f2e65c0d12bce92eb1832762b42f4b0f69d50a99e365518e29761ed2ce3"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001CA74",
+     "size": 8,
+     "sha256": "a4783f2e65c0d12bce92eb1832762b42f4b0f69d50a99e365518e29761ed2ce3"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C2D0",
+     "size": 8,
+     "sha256": "feb3b5bdbbe337c534696eddbcb9c3e38ecad7df37213cc9a271ad34b46f8ec2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C738",
+     "size": 4,
+     "sha256": "10ff43e1b6f3e4882922c6f2475447085f530c840ce7a80dba62443724fc070a"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C754",
+     "size": 4,
+     "sha256": "af8fc9b0ba927f178e522bdba5628fa89bbe6a2d0224cb00743b747804543d55"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C766",
+     "size": 4,
+     "sha256": "37b8311b99c33beb016717d826ceb9cbd682f43314dbd62e27cb044964fb3fd9"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001CA74",
+     "size": 8,
+     "sha256": "a4783f2e65c0d12bce92eb1832762b42f4b0f69d50a99e365518e29761ed2ce3"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.voice",
+   "claim": "Voice call: 0x1C71E does bl 0x1008E with r0 = voice slot, r1 = mix buffer, r2 and r3 = pointers to two out values on the stack. 0x1008E is a veneer to 0x80005870, which loads the state pointer from the slot, returns if empty, else jumps by veneer 0x800D2D5C to 0x14B88, the real voice renderer in ITCM. 0x1C71E is the only direct caller of 0x1008E, and the path crosses into SDRAM and back on every voice.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1C710-0x1C71E, 0x1008E, 0x80005870-0x80005878, 0x800D2D5C, 0x14B88; caller scan"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80005870",
+     "size": 10,
+     "sha256": "c9d721b109d2277795aeb1bf61dadd0a68050bed09cc788a97b3c662725ee971"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80005870",
+     "size": 10,
+     "sha256": "c9d721b109d2277795aeb1bf61dadd0a68050bed09cc788a97b3c662725ee971"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80005870",
+     "size": 10,
+     "sha256": "c9d721b109d2277795aeb1bf61dadd0a68050bed09cc788a97b3c662725ee971"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D2D5C",
+     "size": 8,
+     "sha256": "0d45ab137645c09a67f30c8d756042adfa14743352ffee7753bed841cdd9b13f"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D2D5C",
+     "size": 8,
+     "sha256": "0d45ab137645c09a67f30c8d756042adfa14743352ffee7753bed841cdd9b13f"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D2D5C",
+     "size": 8,
+     "sha256": "0d45ab137645c09a67f30c8d756042adfa14743352ffee7753bed841cdd9b13f"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x00014B88",
+     "size": 8,
+     "sha256": "79677d62cd18b98bdb0e1f88b1b401babafa3ce3c6d2625772e3e5133ed51efb"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x00014B88",
+     "size": 8,
+     "sha256": "79677d62cd18b98bdb0e1f88b1b401babafa3ce3c6d2625772e3e5133ed51efb"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x00014B88",
+     "size": 8,
+     "sha256": "79677d62cd18b98bdb0e1f88b1b401babafa3ce3c6d2625772e3e5133ed51efb"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80005870",
+     "size": 10,
+     "sha256": "c9d721b109d2277795aeb1bf61dadd0a68050bed09cc788a97b3c662725ee971"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D2D5C",
+     "size": 8,
+     "sha256": "0d45ab137645c09a67f30c8d756042adfa14743352ffee7753bed841cdd9b13f"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x00014B88",
+     "size": 8,
+     "sha256": "79677d62cd18b98bdb0e1f88b1b401babafa3ce3c6d2625772e3e5133ed51efb"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.voice-struct",
+   "claim": "The voice state structure, sample engine, envelope, looper and resampler, the alternate flag and BUS routing have not been documented. Fields are known only in scattered reads, and the stand uses synthetic voices with no pitch, loop or reverse.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "partial reading only"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.pack",
+   "claim": "Output packing at 0x1C840-0x1C8A0 writes frames of 16 words: words 0-11 are mix channels 0-11, word 12 comes per frame from the buffer at 0x202AD2A0, word 13 is a per-block mask built at 0x1C776-0x1C7DE, words 14-15 are mix channels 12-13. Destination is DTCM, 0x20000000 + bank x 0x1000 + plane x 0x2000 (pointers at 0x1D078-0x1D08E). DMA reads DTCM, so no cache maintenance is involved. Older notes that output comes from cached OCRAM are wrong. Only plane 0 was read here.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1C840-0x1C8A0, 0x1D078-0x1D08E"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm Cortex-M7 Technical Reference Manual, DDI 0489F, 5.8, p.103-104"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C88E",
+     "size": 4,
+     "sha256": "f7a8c1a69f7773c6c521110b559279339e0b0a8ee72823a373264fe42274a4a6"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C88E",
+     "size": 4,
+     "sha256": "f7a8c1a69f7773c6c521110b559279339e0b0a8ee72823a373264fe42274a4a6"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C88E",
+     "size": 4,
+     "sha256": "f7a8c1a69f7773c6c521110b559279339e0b0a8ee72823a373264fe42274a4a6"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C894",
+     "size": 4,
+     "sha256": "a94eb4f99339dcbb77a2010a17b411dd21b0e45783c593bc1ac7b6c521e22d45"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C894",
+     "size": 4,
+     "sha256": "a94eb4f99339dcbb77a2010a17b411dd21b0e45783c593bc1ac7b6c521e22d45"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C894",
+     "size": 4,
+     "sha256": "a94eb4f99339dcbb77a2010a17b411dd21b0e45783c593bc1ac7b6c521e22d45"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001D078",
+     "size": 8,
+     "sha256": "1db766d91b0526e51c60673d995cf8081a2e9bc183b2233e5c378cd8b5c54b09"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001D078",
+     "size": 8,
+     "sha256": "1db766d91b0526e51c60673d995cf8081a2e9bc183b2233e5c378cd8b5c54b09"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001D078",
+     "size": 8,
+     "sha256": "1db766d91b0526e51c60673d995cf8081a2e9bc183b2233e5c378cd8b5c54b09"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C88E",
+     "size": 4,
+     "sha256": "f7a8c1a69f7773c6c521110b559279339e0b0a8ee72823a373264fe42274a4a6"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C894",
+     "size": 4,
+     "sha256": "a94eb4f99339dcbb77a2010a17b411dd21b0e45783c593bc1ac7b6c521e22d45"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001D078",
+     "size": 8,
+     "sha256": "1db766d91b0526e51c60673d995cf8081a2e9bc183b2233e5c378cd8b5c54b09"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.routes",
+   "claim": "Meaning of the 14 channels and of frame words on the receiver is not established. Tallfree authors report by trial that words 14 and 15 reach the main outputs without being recorded and words 0 and 1 are the recorded path. That is their report, not a measurement here.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree engine/device.c at commit 2d44c6e5, comments"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "not tested by this project"
+    }
+   ]
+  },
+  {
+   "id": "st.audio.clip-log",
+   "claim": "The clamp at 0x1C8B2 onward calls 0xE668, the print routine, once per clipped sample, with printf veneer 0x800D31C6 and 212 direct callers overall. In an overloaded mix this adds stock work in the audio path. Output destination appears unused.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1C8B2-0x1C8DC, 0x800D31C6"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "that the output goes nowhere"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C8BC",
+     "size": 4,
+     "sha256": "861479e10f7e99289f00ccbbed5e7880ba1d76ba9a0481f3981472e50e6d3150"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C8BC",
+     "size": 4,
+     "sha256": "861479e10f7e99289f00ccbbed5e7880ba1d76ba9a0481f3981472e50e6d3150"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C8BC",
+     "size": 4,
+     "sha256": "861479e10f7e99289f00ccbbed5e7880ba1d76ba9a0481f3981472e50e6d3150"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D31C6",
+     "size": 8,
+     "sha256": "bd3a46d8684b9c7fb49d9c374af66cdddd355b5d2663650d840e984ff1541059"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D31C6",
+     "size": 8,
+     "sha256": "bd3a46d8684b9c7fb49d9c374af66cdddd355b5d2663650d840e984ff1541059"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D31C6",
+     "size": 8,
+     "sha256": "bd3a46d8684b9c7fb49d9c374af66cdddd355b5d2663650d840e984ff1541059"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C8BC",
+     "size": 4,
+     "sha256": "861479e10f7e99289f00ccbbed5e7880ba1d76ba9a0481f3981472e50e6d3150"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D31C6",
+     "size": 8,
+     "sha256": "bd3a46d8684b9c7fb49d9c374af66cdddd355b5d2663650d840e984ff1541059"
+    }
+   ]
+  },
+  {
+   "id": "st.transport",
+   "claim": "Transport structure 0x80592244: byte +0 state, read by getter 0x800C1A50: 0 stopped, 1 waiting to start, 2 running, 3 and 4 stopping. +0x0C tempo x 100, +0x14 position in ticks, +0x20 last CYCCNT, +0x28 time units, plus 0x20 per audio block. 0x80004F70 updates it from the DMA interrupt. Ticks per beat 480 by calculation.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800C1A50, 0x80004F98-0x80004FAC, 0x800A3910-0x800A3932, 0x80005064"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "tempo unit and 480 ticks per beat"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800C1A50",
+     "size": 12,
+     "sha256": "a734d949b028923652740941c5d5758f25124bb786e100b03c72e9663aef99c6"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800C1A50",
+     "size": 12,
+     "sha256": "a734d949b028923652740941c5d5758f25124bb786e100b03c72e9663aef99c6"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800C1A50",
+     "size": 12,
+     "sha256": "a734d949b028923652740941c5d5758f25124bb786e100b03c72e9663aef99c6"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80004F98",
+     "size": 6,
+     "sha256": "b339f0e10f1f58b45ad03713e1bfc9105fe556f6cec87d64581ea90b39a157fd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80004F98",
+     "size": 6,
+     "sha256": "b339f0e10f1f58b45ad03713e1bfc9105fe556f6cec87d64581ea90b39a157fd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80004F98",
+     "size": 6,
+     "sha256": "b339f0e10f1f58b45ad03713e1bfc9105fe556f6cec87d64581ea90b39a157fd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800C1A50",
+     "size": 12,
+     "sha256": "a734d949b028923652740941c5d5758f25124bb786e100b03c72e9663aef99c6"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80004F98",
+     "size": 6,
+     "sha256": "b339f0e10f1f58b45ad03713e1bfc9105fe556f6cec87d64581ea90b39a157fd"
+    }
+   ]
+  },
+  {
+   "id": "st.transport.end",
+   "claim": "Whether transport returns to 0 at the end of a pattern without LOOP has not been confirmed. Treat any non-zero state as running.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 reset paths seen for STOP and project change only"
+    }
+   ]
+  },
+  {
+   "id": "st.rec",
+   "claim": "Recorder state byte 0x82E0E755, 97 reads: 0 idle, 1 armed, 2 recording, 3 exists with unclear meaning. 0x80591E90 is believed to mark a sequencer recording session.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 reads such as 0x8000BF8C; states from earlier reading of recorder code"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8000BF8C",
+     "size": 4,
+     "sha256": "d6adc78c2df9969afa161a5d091b8a6d8bf84fd56e201db843357aaa4157d800"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8000BF8C",
+     "size": 4,
+     "sha256": "d6adc78c2df9969afa161a5d091b8a6d8bf84fd56e201db843357aaa4157d800"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8000BF8C",
+     "size": 4,
+     "sha256": "d6adc78c2df9969afa161a5d091b8a6d8bf84fd56e201db843357aaa4157d800"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8000BF8C",
+     "size": 4,
+     "sha256": "d6adc78c2df9969afa161a5d091b8a6d8bf84fd56e201db843357aaa4157d800"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.page",
+   "claim": "Current UI page number is an int16 at 0x80245880, 30 reads found through base 0x80245874 or 0x80245880. In DOOM OS 0.7.x a trampoline compares it with 0x5F to detect the SYSTEM page (0.7.2 0x802099E2, 0.7.3 0x8020996A, 0.7.4 0x8020997A). Tab number of SYSTEM is at 0x80591C00, used in 0x8013DFF4-0x8013E6F8.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8003A99C area; doom-os-0.7.2 0x802099E2-0x802099EC; stock-5.52 0x8013E3AC"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003A994",
+     "size": 8,
+     "sha256": "09f2a48b9edb36e9360ddd05ff2f861648cf800de101b495799ace0fa2a64e90"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003A994",
+     "size": 8,
+     "sha256": "09f2a48b9edb36e9360ddd05ff2f861648cf800de101b495799ace0fa2a64e90"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003A994",
+     "size": 8,
+     "sha256": "09f2a48b9edb36e9360ddd05ff2f861648cf800de101b495799ace0fa2a64e90"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x802099E2",
+     "size": 12,
+     "sha256": "7962a5066eb9a7f5b2951827142ada83a77d038d6e4253f61b869f10d042ad10"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8020996A",
+     "size": 12,
+     "sha256": "7962a5066eb9a7f5b2951827142ada83a77d038d6e4253f61b869f10d042ad10"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003A994",
+     "size": 8,
+     "sha256": "09f2a48b9edb36e9360ddd05ff2f861648cf800de101b495799ace0fa2a64e90"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8020997A",
+     "size": 12,
+     "sha256": "7962a5066eb9a7f5b2951827142ada83a77d038d6e4253f61b869f10d042ad10"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.map",
+   "claim": "No map of UI screens exists: page numbers, how a page is created and drawn, and which keys each gets. Only SYSTEM tabs and the pad screen have been looked at.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "not researched"
+    }
+   ]
+  },
+  {
+   "id": "st.input.tick",
+   "claim": "Panel tick: 0x80072F38 creates a 1 ms cyclic handler 0x8004D2B9, which sets event bit 8. The task object method 0x80072CF0 is entered with code 0 for it, in PANEL TASK, priority 29, through vtable word 0x8021D018. That code calls scan 0x80046E90, reads the encoder at 0x80038270, posts a type 7 event through 0x8003B480, calls 0x800BA228, then 0x8004BE60 and 0x80182B80(10). Two PANEL TASK objects share the vtable (0x82E48700, 0x8300A3E4).",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80072F4C-0x80072F7C, 0x80072CF6-0x80072D2E, 0x80045F86, 0x80045FE0"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "exact timing on a unit"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80072D0C",
+     "size": 8,
+     "sha256": "ca3c6b44118e70f9dceae080b39ba3cb9a31a784b9392450ffb9c0aa45307227"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80072D0C",
+     "size": 8,
+     "sha256": "ca3c6b44118e70f9dceae080b39ba3cb9a31a784b9392450ffb9c0aa45307227"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80072D0C",
+     "size": 8,
+     "sha256": "ca3c6b44118e70f9dceae080b39ba3cb9a31a784b9392450ffb9c0aa45307227"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80072F66",
+     "size": 8,
+     "sha256": "d1abb1613ef48511ed2e81e4c13c67635ce5bb05bdec9e656b6af3f574a0d205"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80072F66",
+     "size": 8,
+     "sha256": "d1abb1613ef48511ed2e81e4c13c67635ce5bb05bdec9e656b6af3f574a0d205"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80072F66",
+     "size": 8,
+     "sha256": "d1abb1613ef48511ed2e81e4c13c67635ce5bb05bdec9e656b6af3f574a0d205"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80072D0C",
+     "size": 8,
+     "sha256": "ca3c6b44118e70f9dceae080b39ba3cb9a31a784b9392450ffb9c0aa45307227"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80072F66",
+     "size": 8,
+     "sha256": "d1abb1613ef48511ed2e81e4c13c67635ce5bb05bdec9e656b6af3f574a0d205"
+    }
+   ]
+  },
+  {
+   "id": "st.input.ring",
+   "claim": "Input events go through a ring of 256 records of 12 bytes at 0x80B5E7A4, write index 0x805919B0, read index 0x805919B4. Router 0x8003B530 takes event type 5 to 0x25 by a table. Event layout starts {int16 type, int16 code, int16 value}.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8003B480-0x8003B4CE, 0x8003B530-0x8003B53A"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003B484",
+     "size": 8,
+     "sha256": "dd37eea5599a93704e9301dabd983c03ed0ca511fc8a3626c6ce959c1c8a1211"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003B484",
+     "size": 8,
+     "sha256": "dd37eea5599a93704e9301dabd983c03ed0ca511fc8a3626c6ce959c1c8a1211"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003B484",
+     "size": 8,
+     "sha256": "dd37eea5599a93704e9301dabd983c03ed0ca511fc8a3626c6ce959c1c8a1211"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003B4A8",
+     "size": 8,
+     "sha256": "af106bee536f6b1657a3de7faa3158d6d6a57b4f535371511c0c0d761fdc065c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003B4A8",
+     "size": 8,
+     "sha256": "af106bee536f6b1657a3de7faa3158d6d6a57b4f535371511c0c0d761fdc065c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003B4A8",
+     "size": 8,
+     "sha256": "af106bee536f6b1657a3de7faa3158d6d6a57b4f535371511c0c0d761fdc065c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003B530",
+     "size": 8,
+     "sha256": "42bbdc2389ae03a9505d6b5c9492ea82122abad38e30ff558bc250e63fafc46c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003B530",
+     "size": 8,
+     "sha256": "42bbdc2389ae03a9505d6b5c9492ea82122abad38e30ff558bc250e63fafc46c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003B530",
+     "size": 8,
+     "sha256": "42bbdc2389ae03a9505d6b5c9492ea82122abad38e30ff558bc250e63fafc46c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003B484",
+     "size": 8,
+     "sha256": "dd37eea5599a93704e9301dabd983c03ed0ca511fc8a3626c6ce959c1c8a1211"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003B4A8",
+     "size": 8,
+     "sha256": "af106bee536f6b1657a3de7faa3158d6d6a57b4f535371511c0c0d761fdc065c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003B530",
+     "size": 8,
+     "sha256": "42bbdc2389ae03a9505d6b5c9492ea82122abad38e30ff558bc250e63fafc46c"
+    }
+   ]
+  },
+  {
+   "id": "st.input.handler",
+   "claim": "Page button handler 0x800A80A8(owner, event) switches on event type 0-0x23 and calls the object virtual method: type 5 press +0x18, 6 release +0x1C, 7 +0x20 (code, value), 9 +0x60, 0 +0x0C, 2 +0x14, 8 +0x5C, 10 +0x34, 11 +0x74, 12 +0x38, 14-18 +0x88 to +0x98, 19 +0x48, 20 +0x4C, 22 +0x50, 24 +0x44, 27 +0x9C, 32 +0xB8, 33 +0xBC, 34 +0x40, 35 +0x3C. 98 data words in the main code hold its address, so 98 vtable slots lead here. Older notes said about 90. Names for type 7 VALUE and type 9 knob come from use, not from code.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 tbh table at 0x800A80C0, and count of the word 0x800A80A9 in the COPY row"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "button handling observed through hooks on the owner's unit, 2026-11"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800A80A8",
+     "size": 8,
+     "sha256": "524f1f24da2efcf78b7c5ca64fe172b5b0e618c428bbcafb6d5087d910967dd8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800A80A8",
+     "size": 8,
+     "sha256": "524f1f24da2efcf78b7c5ca64fe172b5b0e618c428bbcafb6d5087d910967dd8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800A80A8",
+     "size": 8,
+     "sha256": "524f1f24da2efcf78b7c5ca64fe172b5b0e618c428bbcafb6d5087d910967dd8"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800A81C2",
+     "size": 6,
+     "sha256": "66a33fd9e2161a57fb61adf75594224a667652719617daab0086f34e9d2739a8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800A81C2",
+     "size": 6,
+     "sha256": "66a33fd9e2161a57fb61adf75594224a667652719617daab0086f34e9d2739a8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800A81C2",
+     "size": 6,
+     "sha256": "66a33fd9e2161a57fb61adf75594224a667652719617daab0086f34e9d2739a8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800A80A8",
+     "size": 8,
+     "sha256": "524f1f24da2efcf78b7c5ca64fe172b5b0e618c428bbcafb6d5087d910967dd8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800A81C2",
+     "size": 6,
+     "sha256": "66a33fd9e2161a57fb61adf75594224a667652719617daab0086f34e9d2739a8"
+    }
+   ]
+  },
+  {
+   "id": "st.input.keys",
+   "claim": "Pressed keys are a bit map of byte array at 0x80592448, which is 0x80592438 + 0x10, indexed by code: byte code/8, bit code%8, codes up to 0x54. Press sets the bit at 0x8003AC0A, release clears it at 0x8003ADE4, getter 0x800D9F2C reads it. Known codes: 42 SHIFT, 36 REMAIN, 49 VALUE (the press of the VALUE encoder; its bit stays set while it is held, seen on the emulator), 34 EXIT, 24 near PITCH/SPEED. Other codes are not established here.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8003AC06-0x8003AC0A, 0x8003ADDC-0x8003ADE4, 0x8003ACD4-0x8003ACE2, 0x800D9F2C-0x800D9F46"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "hotkeys read through this map worked on the owner's unit, 2026-11 report on a private build"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator on doom-os-0.7.3, owner's mod session 2026-11-14: bit 49 set from press to release of VALUE; reported by that session, not re-run here"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D9F2C",
+     "size": 8,
+     "sha256": "dc15e01fc507a69d53c6e7eeb07b9f80df6b5e6ffd86d62619a7c261dbe69beb"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D9F2C",
+     "size": 8,
+     "sha256": "dc15e01fc507a69d53c6e7eeb07b9f80df6b5e6ffd86d62619a7c261dbe69beb"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D9F2C",
+     "size": 8,
+     "sha256": "dc15e01fc507a69d53c6e7eeb07b9f80df6b5e6ffd86d62619a7c261dbe69beb"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D9F38",
+     "size": 8,
+     "sha256": "4be9723cb353759664ce1ed787c0dd18b546cacb40700f2e1033db3f4ad054fd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D9F38",
+     "size": 8,
+     "sha256": "4be9723cb353759664ce1ed787c0dd18b546cacb40700f2e1033db3f4ad054fd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D9F38",
+     "size": 8,
+     "sha256": "4be9723cb353759664ce1ed787c0dd18b546cacb40700f2e1033db3f4ad054fd"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003ACD4",
+     "size": 8,
+     "sha256": "32c6821bd11dee977789c63cd218aed712132d563957798bfc870747ce607054"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003ACD4",
+     "size": 8,
+     "sha256": "32c6821bd11dee977789c63cd218aed712132d563957798bfc870747ce607054"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003ACD4",
+     "size": 8,
+     "sha256": "32c6821bd11dee977789c63cd218aed712132d563957798bfc870747ce607054"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D9F2C",
+     "size": 8,
+     "sha256": "dc15e01fc507a69d53c6e7eeb07b9f80df6b5e6ffd86d62619a7c261dbe69beb"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D9F38",
+     "size": 8,
+     "sha256": "4be9723cb353759664ce1ed787c0dd18b546cacb40700f2e1033db3f4ad054fd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003ACD4",
+     "size": 8,
+     "sha256": "32c6821bd11dee977789c63cd218aed712132d563957798bfc870747ce607054"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.commit",
+   "claim": "0x8006FD48 sends dirty areas of the current page to the display; direct callers 0x8003A686, 0x8006B1F0, 0x8006C0E8. In more detail: it sends only the dirty areas of the picture [[0x80591B3C] + 8] (flag +0x34, list +0xB4; an area is marked with 0x800C1CC0(picture, x0, y0, x1, y1)), then copies the picture [0x80591B3C + 0x10] (pixels at 0x82E0771C) into the display buffer 0x82E0971C (0x8017E008 / 0x8017E040); 0x80047E80 is only a counter. The usual chain runs from PANEL TASK, but that every call does is not proven. On the emulator the frame reached the SSD1309 only in the page's ordinary loop: while PANEL TASK was busy (cutting 32 chops in a button handler, 4.5-6 s) the screen did not change once in screenshots every 0.12 s, although 0x8006FD48 was called after each chop and copied the picture into 0x82E0971C; a direct write into 0x82E0971C showed nothing either. So long work that must show progress has to be split into steps between PANEL ticks: a mod that cut one chop every 8 ms from the PANEL tick and asked for a picture between chops showed its progress bar on the emulator. The bytes are stock on all four images; nothing of this was measured on a unit.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8006FD48-0x8006FDA4, caller scan"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8006FD48, 0x800C1CC0, 0x8017E008, 0x8017E040, 0x80047E80; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: screenshots every 0.12 s during a cut in the button handler, and during a cut split over PANEL ticks"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.saver",
+   "claim": "Screensaver class draws through slot word 0x8022C454, stock value 0x80175261. Custom mode is a horizontal slideshow, with images from PROJECT_xx/PICTURE/screen_saver_N.bmp up to 16, otherwise built-in images from drive G:. Menu item 316 values: 0 OldRave, 1 Naminori, 2 Custom, 3 Disp OFF. Where the setting is read was not found.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8022C454, string at 0x80241256, 0x8006D41A, 0x8006DC70"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80241256",
+     "size": 16,
+     "sha256": "6cd4e0948d2f79b9ee12878946d79d5dc843c84cefcfbfa7feb61865d2901268"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80241256",
+     "size": 16,
+     "sha256": "6cd4e0948d2f79b9ee12878946d79d5dc843c84cefcfbfa7feb61865d2901268"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80241256",
+     "size": 16,
+     "sha256": "6cd4e0948d2f79b9ee12878946d79d5dc843c84cefcfbfa7feb61865d2901268"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80241256",
+     "size": 16,
+     "sha256": "6cd4e0948d2f79b9ee12878946d79d5dc843c84cefcfbfa7feb61865d2901268"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.flags",
+   "claim": "0x8059259C is used as a modal dialog count or pointer in 36 places. 0x80249730 is read by getter 0x800D1360 and at 0x801008A8, and is called the screensaver-active flag in later notes after older notes called it save in progress. No writer was found by direct scan. Treat both meanings as unproven.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800D1360, 0x801008A0, references to 0x8059259C"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "meaning from mod code that used them, not from stock logic"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D1360",
+     "size": 10,
+     "sha256": "e0a5f8792161aadbaf87342bb3f1260b2dd519e18e96e6af93c9d50f61529e72"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D1360",
+     "size": 10,
+     "sha256": "e0a5f8792161aadbaf87342bb3f1260b2dd519e18e96e6af93c9d50f61529e72"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D1360",
+     "size": 10,
+     "sha256": "e0a5f8792161aadbaf87342bb3f1260b2dd519e18e96e6af93c9d50f61529e72"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D1360",
+     "size": 10,
+     "sha256": "e0a5f8792161aadbaf87342bb3f1260b2dd519e18e96e6af93c9d50f61529e72"
+    }
+   ]
+  },
+  {
+   "id": "st.queue.smpl",
+   "claim": "0x800E25C0(arg0, arg1, arg2) posts a command to SMPL TASK, 264 direct callers, without waiting. Command 13 can lead through 0x80194738 and 0x8004D8B8 to SAVE 0x800CF218 when stock parameters changed.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800E25C0, examples 0x8011158E, 0x800DC418; chain from earlier project reading"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800E25C0",
+     "size": 8,
+     "sha256": "4b55e306b6d5ad8684a1abd03cd5d3426c724366c949626b65bb6769ed985c07"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800E25C0",
+     "size": 8,
+     "sha256": "4b55e306b6d5ad8684a1abd03cd5d3426c724366c949626b65bb6769ed985c07"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800E25C0",
+     "size": 8,
+     "sha256": "4b55e306b6d5ad8684a1abd03cd5d3426c724366c949626b65bb6769ed985c07"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800E25C0",
+     "size": 8,
+     "sha256": "4b55e306b6d5ad8684a1abd03cd5d3426c724366c949626b65bb6769ed985c07"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.drives",
+   "claim": "A: is the SD card and B: the internal eMMC, FAT32 by formatter 0x800CF0E0 and 0x8017ABE8, capacity 16 GB by Roland including factory data. G: is an internal resource path (G:/XPAGE/...); whether it is writable is unknown. The unit works without an SD card and many users play that way.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 strings at 0x8004AF40, 0x8023C42B, 0x80056F88; 0x800CF0E0"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner often plays without a card, recorded 2026-10-27"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 specifications"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8023C42B",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8023C42B",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8023C42B",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800CF0E0",
+     "size": 4,
+     "sha256": "f1231a43486723ba9f8f321e7c7721e9cf5fab829d4319788572fe84e4bb067c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800CF0E0",
+     "size": 4,
+     "sha256": "f1231a43486723ba9f8f321e7c7721e9cf5fab829d4319788572fe84e4bb067c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800CF0E0",
+     "size": 4,
+     "sha256": "f1231a43486723ba9f8f321e7c7721e9cf5fab829d4319788572fe84e4bb067c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8023C42B",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800CF0E0",
+     "size": 4,
+     "sha256": "f1231a43486723ba9f8f321e7c7721e9cf5fab829d4319788572fe84e4bb067c"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.project",
+   "claim": "Project folder: B:/ROLAND/SP-404MKII/PROJECT_xx, xx 01-16. Contents: PADCONF.BIN (settings and pads), SMPL/BANK%d-%02d.SMP (samples; .WAV and .AIF also accepted by the name builder), PTN/PTN%05d.BIN (patterns), PTN/PATTERNCHAIN_%02d.CHN (chains), PICTURE/startup_1.bmp, startup_2.bmp, screen_saver_*.bmp. Empty slots do not need files. Also on B: _BackSamplingRec.bin, _emphasis.bin, FCTRY/FACTORY.SVD; on A: IMPORT, EXPORT, BKUP, update files in the root.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 strings 0x8023C46C, 0x8023C3DF, 0x8023F176, 0x8006FF60, 0x80192F1C, 0x80050054-0x8005006C"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8023C46C",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8023C46C",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8023C46C",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8023C3DF",
+     "size": 12,
+     "sha256": "fc6d543dee4d2994f996d622d6c6dea70a0a784f49473561f5260fa33c8e8f08"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8023C3DF",
+     "size": 12,
+     "sha256": "fc6d543dee4d2994f996d622d6c6dea70a0a784f49473561f5260fa33c8e8f08"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8023C3DF",
+     "size": 12,
+     "sha256": "fc6d543dee4d2994f996d622d6c6dea70a0a784f49473561f5260fa33c8e8f08"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006FF60",
+     "size": 16,
+     "sha256": "fdf84ab5e87e94bbaee515dc00664b8428ad4e3960f7357bc065870a0ab48788"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006FF60",
+     "size": 16,
+     "sha256": "fdf84ab5e87e94bbaee515dc00664b8428ad4e3960f7357bc065870a0ab48788"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006FF60",
+     "size": 16,
+     "sha256": "fdf84ab5e87e94bbaee515dc00664b8428ad4e3960f7357bc065870a0ab48788"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80050054",
+     "size": 9,
+     "sha256": "f1b3a9f9e651cf8f2bad469a2b286c867ab60183b23da1a76937c5e5a403069e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80050054",
+     "size": 9,
+     "sha256": "f1b3a9f9e651cf8f2bad469a2b286c867ab60183b23da1a76937c5e5a403069e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80050054",
+     "size": 9,
+     "sha256": "f1b3a9f9e651cf8f2bad469a2b286c867ab60183b23da1a76937c5e5a403069e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8023C46C",
+     "size": 16,
+     "sha256": "07aba70998f88ad9dc9f48a4f73a3395e54e3b75117da9c69c67d92a227362fd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8023C3DF",
+     "size": 12,
+     "sha256": "fc6d543dee4d2994f996d622d6c6dea70a0a784f49473561f5260fa33c8e8f08"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8006FF60",
+     "size": 16,
+     "sha256": "fdf84ab5e87e94bbaee515dc00664b8428ad4e3960f7357bc065870a0ab48788"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80050054",
+     "size": 9,
+     "sha256": "f1b3a9f9e651cf8f2bad469a2b286c867ab60183b23da1a76937c5e5a403069e"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.padconf",
+   "claim": "PADCONF.BIN: SAVE 0x800CF218 opens it with flags 0x601 at 0x800CF69E. LOAD 0x8018AE68 accepts only sizes 0x7B00, 0xCB00 and 0xCB20 (checks at 0x8018B156-0x8018B1E8). Pad records are 0xAC bytes, 160 of them (loop to 0x6B80). SAVE zeroes +0x68 to +0xAB of each at 0x800CF522-0x800CF532. So no free field survives and the file cannot grow. Field layout otherwise not documented.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 addresses given"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "save tail clearing run on the owner's research stand: all 160 cleared, 2026-10"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8018B15A",
+     "size": 4,
+     "sha256": "fc1cdf73beb0ef81a18a05ba97fd44b8193c5937e5b37da8b884e1f647de9f76"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8018B164",
+     "size": 4,
+     "sha256": "abc2919c5f6885a31f00c56ae6de74634ad1c43978e3e8310bd126e56bd452bc"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8018B1E0",
+     "size": 4,
+     "sha256": "6a2c514d3ef780072123d6b8c6245368f54c17a4c118b5a7aafde2b2feb325e9"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800CF522",
+     "size": 6,
+     "sha256": "da634b7661d8f7bd97f84481339cb376de60e591de8695680f363ad02607267f"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800CF52E",
+     "size": 4,
+     "sha256": "bbd42100dbda2448b5c0555b3f9744741b07d0824d11f0d1a6738a283686876c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800CF69E",
+     "size": 4,
+     "sha256": "2b1b35b08dcb2127e3a2384500bf583c216e96062fb4eadeb6c6a5fb757a5ca7"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.formats",
+   "claim": "File formats not specified: PADCONF fields, PTN*.BIN, PATTERNCHAIN_*.CHN, .SMP headers, BKUP*.bin.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "names and some sizes only"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.ops",
+   "claim": "What stock operations do with files: LOAD reads PADCONF by exact path. SAVE overwrites PADCONF only. COPY 0x800E8BE8 and EXPORT 0x800E9068 move only what filters pass: samples 0x800FB450, patterns 0x800FB1D8, chains 0x800FB870, pictures 0x800FB620. IMPORT 0x8008A188 empties the destination first. BACKUP 0x80038548 writes BKUP%02d.bin from selected names. RESTORE 0x80038DC8 clears B:/ROLAND first (0x800391CA). DELETE 0x800E95D0 removes the folder. A stray file in a project is ignored by LOAD and SAVE, lost by COPY and EXPORT, removed by IMPORT and RESTORE.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 addresses given"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "test_stock_copy_filters on the owner's research stand, stock filter code with a stubbed directory, 2026-11-05"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "real FAT behaviour on a unit"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800E8BE8",
+     "size": 8,
+     "sha256": "c3a6029e17fc7cc2b7eb2402073b05e8e9313c61a6f93d477b81a331bb350791"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800E8BE8",
+     "size": 8,
+     "sha256": "c3a6029e17fc7cc2b7eb2402073b05e8e9313c61a6f93d477b81a331bb350791"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800E8BE8",
+     "size": 8,
+     "sha256": "c3a6029e17fc7cc2b7eb2402073b05e8e9313c61a6f93d477b81a331bb350791"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800E9068",
+     "size": 8,
+     "sha256": "e4b106448a41f448f00c67067bb19b81ace47617b02f36be614519afa0eec241"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800E9068",
+     "size": 8,
+     "sha256": "e4b106448a41f448f00c67067bb19b81ace47617b02f36be614519afa0eec241"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800E9068",
+     "size": 8,
+     "sha256": "e4b106448a41f448f00c67067bb19b81ace47617b02f36be614519afa0eec241"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8008A188",
+     "size": 8,
+     "sha256": "491c4389326a68c5298a3bd8fc706d560140f75379ab3e1c9c52d08e8cb2e832"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8008A188",
+     "size": 8,
+     "sha256": "491c4389326a68c5298a3bd8fc706d560140f75379ab3e1c9c52d08e8cb2e832"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8008A188",
+     "size": 8,
+     "sha256": "491c4389326a68c5298a3bd8fc706d560140f75379ab3e1c9c52d08e8cb2e832"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80038548",
+     "size": 8,
+     "sha256": "48d2f064748bf46783c96a5510f1c72c2397af1c1c3c2e5490c088df7f24ee4d"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80038548",
+     "size": 8,
+     "sha256": "48d2f064748bf46783c96a5510f1c72c2397af1c1c3c2e5490c088df7f24ee4d"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80038548",
+     "size": 8,
+     "sha256": "48d2f064748bf46783c96a5510f1c72c2397af1c1c3c2e5490c088df7f24ee4d"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80038DC8",
+     "size": 8,
+     "sha256": "aa6f3451fb2393271dfbc6318bd9109f8566c5d5182a69afeaf41fc8d5230cb6"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80038DC8",
+     "size": 8,
+     "sha256": "aa6f3451fb2393271dfbc6318bd9109f8566c5d5182a69afeaf41fc8d5230cb6"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80038DC8",
+     "size": 8,
+     "sha256": "aa6f3451fb2393271dfbc6318bd9109f8566c5d5182a69afeaf41fc8d5230cb6"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800FB620",
+     "size": 8,
+     "sha256": "6827d5f2d191891b80d0cfe40f9a400698574cc522306ca2b5d689a9c62d159e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800FB620",
+     "size": 8,
+     "sha256": "6827d5f2d191891b80d0cfe40f9a400698574cc522306ca2b5d689a9c62d159e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800FB620",
+     "size": 8,
+     "sha256": "6827d5f2d191891b80d0cfe40f9a400698574cc522306ca2b5d689a9c62d159e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800E8BE8",
+     "size": 8,
+     "sha256": "c3a6029e17fc7cc2b7eb2402073b05e8e9313c61a6f93d477b81a331bb350791"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800E9068",
+     "size": 8,
+     "sha256": "e4b106448a41f448f00c67067bb19b81ace47617b02f36be614519afa0eec241"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8008A188",
+     "size": 8,
+     "sha256": "491c4389326a68c5298a3bd8fc706d560140f75379ab3e1c9c52d08e8cb2e832"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80038548",
+     "size": 8,
+     "sha256": "48d2f064748bf46783c96a5510f1c72c2397af1c1c3c2e5490c088df7f24ee4d"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80038DC8",
+     "size": 8,
+     "sha256": "aa6f3451fb2393271dfbc6318bd9109f8566c5d5182a69afeaf41fc8d5230cb6"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800FB620",
+     "size": 8,
+     "sha256": "6827d5f2d191891b80d0cfe40f9a400698574cc522306ca2b5d689a9c62d159e"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.ptn-filter",
+   "claim": "Name check for files in PTN, 0x800FB398: file extension, uppercased, must be BIN or MID. Other files in PTN are not copied by COPY and EXPORT. BACKUP has a separate check 0x8005DB10. The picture filter passes any .BMP name.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800FB398-0x800FB44C: compares with the words 0x0044494D and BIN"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "test_stock_copy_filters on the owner's research stand, 2026-11-05"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800FB424",
+     "size": 12,
+     "sha256": "74abd78ab0687dc0c8c0a8471ffaa29500301b44864612f756173ebd2cac42b2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800FB424",
+     "size": 12,
+     "sha256": "74abd78ab0687dc0c8c0a8471ffaa29500301b44864612f756173ebd2cac42b2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800FB424",
+     "size": 12,
+     "sha256": "74abd78ab0687dc0c8c0a8471ffaa29500301b44864612f756173ebd2cac42b2"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800FB432",
+     "size": 8,
+     "sha256": "8424a582a13debfce061ec74f73e51081fc077b3d425353f1761328b7895dda3"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800FB432",
+     "size": 8,
+     "sha256": "8424a582a13debfce061ec74f73e51081fc077b3d425353f1761328b7895dda3"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800FB432",
+     "size": 8,
+     "sha256": "8424a582a13debfce061ec74f73e51081fc077b3d425353f1761328b7895dda3"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800FB424",
+     "size": 12,
+     "sha256": "74abd78ab0687dc0c8c0a8471ffaa29500301b44864612f756173ebd2cac42b2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800FB432",
+     "size": 8,
+     "sha256": "8424a582a13debfce061ec74f73e51081fc077b3d425353f1761328b7895dda3"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.api",
+   "claim": "Stock file calls, Thumb addresses: open 0x800DEC61(path, flags: 0 read, 0x602 create or truncate, 0x601 write), read 0x800DEC49, write 0x800DD9B9, close 0x800DEBD9, exists 0x800BE2A1 (0 no, 1 yes, above 1 error), remove 0x800DECD9, rename 0x800100D1 (fails if target exists), seek 0x800DEC79 (32 bit in practice), tell 0x800DA4E9, fstat 0x800D1131 (64 bit size at out+8), mkdir -p 0x800D9369, opendir 0x800D4D8D, readdir 0x800D48D9. Pattern path 0x800BE2A9(n, buf). Project number 0-15: 0x800E1191.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: entry bytes; argument meaning from callers in stock and DOOM OS code"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "file sequences run on the owner's research stand, in-memory file system"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "files written through these calls survived power cycles on the owner's unit, 2026-10-30"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800DEC60",
+     "size": 8,
+     "sha256": "bddf731c9835a2c8c505f5f3f9e57c9f2b19dc34ea5dcb41f807a24d9f4d1613"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800DEC60",
+     "size": 8,
+     "sha256": "bddf731c9835a2c8c505f5f3f9e57c9f2b19dc34ea5dcb41f807a24d9f4d1613"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800DEC60",
+     "size": 8,
+     "sha256": "bddf731c9835a2c8c505f5f3f9e57c9f2b19dc34ea5dcb41f807a24d9f4d1613"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800DD9B8",
+     "size": 8,
+     "sha256": "ea98a5dba0b47cc948930ff55f6392f265918bd120e2e470110357595c55139b"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800DD9B8",
+     "size": 8,
+     "sha256": "ea98a5dba0b47cc948930ff55f6392f265918bd120e2e470110357595c55139b"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800DD9B8",
+     "size": 8,
+     "sha256": "ea98a5dba0b47cc948930ff55f6392f265918bd120e2e470110357595c55139b"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800DEBD8",
+     "size": 8,
+     "sha256": "69d8a322d2d053a994e5b6a41429e8450584dc87b289baa76b6c69a15cd9e3e0"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800DEBD8",
+     "size": 8,
+     "sha256": "69d8a322d2d053a994e5b6a41429e8450584dc87b289baa76b6c69a15cd9e3e0"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800DEBD8",
+     "size": 8,
+     "sha256": "69d8a322d2d053a994e5b6a41429e8450584dc87b289baa76b6c69a15cd9e3e0"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800100D0",
+     "size": 8,
+     "sha256": "31c0b6dc1df8b7ae00394b2e0fef6e492d8da9b7a61fcf37c28b671f8e00d08a"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800100D0",
+     "size": 8,
+     "sha256": "31c0b6dc1df8b7ae00394b2e0fef6e492d8da9b7a61fcf37c28b671f8e00d08a"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800100D0",
+     "size": 8,
+     "sha256": "31c0b6dc1df8b7ae00394b2e0fef6e492d8da9b7a61fcf37c28b671f8e00d08a"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800BE2A8",
+     "size": 8,
+     "sha256": "12cd961844833dd628cfd19fb5d986ee4d153946b33470edbc431ffb11c5496c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800BE2A8",
+     "size": 8,
+     "sha256": "12cd961844833dd628cfd19fb5d986ee4d153946b33470edbc431ffb11c5496c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800BE2A8",
+     "size": 8,
+     "sha256": "12cd961844833dd628cfd19fb5d986ee4d153946b33470edbc431ffb11c5496c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800E1190",
+     "size": 8,
+     "sha256": "e7f40ff45cebcfe06911d7c2fe4bf4b1e017f86bd03cccd7181abeab03e8f0bd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800E1190",
+     "size": 8,
+     "sha256": "e7f40ff45cebcfe06911d7c2fe4bf4b1e017f86bd03cccd7181abeab03e8f0bd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800E1190",
+     "size": 8,
+     "sha256": "e7f40ff45cebcfe06911d7c2fe4bf4b1e017f86bd03cccd7181abeab03e8f0bd"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D9368",
+     "size": 8,
+     "sha256": "22032aceebdc2336dbc3ce0916741daf966be7fb76e21f0f3362885876e60a6e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D9368",
+     "size": 8,
+     "sha256": "22032aceebdc2336dbc3ce0916741daf966be7fb76e21f0f3362885876e60a6e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D9368",
+     "size": 8,
+     "sha256": "22032aceebdc2336dbc3ce0916741daf966be7fb76e21f0f3362885876e60a6e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800DEC60",
+     "size": 8,
+     "sha256": "bddf731c9835a2c8c505f5f3f9e57c9f2b19dc34ea5dcb41f807a24d9f4d1613"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800DD9B8",
+     "size": 8,
+     "sha256": "ea98a5dba0b47cc948930ff55f6392f265918bd120e2e470110357595c55139b"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800DEBD8",
+     "size": 8,
+     "sha256": "69d8a322d2d053a994e5b6a41429e8450584dc87b289baa76b6c69a15cd9e3e0"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800100D0",
+     "size": 8,
+     "sha256": "31c0b6dc1df8b7ae00394b2e0fef6e492d8da9b7a61fcf37c28b671f8e00d08a"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800BE2A8",
+     "size": 8,
+     "sha256": "12cd961844833dd628cfd19fb5d986ee4d153946b33470edbc431ffb11c5496c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800E1190",
+     "size": 8,
+     "sha256": "e7f40ff45cebcfe06911d7c2fe4bf4b1e017f86bd03cccd7181abeab03e8f0bd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D9368",
+     "size": 8,
+     "sha256": "22032aceebdc2336dbc3ce0916741daf966be7fb76e21f0f3362885876e60a6e"
+    }
+   ]
+  },
+  {
+   "id": "st.storage.atomic",
+   "claim": "Stock SAVE writes PADCONF directly in parts, without a temporary file. Safety against a power cut is not shown, and rename atomicity on the device FAT driver and eMMC behaviour are unknown.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800CF69E"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no unit test"
+    }
+   ]
+  },
+  {
+   "id": "st.versions",
+   "claim": "Addresses in this knowledge base apply only to the listed firmwares. Whether other stock versions (5.50, 5.01, 4.04, 3.02) share them has not been recorded. Do not assume so.",
+   "topic": "stock",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "no comparison recorded"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.page-word",
+   "claim": "The word at 0x80245880 holds the current screen as 0xFFFF0000 plus a page number. The main screen reads 1, the boot logos 2, pitch/speed 4, sample edit 5, marker edit 8, sampling 13, resampling 14, envelope 16, pattern select and TR-REC 17, pattern record settings 18, pattern edit 19, pattern chain 20, input setting 22, 16 velocity 23, chromatic 24, mute group 26, pad link 27, sound generator 30, DJ 31, effect edit 34, tempo select 37, bank volume 38, looper 39, microscope 42, utility menu 45, import/export 46, project select 49, delete, copy and exchange 50, system 53, effect settings 54, pad settings 55, sample merge 58. Several screens can share a page, and an effect popup on the main screen does not change it.",
+   "topic": "stock-ui",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "lab404 sweep on stock 5.52 with a project on the drive; routes checked by eye; test_every_route_arrives; the address itself comes from DM-404 notes"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.boot-order",
+   "claim": "With a project on the drive, boot shows logos on page 2 until the main screen at about 11 to 14 s. A logo can stay still for over 3 s, so a still picture does not mean booted. The idle screen saver starts about 70 s after the main screen, matching the System setting Scrn Saver Time 1 min on this drive.",
+   "topic": "stock-ui",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "test_ready_means_the_main_screen_even_under_load"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.resample-page",
+   "claim": "RESAMPLE shows the same standby prompt as REC, on a page of its own: 14, against 13 for REC.",
+   "topic": "stock-ui",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "kb-stock-0185 in knowledge/observations/stock-5.52.json; picture checked by eye"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.waveform-varies",
+   "claim": "The sample edit screen draws a few waveform pixels differently from one boot to another, with the same firmware and project. Comparing that picture between two runs says nothing about a change. The cause is unknown.",
+   "topic": "stock-ui",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "16 of 29 walks differed from the first; test_the_walk_repeats_between_boots_of_the_same_firmware"
+    }
+   ]
+  },
+  {
+   "id": "st.mute.groups",
+   "claim": "Mute groups are a number kept for each pad, not a list of members: project value 0x6D of a pad is 0 for none or 1-10 for groups A-J, read with 0x800DDA38(project 0x82E009D0, 0x6D, pad 0-159), big-endian in the saved pad record at +0x1C. Groups span banks. The limit of 16 pads is only a compare in the screen's add handler (0x80115666: cmp r6,#16 after counting all 160 pads); when a note starts, the mute loop at 0x800D6E00 walks the 32 voice slots and stops every voice whose pad has the same number, with no limit on members. Stock save and load keep groups of 17 to 160 pads unchanged, so a project with a larger group stays a valid stock project.",
+   "topic": "stock",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock 5.52: getter 0x800DCAFC, setter 0x800DBD18, add handler 0x80115640-0x80115668, mute loop 0x800D6E00-0x800D6E66"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "Unicorn: the stock save, the pad-record part of the stock load and the mute loop run with groups of 17, 32, 48 and 160 pads"
+    }
+   ]
+  },
+  {
+   "id": "st.mute.screen",
+   "claim": "The MUTE GROUP screen (SHIFT + pad 8) draws the members of the chosen group (project value 0xDF, 0-9) in a loop at 0x801152C0-0x80115340: member n goes to x = 74 + 27 x (n / 8), y = 10 + 7 x (n mod 8), so two columns of eight fill the 128-pixel screen and a 17th member would be drawn at x = 128, off it. There is no paging. The screen's key handler is 0x801153D8 with a byte table for key codes 26-64: a VALUE press (49) acts only on CANCEL, VALUE turns (63, 64) change the group, 26 clears the group; 0x80115500 redraws. A mod that raises the member limit also has to page this list.",
+   "topic": "stock-ui",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock 5.52: draw loop 0x801152C0-0x80115340, handler 0x801153D8, class table 0x80221A20"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "Unicorn: the stock draw loop run with 20 members placed four of them at x = 128; DM-404: screenshots of the screen with more than 16 members on a build that pages the list"
+    }
+   ]
+  },
+  {
+   "id": "st.mfx.grid",
+   "claim": "The MFX effect picker is a grid of 4 x 4 cells on three pages: hold MFX and turn VALUE (VALUE alone on the MFX screen does not change the type). The cells follow a list of 42 type numbers, one 32-bit word each, at 0x80245D54. The list is written at start-up and is not in the file. Its order is 30 25 37 36 33 38 40 24 9 2 34 11 32 31 39 20 10 14 15 6 5 17 26 16 22 35 21 4 7 8 19 28 44 41 47 46 48 1 12 18 3 13: Scatter first, then the effects in manual order up to DJFX Delay, and last the five effects that also have their own buttons, ending with DJFX Looper (13). Page 3 therefore holds 10 effects and 6 empty cells drawn as '-'. Types 29 and 45 are not in it (app0.hidden-types). The list cannot be lengthened in place: the next word, 0x80245DFC, starts a second list of 42 holding the same numbers rotated by five (1 12 18 3 13 30 25 ...). That second list is read by 0x8006EB00 for project parameters 0x7E-0x82 and is not the grid.",
+   "topic": "effects",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13: the list read from memory after start-up (QEMU monitor) on a private build based on DOOM OS 0.7.3 that leaves these lists stock, and screenshots of the three grid pages"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: readers of 0x80245D54 and 0x80245DFC found as movw/movt pairs (st.mfx.grid-readers); 0x8006EB1A loads 0x80245DFC"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006EB1A",
+     "size": 8,
+     "sha256": "67f74ad767873de3b33566be5b58ecb236d3bbeca7eb89885ffb5226406184ef"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006EB1A",
+     "size": 8,
+     "sha256": "67f74ad767873de3b33566be5b58ecb236d3bbeca7eb89885ffb5226406184ef"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006EB1A",
+     "size": 8,
+     "sha256": "67f74ad767873de3b33566be5b58ecb236d3bbeca7eb89885ffb5226406184ef"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8006EB1A",
+     "size": 8,
+     "sha256": "67f74ad767873de3b33566be5b58ecb236d3bbeca7eb89885ffb5226406184ef"
+    }
+   ]
+  },
+  {
+   "id": "st.mfx.grid-readers",
+   "claim": "Code that reads the grid list 0x80245D54 (st.mfx.grid), found as movw/movt pairs, with the place where each one limits the index to 41 (the last of 42): 0x8006ED40, the next type for a VALUE turn: an unrolled search for the current type, the step added, the limit at 0x8006EF5A; before it returns, it also reads the word at the same index in 0x80245DFC and keeps the old type unless that word is 1-48. 0x80147290, a pad pressed in the grid: index = page x 16 + pad - 16, refused above 41 at 0x801472AA. 0x80147A58, a CTRL knob: index = value x 41 / 127. 0x80145C48, drawing a grid page: the current cell is found at 0x80145D8A with a limit at 0x80145E38, and the cell loop is limited at 0x80145F58. 0x801460F2, the type name over the grid. 0x80146B44, which page the current type is on: an unrolled search of 42 compares ending at 0x80146CFC. 0x80146FEE, a VALUE step in the grid: unrolled search ending at 0x801471E8, limit at 0x801471F8. Three more readers are not part of the grid: 0x80026492 and 0x8006C40C compare with the first words only, and 0x801348B4 loops over 42 (compare at 0x801348C2) and for the type it finds calls 0x800A3EB0 with 0x27C and index + 6; that this sends the effect number out as MIDI is a guess. The second list 0x80245DFC is read at 0x8006EB1A (with its own limit at 0x8006ED28), 0x8006CCB8 and 0x8006EF4E.",
+   "topic": "effects",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 at the addresses named; doom-os-0.7.2 and 0.7.3 carry the same bytes there"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "Unicorn runs of each grid reader with a 43-entry list, private project tests, 2026-11-13"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "what 0x801348B4 sends"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006EF5A",
+     "size": 4,
+     "sha256": "c9316f369dc623ba7e0df53a4cbfc7ec1f1077224da561be685fa686f2fe86e0"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006EF5A",
+     "size": 4,
+     "sha256": "c9316f369dc623ba7e0df53a4cbfc7ec1f1077224da561be685fa686f2fe86e0"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006EF5A",
+     "size": 4,
+     "sha256": "c9316f369dc623ba7e0df53a4cbfc7ec1f1077224da561be685fa686f2fe86e0"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801472AA",
+     "size": 4,
+     "sha256": "f4a9dc62e586a74846c219400ceec453d16bb80c46a88eb64b9e337350ae1cf2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x801472AA",
+     "size": 4,
+     "sha256": "f4a9dc62e586a74846c219400ceec453d16bb80c46a88eb64b9e337350ae1cf2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801472AA",
+     "size": 4,
+     "sha256": "f4a9dc62e586a74846c219400ceec453d16bb80c46a88eb64b9e337350ae1cf2"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80147A58",
+     "size": 4,
+     "sha256": "03454870b00bca7f0bf4aada3feb4ffb8f433dd7486bfe9f700f28a03f78c028"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80147A58",
+     "size": 4,
+     "sha256": "03454870b00bca7f0bf4aada3feb4ffb8f433dd7486bfe9f700f28a03f78c028"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80147A58",
+     "size": 4,
+     "sha256": "03454870b00bca7f0bf4aada3feb4ffb8f433dd7486bfe9f700f28a03f78c028"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80145F58",
+     "size": 4,
+     "sha256": "dc3d9d1b8df3bc6592a5e0874c5eb33811daa65cc8858d52d9c30e4a673d0349"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80145F58",
+     "size": 4,
+     "sha256": "dc3d9d1b8df3bc6592a5e0874c5eb33811daa65cc8858d52d9c30e4a673d0349"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80145F58",
+     "size": 4,
+     "sha256": "dc3d9d1b8df3bc6592a5e0874c5eb33811daa65cc8858d52d9c30e4a673d0349"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80146B44",
+     "size": 8,
+     "sha256": "334ea9096ddf8d966fdb0da65a5ebe0217f14a121418b5a3a644f446301d8df4"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80146B44",
+     "size": 8,
+     "sha256": "334ea9096ddf8d966fdb0da65a5ebe0217f14a121418b5a3a644f446301d8df4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80146B44",
+     "size": 8,
+     "sha256": "334ea9096ddf8d966fdb0da65a5ebe0217f14a121418b5a3a644f446301d8df4"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801471F8",
+     "size": 4,
+     "sha256": "e0dc0f8fa8c3d2cb0b69018f00a982ef53aa6773ddec4d64add5c96068a6e766"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x801471F8",
+     "size": 4,
+     "sha256": "e0dc0f8fa8c3d2cb0b69018f00a982ef53aa6773ddec4d64add5c96068a6e766"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801471F8",
+     "size": 4,
+     "sha256": "e0dc0f8fa8c3d2cb0b69018f00a982ef53aa6773ddec4d64add5c96068a6e766"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801348B4",
+     "size": 8,
+     "sha256": "b1a7aa4e94be65af57808ef1ffd11c5a1b38d7d5945e9426fedd44fcd7b13b69"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x801348B4",
+     "size": 8,
+     "sha256": "b1a7aa4e94be65af57808ef1ffd11c5a1b38d7d5945e9426fedd44fcd7b13b69"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801348B4",
+     "size": 8,
+     "sha256": "b1a7aa4e94be65af57808ef1ffd11c5a1b38d7d5945e9426fedd44fcd7b13b69"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8006EF5A",
+     "size": 4,
+     "sha256": "c9316f369dc623ba7e0df53a4cbfc7ec1f1077224da561be685fa686f2fe86e0"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801472AA",
+     "size": 4,
+     "sha256": "f4a9dc62e586a74846c219400ceec453d16bb80c46a88eb64b9e337350ae1cf2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80147A58",
+     "size": 4,
+     "sha256": "03454870b00bca7f0bf4aada3feb4ffb8f433dd7486bfe9f700f28a03f78c028"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80145F58",
+     "size": 4,
+     "sha256": "dc3d9d1b8df3bc6592a5e0874c5eb33811daa65cc8858d52d9c30e4a673d0349"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80146B44",
+     "size": 8,
+     "sha256": "334ea9096ddf8d966fdb0da65a5ebe0217f14a121418b5a3a644f446301d8df4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801471F8",
+     "size": 4,
+     "sha256": "e0dc0f8fa8c3d2cb0b69018f00a982ef53aa6773ddec4d64add5c96068a6e766"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801348B4",
+     "size": 8,
+     "sha256": "b1a7aa4e94be65af57808ef1ffd11c5a1b38d7d5945e9426fedd44fcd7b13b69"
+    }
+   ]
+  },
+  {
+   "id": "st.mfx.other-lists",
+   "claim": "Two more lists of MFX type numbers are written at start-up next to the grid list (st.mfx.grid). 0x80245C48, 41 words from Bypass to DJFX Delay (0 32 31 39 20 25 28 19 3 34 1 11 ...), is the effect choice for BUS 3 and BUS 4 in EFX SET (st.efx.bus34-list), read at 0x800BA68C; it is also read at 0x8006CAD4 and 0x8006CD40, which the project reads as the MIDI effect choice (CC 83, midi.cc.channels). 0x80245CEC, 18 words (0 27 42 43 23 14 15 10 2 22 25 11 ...: Bypass, Auto Pitch, Vocoder, Harmony, Gt Amp Sim, ...), read at 0x800191F8, 0x8006E200 and 0x800BB452, is very likely the INPUT FX choice; not confirmed on a screen.",
+   "topic": "effects",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13: the lists read from memory after start-up; EFX Type on the BUS 3 tab steps in the order of 0x80245C48"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 movw/movt pairs at the readers named; type names through 0x8020B3D8"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "0x80245CEC as INPUT FX; 0x8006CAD4 and 0x8006CD40 as CC 83, not re-checked in this repository"
+    }
+   ]
+  },
+  {
+   "id": "st.efx.bus34-list",
+   "claim": "The effect type of BUS 3 and BUS 4 is chosen in EFX SET, on the BUS 3 or BUS 4 tab (EFX Type row), from the 41-word list 0x80245C48 (st.mfx.other-lists). A VALUE turn there runs 0x800BA5F0. It acts only when the tab word at screen + 0x1B28 is 3 or 4 and the edit flag byte at screen + 0x1B28 + 0xF is set; the bus index is 0 for BUS 3 and 1 for BUS 4. It reads the cursor row as system parameter 0x2C (object 0x80591ADC, getter 0x800D61F0), turns the row (counted from 1) into a parameter number through the byte table at 0x800BA944 (row 1 gives 0x2D, the effect type), reads the bus's current type, searches the list for it (loop limit 41 at 0x800BA6BA; a type that is not in the list counts as index 0, Bypass), adds +1 or -1, holds the index in 0..40 (0x800BA6D8: cmp r0,#0x28 then movge) and writes list[index] back with 0x800D3B68. The list's base comes from the movw/movt pair into fp at 0x800BA68C and 0x800BA69E. The list runs from Bypass first to DJFX Delay last; on the emulator the type stepped Equalizer, Isolator, Super Filter, Filter+Drive, matching words 7 to 10. The tabs can be edited only while BUS 3/4 are in use, for example after choosing a FAVORITE.",
+   "topic": "effects",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800BA5F0-0x800BA6EE; doom-os-0.7.2 and 0.7.3 identical at the checked addresses"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13: SHIFT+PAD16 on DOOM OS 0.7.3 opens EFX SET; CTRL3 to the BUS 3 tab; VALUE steps the EFX Type through the list order"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800BA68C",
+     "size": 4,
+     "sha256": "161834f4df06670bf6d7cc8e1fa91393e7865b4b7de90323ac320c7e129a7d93"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800BA68C",
+     "size": 4,
+     "sha256": "161834f4df06670bf6d7cc8e1fa91393e7865b4b7de90323ac320c7e129a7d93"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800BA68C",
+     "size": 4,
+     "sha256": "161834f4df06670bf6d7cc8e1fa91393e7865b4b7de90323ac320c7e129a7d93"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800BA6BA",
+     "size": 4,
+     "sha256": "8bf42389a815cb2a99642e93c64fefb17441f8e3bd02a301c3644f5b12548f6c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800BA6BA",
+     "size": 4,
+     "sha256": "8bf42389a815cb2a99642e93c64fefb17441f8e3bd02a301c3644f5b12548f6c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800BA6BA",
+     "size": 4,
+     "sha256": "8bf42389a815cb2a99642e93c64fefb17441f8e3bd02a301c3644f5b12548f6c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800BA6D8",
+     "size": 6,
+     "sha256": "0d85e3f93442d039d79d39d27316eabead6d12e24a5438b1efc8719491c0f595"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800BA6D8",
+     "size": 6,
+     "sha256": "0d85e3f93442d039d79d39d27316eabead6d12e24a5438b1efc8719491c0f595"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800BA6D8",
+     "size": 6,
+     "sha256": "0d85e3f93442d039d79d39d27316eabead6d12e24a5438b1efc8719491c0f595"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800BA944",
+     "size": 4,
+     "sha256": "2dbb02234c483e8e5e419903aac620137d9be7b1ed8370972bf3ee0c34a9c52c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800BA944",
+     "size": 4,
+     "sha256": "2dbb02234c483e8e5e419903aac620137d9be7b1ed8370972bf3ee0c34a9c52c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800BA944",
+     "size": 4,
+     "sha256": "2dbb02234c483e8e5e419903aac620137d9be7b1ed8370972bf3ee0c34a9c52c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800BA68C",
+     "size": 4,
+     "sha256": "161834f4df06670bf6d7cc8e1fa91393e7865b4b7de90323ac320c7e129a7d93"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800BA6BA",
+     "size": 4,
+     "sha256": "8bf42389a815cb2a99642e93c64fefb17441f8e3bd02a301c3644f5b12548f6c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800BA6D8",
+     "size": 6,
+     "sha256": "0d85e3f93442d039d79d39d27316eabead6d12e24a5438b1efc8719491c0f595"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800BA944",
+     "size": 4,
+     "sha256": "2dbb02234c483e8e5e419903aac620137d9be7b1ed8370972bf3ee0c34a9c52c"
+    }
+   ]
+  },
+  {
+   "id": "st.efx.knob-pages",
+   "claim": "Effect knob pages and EFX SET. On the effect screen the second page of an effect's knobs is reached by holding VALUE and turning CTRL1-3 (the Roland manual says VALUE + CTRL); a press of VALUE turns the pages only when a page is pinned. (app0.comp2-params earlier recorded that the second page could not be opened on the emulator: VALUE and MFX were tried, not VALUE held with a CTRL.) In EFX SET on the BUS 3 or BUS 4 tab the VALUE cursor moves over rows (type, upper row of knobs, lower row), and CTRL1-3 change the values of the row under the cursor; COMPRESSOR 2 there shows six cells on one screen and MODE is CTRL3 on the lower row. On the owner's unit the MODE cell was seen there on 2026-11-18 (photo). How many knob cells an effect shows does not come from the group table 0x8022E1C8 (app0.params): changing it changed nothing on the emulator. The knob labels lie in the shared string pool without a pointer table. Where the stock decides the number of cells is not found.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5 (English), effect parameters, VALUE + CTRL"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: the second page opened by holding VALUE and turning CTRL; EFX SET BUS 3 with COMPRESSOR 2, rows and CTRL3 on MODE; a changed 0x8022E1C8 had no effect on the cells"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-18, photo of EFX SET BUS 3/4 with COMPRESSOR 2 showing six cells including MODE COMP, on a private build; one unit, once"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: pinned page check on the effect screen as read by the mod session, not re-read here"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.marks",
+   "claim": "CHOP marks are kept per pad in a table at 0x82E3C508 + pad x 0x80, where pad = bank x 16 + pad number (the current bank and pad are the words at 0x82E2CD1C and 0x82E2CD20). The first 16 words are the marks as sample positions in rising order; word 0 is always 0, the start, and an unused mark is 0xFFFFFFFF. The other 16 words of each 0x80 block are not marks. The project parameters behind CHOP live on the project object 0x82E009D0, read with 0x800DDA38(project, id, index) and written with 0x800DED18(project, id, value, index): 0x9D-0xA1 AUTO MARK (type, TIME DIVISION, LEVEL, TRANSIENT, one more not named), 0xA2 the marks (index 0-15; getter 0x800DDD6C), 0xA5 the selected mark, 0xA6 the pad each mark is assigned to (index 0-15, at object + 0xB0), 0xA7-0xA9 auto assign (0xA8 the start pad). Marks are read or written in about 91 places and assignments in about 44, many as unrolled runs of 16, plus helpers between 0x8010E5C8 and 0x8010FE00. Moving or deleting the start mark is refused by its index: 0x80106E9E reads the selected mark (0xA5), and index 0 brings dialog 19 or 22 (st.ui.dialogs). The CHOP code of DOOM OS 0.7.3 is the stock code.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: parameter getter 0x800DDA38, setter 0x800DED18, 0x800DDD6C, 0x80106E9E; reader counts from a scan of the parameter ids"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 compared at runtime addresses 0x80104000-0x80110000, 0x8017A000-0x8017D000, 0x80047E00-0x80048200, 0x8014DD60, 0x800552F0, 0x800D8C00, 0x801F7A90 and the project parameter getter and setter: identical, 2026-11-14"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13/14, on a private build based on DOOM OS 0.7.3 whose CHOP code is stock (screenshots of the marker, assign and dialog screens; gdb watchpoints): the table filled as marks were placed with MARK"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18 (0x8010E980, 0x800E0C00-0x800E0D00)"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80106E9E",
+     "size": 6,
+     "sha256": "63a253e5e203f0739edfe06c883fb0dd0764f7c8a7e1dcc595cfdfbfa5463467"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80106E9E",
+     "size": 6,
+     "sha256": "63a253e5e203f0739edfe06c883fb0dd0764f7c8a7e1dcc595cfdfbfa5463467"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80106E9E",
+     "size": 6,
+     "sha256": "63a253e5e203f0739edfe06c883fb0dd0764f7c8a7e1dcc595cfdfbfa5463467"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.screens",
+   "claim": "The marker screen (SHIFT + START/END on a pad) is UI page 8 (st.ui.page-word). Its enter function 0x80106208 builds the header text in code, so the header cannot be found by a text search. MARK past 16 marks does nothing, without a message. Auto assign (MARK on the assign screen) is 0x80105BA8; it takes destination pads from the list built by 0x8010E5C8 and shows dialog 27, Not All Marks Assigned!, when pads ran out.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80106208, 0x80105BA8, 0x8010E5C8"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 compared at runtime addresses 0x80104000-0x80110000, 0x8017A000-0x8017D000, 0x80047E00-0x80048200, 0x8014DD60, 0x800552F0, 0x800D8C00, 0x801F7A90 and the project parameter getter and setter: identical, 2026-11-14"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13/14, on a private build based on DOOM OS 0.7.3 whose CHOP code is stock (screenshots of the marker, assign and dialog screens; gdb watchpoints)"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Marking and splitting samples"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80106208",
+     "size": 4,
+     "sha256": "5c321f905d6a7660b563fb478f2ba66ad87ea7a276a56ddb855e95e4f2b0a47e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80106208",
+     "size": 4,
+     "sha256": "5c321f905d6a7660b563fb478f2ba66ad87ea7a276a56ddb855e95e4f2b0a47e"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80105BA8",
+     "size": 4,
+     "sha256": "90d0f4dca8b9cfa14674e9ea1f57cd8990bc17f089a15557bb19199796fb4535"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80105BA8",
+     "size": 4,
+     "sha256": "90d0f4dca8b9cfa14674e9ea1f57cd8990bc17f089a15557bb19199796fb4535"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80106208",
+     "size": 4,
+     "sha256": "5c321f905d6a7660b563fb478f2ba66ad87ea7a276a56ddb855e95e4f2b0a47e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80105BA8",
+     "size": 4,
+     "sha256": "90d0f4dca8b9cfa14674e9ea1f57cd8990bc17f089a15557bb19199796fb4535"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.waveform",
+   "claim": "Waveform of the marker screen. 0x800552F0 is not a background job, as this entry said before: it creates the marker screen object (new of 0x570 bytes through 0x800D8B14, vtable 0x80227008, st.chop.marker-screen), reached through 0x800BDA40 (handle kept at screen + 0x1A6C). Two peak buffers, 0x82E0D748 and 0x82E0DEA0 (vtable 0x8022D234), each hold from +4 127 pairs of 16-bit numbers, one per screen column; +0x200 = 0x000F0001, +0x204 pad (bank x 16 + number, 16 bits; 0x800D0908 splits it), +0x206 zoom power, +0x208 step (frames per column), +0x20C length in frames = (bytes - 0x200) / 4, +0x210 current column, +0x21C window start, +0x224 ready flag. Which half of a pair is the maximum is written both ways in the source notes; the reset fills each pair with 0x7FFF in the first halfword and 0x8000 in the second, so treat the order as not settled. Reset 0x800BF858(buffer) also sets step = max(1, length / 127 >> zoom). Update 0x80194128(buffer), reached from 0x800A4630, asks the peak cache 0x82E024D8 for each column through 0x80100A38(cache, pair, ..., position, step); 0x80100C40 looks up a block in a linked list by a five-word key and creates it when missing (new of 0x770 bytes, holding a reader object with vtable 0x8021D068). 0x800C1AE0(0x82E024D8) returns all cache blocks (up to 516) to the malloc pool; the stock calls it when the pad changes and on leaving the screen. On entering the screen the columns are written by 0x801941B6 in the screen's own flow: 0x80073B76 -> 0x8014B4F0 -> 0x800A4630 -> 0x80100A38. Drawing: the screen method 0x8014DD60(screen, rectangle, which buffer: 0 for 0x82E0D748, else 0x82E0DEA0) draws vertical lines through 0x800C1F98 on the canvas at screen + 0x84, reading +0x3F8, +0x408, +0x414, +0x474, +0x4D8 and +0x4E4; the marker screen passes the rectangle (-1, 8, 127, 50). The canvas is the word +0xBD0 of the page's widget collection (page owner + 0x38, 0x800C2A82) and draws straight into the display picture, 8 bits a pixel, 0xFF lit. On the emulator the peak service also worked outside the marker screen: on the pad screen, in the panel flow, a buffer given another pad, reset and updated 8 times filled with that pad's peaks and the unit kept playing. Not checked: a buffer in a mod's own memory instead of the stock ones (the methods read only their own fields, so it should work: a guess), the time a call costs, anything on a unit.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800552F0, 0x800BDA40, 0x800BF858, 0x8014DD60, vtable word 0x8022D234"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 compared at runtime addresses 0x80104000-0x80110000, 0x8017A000-0x8017D000, 0x80047E00-0x80048200, 0x8014DD60, 0x800552F0, 0x800D8C00, 0x801F7A90 and the project parameter getter and setter: identical, 2026-11-14"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13/14, on a private build based on DOOM OS 0.7.3 whose CHOP code is stock (screenshots of the marker, assign and dialog screens; gdb watchpoints): gdb on the marker screen as it opened"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800552F0, 0x800D8B14, 0x800BF858, 0x80194128, 0x800A4630, 0x80100A38, 0x80100C40, 0x800C1AE0, 0x800C2A82, 0x8014DD60; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: gdb on the writes of the peak buffers on entering the marker screen, and a reset and update called from the pad screen"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "a peak buffer in a mod's own memory; the order of maximum and minimum in a pair"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8014DD60",
+     "size": 6,
+     "sha256": "70e49b692387ee819f8f03f9ea8e9c1dccd0566b289767cf836328cf9e77f2c4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8014DD60",
+     "size": 6,
+     "sha256": "70e49b692387ee819f8f03f9ea8e9c1dccd0566b289767cf836328cf9e77f2c4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8014DD60",
+     "size": 6,
+     "sha256": "70e49b692387ee819f8f03f9ea8e9c1dccd0566b289767cf836328cf9e77f2c4"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.job",
+   "claim": "Cutting a pad into chops: 0x80047EB0, reached by a tail branch at 0x8005CA42 (path 0x8004F498 -> 0x8005CA28 -> 0x80047EB0, run in PANEL TASK from the button handler, on the same stack as key events), builds a job on its stack (+0 bank, +4 pad, the AUTO MARK values as in st.chop.automark, +0x1C 16 mark positions, +0x5C 16 assigned pads, read by unrolled runs of parameters 0xA2 and 0xA6). Stock order: 0x800CF878(0x82E46658), 0x800CEC38(0x82E46610), then 0x800AE700(0x80591800, pad, 0xA0, 0, 0), which copies the source pad to the temporary pad 160, so the job names bank 10, pad 0 (the copy), not the source; then the chop executor 0x8017C828 (the firmware's own strings name it ExeChop) with the object 0x80B499EC and the job, from 0x800480F8; then 0x800D08E0(0x80591800, 0xA0) and 0x800CE498(0xA0) remove the copy, then 0x800C0A80(0x80591800, 7, pad, 0), 0x800D9F58(0x80249734, project) and 0x800CFE18(0x82E46610). ExeChop counts the marks that are not -1 and skips a mark whose pad is -1. Per chop, 0x8017AC88 takes start = job + 0x1C + 4i and end = job + 0x20 + 4i; the last chop (i = count - 1, count at chopper + 0x2000) ends at the source pad's parameter 0x66, the sample end, read with 0x800D9EB8 (0x8017ACC4-0x8017ACD2). Each chop becomes its own SMP file and an ordinary pad record. The executor loops exactly 16 times (0x8017C976: cmp r6,#16). It returns 0, -113 (no marks) or -127 (a chop failed). On the emulator every chop but the last came out one frame longer than the gap between its marks (sample record length 0x200 + 4 x frames): that is how the stock cuts. Calling ExeChop once per chop (marks i and i+1 only, the last with one mark) gave byte for byte the same chops as one call of 15. Because the work runs inside PANEL TASK, the screen does not change while it cuts (st.ui.commit). None of this was measured separately on a unit.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80047EB0, 0x8005CA42, 0x800480F8, 0x8017AC88, 0x8017ACC4-0x8017ACD2, 0x8017C976; string ExeChop at 0x8017C9CB"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 compared at runtime addresses 0x80104000-0x80110000, 0x8017A000-0x8017D000, 0x80047E00-0x80048200, 0x8014DD60, 0x800552F0, 0x800D8C00, 0x801F7A90 and the project parameter getter and setter: identical, 2026-11-14"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8004F498, 0x8005CA28, 0x800480CC-0x800480F8, 0x800AE700, 0x800D08E0, 0x800CE498, 0x8017C828; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: chop lengths read from the sample records; 32 chops in calls of one and of 15 compared"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8017ACCC",
+     "size": 2,
+     "sha256": "1eaee1369048ec4e64addd282758f27e99e46ddea34e0be79fe07304e66bd8ad"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8017ACCC",
+     "size": 2,
+     "sha256": "1eaee1369048ec4e64addd282758f27e99e46ddea34e0be79fe07304e66bd8ad"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8017C976",
+     "size": 2,
+     "sha256": "d46bc0d8755325da136564216f9f5c6bc49812f549ff735c3e9aa0b48f6da003"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8017C976",
+     "size": 2,
+     "sha256": "d46bc0d8755325da136564216f9f5c6bc49812f549ff735c3e9aa0b48f6da003"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800480F8",
+     "size": 4,
+     "sha256": "718e1eebc17021ec88c2cb86f089fe01c4c16de9eb8852d6791830f49e720392"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800480F8",
+     "size": 4,
+     "sha256": "718e1eebc17021ec88c2cb86f089fe01c4c16de9eb8852d6791830f49e720392"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8017ACCC",
+     "size": 2,
+     "sha256": "1eaee1369048ec4e64addd282758f27e99e46ddea34e0be79fe07304e66bd8ad"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8017C976",
+     "size": 2,
+     "sha256": "d46bc0d8755325da136564216f9f5c6bc49812f549ff735c3e9aa0b48f6da003"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800480F8",
+     "size": 4,
+     "sha256": "718e1eebc17021ec88c2cb86f089fe01c4c16de9eb8852d6791830f49e720392"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.automark",
+   "claim": "AUTO MARK analysis: 0x8017B410(0x80B499EC, job), the object being the chopper (CChop). The stock AUTO MARK screen builds the job at 0x80048198 after calling 0x8010E980(project). Job words: 0 bank (0-9; 10 is the temporary pad 160), 1 pad 0-15, 2 mode (project value 0x9D), 3 LEVEL 1-10 (0x9F), 4 the value 0xA1 (meaning not found), 5 TIME DIVISION (0x9E), 6 TRANSIENT 0 HARD, 1 MID, 2 SOFT (0xA0), 7-22 (+0x1C) the answer: up to 16 marks in frames, -1 for unused, 23-38 (+0x5C) the pad of each mark, used when cutting (st.chop.job). A tbb at 0x8017B424 switches on word 2: 0 TIME DIVISION, done in the dispatcher itself; 1 LEVEL 0x8017BC48 (st.chop.automark-level); 2 TRANSIENT 0x8017C138 (st.chop.automark-transient); 4 0x8017B920, equal parts from project value 0x6F and a table of 10 words (perhaps division by tempo: a guess); 3 nothing. The analysis reads some of its settings from the project values, not from the job, so 0x9D, 0x9F, 0xA0 and 0x9E must be set before the call: without them TRANSIENT found nothing on the emulator. The return value is not a count: TRANSIENT returns -127 (0xFFFFFF81) even when it found marks, and the stock screen does not look at it; read the job instead. The analysis always runs from the first frame of the sample file to the pad's end point (0x66); the pad's start point (0xAB) is ignored, so a copy of a pad with its start in the middle gave the marks of the first half, and analysing a sample in halves this way does not work. The limit is 16 marks counting the start (mark 0). Sound is read through 0x800D9158(0x82F5C760, pad, -1) for the sample record (+0xC the channel count), 0x800D9000(0x82F5C760, record, byte offset) for a cache block, offset = frame x 2 x channels + 0x200 for the header, and 0x800D3090 for each 16-bit sample. TIME DIVISION splits the length into 2-16 equal parts, step = length / N; how the remainder is spread (perhaps one frame to each of the first parts) is not decoded. None of this was measured separately on a unit.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8017B410, tbb at 0x8017B424, 0x80048198, 0x8010E980, 0x8017B920, 0x800D9158, 0x800D9000, 0x800D3090; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: jobs run with and without the project values set, and on a copy of the pad with its start point moved"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "mode 4 as division by tempo; how TIME DIVISION spreads the remainder; the meaning of 0xA1"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.automark-transient",
+   "claim": "AUTO MARK TRANSIENT is one float function, 0x8017C138-0x8017C768 (about 1.6 KB). Its threshold is a double from the table 0x801E4FD8 at index 0, 6 or 12 for HARD, MID or SOFT, turned into a float. It reads the sound in blocks of 1024 frames, the left channel as floats into the chopper object at +0 and the right one (when project value 0x65 is 2, stereo) at +0x1000, each sample divided by 32768. For each frame it compares with the previous sample (a product below 0 is a sign change), keeps envelopes of the magnitude, and takes a candidate when the current peak exceeds the previous one times the threshold. Marks are at least 2400 frames apart (cmp with 0x960 at 0x8017C4AA and 0x8017C5EA; 0x95E and 0x95F are used to pull a mark to a zero crossing); when a new mark is nearer than 2400 frames to the last one, the smaller position of the two stays. The list is 16 words at 0x830089E0, filled with -1 first; the count is a register (sb) and the stop is 'more than 15', cmp.w sb,#0xf at 0x8017C368 and 0x8017C500. At the end it closes the cache file (0x800DEBD8), clears fields of 0x82F5C760 and copies the 16 words into the job at +0x1C. On the emulator, pad B-16: HARD reached the limit of 16 with all marks in the first quarter of the sample (2731, 7767, 14882, ... 107410), MID gave 8, SOFT none besides the start. None of this was measured separately on a unit.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8017C138-0x8017C768: table 0x801E4FD8, 0x960 at 0x8017C4AA and 0x8017C5EA, 0x95E at 0x8017C35C and 0x8017C4EE, 0x95F at 0x8017C608, cmp.w sb,#0xf at 0x8017C368 and 0x8017C500; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: HARD, MID and SOFT run on B-16"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.automark-level",
+   "claim": "AUTO MARK LEVEL: outer function 0x8017BC48 -> block step 0x8017BA38 -> core 0x8017B5F8 -> choice 0x8017B090. State in the chopper object (r5 = object + 0x2008): +0x2220 the length (0x66), +0x2318 the previous mark (0 at first), +0x231C on the marks found, the byte +0x2358 the count, the byte +0x2359 LEVEL - 1, +0x235C the position of the next block (0, then +0xF00 a block), +0x2360 = 0xF00, halfword +0x2364 'analysis running'. A block is 3840 frames (0xF00); the core cuts it into 16 slices of 240 frames (0xF0) and writes for each the peak (halfwords at +0x2224), the place of the maximum (+0x2244) and the sum of magnitudes (+0x2284). The choice carries the last slices of the previous block and the 16 new ones into work arrays 0x80B6C3DC, 0x80B49998 and 0x80B49944 and decides with threshold tables 0x802177C8, 0x802177A0 and 0x80217778 (index LEVEL - 1) and a minimum level 0xD8. A new mark is at least 3088 frames (0xC10) from the previous one at +0x2318 + 4 x count; it is written at +0x2318 + 4 x (count + 1) and the count goes up; at 15 it stops (16 with the start). After each block progress goes to the interface with 0x800DEB58(0x82E46610, percent), a message through 0x800CE6C0(0x80249734, ...). At the end the 16 words from +0x231C are copied into the job at +0x1C while each is below the length; that copy has a fault, st.chop.automark-level-extra-mark. On the emulator, pad B-16: LEVEL 10 gave 16 marks about every 3200 frames (3272, 6582, ... 48452), LEVEL 6 gave 9 with one false, LEVEL 3 gave 4. None of this was measured separately on a unit.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8017BC48-0x8017BF06 (0xF00 at 0x8017BC80), 0x8017BA38, 0x8017B5F8, 0x8017B090 (0x2318 at 0x8017B2EE, cmp 0xC10 at 0x8017B316, cmp 0xD8 at 0x8017B3B0), tables 0x802177C8, 0x802177A0, 0x80217778; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: LEVEL 3, 6 and 10 run on B-16"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.automark-level-extra-mark",
+   "claim": "A fault in the stock LEVEL analysis (st.chop.automark-level): at the end it copies 16 words starting at chopper + 0x231C, while each is below the sample length, but the 16th word is chopper + 0x2358, which holds the byte count of marks found and the byte LEVEL - 1 (+0x2359), not a mark. When fewer than 15 marks were found, that word is small enough to pass, and the stock hands back an extra 'mark' at count + 256 x (LEVEL - 1) frames: on pad B-16 at LEVEL 6 with 7 marks found, 7 + 256 x 5 = 1287. The stock marker screen shows it as a mark right after the start. At LEVEL 3 the word is 515, and the 1000-frame rule of st.chop.mark-gap throws it away. Whether a unit shows the same mark was not checked, but the code is the same bytes.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8017BC48-0x8017BF06, the final copy from chopper + 0x231C; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: LEVEL 6 on B-16 gave the extra mark 1287 on the stock code; a relocated copy that does not read the 16th word gave the same real marks without it"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.mark-gap",
+   "claim": "Writing a mark through the project value 0xA2 (setter 0x800DED18) is refused when the neighbouring mark is less than 1000 frames away (sub #0x3E8 at 0x800E0C4C). The low level writer 0x800CDB90(0x82E2CD08, bank, pad, index, value, notify) writes into the mark table 0x82E3C508 + pad x 0x80 (st.chop.marks) without that check. On a turn of CTRL2 on the marker screen the stock path is 0x80106EC0 (handler) -> 0x8014CC68 -> 0x80197920 -> mark write 0x800E0C7A -> 0x800CDB90.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800E0C4C, 0x800CDB90, 0x80106EC0, 0x8014CC38-0x8014CC6A, 0x80197920; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: gdb on a CTRL2 turn, 2026-11-17"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.marker-screen",
+   "claim": "The marker screen (page 8, st.chop.screens) is an object with vtable 0x80227008, created by 0x800552F0 (st.chop.waveform). Fields: +0x3F0 cursor column, +0x3F8 end, +0x3FC cursor, +0x474 = 1, +0x4D8 frames per column, +0x4E4 window start, +0x500 window for the cursor, +0x504 + 4i the window for mark i, +0x544 ZOOM 0-9, +0x550 what was touched last (1 cursor, 2 mark). Frames per column = (end / 127) >> ZOOM, plus 1 at 1x when 127 columns do not reach the end (0x8014D76C). The window at a ZOOM = clamp(centre - 63 columns, 0, end - 127 columns), the centre being the cursor or the selected mark; on B-16 this gave 73440 at z5, 79677 at z6 and 85536 at z10, as the stock showed. The window of each mark is kept per mark and equals mark - 63 columns: pressing the mark's pad or choosing it with CTRL3 puts the mark in the middle of the screen (on B-16 at ZOOM 6x, pads 1-5 gave windows 0, 54221, 156045, 257869, 337419); MARK does not move the window, since the new mark is under the cursor already. The knobs are absolute, value 0-127 being a column: CTRL1 puts the cursor at window + value x step; CTRL3 selects mark (value x N + 64) / 128 of N; CTRL2 takes hold of the selected mark (flag at screen + 0xA6) only when the knob comes within 2 columns of it (vtable + 4, for marks 0x8014B610: (mark - window) / step) and then puts the mark in the knob's column (vtable + 8), so the mark follows the knob across the window and ZOOM gives the precision (0x8014CC38-0x8014CC6A). Not known: which action returns mark 0 to position 0 when the table was filled with other values from outside (seen once on the emulator).",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 vtable 0x80227008, 0x8014D76C, 0x8014B610, 0x8014CC38-0x8014CC6A; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: fields read with gdb while ZOOM, CTRL1-3, pads and MARK were used; window values compared with the stock screen"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.marker-drawing",
+   "claim": "What the stock marker screen draws, in screen pixels (128 x 64, x then row): header in font 3 (0x801F7A40) at x 4, 45 and 87, row 2; waveform in rows 8-50 (st.chop.waveform). A mark is a dotted line in rows 15-39 (even rows lit, odd dark) and a 7 x 7 square in rows 40-48: filled with an M cut out for an ordinary mark, an M between lines at rows 40 and 48 for the selected one; the start is a dotted line down to row 48 without a square. The cursor is a square with a C in rows 15-23 to the right of its column and a dotted line in rows 24-48; the stock draws the cursor first, then the marks. While a mark plays there is a dotted bar in rows 15-48, a dot at row 49 and a foot of three dots at row 50, and the cursor is not drawn. The bottom has plates at x 0-56 and 94-127, rows 51-59, text at row 53. The VALUE menu clears x 24-127, rows 17-59, frames x 25-124, rows 18-58, one line every 10 rows, text in font 3 from x 28, marks at x 126 row 28 and x 126-127 rows 51-59. The AUTO MARK screen shows [C2]/[C3] with labels in font 3, the mode inverted in x 1-83 rows 30-41 (font 2, centred on x 43) and the parameter framed in x 84-127 (centred on x 106). The question box has lines at rows 0-1 and 62-63, dialog text (st.ui.dialogs, ids 23 and 24) in the bold font 0x801F7A68 at x 13, rows 10 and 19, a third line in font 2, and two buttons at x 13-54 and 71-112, rows 44-55. Menu behaviour: VALUE opens the menu; there VALUE on AUTO MARK opens the AUTO MARK screen and its EXIT goes back to the menu; ENTER always asks the question, even with no marks; CANCEL goes back to the marks; DELETE ALL MARKS asks the same question. A copy of this screen drawn by a mod matched the stock screenshots with 0 differing pixels for marks, CTRL3 choice, CTRL2 move, AUTO MARK, the question and the menu; the waveform differed by 1 pixel at some peaks. Described here for orientation, in our own words; no screen image is kept in this repository.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: screenshots of the stock screen in each state, compared pixel by pixel with a mod's copy; kept outside git"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 fonts 0x801F7A40 and 0x801F7A68; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.play",
+   "claim": "Pressing a pad goes through the handler at 0x80050C60, which takes the pad mode byte ([r7+1]: 4 on the pad screen, 7 on the marker screen) and calls 0x800AEC48(0x80591800, mode, pad, velocity, 1, 0, 0). In mode 7 the pad passed is the source pad, not the one pressed. Mode 7 runs 0x80185878(_, pad): it reads the mark that plays (project value 0xA4), start = 0xA2[i], end = 0xA2[i + 1] or the sample end 0x66, takes the pad's player object with 0x800D8628(pad) and sets the range with 0x80182218(player, start, end) in frames, then starts a voice the usual way through 0x800D63C8(0x80D4E630, 7, pad, velocity, ...). The range stays on the player object: on the emulator, after a range was set in the middle of a sample from the pad screen, the next ordinary play of that pad used it (peak 7 instead of 627). A mod that plays chops this way must set the range back to 0 - length when it is done.",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80050C60, 0x800AEC48, 0x80185878, 0x800D8628, 0x80182218, 0x800D63C8; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: gdb on a pad press on the marker screen, and a range set from the pad screen, 2026-11-16"
+    }
+   ]
+  },
+  {
+   "id": "st.chop.lights",
+   "claim": "Pad lights the stock sends around CHOP, seen as LPUART3 messages [1, command, channel, value] (hw.leds.path; pad n has channels 3(n - 1) to 3(n - 1) + 2 for R, G, B; a button's channel is its key code + 33, hk.key-codes). Pad screen: a pad with a sample command 1, dim (1F/10/00 orange or 00/1F/00 green by the pad's colour). Marker screen with no marks: pad 1 white (command 0, FF/FF/FF), the others off. With 16 marks: all 16 pads orange (command 0, FF/55/00), the pad of the selected mark white; a pressed pad white. SUB PAD is left dim (command 1, value 31) and pressing it sends nothing. A lit button is command 0, 255; RESAMPLE and START/END on this screen use command 6, 255, which is probably blinking (not visible on the emulator). Assign screen: pads of a bank with samples dim orange; an empty bank all command 6, FF/FF/00 (yellow). Command 1 is 0x8008CCC0 mode 0 and command 0 is mode 1 (hw.leds.modes).",
+   "topic": "editing",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: LPUART3 messages recorded on the pad, marker and assign screens, 2026-11-16"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8008CCC0 tbb on the mode; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "command 6 as blinking"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.dialogs",
+   "claim": "Stock message boxes are opened with 0x800D8C88(0x82DFD314, id, own text or 0). Their table is at 0x801F7A90, 40 bytes per id: +0 the kind, +0x10 a pointer to the text. Kind 9 is a message that goes away by itself; kind 2 has CANCEL and OK. Ids around CHOP: 17 No Sample Selected, 19 Cannot Move Start Mark, 20 Cannot Add Mark, 21 Cannot Add Mark Too Close, 22 Cannot Delete Start Mark, 23 and 24 Current Marks will be lost, 25 Current Assign will be lost, 26 No Mark Present, 27 Not All Marks Assigned!, 28 No Assign!, 29 Attention! No Empty Pad for Assign, 30 Attention! alone. Given its own text, the function copies it with malloc to +0x184 of the box object. How a caller learns whether OK or CANCEL was chosen on kind 2 is not established.",
+   "topic": "stock-ui",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 table 0x801F7A90 read for ids 15-31, 0x800D8C88"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 compared at runtime addresses 0x80104000-0x80110000, 0x8017A000-0x8017D000, 0x80047E00-0x80048200, 0x8014DD60, 0x800552F0, 0x800D8C00, 0x801F7A90 and the project parameter getter and setter: identical, 2026-11-14"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator, 2026-11-13/14, on a private build based on DOOM OS 0.7.3 whose CHOP code is stock (screenshots of the marker, assign and dialog screens; gdb watchpoints): a stock CHOP dialog on screen"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801F7A90",
+     "size": 8,
+     "sha256": "bde673a7d651cffca9a92f69afca13c230f50a98eac09452698d85ac1f474b5e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801F7A90",
+     "size": 8,
+     "sha256": "bde673a7d651cffca9a92f69afca13c230f50a98eac09452698d85ac1f474b5e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801F7A90",
+     "size": 8,
+     "sha256": "bde673a7d651cffca9a92f69afca13c230f50a98eac09452698d85ac1f474b5e"
+    }
+   ]
+  }
+ ]
+}

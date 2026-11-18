@@ -1,0 +1,44 @@
+{
+ "firmware": "side-piece",
+ "screens": [
+  {
+   "id": "sp-fx",
+   "name": "Side-Piece FX screen (HOME menu)",
+   "about": "Entry to EQ, buses, LFOs, stretch, Euclidean lanes, chop, view and info pages.",
+   "how_to_open": "SHIFT+PATTERN EDIT",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "sp-main-views",
+   "name": "Main-screen views",
+   "about": "Info, pads, meters, scope, LFO traces, psychedelic view.",
+   "how_to_open": "Control not stated",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece v0.1.0 does, Main-screen views"
+    }
+   ]
+  },
+  {
+   "id": "sp-bus-stack",
+   "name": "Bus stack and LFO pages",
+   "about": "Four slots per bus, four LFOs; sub-page layout and keys not read.",
+   "how_to_open": "From the HOME menu",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece v0.1.0 does, FX stacks"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "firmware": "tallfree",
+ "inherits": "stock-5.52",
+ "coverage": {
+  "any": "partial"
+ },
+ "bindings": [
+  {
+   "id": "kb-tf-0001",
+   "screen": "any",
+   "keys": [
+    "SHIFT",
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Open speech settings (README says hold SHIFT and press EXIT, on any screen)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), Speech settings"
+    }
+   ]
+  }
+ ]
+}

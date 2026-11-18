@@ -1,0 +1,2225 @@
+{
+ "firmware": "doom-os-0.7.3",
+ "inherits": "stock-5.52",
+ "coverage": {
+  "doom-grid": "partial",
+  "doom-piano-roll": "partial",
+  "doom-track-page": "partial",
+  "doom-pattern-panel": "partial",
+  "doom-mixer": "partial",
+  "doom-eq": "partial",
+  "doom-instrument-browser": "partial",
+  "doom-instrument-editor": "partial",
+  "doom-param-lock": "partial",
+  "doom-arp": "partial",
+  "doom-pattern-tools": "partial",
+  "doom-sidechain": "partial",
+  "doom-fx-automation": "partial",
+  "doom-bounce": "partial",
+  "doom-fx-page": "partial",
+  "doom-help": "partial",
+  "doom-new-notes": "partial",
+  "doom-settings-tab": "partial",
+  "any": "partial"
+ },
+ "bindings": [
+  {
+   "id": "kb-doom-0001",
+   "screen": "any",
+   "keys": [
+    "REMAIN",
+    "SUB PAD"
+   ],
+   "gesture": "press",
+   "action": "Open DOOM OS from any screen",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Quickstart"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0002",
+   "screen": "doom-grid",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Close DOOM OS and save (or hold, if Hold to Exit is set)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0003",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT"
+   ],
+   "gesture": "hold",
+   "action": "Hold 3 seconds: help mode on/off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0004",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PATTERN SELECT"
+   ],
+   "gesture": "press",
+   "action": "Undo",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0005",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "PATTERN SELECT"
+   ],
+   "gesture": "press",
+   "action": "Redo",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0006",
+   "screen": "doom-grid",
+   "keys": [
+    "PATTERN SELECT"
+   ],
+   "gesture": "press",
+   "action": "Start or stop playback",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0007",
+   "screen": "doom-grid",
+   "keys": [
+    "PATTERN SELECT",
+    "SUB PAD"
+   ],
+   "gesture": "press",
+   "action": "Hold PATTERN SELECT, SUB PAD, then a pad: switch pattern at once",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0008",
+   "screen": "doom-grid",
+   "keys": [
+    "PATTERN SELECT",
+    "BANK A/F"
+   ],
+   "gesture": "press",
+   "action": "Hold PATTERN SELECT and press a BANK button: pattern bank (same for the other BANK buttons)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0009",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PAD11"
+   ],
+   "gesture": "press",
+   "action": "Tempo: then turn and press VALUE",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0010",
+   "screen": "doom-grid",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Select track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0011",
+   "screen": "doom-grid",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Open the piano roll",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Piano Roll"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0012",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Next or previous bar (beat in ZOOM at one beat)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bars and Views"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0013",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Zoom in ZOOM view",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bars and Views"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0014",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "HOLD"
+   ],
+   "gesture": "press",
+   "action": "Follow playhead on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bars and Views"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0015",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "Next grid view",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bars and Views"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0016",
+   "screen": "doom-grid",
+   "keys": [
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "TRACK page, again PATTERN panel, third time closes; hold 0.6 s opens the mixer",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0017",
+   "screen": "doom-grid",
+   "keys": [
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open pattern tools",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0018",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open NEW NOTES settings (quantize, swing, velocity, length of recorded notes)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0019",
+   "screen": "doom-grid",
+   "keys": [
+    "REC"
+   ],
+   "gesture": "press",
+   "action": "Rehearse, then record",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0020",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "REC"
+   ],
+   "gesture": "press",
+   "action": "Next record mode",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0021",
+   "screen": "doom-grid",
+   "keys": [
+    "HOLD"
+   ],
+   "gesture": "press",
+   "action": "Pads play samples instead of steps",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0022",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PAD1"
+   ],
+   "gesture": "press",
+   "action": "Fixed velocity on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0023",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PAD2"
+   ],
+   "gesture": "press",
+   "action": "Record mode 16 VEL on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0024",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PAD9"
+   ],
+   "gesture": "press",
+   "action": "Metronome ON, RECPLAY, OFF",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0025",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PAD13"
+   ],
+   "gesture": "press",
+   "action": "Turns step 13 on or off (does not open UTILITY)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Settings"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0026",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "PAD16"
+   ],
+   "gesture": "press",
+   "action": "Open stock bus effects settings",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0027",
+   "screen": "doom-grid",
+   "keys": [
+    "EXT SOURCE"
+   ],
+   "gesture": "press",
+   "action": "Inputs on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0028",
+   "screen": "doom-grid",
+   "keys": [
+    "RESAMPLE"
+   ],
+   "gesture": "press",
+   "action": "Bounce selected track in place",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0029",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "RESAMPLE"
+   ],
+   "gesture": "press",
+   "action": "Bounce everything heard onto a new pad",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0030",
+   "screen": "doom-grid",
+   "keys": [
+    "SUB PAD"
+   ],
+   "gesture": "hold",
+   "action": "Show pads that hold samples; tap pads to add a track; on an empty pad opens the instrument browser",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0031",
+   "screen": "doom-grid",
+   "keys": [
+    "START/END"
+   ],
+   "gesture": "press",
+   "action": "Instrument editor (on an instrument track)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0032",
+   "screen": "doom-grid",
+   "keys": [
+    "MARK"
+   ],
+   "gesture": "press",
+   "action": "Parameter lock mode (on an instrument track)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0033",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "MARK"
+   ],
+   "gesture": "press",
+   "action": "Open FX Automation",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0034",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "START/END"
+   ],
+   "gesture": "press",
+   "action": "Cycle waveform overlay: output, track, off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Waveform Display"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0035",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Mute or unmute selected track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0036",
+   "screen": "doom-grid",
+   "keys": [
+    "SHIFT",
+    "ROLL"
+   ],
+   "gesture": "press",
+   "action": "Solo selected track on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0037",
+   "screen": "doom-grid",
+   "keys": [
+    "COPY"
+   ],
+   "gesture": "press",
+   "action": "Copy the track's notes",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0038",
+   "screen": "doom-grid",
+   "keys": [
+    "DEL"
+   ],
+   "gesture": "press",
+   "action": "Delete the track (asks first)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0039",
+   "screen": "doom-grid",
+   "keys": [
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "Set velocity of every note of the selected track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0040",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1",
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "Hold a step pad and turn: velocity of that note (any of the 16 pads)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0041",
+   "screen": "doom-grid",
+   "keys": [
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "Set length of every note of the selected track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0042",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1",
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "Hold a step pad and turn: length of that note (any of the 16 pads)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0043",
+   "screen": "doom-grid",
+   "keys": [
+    "CTRL3"
+   ],
+   "gesture": "turn",
+   "action": "Set nudge of every note of the selected track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Tracks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0044",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1",
+    "CTRL3"
+   ],
+   "gesture": "turn",
+   "action": "Hold a step pad and turn: nudge of that note (any of the 16 pads)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0045",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1",
+    "SHIFT",
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "Hold a step pad: pitch of that note",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0046",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1",
+    "SHIFT",
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "Hold a step pad: fine length",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0047",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1",
+    "REMAIN"
+   ],
+   "gesture": "press",
+   "action": "Hold a step pad and press REMAIN: keep the note selected",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0048",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD1"
+   ],
+   "gesture": "press",
+   "action": "Turn step 1 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0049",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD2"
+   ],
+   "gesture": "press",
+   "action": "Turn step 2 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0050",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD3"
+   ],
+   "gesture": "press",
+   "action": "Turn step 3 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0051",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD4"
+   ],
+   "gesture": "press",
+   "action": "Turn step 4 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0052",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD5"
+   ],
+   "gesture": "press",
+   "action": "Turn step 5 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0053",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD6"
+   ],
+   "gesture": "press",
+   "action": "Turn step 6 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0054",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD7"
+   ],
+   "gesture": "press",
+   "action": "Turn step 7 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0055",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD8"
+   ],
+   "gesture": "press",
+   "action": "Turn step 8 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0056",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD9"
+   ],
+   "gesture": "press",
+   "action": "Turn step 9 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0057",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD10"
+   ],
+   "gesture": "press",
+   "action": "Turn step 10 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0058",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD11"
+   ],
+   "gesture": "press",
+   "action": "Turn step 11 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0059",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD12"
+   ],
+   "gesture": "press",
+   "action": "Turn step 12 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0060",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD13"
+   ],
+   "gesture": "press",
+   "action": "Turn step 13 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0061",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD14"
+   ],
+   "gesture": "press",
+   "action": "Turn step 14 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0062",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD15"
+   ],
+   "gesture": "press",
+   "action": "Turn step 15 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0063",
+   "screen": "doom-grid",
+   "keys": [
+    "PAD16"
+   ],
+   "gesture": "press",
+   "action": "Turn step 16 on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Notes"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0064",
+   "screen": "doom-piano-roll",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Close the piano roll",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Piano Roll"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0065",
+   "screen": "doom-piano-roll",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Scroll; with a step pad held, change its pitch by one semitone",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Piano Roll"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0066",
+   "screen": "doom-piano-roll",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Select another track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Piano Roll"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0067",
+   "screen": "doom-track-page",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Select a row",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0068",
+   "screen": "doom-track-page",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Open or change the row",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0069",
+   "screen": "doom-track-page",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Back one level or close the menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0070",
+   "screen": "doom-mixer",
+   "keys": [
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "Pan",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0071",
+   "screen": "doom-mixer",
+   "keys": [
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "Bus: B1, B2, DRY",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0072",
+   "screen": "doom-mixer",
+   "keys": [
+    "CTRL3"
+   ],
+   "gesture": "turn",
+   "action": "Level",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0073",
+   "screen": "doom-mixer",
+   "keys": [
+    "PITCH/SPEED"
+   ],
+   "gesture": "press",
+   "action": "Show or hide the EQ display",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, EQ"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0074",
+   "screen": "doom-mixer",
+   "keys": [
+    "SHIFT",
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "Display style",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0075",
+   "screen": "doom-mixer",
+   "keys": [
+    "REMAIN",
+    "PAD1"
+   ],
+   "gesture": "press",
+   "action": "Solo that track on or off (any pad)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0076",
+   "screen": "doom-mixer",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Mute or unmute the track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0077",
+   "screen": "doom-mixer",
+   "keys": [
+    "SHIFT",
+    "ROLL"
+   ],
+   "gesture": "press",
+   "action": "Solo on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0078",
+   "screen": "doom-mixer",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Back to the grid",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0079",
+   "screen": "doom-eq",
+   "keys": [
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "EQ: gain (LOW, MID, HIGH gain on the EQ display)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, EQ"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0080",
+   "screen": "doom-eq",
+   "keys": [
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "EQ: frequency (LOW, MID, HIGH gain on the EQ display)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, EQ"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0081",
+   "screen": "doom-eq",
+   "keys": [
+    "CTRL3"
+   ],
+   "gesture": "turn",
+   "action": "EQ: Q (LOW, MID, HIGH gain on the EQ display)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, EQ"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0082",
+   "screen": "doom-eq",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "ADV on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, EQ"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0083",
+   "screen": "doom-eq",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Back to the EQ display, then the mixer",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, EQ"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0084",
+   "screen": "doom-instrument-browser",
+   "keys": [
+    "SUB PAD"
+   ],
+   "gesture": "hold",
+   "action": "Preview selected instrument",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0085",
+   "screen": "doom-instrument-browser",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Switch INSTRUMENTS / KITS",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0086",
+   "screen": "doom-instrument-browser",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Load the instrument or kit",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0087",
+   "screen": "doom-instrument-browser",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Back to the grid without loading",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Instrument Browser"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0088",
+   "screen": "doom-instrument-editor",
+   "keys": [
+    "REMAIN"
+   ],
+   "gesture": "press",
+   "action": "Replace the instrument (browser opens)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0089",
+   "screen": "doom-instrument-editor",
+   "keys": [
+    "SHIFT",
+    "PAD4"
+   ],
+   "gesture": "press",
+   "action": "Chromatic mode on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0090",
+   "screen": "doom-instrument-editor",
+   "keys": [
+    "MARK"
+   ],
+   "gesture": "press",
+   "action": "Parameter lock mode",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0091",
+   "screen": "doom-instrument-editor",
+   "keys": [
+    "SUB PAD"
+   ],
+   "gesture": "hold",
+   "action": "Hear the pad",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0092",
+   "screen": "doom-instrument-editor",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Save the sound and return to the grid",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0093",
+   "screen": "doom-instrument-editor",
+   "keys": [
+    "BANK C/H"
+   ],
+   "gesture": "press",
+   "action": "Chromatic octave: C/H own octave (A/F, B/G down; D/I, E/J up)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Instruments"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0094",
+   "screen": "doom-param-lock",
+   "keys": [
+    "MARK"
+   ],
+   "gesture": "press",
+   "action": "Save the locks",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0095",
+   "screen": "doom-param-lock",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Discard changes",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0096",
+   "screen": "doom-param-lock",
+   "keys": [
+    "DEL"
+   ],
+   "gesture": "press",
+   "action": "Reset the selected step",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0097",
+   "screen": "doom-param-lock",
+   "keys": [
+    "SUB PAD"
+   ],
+   "gesture": "hold",
+   "action": "Hear the step",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0098",
+   "screen": "doom-arp",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Arpeggiator on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0099",
+   "screen": "doom-arp",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Switch PLAY and PITCH page",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0100",
+   "screen": "doom-arp",
+   "keys": [
+    "HOLD"
+   ],
+   "gesture": "press",
+   "action": "Latch the arpeggio",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0101",
+   "screen": "doom-arp",
+   "keys": [
+    "START/END"
+   ],
+   "gesture": "press",
+   "action": "Instrument editor",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0102",
+   "screen": "doom-arp",
+   "keys": [
+    "DEL"
+   ],
+   "gesture": "press",
+   "action": "Clear the track's notes (asks first)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0103",
+   "screen": "doom-arp",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Return to the grid",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0104",
+   "screen": "doom-pattern-tools",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Select a tool, then the amount",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0105",
+   "screen": "doom-pattern-tools",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Open a tool / apply",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0106",
+   "screen": "doom-pattern-tools",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "In SWING: swing on 8th notes",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0107",
+   "screen": "doom-pattern-tools",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Cancel",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0108",
+   "screen": "doom-sidechain",
+   "keys": [
+    "SHIFT",
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "Toggle the gain-reduction view",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Side Chain"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0109",
+   "screen": "doom-sidechain",
+   "keys": [
+    "DEL",
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Side chain off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Side Chain"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0110",
+   "screen": "doom-sidechain",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Back to the grid",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Side Chain"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0111",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Next parameter",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0112",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "SHIFT",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Next or previous effect",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0113",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "REMAIN",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Next or previous bar",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0114",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "DEL",
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Delete the parameter's movements",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0115",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "COPY",
+    "VALUE"
+   ],
+   "gesture": "press",
+   "action": "Copy or paste a parameter",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0116",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "START/END"
+   ],
+   "gesture": "press",
+   "action": "EFX MOTION PLAY on or off",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0117",
+   "screen": "doom-fx-automation",
+   "keys": [
+    "SHIFT",
+    "MARK"
+   ],
+   "gesture": "press",
+   "action": "Back to the grid",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0118",
+   "screen": "doom-bounce",
+   "keys": [
+    "RESAMPLE"
+   ],
+   "gesture": "press",
+   "action": "Start the bounce",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0119",
+   "screen": "doom-bounce",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Choose CUT, TAIL, LOOP",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0120",
+   "screen": "doom-bounce",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Close the card or stop the bounce",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0121",
+   "screen": "doom-fx-page",
+   "keys": [
+    "VALUE"
+   ],
+   "gesture": "hold",
+   "action": "Hold: second page of parameters",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0122",
+   "screen": "doom-fx-page",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Close the page (effect stays on)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0123",
+   "screen": "doom-fx-page",
+   "keys": [
+    "REC"
+   ],
+   "gesture": "press",
+   "action": "Press twice and turn knobs: record effect movements",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0124",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "FILTER+DRIVE"
+   ],
+   "gesture": "press",
+   "action": "Reopen the page of that effect if it is on",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0125",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "RESONATOR"
+   ],
+   "gesture": "press",
+   "action": "Reopen the page of that effect if it is on",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0126",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "DELAY"
+   ],
+   "gesture": "press",
+   "action": "Reopen the page of that effect if it is on",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0127",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "ISOLATOR"
+   ],
+   "gesture": "press",
+   "action": "Reopen the page of that effect if it is on",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0128",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "DJFX LOOPER"
+   ],
+   "gesture": "press",
+   "action": "Reopen the page of that effect if it is on",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0129",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "MFX"
+   ],
+   "gesture": "press",
+   "action": "Reopen the page of that effect if it is on (the manual text names FILTER+DRIVE to DJFX LOOPER; its control table also shows MFX in the range)",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0130",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the stock UTILITY menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Settings"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0131",
+   "screen": "doom-grid",
+   "keys": [
+    "REMAIN",
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "Open the stock pattern select screen",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Settings"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0132",
+   "screen": "doom-grid",
+   "keys": [
+    "MFX",
+    "PAD1"
+   ],
+   "gesture": "press",
+   "action": "Hold MFX and press a pad: select MFX effect (with DJFX LOOPER or ISOLATOR also held: effects 17-32 or 33-48)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0133",
+   "screen": "doom-help",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Leave help mode",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Help Mode"
+    }
+   ]
+  },
+  {
+   "id": "kb-doom-0134",
+   "screen": "doom-help",
+   "keys": [
+    "SHIFT"
+   ],
+   "gesture": "hold",
+   "action": "Hold 3 seconds: leave help mode",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Help Mode"
+    }
+   ]
+  }
+ ]
+}

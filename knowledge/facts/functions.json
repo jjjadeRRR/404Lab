@@ -1,0 +1,914 @@
+{
+ "facts": [
+  {
+   "id": "fn-stock-001",
+   "claim": "Data model: a sample holds audio plus its settings (loop, bus routing). 16 samples form a bank, banks A to J give 10 banks, and a project holds 10 sample banks plus 10 pattern banks. The unit stores 16 projects. Patterns follow the same 16-per-bank layout.",
+   "topic": "structure",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Introduction: how data is organized"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-002",
+   "claim": "Capacity per the manual: 2560 samples and 2560 patterns (16 x 10 banks x 16 projects), 32 voices, 16 GB internal storage, about 16 minutes of sampling time, pattern resolution 480 ticks per quarter note, pattern length 1 to 64 bars, BPM 40 to 200.",
+   "topic": "structure",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Main specifications; 4 Specifications"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-003",
+   "claim": "The sample sample rate is 48 kHz, 16-bit linear. Import accepts WAV, AIFF and MP3; export writes WAV.",
+   "topic": "structure",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Main specifications"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-004",
+   "claim": "Bank buttons: pressing a lit bank button again toggles A-E and F-J of that button; F-J is shown by a blinking bank button.",
+   "topic": "structure",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: selecting a bank"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-005",
+   "claim": "Pad colours in sample mode: orange for samples, purple for patterns, red for muted, white for dry bus, green for BUS 2, orange for BUS 1 when in the bus colour mode. Colour mode (BUS, PAD or SAMPLE) is a PAD SET option.",
+   "topic": "structure",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), Using effects; Pad settings"
+    },
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), Pad Settings"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-006",
+   "claim": "Pad playback modes per sample: gate (plays while held), one-shot (plays to the end, ignores pad until finished), loop (toggle on/off per press). BPM SYNC stretches playback to the bank or project tempo (needs a BPM stored on the sample).",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: gate, one-shot, loop, BPM sync"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-007",
+   "claim": "Reverse Type system setting decides where reverse starts when REVERSE is pressed while a sample plays: type 404 restarts from the end like the SP-404SX, type 303 reverses from the current position like the SP-303.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters, Reverse Type"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-008",
+   "claim": "ROLL repeats a sample at a chosen interval (1/4, 1/8, 1/16, 1/32, 1/64, 3/8, 3/16, 3/32, 3/64). Up to four samples can roll together. Hold ROLL and turn VALUE clockwise to shorten the interval while rolling.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: roll"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), Roll interval"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-009",
+   "claim": "Fixed velocity forces velocity 127. 16 VELOCITY maps the 16 pads to 16 velocity steps of one sample. Both are per-sample.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-010",
+   "claim": "Chromatic mode plays one sample across the pads. VALUE turn moves the key range, VALUE press cycles the scale (major, minor, dorian, phrygian, major pentatonic, minor pentatonic), ROLL held plus VALUE turn picks the root note, REMAIN cycles legato, mono and poly.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: chromatic"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-011",
+   "claim": "Pad MUTE mutes a pad, shown red; pad mute can be latched with SHIFT+REVERSE+REMAIN. System option Pad MUTE decides whether muted pads are monitored in the headphones.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: pad mute"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-012",
+   "claim": "PAD LINK groups (A to J, up to four pads) trigger together. MUTE GROUP (A to J) lets only the last-played sample of a group sound.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Pad link groups; Mute group"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-013",
+   "claim": "SAMPLE MERGE combines up to four samples into one pad: SUM adds them, MUL multiplies (modulates) them. Per-source volume on CTRL3, result confirmed with VALUE.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Merging samples"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-014",
+   "claim": "STOP: four quick presses of EXIT or SHIFT+EXIT stops all samples and patterns. SHIFT+HOLD pauses and resumes. SHIFT+REMAIN held three seconds toggles LIVE MODE, which disables DEL, REC, RESAMPLE, COPY and MARK.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Stopping all sample playback; Pause; Live mode"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-015",
+   "claim": "Bank volume is a per-bank level (SHIFT plus bank button, turn VALUE). Bank PROTECT (SHIFT+COPY) blocks overwrite, copy-over and delete for samples and patterns of that bank.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: bank volume; Protecting a sample"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-016",
+   "claim": "Pad MUTE and bank mute: the system option Bank Mute stops sounds of other banks when a pad of a new bank is played.",
+   "topic": "playback",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters, Bank Mute"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-017",
+   "claim": "Six effect buttons (FILTER+DRIVE, RESONATOR, DELAY, ISOLATOR, DJFX LOOPER, MFX) control BUS 1 or BUS 2, chosen with BUS FX. BUS 3 and BUS 4 apply to the master output, set in EFX SET.",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Using effects"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-018",
+   "claim": "Each sample is routed to BUS 1 (orange), BUS 2 (green) or dry (white) with REMAIN+pad. REMAIN plus a bank button sets the whole bank. REMAIN+EXT SOURCE picks the external input bus.",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Using effects: effects per sample; utility note"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-019",
+   "claim": "MFX has an effect list. Hold MFX and turn VALUE or CTRL3, or press pads; MFX+DJFX LOOPER shows effects 17 and up, MFX+ISOLATOR 33 and up. Release MFX to apply.",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Using effects: MFX; shortcut list MFX"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-020",
+   "claim": "Effect edit: CTRL1-3 are main parameters; holding VALUE while turning a knob edits sub-parameters. Holding VALUE while pressing an effect button makes it momentary (effect grab). REMAIN+effect button locks the edit page on screen.",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Using effects: editing effects"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-021",
+   "claim": "MUTE BUS (SHIFT+BUS FX) silences the dry signal into the bus and leaves only the effect output. Which bus is chosen in EFX SET, OTHER, Mute Bus. SHIFT+MARK held three seconds saves the main parameters of the BUS 1 and BUS 2 effects.",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Using effects: MUTE BUS; parameter saving"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-022",
+   "claim": "EFX SET has tabs: FAVORITE (bus routing type A or B, favorite 1-16 for BUS 3/4), BUS 3 / BUS 4 (effect type), SIDE CHAIN, DIRECT (five effect-button assignments), OTHER (mute bus, input FX, input bus, DRY routing, MFX top).",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Reference manual: EFX SETTING"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-023",
+   "claim": "Input FX: separate effects applied only to the input jacks. Auto Pitch, Vocoder, Harmony and Gt Amp Sim exist only there.",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Utility: input effects"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-024",
+   "claim": "Effect list covers 42 multi effects in the 4.x manual (Filter+Drive, Resonator, Sync Delay, Isolator, DJFX Looper, Scatter, Downer, Ha-Dou, Ko-Da-Ma, Zan-Zou, To-Gu-Ro, SBF, Stopper, Tape Echo, TimeCtrlDly, Super Filter, WrmSaturator, 303 and 404 VinylSim, Cassette Sim, Lo-fi, Reverb, Chorus, JUNO Chorus, Flanger, Phaser, Wah, Slicer, Tremolo/Pan, Chromatic PS, Hyper-Reso, Ring Mod, Crusher, Overdrive, Distortion, Equalizer, Compressor, SX Reverb, SX Delay, Cloud Delay, Back Spin).",
+   "topic": "effects",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), Specifications; EFX SET: DIRECT list"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-025",
+   "claim": "REC samples from the selected input; empty pads blink red. Pick a pad, press REC to start, press the pad or REC to finish. RESAMPLE records the unit output. RECORD SETTING opens routing (Mix or ExtIn), tempo (CTRL1) and level (CTRL3).",
+   "topic": "sampling",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Sampling; Resampling"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-026",
+   "claim": "Count-in (SHIFT+PAD10) cycles 1 measure, 2 measures, wait for sound or pad, off. Samples and patterns keep separate count-in settings. END SNAP (START/END while in REC) sets the end point to the beat before the end. Metronome toggles with SHIFT+PAD9.",
+   "topic": "sampling",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Sampling: count-in, end snap"
+    },
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), Quick start list"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-027",
+   "claim": "Skip-back sampling keeps a rolling buffer (25 s by default, 40 s with SBS Time long). MARK shows the buffer, REC then a pad saves it. The MARK Function system setting chooses skip-back or looper; SHIFT+VALUE press switches it.",
+   "topic": "sampling",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Skip-back sampling; Looper"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-028",
+   "claim": "The looper records and overdubs a loop of up to 16 seconds. CTRL1 sets measures, CTRL2 auto trigger, CTRL3 BPM or play rate. REC records, RESAMPLE overdubs, DEL clears, COPY exports to a pad, SHIFT+PATTERN SELECT undoes.",
+   "topic": "sampling",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Looper"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-029",
+   "claim": "SOUND GENERATOR (SHIFT+RECORD SETTING) is a simple synth: waveform CTRL1, frequency CTRL2, level CTRL3; SHIFT variants set length, duty cycle and pan. Pads play notes, REC exports to a pad.",
+   "topic": "sampling",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Sound generator"
+    },
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), Sound Gen."
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-030",
+   "claim": "START/END edits start, loop and end points (CTRL1-3), zoom with VALUE or SHIFT+CTRL. Numeric entry uses pads 1-10 as digits. The process menu (VALUE press) has TRUNCATE, NORMALIZE, EMPHASIS, which change the audio data and cannot be undone.",
+   "topic": "editing",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Setting the playback range; Processing a sample"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-031",
+   "claim": "Markers (SHIFT+START/END): CTRL1 cursor, MARK adds, CTRL2 moves, CTRL3 selects, DEL removes. The menu offers AUTO MARK (time division, level or transient), assign to pads (CHOP) and delete all.",
+   "topic": "editing",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Marking and chopping samples"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-032",
+   "claim": "ENVELOPE (SHIFT+PITCH/SPEED) is attack, hold, release per sample on CTRL1-3.",
+   "topic": "editing",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Envelope"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-033",
+   "claim": "PITCH/SPEED holds speed, pitch, volume and pan per sample, a tempo (BPM) with auto detect or manual entry, vinyl/backing/ensemble varispeed behaviour and groove. REMAIN held changes the same parameter for every sample in the bank, COPY held for every sample in the mute group.",
+   "topic": "editing",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Changing pitch or speed; shortcut list REMAIN, COPY"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-034",
+   "claim": "INIT PARAM (SHIFT+PAD6) resets the sample parameters of the selected pad. Pad colour per sample can be set when Pad LED mode is SAMPLE.",
+   "topic": "editing",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Initializing sample parameters; System parameters"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-035",
+   "claim": "COPY (pad to pad), SHIFT+PAD5 exchange, DEL delete, COPY+EXIT copy whole bank, DEL+EXIT delete whole bank. These are confirmed with VALUE or the same button.",
+   "topic": "editing",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Organizing samples"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-036",
+   "claim": "PATTERN SELECT turns on the sequencer. Pads start patterns; another pad queues the next one; SUB PAD plus pad switches immediately; VALUE plus pad selects without playing.",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing a pattern"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-037",
+   "claim": "Real-time recording: PATTERN SELECT, REC, pick a blinking pad, set BPM/length/quantize on CTRL1-3, press REC. REC toggles rehearsal. SHIFT+PATTERN SELECT undoes; DEL held erases. EXIT once ends recording, twice stops.",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Creating a new pattern (real-time recording)"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-038",
+   "claim": "TR-REC: choose TR-REC with REMAIN on the record settings page, then REC. The 16 pads are 16 steps; bar selected by VALUE; step modes TRIG (substeps) and HOLD STEP (tied steps); CTRL2 pitch, CTRL3 velocity. Knob motion can be recorded with ROLL+CTRL in TRIG mode.",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Creating a new pattern (TR-REC)"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-039",
+   "claim": "Pattern edit: loop start and length, duplicate, crop, quantize, motion erase. Swap, copy, extract samples from a pattern, bank copy and delete work like their sample counterparts.",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Editing a pattern; Organizing pattern data"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-040",
+   "claim": "Pattern chain: hold HOLD and press a pad to choose the chain number (1 to 16), then build the list with pads; REMAIN cycles repeat all, current or off; SUB PAD plays.",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing patterns in order (PATTERN CHAIN)"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-041",
+   "claim": "EFX motion record stores effect button and knob moves in the pattern (MARK while recording, START/END turns playback of motion on or off). PAD MUTE MOTION REC records pad mutes (enter with SHIFT+REVERSE+REMAIN).",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Recording effect operations to a pattern; Pad mute motion rec"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-042",
+   "claim": "BOUNCE converts a pattern or chain to a sample by COPY, source, destination; RESAMPLE with the sequencer on records the pattern output including effects. MULTIPAD EXPORT writes one stem per pad to SD.",
+   "topic": "patterns",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Bounce; Multipad export"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-043",
+   "claim": "Tempo: sample tempo, bank tempo and project tempo. SHIFT+PAD11 opens tempo select (CTRL1 picks project or bank; VALUE sets BPM; SHIFT+VALUE sets decimals). SUB PAD blinks orange and acts as tap tempo on that screen.",
+   "topic": "tempo",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Setting the tempo"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-044",
+   "claim": "MIDI Sync system setting chooses clock source: Auto, Internal, MIDI, USB. MIDI Sync Out sends clock and start/stop.",
+   "topic": "tempo",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters, MIDI"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-045",
+   "claim": "DJ mode: press bank D/I and E/J together. Two channels, level CTRL1 and CTRL2, CTRL3 for cue mix or crossfader, pad roles for bend, BPM, cue, sync, play/pause. HOLD switches to pad mode, where pads play samples not used by the decks.",
+   "topic": "dj",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Mixing samples (DJ MODE)"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-046",
+   "claim": "DJ mode markers: up to seven markers per sample are used; SHIFT+pad plays from a marker; SHIFT+MARK adds one; SHIFT+START/END edits; SHIFT+DEL+pad deletes. Roll size set with SHIFT+ROLL or ROLL+pads 1-4.",
+   "topic": "dj",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), DJ mode markers; shortcut list DJ mode"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-047",
+   "claim": "DJ mode volume curve cycles with RESAMPLE+VALUE press: fast cut, linear, square, cubic. System options DJ Mode TS type (vinyl, backing, ensemble) and Bend Sens (DJ) shape pitch behaviour.",
+   "topic": "dj",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Shortcut list DJ mode; system parameters"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-048",
+   "claim": "SYSTEM tabs: GENERAL (knob mode direct or catch, sub pad mode, screen saver, BPM auto detect and range, pad mute, pattern change mode, pop-up time, MARK function, SBS time, reverse type, USB IN, DJ mode TS type, bend sens, file system, bank mute), CLICK (metronome and count-in), MIDI, GAIN, VERSION.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-049",
+   "claim": "App Auto Connection and Start-up Screen are SYSTEM GENERAL parameters that appear in the 5.50 reference manual and not in the 4.x one. NearTao 4.05 does not list them.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters: GENERAL"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), System parameters: GENERAL (not present)"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-050",
+   "claim": "PAD SET: pad curve type (Lin, Exp, Log, Fix), threshold, gain and trigger span; LED brightness and glow; Pad LED mode BUS, PAD or SAMPLE with colour tables.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Pad settings"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-051",
+   "claim": "UTILITY MENU items include SYSTEM, IMPORT, BACKUP, FACTORY and EFX SET. Backup writes one of 64 numbered backups to SD. Factory reset has ALL DATA and SYSTEM DATA options and asks for a power cycle.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Utility: backup, factory reset"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-052",
+   "claim": "Project import/export, sample import/export, SD format and the 128 x 64 monochrome BMP startup and screen saver images (startup_1 and 2, screen_saver_1 to 16 in the project PICTURE folder) are managed from SD.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Customizing: startup image, screen saver"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-053",
+   "claim": "The firmware version is shown at the VERSION entry of the system menu. Holding SHIFT and pressing pad 13 opens the utility menu from the main screen.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters, VERSION"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MKII system program release notes (public web pages; seen only as search-result snippets), how to tell the version"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-054",
+   "claim": "USB audio class 2.0 and MIDI over USB-C; no driver needed. USB IN routes USB audio to LINE IN or MIX OUT. SD cards are formatted from the import/export menu.",
+   "topic": "system",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Connecting; system parameters"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-055",
+   "claim": "MIDI pad notes follow mode A (pads 1 to 16 send notes 36 to 51, bank A-J selects MIDI channel 1-10) or mode B (channel pairs and note offset). Effect controls use CC 16-18 for CTRL1-3 and CC 80-82 for CTRL4-6, which are MIDI only. Looper and DJ mode have their own CC tables.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), Midi In & Out"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), MIDI implementation chart"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-056",
+   "claim": "There are only three physical control knobs (CTRL1 to CTRL3). CTRL4 to CTRL6 exist as MIDI controllers only.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), Midi In & Out: effect controls"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Panel descriptions"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-057",
+   "claim": "Firmware 5.00 (April 2025) added Serato DJ and Serato Studio control from the unit, per press coverage and Roland notes seen as snippets.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MKII system program release notes (public web pages; seen only as search-result snippets), release notes Ver.5.00"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-058",
+   "claim": "Firmware 5.01 (July 2025) added the System GENERAL parameters App Auto Connection and Start-up Screen. Confirmed by the 5.50 manual listing them.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), System parameters: GENERAL"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MKII system program release notes (public web pages; seen only as search-result snippets), release notes Ver.5.01"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-059",
+   "claim": "Firmware 5.50 (April 2026) added side chain compression between buses (EFX SET, SIDE CHAIN tab: source, target, threshold, ratio, release, gain) and, per release notes, Serato operation and skip-back use in DJ pad mode. The side chain tab is confirmed by the 5.50 manual; the other items come only from search snippets.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), EFX SETTING: SIDE CHAIN"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MKII system program release notes (public web pages; seen only as search-result snippets), release notes Ver.5.50"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-060",
+   "claim": "Firmware 5.51 is described as a bug-fix release and 5.52 as a version-number-only change; one snippet also attributes exFAT SDXC support to the 5.5x line. Not confirmed from the unit manual.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MKII system program release notes (public web pages; seen only as search-result snippets), release notes Ver.5.51, 5.52"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-061",
+   "claim": "The shortcut key tables of the 5.50 manual list the same rows as the 4.x tables: same SHIFT, REMAIN, VALUE, DEL, COPY, MFX, DJ mode and TR-REC rows. The only visible addition is REMAIN+EXT SOURCE in the REMAIN table, which NearTao already lists for 4.05. The function text of many 5.50 table cells could not be read, so no new chord is excluded.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), List of shortcut keys (row labels only)"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), List of shortcut keys"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-062",
+   "claim": "The 5.50 manual extract used here is embedded in a third-party spreadsheet whose other sheets are partly AI-written. Only the embedded English manual text was used. The spreadsheet shortcut sheet itself contains errors (for example it describes SHIFT+bank as switching to banks F-J and SHIFT+LOOP as a bank-wide loop toggle) and was not used for bindings.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), embedded manual vs spreadsheet shortcut sheet"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-063",
+   "claim": "Sources disagree on SHIFT+LOOP: both manuals and the cheat sheet give ping-pong loop; NearTao 4.05 lists ping-pong and also a bank-wide bulk toggle for LOOP and REVERSE. The manuals list bank-wide toggles only for GATE and BPM SYNC.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples: loop"
+    },
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), Bank Edits"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-064",
+   "claim": "Sources disagree on the source of the sound generator: Roland release notes snippets credit 5.00 with a SOUND GENERATOR while the 4.x manual and NearTao 4.05 already describe it. Treat the 5.00 attribution as unreliable.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MKII system program release notes (public web pages; seen only as search-result snippets), release notes Ver.5.00"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), Sound generator"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-065",
+   "claim": "Power-on key combinations (for example for update or reset modes) were not found in any of the documents read. Factory reset is done from the utility menu, not by a power-on chord.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Utility: factory reset"
+    }
+   ]
+  },
+  {
+   "id": "fn-stock-066",
+   "claim": "The reference manuals do not give hardware key codes, so a binding table here is about user-visible gestures, not scan codes.",
+   "topic": "versions",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), whole manual"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,876 @@
+{
+ "facts": [
+  {
+   "id": "app0.what",
+   "claim": "APP0 is the firmware of the second processor, the Roland BMC chip. It comes as SP404MKII_APP0.bin in Roland update packages, 2,359,296 bytes (0x240000) in 5.52. It is not code for the main processor; its internal label App1_Main does not change that.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "SP404MKII_APP0.bin from the Roland 5.52 update package, SHA256 3e35ff30137f741a715566e205384f9b434ca7ac3847e247bad3f0c9c8a2bd23, offset 0 and file size"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ]
+  },
+  {
+   "id": "app0.role",
+   "claim": "APP0 runs the built-in MFX effects: 49 type numbers (0 Bypass to 48 DJFX Delay) in 5 slots, 0 Input FX and 1-4 BUS 1-4. APP1 only chooses a type and sets parameters.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 name table 0x8020B3D8 (4 bytes per ID), slot branch at 0x800D0D60"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "encoder run on the owner's research stand, 2026-10, see hw.bmc.sysex"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8020B3D8",
+     "size": 8,
+     "sha256": "6429c2118982036301a438ad1e4ae9759aacfc37b45f12c1721351f1cd7edb16"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8020B3D8",
+     "size": 8,
+     "sha256": "6429c2118982036301a438ad1e4ae9759aacfc37b45f12c1721351f1cd7edb16"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8020B3D8",
+     "size": 8,
+     "sha256": "6429c2118982036301a438ad1e4ae9759aacfc37b45f12c1721351f1cd7edb16"
+    }
+   ]
+  },
+  {
+   "id": "app0.mods-leave-it",
+   "claim": "Every mod known to this project changes APP1 only, and APP0 stays stock: DOOM OS, Etc, Side-Piece and Tallfree builders copy it or leave it alone. 404Lab does not build or change APP0.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "APP0 beside the Etc v9.46 APP1 hashes the same as Roland 5.52"
+    },
+    {
+     "label": "DOC",
+     "source": "public patcher and builder sources of those projects, read 2026-10-21"
+    }
+   ]
+  },
+  {
+   "id": "app0.transfer",
+   "claim": "APP1 sends APP0 to the second processor only during a firmware update. 0x8017D218 opens A:/SP404MKII_APP0.bin (string at 0x8023C375) or a service alternative A:/TD003_ROM.bin (0x8023C3B6). Worker 0x8017D2C0 reads 4096 bytes at a time into the non-cacheable buffer at 0x83FF0000 and passes each block on through a callback that ends at LPUART3. In this path APP1 treats the file as opaque data.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8017D218, 0x8017D2C0, 0x8017D356-0x8017D362"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8017D218",
+     "size": 8,
+     "sha256": "953ce16f485b457f96021b13586907db3626025ab2efa8dc4885a6786ccab43b"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8017D218",
+     "size": 8,
+     "sha256": "953ce16f485b457f96021b13586907db3626025ab2efa8dc4885a6786ccab43b"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8017D218",
+     "size": 8,
+     "sha256": "953ce16f485b457f96021b13586907db3626025ab2efa8dc4885a6786ccab43b"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8017D2C0",
+     "size": 8,
+     "sha256": "47492e74f3a664a90af173684512c4202f7e9346d1d5ad07a62467c2902645f7"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8017D2C0",
+     "size": 8,
+     "sha256": "47492e74f3a664a90af173684512c4202f7e9346d1d5ad07a62467c2902645f7"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8017D2C0",
+     "size": 8,
+     "sha256": "47492e74f3a664a90af173684512c4202f7e9346d1d5ad07a62467c2902645f7"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8023C375",
+     "size": 16,
+     "sha256": "cb40098164a078e2d6e0f2cfee1a35d84be4da3f5dfeb872ee8c4027813b1270"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8023C375",
+     "size": 16,
+     "sha256": "cb40098164a078e2d6e0f2cfee1a35d84be4da3f5dfeb872ee8c4027813b1270"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8023C375",
+     "size": 16,
+     "sha256": "cb40098164a078e2d6e0f2cfee1a35d84be4da3f5dfeb872ee8c4027813b1270"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8017D218",
+     "size": 8,
+     "sha256": "953ce16f485b457f96021b13586907db3626025ab2efa8dc4885a6786ccab43b"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8017D2C0",
+     "size": 8,
+     "sha256": "47492e74f3a664a90af173684512c4202f7e9346d1d5ad07a62467c2902645f7"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8023C375",
+     "size": 16,
+     "sha256": "cb40098164a078e2d6e0f2cfee1a35d84be4da3f5dfeb872ee8c4027813b1270"
+    }
+   ]
+  },
+  {
+   "id": "app0.no-runtime-load",
+   "claim": "In normal running, changing an effect sends a type number and parameters and no program load was found. 0x800D0CF0 sends TYPE, 0x801805D0-0x801806E2 sends starting parameters. What the second processor does after a TYPE message is unknown.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800D0CF0, 0x800D0DBE-0x800D0DD2, 0x801805D0"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "active-slot scenario on the owner's research stand gave TYPE and ON and no program, 2026-10"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "five slots are the limit of the APP1 address map, not a proven limit of the receiver"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D0CF0",
+     "size": 4,
+     "sha256": "cfa045938b57940b57930f97cd7cdf3e1a8c3b1ddb72c2609b95b97c1b1921ed"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D0CF0",
+     "size": 4,
+     "sha256": "cfa045938b57940b57930f97cd7cdf3e1a8c3b1ddb72c2609b95b97c1b1921ed"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D0CF0",
+     "size": 4,
+     "sha256": "cfa045938b57940b57930f97cd7cdf3e1a8c3b1ddb72c2609b95b97c1b1921ed"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D0CF0",
+     "size": 4,
+     "sha256": "cfa045938b57940b57930f97cd7cdf3e1a8c3b1ddb72c2609b95b97c1b1921ed"
+    }
+   ]
+  },
+  {
+   "id": "app0.layout",
+   "claim": "File map of APP0 5.52, end not included. 0x000000-0x000040 readable header: label App1_Main, date 2026/06/12 08:51, version 5.520001. 0x000040-0x000060 descriptor of the main block: length field 0x4BB90 at +0x44, destination field 0x01000000 at +0x48. 0x000060-0x04BBF0 opaque block, 310,160 bytes. 0x04BBF0-0x04BC30 tail with the string Roland TD003_C0AVER.1.03 at 0x04BC00. 0x04BC30-0x140000 all FF. 0x140000-0x15D828 readable program data, descriptors and catalogue. 0x15D828-0x1F0000 all FF. 0x1F0000-0x237F48 readable tables. 0x237F48-0x240000 all FF.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "SP404MKII_APP0.bin from the Roland 5.52 update package, SHA256 3e35ff30137f741a715566e205384f9b434ca7ac3847e247bad3f0c9c8a2bd23: boundaries re-read for this record, 2026-11-09"
+    }
+   ]
+  },
+  {
+   "id": "app0.encrypted",
+   "claim": "Part of APP0 is encrypted. The first block of about 310 KB after the header cannot be read as code or data, third-party analysis calls it encrypted, and no public document describes it. Bytes alone cannot separate encrypted from compressed. The rest of the file is not encrypted.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "SP404MKII_APP0.bin from the Roland 5.52 update package, SHA256 3e35ff30137f741a715566e205384f9b434ca7ac3847e247bad3f0c9c8a2bd23, 0x60-0x4BBF0 against the readable regions"
+    },
+    {
+     "label": "DOC",
+     "source": "dm-404 project notes, third party"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the word encrypted is not confirmed by Roland"
+    }
+   ]
+  },
+  {
+   "id": "app0.readable",
+   "claim": "Readable parts: at 0x140000 a few short Thumb routines, then per-effect program data with descriptors, and at 0x15D698 a catalogue of 49 pointer pairs. At 0x1F0000 parameter and pointer tables, including 2,940 bytes at 0x203644 (245 records of 12 bytes) equal to the APP1 table at 0x80231408, so sender and receiver share one parameter address list. Which instruction set the program data uses is unknown.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "SP404MKII_APP0.bin from the Roland 5.52 update package, SHA256 3e35ff30137f741a715566e205384f9b434ca7ac3847e247bad3f0c9c8a2bd23: 0x203644 compared with stock-5.52 APP1, equal; catalogue boundaries from earlier project reading, 5.50 and 5.52"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80231408",
+     "size": 12,
+     "sha256": "b04520a31cc21f36a905d30ac4516ff0ab87afedb0dc6b7713689f2e3c457c2c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80231408",
+     "size": 12,
+     "sha256": "b04520a31cc21f36a905d30ac4516ff0ab87afedb0dc6b7713689f2e3c457c2c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80231408",
+     "size": 12,
+     "sha256": "b04520a31cc21f36a905d30ac4516ff0ab87afedb0dc6b7713689f2e3c457c2c"
+    }
+   ]
+  },
+  {
+   "id": "app0.versions",
+   "claim": "Known APP0 files, each 0x240000 bytes, with their main block length: 3.02 SHA256 8757010d..., 0x4F310. 4.04 88b49c1e..., 0x4AD80. 5.01 5aafc135..., 0x4AE10. 5.50 7615f712..., 0x4BB90. 5.52 3e35ff30..., 0x4BB90. Catalogue offsets differ in versions before 5.50. Behaviour differences are not catalogued.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "files from Roland update packages held by the project owner, compared by offset and hash"
+    }
+   ]
+  },
+  {
+   "id": "app0.hidden-types",
+   "claim": "Two MFX numbers exist in APP1 but appear in no selection list: 29 COMPRESSOR 2 and 45 Sub Sonic. The lists at 0x80245D54 (the grid, st.mfx.grid), 0x80245C48 and 0x80245CEC leave them out, while names, parameter ranges and addresses exist. In APP0, 45 shares its program and memory block with Bypass (app0.pairs); 29 has a program of its own. Type 29 works on a unit once it is offered in the grid (app0.type29-on-unit). Older notes calling both empty were wrong about 29.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 names through 0x8020B3D8+4 x ID; APP0 5.52 catalogue, earlier project reading"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-13: the owner flashed a private build on DOOM OS 0.7.3 that adds type 29 to the MFX grid as described in hk.recipe.mfx-grid-entry, chose it on BUS 1 and played through it; reported in words, no recording yet"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8023E5CD",
+     "size": 12,
+     "sha256": "f793b9edbd43db0c9bcb9c4df90de2244fd7a02d14d4f68de4cc1ae6b7e995cf"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8023E5CD",
+     "size": 12,
+     "sha256": "f793b9edbd43db0c9bcb9c4df90de2244fd7a02d14d4f68de4cc1ae6b7e995cf"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8023E5CD",
+     "size": 12,
+     "sha256": "f793b9edbd43db0c9bcb9c4df90de2244fd7a02d14d4f68de4cc1ae6b7e995cf"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8023EF89",
+     "size": 9,
+     "sha256": "2be7962b91b2676ca056b1c60897417cea5eace6f040a8848f476c6678c08a77"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8023EF89",
+     "size": 9,
+     "sha256": "2be7962b91b2676ca056b1c60897417cea5eace6f040a8848f476c6678c08a77"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8023EF89",
+     "size": 9,
+     "sha256": "2be7962b91b2676ca056b1c60897417cea5eace6f040a8848f476c6678c08a77"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8023E5CD",
+     "size": 12,
+     "sha256": "f793b9edbd43db0c9bcb9c4df90de2244fd7a02d14d4f68de4cc1ae6b7e995cf"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8023EF89",
+     "size": 9,
+     "sha256": "2be7962b91b2676ca056b1c60897417cea5eace6f040a8848f476c6678c08a77"
+    }
+   ]
+  },
+  {
+   "id": "app0.params",
+   "claim": "383 MFX parameter records exist in APP1. Each parameter has a 20-byte descriptor at 0x8021996C + 20 x p: default, minimum, maximum, knob position within its effect, and a last word that is 1 for MFX. p is one index over all 627 descriptors of the firmware, shared with the formatters at 0x80218F9C + 4 x p and the names at 0x80245EE4 + 4 x p; the MFX descriptors are p = 163 (type 1, Filter+Drive) to 545, one run of knob positions per type, for example Compressor 383-387 and COMPRESSOR 2 388-393 (app0.comp2-params). Type names are at 0x8020B3D8 + 4 x ID. 0x8022E1C8 is a table of 54 entries of 6 bytes, three halfwords each (first record, last record, last record again), together covering p = 0-626: entries 0-3 are 0-32, 33-76, 77-122, 123-162, and MFX type t (1-48) is entry t+3, for example Compressor (28) = entry 31 (383, 387, 387) and COMPRESSOR 2 (29) = entry 32 (388, 393, 393) at 0x8022E288; entries 52-53 (546-581, 582-626) are not MFX. 0x8001D950 and 0x800D8118 walk it (9 entries per step of 0x36 bytes, to 0x144) and return the entry whose range holds a given p; what they use it for (perhaps building the DT1 address) is a hypothesis. The range and scaling of an effect knob do not come from the 20-byte descriptor: see app0.knob-ranges. Earlier text here named 0x8022E30C as the descriptor table: that is wrong; the records there have a different layout, whose role and total count are not established. Record index 44 at 0x8022E67C has words [0, 0, 1, 0x0021000B, 103]; a change in its last word does not establish the end of the table. Type selector values 126-130 pick the type for each slot. Reverb PLATE/MOD and Super Filter NOTCH name strings exist beyond their allowed ranges.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 tables at the given addresses"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "formatter and encoder runs on the owner's research stand, 2026-10"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8021996C read 2026-11-14: 627 descriptors, knob positions restart at 0 at each type boundary from p = 163; record 383 starts Compressor and 388 COMPRESSOR 2"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8022E67C: record at index 44, re-read 2026-11-14; earlier length 44 was inferred only from the last word changing from 255 to 103 and is withdrawn"
+    },
+    {
+     "label": "BYTES",
+     "source": "0x8022E1C8 entries 0-55 and the walks in 0x8001D950 and 0x800D8118, read 2026-11-14 in stock-5.52, doom-os-0.7.2 and doom-os-0.7.3 (identical bytes)"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8022E1C8",
+     "size": 8,
+     "sha256": "daa3ceeaa21b1a62e9ba03e862388f1661c0ff6129239489c01d4e18a36b38f9"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8022E1C8",
+     "size": 8,
+     "sha256": "daa3ceeaa21b1a62e9ba03e862388f1661c0ff6129239489c01d4e18a36b38f9"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8022E1C8",
+     "size": 8,
+     "sha256": "daa3ceeaa21b1a62e9ba03e862388f1661c0ff6129239489c01d4e18a36b38f9"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8021B758",
+     "size": 12,
+     "sha256": "b3e4110ef027db7e5898884d3935038b1965a2933da0e927d36e38376fc9a4a2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8021B758",
+     "size": 12,
+     "sha256": "b3e4110ef027db7e5898884d3935038b1965a2933da0e927d36e38376fc9a4a2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8021B758",
+     "size": 12,
+     "sha256": "b3e4110ef027db7e5898884d3935038b1965a2933da0e927d36e38376fc9a4a2"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8022E67C",
+     "size": 20,
+     "sha256": "aafdcbc78844533bb37b0dfbd8df1763bbb506a8f545aa408073df0c8b9fcdc4"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8022E67C",
+     "size": 20,
+     "sha256": "aafdcbc78844533bb37b0dfbd8df1763bbb506a8f545aa408073df0c8b9fcdc4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8022E67C",
+     "size": 20,
+     "sha256": "aafdcbc78844533bb37b0dfbd8df1763bbb506a8f545aa408073df0c8b9fcdc4"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8022E288",
+     "size": 6,
+     "sha256": "881727e6dcbba5dc5d4807b6f00d0499fccb40d16458c851f5ece05198374c47"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8022E288",
+     "size": 6,
+     "sha256": "881727e6dcbba5dc5d4807b6f00d0499fccb40d16458c851f5ece05198374c47"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8022E288",
+     "size": 6,
+     "sha256": "881727e6dcbba5dc5d4807b6f00d0499fccb40d16458c851f5ece05198374c47"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8001D964",
+     "size": 10,
+     "sha256": "9e37f6ae4bfeff8e97accc867e9169e006c5faa34bf5b750d90ad944caa36658"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8001D964",
+     "size": 10,
+     "sha256": "9e37f6ae4bfeff8e97accc867e9169e006c5faa34bf5b750d90ad944caa36658"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8001D964",
+     "size": 10,
+     "sha256": "9e37f6ae4bfeff8e97accc867e9169e006c5faa34bf5b750d90ad944caa36658"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8022E1C8",
+     "size": 8,
+     "sha256": "daa3ceeaa21b1a62e9ba03e862388f1661c0ff6129239489c01d4e18a36b38f9"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8021B758",
+     "size": 12,
+     "sha256": "b3e4110ef027db7e5898884d3935038b1965a2933da0e927d36e38376fc9a4a2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8022E67C",
+     "size": 20,
+     "sha256": "aafdcbc78844533bb37b0dfbd8df1763bbb506a8f545aa408073df0c8b9fcdc4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8022E288",
+     "size": 6,
+     "sha256": "881727e6dcbba5dc5d4807b6f00d0499fccb40d16458c851f5ece05198374c47"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8001D964",
+     "size": 10,
+     "sha256": "9e37f6ae4bfeff8e97accc867e9169e006c5faa34bf5b750d90ad944caa36658"
+    }
+   ]
+  },
+  {
+   "id": "app0.unknowns",
+   "claim": "Not known: the instruction set and format of BMC programs, its memory map and command set, its boot and update check, what happens inside on a failed update, and which NOR chip holds it. The second processor cannot be emulated, so effect output stays on the unit-only list.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "no public documentation; the readable parts do not explain the receiver"
+    }
+   ]
+  },
+  {
+   "id": "app0.recovery",
+   "claim": "No documented way exists to recover from a damaged APP0, so mods must never touch it. Roland warns about interrupting an update. One owner report: after several interrupted updates normal firmware failed to start, yet the update menu still opened after a power cycle. That says something survived, not what, nor that APP0 is safe. The fuller account is in hw.update.stalled: the loader still started after about five stalled updates, and the owner blames a faulty SD card.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner's unit, report recorded in project notes, 2026-11"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland System Program 5.52 update instructions, caution section"
+    }
+   ]
+  },
+  {
+   "id": "app0.own-effects",
+   "claim": "New effects on the second processor are not possible with what is known. Custom sound work must run on the main processor in APP1, inside the audio block budget, before audio reaches the second processor.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "see app0.unknowns and st.audio.chain"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "main processor float effects have run on the owner's unit, 2026-10"
+    }
+   ]
+  },
+  {
+   "id": "app0.type29-on-unit",
+   "claim": "Type 29, COMPRESSOR 2 (app0.hidden-types), works on a unit. Chosen in the grid on BUS 1 (hk.recipe.mfx-grid-entry), the screen shows BUS 1 COMPRESSOR 2 with the knobs SUSTAIN, ATTACK and RATIO, and the knobs change the sound clearly. TONE across its whole range, -100 to 100, changes it very little. MODE = LIMIT silences everything on the bus. By ear it is harsher than the ordinary Compressor (28), and its settings act more strongly. It is not offered for BUS 3 or 4 in FX SETTING, which uses another list (st.mfx.other-lists). An earlier try, 2026-11-13, set only the type by a DT1 (hw.bmc.sysex) while the knobs went on sending the parameters of the effect chosen before: there a bass note through type 29 was identical, sample for sample, to the dry note. So with the parameters of another effect it changed nothing; with its own, sent by the stock grid, it works. Why LIMIT mutes the bus and why TONE does so little is not known: a property of this program, or of the parameter values the stock sends for it. Its parameter records and the DT1 a MODE turn sends: app0.comp2-params.",
+   "topic": "app0",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-13: the owner flashed a private build on DOOM OS 0.7.3 that adds type 29 to the MFX grid as described in hk.recipe.mfx-grid-entry, chose it on BUS 1 and played through it; reported in words, no recording yet; one session"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-13, earlier try: three recordings of one bass-generator note made by the owner in a DAW, aligned and subtracted; the residual of dry against type 29 was exactly zero over 2.5 s, while Compressor (28) at full settings dropped the level by about 6 dB after 80 ms"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "why LIMIT mutes and TONE barely acts"
+    }
+   ]
+  },
+  {
+   "id": "app0.crc",
+   "claim": "APP0 carries a CRC-32 that anyone can recompute: with length = the 32-bit little-endian word at file offset 0x44, the word at 0x60 + length + 12 equals the standard CRC-32 (zlib) of every byte before it, that is the header, the closed block and the 12 bytes after it. It holds in all five known versions (3.02, 4.04, 5.01, 5.50, 5.52). The open effect programs further on in the file lie outside this sum; whether anything else checks them is not known. The header word at 0x50 is a different value whose meaning is not established.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "five APP0 files: the stored word against zlib.crc32, computed twice by two agents independently; in 5.52 the word is at 0x4BBFC and reads 0x1A05DABA"
+    }
+   ]
+  },
+  {
+   "id": "app0.pairs",
+   "claim": "The APP0 catalogue at file offset 0x15D698 holds, for each type number 0-48, two pointers: the effect's program for the second processor and its memory block. The pointers are file offset + 0xC0000. Each points at a descriptor of four words: 0, size, the same size again, and the address of the bytes. In APP0 5.52 four pairs of types share both program and memory block byte for byte: 0 Bypass and 45 Sub Sonic, 10 Reverb and 37 Ha-Dou, 12 Resonator and 35 Hyper-Reso, 24 Stopper and 38 To-Gu-Ro. So within a pair the difference likely comes from elsewhere, from the parameters APP1 sends or from tables outside the catalogue; not checked. 28 Compressor and 29 COMPRESSOR 2 are different programs, 796 and 746 bytes, with memory blocks of 40 bytes each. Bypass is 66 bytes.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "SP404MKII_APP0.bin from the Roland 5.52 update package, SHA256 3e35ff30137f741a715566e205384f9b434ca7ac3847e247bad3f0c9c8a2bd23: all 98 catalogue pointers followed and the blocks compared, 2026-11-13, recomputed in this repository the same day"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "why paired types sound different"
+    }
+   ]
+  },
+  {
+   "id": "app0.comp2-params",
+   "claim": "Parameters of the two compressors in the descriptor table 0x8021996C (app0.params): Compressor (28) is records 383 SUSTAIN, 384 ATTACK, 385 LEVEL, 386 RATIO, 387 MODE; COMPRESSOR 2 (29) is records 388 SUSTAIN, 389 ATTACK, 390 LEVEL, 391 RATIO, 392 TONE (shown -100 to 100), 393 MODE. The knob table 0x802E5B40 + 24 x type (app0.knob-ranges) puts them on the controls as 388, 389, 391, 390, 392, 393 for type 29 (so RATIO before LEVEL) and 383, 384, 386, 385, none, none for type 28, so Compressor's MODE has no control there. Both MODEs are 0-1, shown COMP or LIMIT through a value-name list at 0x80244530. Record 393 at 0x8021B820 reads default 0, min 0, max 1 (the word at 0x8021B828), knob 5, 1. Turning MODE on the effect page sends DT1 address 03 01 0D 0A with value 00 01 for BUS 1 (type 29, knob 5 = LIMIT) and 03 01 0E 0A for BUS 2, as hw.bmc.sysex predicts. Path of a knob on the effect page: 0x80147B84 -> 0x800DE270 -> range from 0x800D3260 and scaling 0x800D1188 -> 0x80018B90 -> sender 0x800D93F0. Both 0x800D3260 and 0x800D1188 take max and min from the second tables 0x801AC830 and 0x801AD1FC (app0.knob-ranges), not from the descriptor; for p = 393 that max is the word 0x801ACE54 = 1. So pinning MODE to COMP is not just setting 0x8021B828 to 0: 0x801ACE54 holds the max that knob turns use. No such change has been tested, on the emulator or a unit, and what the stock then does with a project that saved LIMIT is not checked. On the DM-404 emulator the second page of the COMPRESSOR 2 controls (TONE, MODE) could not be opened: on the BUS 1 effect page, turning VALUE and pressing MFX again showed the BPM screen, and SHIFT+CTRL1-3 turned parameters 1-3. How a unit reaches MODE was not recorded. Later (2026-11-18): the second page opens by holding VALUE and turning a CTRL (st.efx.knob-pages). With both maxima of p = 393 set to 0 (0x8021B828 and 0x801ACE54) MODE stayed COMP over the whole travel of its knob on the emulator, on the effect page and in EFX SET BUS 3/4, where the unchanged firmware reaches LIMIT with CTRL3; the cell itself still shows MODE COMP, and on the owner's unit the cell was seen in EFX SET. Whether a unit can still reach LIMIT with that change, and what a project that saved LIMIT does, is not reported.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 records 383-393 and 0x80244530, read 2026-11-14"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "full-image emulator with gdb on a breakpoint at the sender 0x800D93F0, 2026-11-14: the DT1 for a MODE turn, BUS 1 and BUS 2"
+    },
+    {
+     "label": "BYTES",
+     "source": "names 0x80245EE4 + 4 x p and descriptors for p = 383-393, knob table 0x802E5DF8 (type 29), max 0x801ACE54, read 2026-11-14 in stock-5.52, doom-os-0.7.2 and doom-os-0.7.3 (identical bytes)"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator on doom-os-0.7.3, owner's mod session 2026-11-14: COMPRESSOR 2 on BUS 1, VALUE, MFX and SHIFT+CTRL1-3 tried; screenshots kept outside git"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: COMPRESSOR 2 MODE turned with CTRL3 in EFX SET BUS 3 and on the effect page, unchanged against both maxima 0"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8021B820",
+     "size": 20,
+     "sha256": "cdc8eb0a0c269452d63a2885c55775f4c02cf933593e9d48ace06b7ddd24a485"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8021B820",
+     "size": 20,
+     "sha256": "cdc8eb0a0c269452d63a2885c55775f4c02cf933593e9d48ace06b7ddd24a485"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8021B820",
+     "size": 20,
+     "sha256": "cdc8eb0a0c269452d63a2885c55775f4c02cf933593e9d48ace06b7ddd24a485"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80244530",
+     "size": 10,
+     "sha256": "dcb25ad770abddbf3f96dd0e63a0e1df5519892e56c9e3400560e6e9f2c559a0"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80244530",
+     "size": 10,
+     "sha256": "dcb25ad770abddbf3f96dd0e63a0e1df5519892e56c9e3400560e6e9f2c559a0"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80244530",
+     "size": 10,
+     "sha256": "dcb25ad770abddbf3f96dd0e63a0e1df5519892e56c9e3400560e6e9f2c559a0"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x802E5DF8",
+     "size": 24,
+     "sha256": "59da7e57571bd4375af78942de34141d816ebd21b529e1682052fd040ca452af"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x802E5DF8",
+     "size": 24,
+     "sha256": "59da7e57571bd4375af78942de34141d816ebd21b529e1682052fd040ca452af"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x802E5DF8",
+     "size": 24,
+     "sha256": "59da7e57571bd4375af78942de34141d816ebd21b529e1682052fd040ca452af"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8021B820",
+     "size": 20,
+     "sha256": "cdc8eb0a0c269452d63a2885c55775f4c02cf933593e9d48ace06b7ddd24a485"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80244530",
+     "size": 10,
+     "sha256": "dcb25ad770abddbf3f96dd0e63a0e1df5519892e56c9e3400560e6e9f2c559a0"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x802E5DF8",
+     "size": 24,
+     "sha256": "59da7e57571bd4375af78942de34141d816ebd21b529e1682052fd040ca452af"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    }
+   ]
+  },
+  {
+   "id": "app0.knob-ranges",
+   "claim": "Effect knobs take their range from two tables of 627 words beside the descriptors of app0.params: max at 0x801AC830 + 4 x p and min at 0x801AD1FC + 4 x p (for p = 383-395 max 255, 255, 255, 255, 1, 255, 255, 255, 255, 255, 1, 9, 9 and min all 0, the same values as the descriptor max and min there). The range function 0x800D3260 and the scaling 0x800D1188 read them for controls 0x27F-0x284 (639-644, the six effect controls): p comes from 0x802E5B40 + 24 x type + 4 x (control - 639), the type being a halfword at offset 0xC4 + 2 x slot of the state passed in; -1 means no parameter. 0x800D1188 maps a position 0-255 to min + (max - min + 1) x position / 255 (rounded); for control 0x57 it uses the entries at p = 87; for other controls it returns the value unchanged. Whether anything else still reads the descriptor max (0x8021996C + 20 x p + 8) for MFX, and which of the two wins on screen or when a project loads, is not established; a change to only one of them is untested; a change to both for p = 393 is recorded in app0.comp2-params.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "0x800D1188-0x800D1284, 0x800D3260-0x800D32E6, tables 0x801AC830, 0x801AD1FC, 0x802E5B40, read 2026-11-14 in stock-5.52, doom-os-0.7.2 and doom-os-0.7.3 (identical bytes)"
+    },
+    {
+     "label": "DOC",
+     "source": "first noted by a DOOM OS mod session, 2026-11-14 (in that session's private notes); re-read here from the bytes"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D11CC",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D11CC",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D11CC",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D32CE",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D32CE",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D32CE",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x801AD820",
+     "size": 4,
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x801AD820",
+     "size": 4,
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x801AD820",
+     "size": 4,
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D11CC",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D32CE",
+     "size": 8,
+     "sha256": "b20dfc8ba411091e2429c767e24ba26c1d490e7149c05c837ad547fa896da766"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801ACE54",
+     "size": 4,
+     "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x801AD820",
+     "size": 4,
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    }
+   ]
+  }
+ ]
+}

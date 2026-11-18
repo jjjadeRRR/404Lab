@@ -1,0 +1,6106 @@
+{
+"firmware": "stock-5.52",
+"meaning": "What the whole-firmware emulator showed. Never proof of behaviour on a unit. no-reaction and unobserved are no evidence either way: the action may need a condition these runs lacked.",
+"experiments": [
+{
+"firmware": "stock-5.52",
+"image_sha256": "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80",
+"bindings_sha256": "02b85634a3de3a93171f94293b3a12ca9be678c146597b52a0d19ec14b712097",
+"tools_sha256": "c23bb8feb4f0f1598dbb2958defcdb8af160b4f4b68c2653fb3537e768adabe3",
+"emulator_sha256": "804969319aad53b1cc36368c530e6a37c227fc48861b8742a181e06e4584d3eb"
+},
+{
+"firmware": "stock-5.52",
+"image_sha256": "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80",
+"bindings_sha256": "02b85634a3de3a93171f94293b3a12ca9be678c146597b52a0d19ec14b712097",
+"tools_sha256": "8085e582a7ebd53b2bc39b5024cd3ac91b136f3d4e716664aa612379f3cd6d07",
+"emulator_sha256": "804969319aad53b1cc36368c530e6a37c227fc48861b8742a181e06e4584d3eb"
+}
+],
+"verdicts": {
+"kb-stock-0002": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0004": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0006": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0003": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0005": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0001": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0007": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0008": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0009": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0010": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0011": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0012": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0013": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0014": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0016": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0015": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0017": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0018": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0019": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 38}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0020": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0021": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0022": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 38}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0023": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0024": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0025": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 38}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0026": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0027": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0028": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 38}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0029": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0030": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0031": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 38}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0032": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0033": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x3E']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0034": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x3E']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0035": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x3F']}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0036": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x3F']}",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0037": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0038": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x40']}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0039": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0040": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x41']}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0041": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0042": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0043": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0044": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0045": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0046": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0047": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0048": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0049": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0050": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0051": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0052": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0053": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0054": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0056": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0055": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0057": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0058": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0059": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0060": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0062": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0061": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0063": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0064": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0065": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0066": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0067": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0068": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0069": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0070": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0071": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0072": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0073": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0074": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0075": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0076": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0077": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0078": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0079": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0080": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0081": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0082": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0083": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0084": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0085": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0086": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0087": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0088": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0089": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0090": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0091": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0092": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0093": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0094": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0096": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0095": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0097": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0098": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0099": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0100": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0101": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0102": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0103": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0104": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0105": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0106": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0107": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0108": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0109": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0110": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0111": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0112": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0114": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0113": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0115": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0116": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0117": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0118": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0119": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0120": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0121": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0122": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0123": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0124": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0126": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0125": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0127": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0128": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0129": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0130": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0131": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0132": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0133": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0134": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0135": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0136": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0138": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0137": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0139": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0140": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0141": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0142": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0143": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0144": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0145": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0146": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0147": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0148": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0149": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0150": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0151": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0153": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0154": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0152": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0155": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 23}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0156": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0157": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 24}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0158": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 50}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0159": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0160": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 27}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0161": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 26}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0162": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0163": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0164": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 37}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0165": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 53}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0166": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 45}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0167": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 46}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0168": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 55}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0169": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 54}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0170": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 49}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0171": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 22}",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0172": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 16}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0173": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 8}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0174": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0175": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 58}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0176": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 30}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0177": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0178": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0179": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 50}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0180": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 50}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0181": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0182": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 5}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0183": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 4}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0184": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 13}",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0185": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 14}",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0186": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0187": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 17}",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0188": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x4C']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0189": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0190": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0191": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x4D']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0192": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0193": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0194": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x4E']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0195": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0196": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0197": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x4F']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0198": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0199": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0200": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x50']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0201": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0202": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0203": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x51']}",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0204": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0205": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0206": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0207": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0209": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0208": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0210": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0211": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0212": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0213": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0214": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0215": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0216": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0217": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0218": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0219": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0220": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0223": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0224": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0225": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0226": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0221": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0227": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0229": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0222": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0230": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0231": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0232": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0233": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0234": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0235": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0228": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0236": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0237": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0238": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0239": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0240": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0241": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0242": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0243": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0245": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0244": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0246": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0247": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0248": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0249": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0251": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0250": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0252": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0253": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0254": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0255": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0256": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0257": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0258": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0259": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0260": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0261": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0262": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0263": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0264": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0265": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0266": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0267": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0268": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0269": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0270": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0271": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0272": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0273": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0277": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0274": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0278": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0279": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0280": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0281": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0282": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0283": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0284": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights",
+"sound"
+]
+},
+"kb-stock-0285": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0286": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0287": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0288": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0289": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0290": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0291": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0292": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0293": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0294": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"lights",
+"sound"
+]
+},
+"kb-stock-0295": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0296": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0297": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0298": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0299": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0300": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0301": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0302": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0303": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0304": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0305": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0306": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0307": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0308": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0309": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0310": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0311": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0312": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0313": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0314": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"sound"
+]
+},
+"kb-stock-0315": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0316": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0317": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0318": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0319": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0320": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0321": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0322": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0323": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0324": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0325": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0326": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0327": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0328": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0329": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0330": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0331": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0332": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0333": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0334": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0335": {
+"verdict": "unobserved",
+"why": "it started from a different picture than its control",
+"signals": []
+},
+"kb-stock-0336": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0337": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0338": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0339": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0340": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0341": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0342": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0343": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0344": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0345": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0346": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0347": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0348": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0349": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0350": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0351": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0352": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0353": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0354": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0355": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0356": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0357": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0358": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0359": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0360": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0361": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0362": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0363": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0364": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0365": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0366": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0367": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0368": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0369": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0370": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0371": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0372": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0373": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0374": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0375": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0376": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0377": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0378": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0379": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0380": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0381": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0382": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0383": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0384": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0385": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0386": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0387": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0388": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0389": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0390": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0391": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0392": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0393": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0394": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0395": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0396": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0397": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0398": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0399": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0400": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0401": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0402": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0403": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0404": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0405": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0406": {
+"verdict": "confirmed",
+"why": "declared signature met: {'audio': True}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0407": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0408": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0409": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0410": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0411": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0412": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0413": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0414": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0415": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0416": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0417": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0418": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0419": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0420": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0421": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0422": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0423": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0424": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0425": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0426": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0427": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0428": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0429": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0430": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0431": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0432": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0433": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0434": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0435": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0436": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0437": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0438": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0439": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0440": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0441": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0442": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0443": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0446": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0447": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0448": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0449": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0450": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0451": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0444": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0452": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0445": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0453": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0454": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0455": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0456": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0457": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0458": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0459": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0460": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0461": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0462": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0463": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0465": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0464": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 45}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0466": {
+"verdict": "confirmed",
+"why": "declared signature met: {'page': 19}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0467": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0468": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0469": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0471": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0470": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0472": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0473": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0474": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0475": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0476": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0477": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0478": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0479": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0480": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0481": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0482": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0483": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0484": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0485": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0486": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0487": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0488": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0489": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0490": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0491": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0492": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0493": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0494": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0495": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0496": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0497": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0498": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0499": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0500": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": [
+"sound"
+]
+},
+"kb-stock-0501": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0502": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0503": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0504": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0505": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0507": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": [
+"sound"
+]
+},
+"kb-stock-0506": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": [
+"sound"
+]
+},
+"kb-stock-0508": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x00', '0x01', '0x02']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0511": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x09', '0x0A', '0x0B']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0512": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x0C', '0x0D', '0x0E']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0513": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x0F', '0x10', '0x11']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0514": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x12', '0x13', '0x14']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0509": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'led': ['0x03', '0x04', '0x05']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0510": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'led': ['0x06', '0x07', '0x08']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0515": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x15', '0x16', '0x17']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0516": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x18', '0x19', '0x1A']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0517": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x1B', '0x1C', '0x1D']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0518": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x1E', '0x1F', '0x20']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0519": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x21', '0x22', '0x23']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0520": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x24', '0x25', '0x26']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0521": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x27', '0x28', '0x29']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0522": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x2A', '0x2B', '0x2C']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0523": {
+"verdict": "confirmed",
+"why": "declared signature met: {'led': ['0x2D', '0x2E', '0x2F']}",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0524": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0525": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0526": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0527": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0528": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0529": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0530": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0531": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0532": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0533": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0534": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0535": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0536": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0537": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0538": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0539": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0540": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0541": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0542": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0544": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0543": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0545": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0547": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0548": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound",
+"effect parameters"
+]
+},
+"kb-stock-0549": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0550": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0551": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0546": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0552": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0553": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0554": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0555": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0556": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0557": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0558": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0560": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0559": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0561": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0562": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0563": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0564": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0566": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0565": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0567": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0569": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0570": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0572": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0573": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0568": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0574": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0571": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0575": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0576": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0577": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0578": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0580": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0579": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0581": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0582": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0583": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0584": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0585": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0586": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0587": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0588": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0589": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0590": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0591": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0592": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0593": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0594": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0595": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0596": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0597": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0598": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0599": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0600": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0601": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0602": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0603": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0604": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0605": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0606": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0607": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0608": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0609": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0610": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0611": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0612": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0613": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0614": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0615": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0616": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0617": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0618": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0619": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0620": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0621": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0622": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0623": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture"
+]
+},
+"kb-stock-0624": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0625": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0626": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0627": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0628": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0629": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0630": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0631": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0632": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0633": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0634": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0635": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0636": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture"
+]
+},
+"kb-stock-0637": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture"
+]
+},
+"kb-stock-0638": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0639": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0640": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0641": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0642": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0643": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0644": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0645": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0646": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0647": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0648": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0649": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0650": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0651": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0652": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0653": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0654": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0655": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0656": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0657": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0658": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0659": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0660": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0661": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0662": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0663": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0664": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0665": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0666": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0667": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0668": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0669": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0670": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0671": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0672": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0673": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"effect parameters"
+]
+},
+"kb-stock-0674": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0675": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0676": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0677": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"effect parameters"
+]
+},
+"kb-stock-0678": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0679": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0680": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0681": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0682": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0683": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0684": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0685": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0686": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0687": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0688": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0689": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0690": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0691": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0692": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0693": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0694": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0695": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0696": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0697": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0698": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0699": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0700": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0701": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0702": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0703": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0704": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0705": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0706": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0707": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0708": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0709": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0710": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0711": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0712": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0713": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0714": {
+"verdict": "reacted",
+"why": "something changed, but not the declared signature {'audio': True}",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0715": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0716": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0717": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0718": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0719": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0720": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0721": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0722": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0723": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0724": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0725": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0726": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0727": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0728": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0729": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0730": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0731": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0732": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0733": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0734": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0735": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0736": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0737": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0738": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0739": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0740": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0741": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0742": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0743": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0744": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0745": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0746": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0747": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0748": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0749": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0750": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0751": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0752": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0753": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0754": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0755": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0756": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"page",
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0757": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0758": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0760": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0759": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"effect parameters"
+]
+},
+"kb-stock-0761": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0762": {
+"verdict": "unobserved",
+"why": "it started from a different picture than its control",
+"signals": [
+"page",
+"picture",
+"lights"
+]
+},
+"kb-stock-0763": {
+"verdict": "unobserved",
+"why": "it started from a different picture than its control",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0764": {
+"verdict": "unobserved",
+"why": "it started from a different picture than its control",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0766": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0765": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0767": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0768": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0769": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"lights"
+]
+},
+"kb-stock-0770": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0771": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0772": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0773": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0774": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights"
+]
+},
+"kb-stock-0775": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0776": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0777": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": []
+},
+"kb-stock-0778": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0779": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"lights",
+"sound"
+]
+},
+"kb-stock-0780": {
+"verdict": "no-reaction",
+"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"signals": [
+"sound"
+]
+},
+"kb-stock-0781": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0782": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0783": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0784": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture",
+"sound"
+]
+},
+"kb-stock-0786": {
+"verdict": "reacted",
+"why": "something changed; no declared signature says what it means",
+"signals": [
+"picture"
+]
+},
+"kb-stock-0785": {
+"verdict": "confirmed",
+"why": "declared signature met: {'left': True}",
+"signals": [
+"page",
+"picture",
+"lights",
+"sound"
+]
+}
+},
+"not_tried": {
+"kb-stock-0275": "needs recorded audio above the skip-back threshold; on the emulator MARK reports no triggered data",
+"kb-stock-0276": "needs recorded audio above the skip-back threshold; on the emulator MARK reports no triggered data",
+"kb-stock-power-shift": "needs the control down during power-on; a run starts already powered"
+}
+}

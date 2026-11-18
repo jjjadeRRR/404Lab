@@ -1,0 +1,6 @@
+# Same bytes on every system. Source hashes tie a build to its sources (`check`), and a shell script with CRLF endings
+# does not run, so Git must not convert line endings on Windows.
+* text=auto eol=lf
+*.bin binary
+*.img binary
+*.png binary

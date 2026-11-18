@@ -1,0 +1,1696 @@
+{
+ "facts": [
+  {
+   "id": "hk.method",
+   "claim": "How mods attach to stock, as seen in DOOM OS, Etc and Tallfree builders and in tools here: replace a few instructions or one data word with a jump or pointer into added code, guarded by the exact original bytes; add code either in flash (XIP) after the image, or in SDRAM by a new COPY scatter row. Nothing already in the image moves. Run `lab404 check-hook` and let `lab404 build` apply patches. Details: lab404/image.py extend(), lab404/hooks.py.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "comparing doom-os-0.7.2 and 0.7.3 with stock-5.52; scatter rows on all three unchanged"
+    },
+    {
+     "label": "DOC",
+     "source": "Etc synth/build.py and Tallfree image/make_image.py at the commits read 2026-10-21"
+    }
+   ]
+  },
+  {
+   "id": "hk.guard",
+   "claim": "Every patch must verify the original bytes and the parent image hash. Addresses for one image do not carry over: other stock versions were not compared, and DOOM OS moved code even between 0.7.2 and 0.7.3. An older DOOM OS 0.6.1 based line used different sites inside DOOM code.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "hk.doom.diff; doom addresses in hk.site.button and hk.site.load differ by version"
+    }
+   ]
+  },
+  {
+   "id": "hk.scatter.order",
+   "claim": "A new COPY row goes after the existing rows. Rows run in order, so a row after the ZERO rows is not cleared. COPY puts payload both in flash and in SDRAM. `extend` writes the moved table after the payload and updates the words at 0x80. Stock, 0.7.2 and 0.7.3 keep the table at file offset 0x62C with no spare room, so the table must move.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 dispatcher 0x60080054-0x60080072"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "404Lab demo build: tests/test_demo_mod.py"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008006E",
+     "size": 8,
+     "sha256": "440129e55389f78d54a06e3c970e9c1bf193e0c10ab05fbc42039d0c3395cdad"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008006E",
+     "size": 8,
+     "sha256": "440129e55389f78d54a06e3c970e9c1bf193e0c10ab05fbc42039d0c3395cdad"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008006E",
+     "size": 8,
+     "sha256": "440129e55389f78d54a06e3c970e9c1bf193e0c10ab05fbc42039d0c3395cdad"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008006E",
+     "size": 8,
+     "sha256": "440129e55389f78d54a06e3c970e9c1bf193e0c10ab05fbc42039d0c3395cdad"
+    }
+   ]
+  },
+  {
+   "id": "hk.region.sdram",
+   "claim": "Best place for payload: 0x83F7A424-0x83FF0000 (see st.mem.free), cached and executable by MPU region 8. The demo mod uses 0x83FD0000. Private test mods have used 0x83FD0000-0x83FEF000 on a real unit. Other mods overlap it: Etc puts waves at 0x83F80000 and a module from 0x83FA2000, and Tallfree reserves 0x83AC0000-0x83FF0000 after shrinking the big buffer. So two mods may collide.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "st.mem.free scan"
+    },
+    {
+     "label": "DOC",
+     "source": "Etc and Tallfree sources at the commits read 2026-10-21"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, private builds, 2026-10 and 2026-11"
+    }
+   ]
+  },
+  {
+   "id": "hk.region.flash",
+   "claim": "Flash after the image is readable at run time and read-only (region 2). Image ends: stock 0x60307A00, DOOM OS 0.7.2 0x60383530, 0.7.3 0x60383FA0, 0.7.4 0x60386DC0. Stop before 0x603FF000 (st.flash.config). That leaves about 0xF7000 on stock and 0x7B000 on DOOM OS. Payload as COPY row data counts against this too. Good for art and tables. Code runs there at flash speed through the cache: NXP gives 58 MB/s with prefetch and 8 MB/s without cache and prefetch on a QSPI reference board.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "image sizes; 0x603FF000 use in stock"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP AN12437 i.MX RT Series Performance Optimization, Rev. 1, tables 4 and 6, p.5-6"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "private test mods have used a flash block at 0x603C0000 on the owner's unit, 2026-10"
+    }
+   ]
+  },
+  {
+   "id": "hk.region.itcm",
+   "claim": "ITCM from 0x1FC00 to 0x20000, 1 KB, is outside every scatter row. No plain reference to it was found apart from values that look like numbers near 0x1FFFF, and Etc uses 0x1FC00 for a small wrapper. It is the only known candidate for code needing cache-free speed. Larger free areas in TCM or OCRAM are unknown.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "scatter rows and scan of references"
+    },
+    {
+     "label": "DOC",
+     "source": "Etc sources at commit af9d9311"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "run-time use not excluded"
+    }
+   ]
+  },
+  {
+   "id": "hk.region.tcm-ocram",
+   "claim": "Free space in DTCM and OCRAM has not been established. Audio DMA banks use DTCM 0x20000000-0x20008000, and stock references other DTCM addresses up to 0x2001xxxx by scan. Absence of a scatter row does not mean free. Do not place data there on a guess.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 references such as 0x1D016, 0x8004297A"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no map of use"
+    }
+   ]
+  },
+  {
+   "id": "hk.patch.decompressed",
+   "claim": "Data in DECOMPRESS regions cannot be patched at a file offset. That covers initial values from 0x80245740 and DTCM and OCRAM data. To change such a value, set it from code at run time. Vtables and constants below 0x80245740 are in the plain COPY row and can be patched: one data word is the smallest possible hook.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "scatter table; `lab404.image.file_offset` refuses these addresses"
+    }
+   ]
+  },
+  {
+   "id": "hk.pattern.veneer",
+   "claim": "Stock has many 10 byte veneers: movw ip, movt ip, bx ip. They live in ITCM near 0x10000 and in SDRAM near 0x800D2D5C. Retargeting a veneer keeps all registers intact except ip, needs no displaced instructions, and changes every caller at once. Scan callers first.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x10034-0x100A6, 0x800D2D5C-0x800D3260"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x000100A2",
+     "size": 8,
+     "sha256": "9c4fbabdee074e92e8a06e06a8c0b726a1be169caab087a787f08a2be7325635"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x000100A2",
+     "size": 8,
+     "sha256": "9c4fbabdee074e92e8a06e06a8c0b726a1be169caab087a787f08a2be7325635"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x000100A2",
+     "size": 8,
+     "sha256": "9c4fbabdee074e92e8a06e06a8c0b726a1be169caab087a787f08a2be7325635"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x000100A2",
+     "size": 8,
+     "sha256": "9c4fbabdee074e92e8a06e06a8c0b726a1be169caab087a787f08a2be7325635"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.audio-voice",
+   "claim": "Per-voice audio site: veneer 0x1008E, single direct caller 0x1C71E, 32 times per block. On entry r0 = voice slot, r1 = mix buffer, r2 and r3 = pointers to stack values, ip free. Bytes are stock on all three images. A pad with no change should take the same stock call so the output stays bit-identical.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "see st.audio.voice"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "bit-exact comparison test of a 32 voice loop with stock on the owner's research stand, synthetic voices only, 2026-11"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "audio code at this site has run on the owner's unit, 2026-10"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001008E",
+     "size": 10,
+     "sha256": "1e6763814fd8f5b20482ff385d73c8a263770502c3079201168727497d3e2797"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C71E",
+     "size": 4,
+     "sha256": "d73d11ae560f9af6c469704057faa66a5d96e3a95fa8b3b920e75463a449e3fb"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.audio-frame",
+   "claim": "Block sites with stock bytes on all three images: 0x1C2D0 render entry, 0x1C766 call of the generator path (used by Etc through 0x1CB84), 0x1CA74 return. 0x1C840 is inside the packing loop and runs 64 times a block, so it is not a block boundary. Tallfree instead replaces the DMA3 vector word at 0x4C at run time and adds samples to the DMA frame after the original handler. No universal site before or after the BUS effects exists: those run on the second processor.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 addresses given; vector 0x4C holds 0x47D3 in the image, so the DMA vector must be installed at run time by 0x10052"
+    },
+    {
+     "label": "DOC",
+     "source": "Tallfree engine/device.c, Etc synth/build_arp.py"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001C840",
+     "size": 8,
+     "sha256": "57da4f0350c9b1b3084d2fd39fc320ff98370596bf4de022c77c7142d799b0ae"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001C840",
+     "size": 8,
+     "sha256": "57da4f0350c9b1b3084d2fd39fc320ff98370596bf4de022c77c7142d799b0ae"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001C840",
+     "size": 8,
+     "sha256": "57da4f0350c9b1b3084d2fd39fc320ff98370596bf4de022c77c7142d799b0ae"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0000004C",
+     "size": 4,
+     "sha256": "080b001d39cc29b9f9c08f9cdd55c02d7b229b5b3c80a160ef0fc95e6ec1d009"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0000004C",
+     "size": 4,
+     "sha256": "080b001d39cc29b9f9c08f9cdd55c02d7b229b5b3c80a160ef0fc95e6ec1d009"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0000004C",
+     "size": 4,
+     "sha256": "080b001d39cc29b9f9c08f9cdd55c02d7b229b5b3c80a160ef0fc95e6ec1d009"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001C840",
+     "size": 8,
+     "sha256": "57da4f0350c9b1b3084d2fd39fc320ff98370596bf4de022c77c7142d799b0ae"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0000004C",
+     "size": 4,
+     "sha256": "080b001d39cc29b9f9c08f9cdd55c02d7b229b5b3c80a160ef0fc95e6ec1d009"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.button.stock",
+   "claim": "Button site on stock: 98 vtable words hold 0x800A80A9. Hook the function entry or those words. Runs in the panel path, normally PANEL TASK. Pass on everything that is not yours.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 count of word 0x800A80A9 in the COPY row"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800A80A8",
+     "size": 8,
+     "sha256": "524f1f24da2efcf78b7c5ca64fe172b5b0e618c428bbcafb6d5087d910967dd8"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.button.doom",
+   "claim": "Button site on DOOM OS 0.7.x: the 98 vtable words point to trampoline 0x802097CD. It saves r0 and r1, loads [0x202BBBFC], compares it with [0x8020979C], and goes to the DOOM OS handler (0x6032F4E9 on 0.7.2, 0x6032F4DD on 0.7.3, 0x60330595 on 0.7.4) or on to stock 0x800A80A9. A site placed on the trampoline sees events before DOOM OS; anything not handled must continue exactly into it.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "doom-os-0.7.2 and doom-os-0.7.3 0x802097CC-0x802097FA; doom-os-0.7.4 the same span"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "hook at this trampoline used on the owner's unit, private build, 2026-11"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x802097CC",
+     "size": 12,
+     "sha256": "f33a8ff3aec0826df284203aedbd4b67e1904dca04475087f820066a0f5334ef"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x802097CC",
+     "size": 12,
+     "sha256": "f33a8ff3aec0826df284203aedbd4b67e1904dca04475087f820066a0f5334ef"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x802097F0",
+     "size": 4,
+     "sha256": "b9cd99c3156f0da1e0bfd9421a2e7807cd98764c1b7378354a2a01fe03ec7c1e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x802097F0",
+     "size": 4,
+     "sha256": "a599410a7cda27540c0f1bf66fcd4c829968e69740cfa5d917720ae0b19590d3"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x802097CC",
+     "size": 12,
+     "sha256": "f33a8ff3aec0826df284203aedbd4b67e1904dca04475087f820066a0f5334ef"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x802097F0",
+     "size": 4,
+     "sha256": "6bb1d9e7778512a2d21c8198241e86a271f8e49be82a21943aa21610b34d99f1"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.load",
+   "claim": "Project LOAD: stock entry 0x8018AE68 unmodified on stock. DOOM OS 0.7.2 replaces it with a jump to 0x802098E1, which goes through the word at 0x80209890, value 0x6033670D. 0.7.3 jumps to 0x802098A1, ldr.w pc,[pc] with the word at 0x802098A4, value 0x60337179. Replacing that word puts a mod in the chain; call the old value first so DOOM OS finishes its own work. LOAD handler in 0.7.3 may call stock LOAD more than once. r0 and r1 pass through. 0.7.4-651C keeps the same stock entry bytes and the same veneer 0x802098A0 with the word at 0x802098A4, now 0x603395FD; its handler is the same function as 0.7.3 0x60337179 (same instructions, moved addresses) with one more call on the repeated-LOAD branch. On both 0.7.3 and 0.7.4 the word is rewritten to RAM while DOOM OS starts (hk.doom.veneers-rewritten), so a file patch of it is lost.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "addresses on each image"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "that a repeated load keeps the same project number"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8018AE68",
+     "size": 8,
+     "sha256": "e763e86d70812e659d09671f3d5ca9face7ed13da827ca97ad47428102f8f005"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8018AE68",
+     "size": 8,
+     "sha256": "966dde4f9e42bc69354c9cdf9df5766e64e480ab6d064d7befcd6d2b2dd61847"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8018AE68",
+     "size": 8,
+     "sha256": "edbba3112fd160a55d70e58622247bc7c93e2558d1d924b0aa11a2295f0ff665"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80209890",
+     "size": 4,
+     "sha256": "09f97989eba02e0c328a3cf247fe44e2a59cdae789193b0c4440171905e1b376"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x802098A0",
+     "size": 8,
+     "sha256": "640d0f27a0109174e81b190092c85e7299dea11433b8fa8112cee11d2798f402"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8018AE68",
+     "size": 8,
+     "sha256": "edbba3112fd160a55d70e58622247bc7c93e2558d1d924b0aa11a2295f0ff665"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x802098A0",
+     "size": 8,
+     "sha256": "f48a7e3ba81f91e74914720f1283134e9a92ca73ff7e3b730a99038e825c73d2"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.project-ops",
+   "claim": "File operation call sites: SAVE 0x800CF218 and TRUNCATE 0x8010C558 are unmodified on all three images, and TRUNCATE writes _trunc.bin then calls SAVE. DOOM OS 0.7.3 alone retargets calls to IMPORT at 0x8004E870, COPY at 0x8004EA02, BACKUP at 0x8004EEFC and 0x8004EF6E, EXPORT at 0x80175BFA; stock and 0.7.2 call the original functions there. 0.7.4 keeps the same five retargeted calls, but each now goes to a veneer 0x10 later (two new veneers were inserted before them, hk.doom.074.veneers); it also retargets two more calls, 0x8004F414 (stock bl 0x80185C18) and 0x80188874 (stock bl 0x800D31D0), whose purpose has not been read.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "bytes compared across images"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800CF218",
+     "size": 8,
+     "sha256": "0c531ce1fd6358f4948fb69d86729447f7cdabbe1e7d27b8eee1d5a1685cf932"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800CF218",
+     "size": 8,
+     "sha256": "0c531ce1fd6358f4948fb69d86729447f7cdabbe1e7d27b8eee1d5a1685cf932"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800CF218",
+     "size": 8,
+     "sha256": "0c531ce1fd6358f4948fb69d86729447f7cdabbe1e7d27b8eee1d5a1685cf932"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8010C558",
+     "size": 8,
+     "sha256": "083775809a49b52bfbd3e432aafb26576aa31a75b282f9e2cae4e62d58829345"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8010C558",
+     "size": 8,
+     "sha256": "083775809a49b52bfbd3e432aafb26576aa31a75b282f9e2cae4e62d58829345"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8010C558",
+     "size": 8,
+     "sha256": "083775809a49b52bfbd3e432aafb26576aa31a75b282f9e2cae4e62d58829345"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8004E870",
+     "size": 4,
+     "sha256": "167142956c828671345b7ef7e5a6002035e6810334f8a84113e64dafb2e2b743"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8004E870",
+     "size": 4,
+     "sha256": "54d2c024e2354a02fad1cf631cc866823780bd56992edba55270cd31f32fcad4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8004EA02",
+     "size": 4,
+     "sha256": "a471afd81fb2601e1b6006949c7488d79edc2a1c2b5deac9bca0550f6414d89a"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80175BFA",
+     "size": 4,
+     "sha256": "0796443af8d6a6eb672fd60761aa7dd46a8bab31cec7571d563113a2cec077ae"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800CF218",
+     "size": 8,
+     "sha256": "0c531ce1fd6358f4948fb69d86729447f7cdabbe1e7d27b8eee1d5a1685cf932"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8010C558",
+     "size": 8,
+     "sha256": "083775809a49b52bfbd3e432aafb26576aa31a75b282f9e2cae4e62d58829345"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.draw",
+   "claim": "Draw site: 0x8006FD48, stock bytes on all three images. Overlay drawing can go here. Tallfree uses data word 0x80226E98 (status line draw, stock 0x8014A019) once to start up, restoring it afterwards.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8006FD48, 0x80226E98"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "overlay at this site used on the owner's unit, private build, 2026-11"
+    },
+    {
+     "label": "DOC",
+     "source": "Tallfree image/make_image.py"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80226E98",
+     "size": 4,
+     "sha256": "70e2f482a02a305207f8198f46652ff477130e76e5a80fcb9721e2e40188bab3"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80226E98",
+     "size": 4,
+     "sha256": "70e2f482a02a305207f8198f46652ff477130e76e5a80fcb9721e2e40188bab3"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80226E98",
+     "size": 4,
+     "sha256": "70e2f482a02a305207f8198f46652ff477130e76e5a80fcb9721e2e40188bab3"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8006FD48",
+     "size": 8,
+     "sha256": "9c3532c667d3a9bf357466c08d109e6c592db35ff27fa27de2c136cfae50778c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80226E98",
+     "size": 4,
+     "sha256": "70e2f482a02a305207f8198f46652ff477130e76e5a80fcb9721e2e40188bab3"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.tick",
+   "claim": "Timer site: vtable word 0x8021D018, stock 0x80072CF1, is called with (this, code) in PANEL TASK, code 0 every 1 ms. Two objects share it, so a wrapper must check this. Replacing it is a 4 byte data patch.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8021D018 and 0x80045FE0"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "used on the owner's unit, private build, 2026-10"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8021D018",
+     "size": 4,
+     "sha256": "fd867316f3615b17cac5ad8b14d0d140a8f4b305f384858e057251558fa1bd6f"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.led",
+   "claim": "LED site: entry 0x800A7DB0 sees every LED change, with stock cache kept by 0x800D4910 above it. DOOM OS also takes over dispatcher 0x800D5370 on 0.7.x. Keep stock cache as the shadow copy and resend it when your animation stops.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800A7DB0; doom-os-0.7.2 and 0.7.3 0x800D5370"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D5370",
+     "size": 8,
+     "sha256": "7f0a0e427eafa65b5ddda9959e50b4953b302314b40bdbdbc31434d7f6b36072"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D5370",
+     "size": 8,
+     "sha256": "7f0a0e427eafa65b5ddda9959e50b4953b302314b40bdbdbc31434d7f6b36072"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D5370",
+     "size": 8,
+     "sha256": "7f0a0e427eafa65b5ddda9959e50b4953b302314b40bdbdbc31434d7f6b36072"
+    }
+   ]
+  },
+  {
+   "id": "hk.site.saver",
+   "claim": "Screensaver draw site: word 0x8022C454, stock 0x80175261. Keep the stock setting range. A value above 3 in item 316 would be saved in system settings and returned to stock on rollback, so keep a mod choice in its own variable.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8022C454, 0x8006E4C4 (cmp r3,#3)"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8006E4C4",
+     "size": 4,
+     "sha256": "2c7716f0faeca2be288cf4b26d1faddd23901c494b869e142d306c5a8c1970df"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8006E4C4",
+     "size": 4,
+     "sha256": "2c7716f0faeca2be288cf4b26d1faddd23901c494b869e142d306c5a8c1970df"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8006E4C4",
+     "size": 4,
+     "sha256": "2c7716f0faeca2be288cf4b26d1faddd23901c494b869e142d306c5a8c1970df"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8022C454",
+     "size": 4,
+     "sha256": "546ac96d5c420f8063cdfeb34404009845c2e134a4419e7d1c1e372d56cb4059"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8006E4C4",
+     "size": 4,
+     "sha256": "2c7716f0faeca2be288cf4b26d1faddd23901c494b869e142d306c5a8c1970df"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.layout",
+   "claim": "DOOM OS 0.7.x adds no scatter rows. Its block, magic SPUA, starts at file offset 0x287A00 (flash 0x60307A00). Sections are named SCRTBL, SYSTAB, SYSSTR, CONTBL, BOOTANI and CODE. Code runs from flash at 0x60318C10 and up, position independent, and calls stock through ldr.w pc,[pc] tables such as 0x60335244. Trampolines live in the main code row at 0x80209798 and up, over what is a table of named console commands in stock.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "doom-os-0.7.x flash 0x60307A00; 0x60335244; stock-5.52 0x80209800-0x802099D4: records of handler, 1, short name"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60307A00",
+     "size": 4,
+     "sha256": "473865edd435e3f95de4e17f45ad784644c8f587f77b5e78c5dd3a5ceea517e5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60307A00",
+     "size": 4,
+     "sha256": "473865edd435e3f95de4e17f45ad784644c8f587f77b5e78c5dd3a5ceea517e5"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80209884",
+     "size": 8,
+     "sha256": "f194df5134b567ef62d05277beeac6dfcdbe67f0804051353bb120cb33d04f97"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60307A00",
+     "size": 4,
+     "sha256": "473865edd435e3f95de4e17f45ad784644c8f587f77b5e78c5dd3a5ceea517e5"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.diff",
+   "claim": "Counting differing bytes in the first 0x287A00 bytes: stock vs 0.7.2 has 774 differing runs, 3,279 bytes; stock vs 0.7.3 has 313 runs, 1,123 bytes; 0.7.2 vs 0.7.3 has 504 runs, 2,436 bytes. Older notes say 236 edits, 4,243 bytes for 0.7.2; that count depends on how nearby changes are merged (245 runs and 4,195 bytes when merging gaps of 4 or less).",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "byte comparison of the three images, 2026-11-09"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.free",
+   "claim": "DOOM OS 0.7.2, 0.7.3 and 0.7.4 code has no direct reference to 0x83F7A424-0x83FF0000 or to non-cacheable top memory. That does not prove it does not touch them through computed addresses, and DOOM OS code behind the trampolines has not been executed on the stand.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "scan of movw/movt pairs and literals in DOOM OS code, both versions; 0.7.4 scanned 2026-11-15 for 0x83F80000-0x84000000 and flash 0x60390000-0x603FF000: no movw/movt pair, literal hits are instruction bytes as on 0.7.3"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "absence of references only"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.files",
+   "claim": "DOOM OS files on internal storage: 0.7.2 uses PTN/DOOMEQ.EQ, B:/DOOMOS.CFG, B:/DOOMBOOT.DAT, B:/DOOMOS.Exx, B:/DOOMOS.BNC. 0.7.3 moves project data to PROJECT_xx/DOOMOS/ (DOOMEQ.EQ, BINDINGS.DAT) and copies that folder on COPY and EXPORT when the target has none. Do not write into its files; their formats are private to it.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "strings at doom-os-0.7.2 0x6033494C, 0x6037E567, doom-os-0.7.3 0x6033B5E3 and code at 0x603392D0"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6033494C",
+     "size": 9,
+     "sha256": "d0864564796f8cbcf2374570e15f5b3949d96ceb5194cc9c6d0017273de7014c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6033B5E3",
+     "size": 12,
+     "sha256": "7900d39ec4df006b4f95f54177497fed23b2bbd40cba91c0caa430c0d2211479"
+    }
+   ]
+  },
+  {
+   "id": "hk.ctx.audio",
+   "claim": "Audio context rules. Hook runs in task inittsk at top task priority, every 1.333 ms. Allowed: arithmetic on memory prepared beforehand. Not allowed: malloc, file calls, waits, mutexes, LED or sysex sends (they block), printf-style work, large table walks in SDRAM. Work scales with voices, since the site runs 32 times. Overrun effects on a unit are not measured.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "st.audio.chain, hw.periph.send"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the rule itself is engineering judgment from the structure, with no overrun measurement"
+    }
+   ]
+  },
+  {
+   "id": "hk.ctx.audio-fpu",
+   "claim": "FPU use in audio: inittsk has the FPU attribute, so its registers survive task switches. A hook still runs inside stock code. Under the normal calling rule s16-s31 must be preserved by whoever uses them, and s0-s15 may hold live caller values if the site is not a true call boundary. Etc wrappers save only d8-d12 and float has worked on a unit, yet this does not prove every site safe. Check the live registers per site, and avoid float at mid-function sites.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "st.rtos.fpu; Etc entry at 0x83F80024 in its image"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "float effects ran on the owner's unit, private builds, 2026-10"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "general safety not proven"
+    }
+   ]
+  },
+  {
+   "id": "hk.ctx.draw",
+   "claim": "Draw context rules: only drawing. No file calls and no malloc from draw code. On a real unit, builds doing file and allocation work from drawing crashed or hung, and it stopped after that work moved elsewhere. The cause is probable, not proven.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: private builds crashed or hung, 2026-10-30 to 2026-11-01"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "cause inferred; no fault record was captured"
+    }
+   ]
+  },
+  {
+   "id": "hk.ctx.files",
+   "claim": "File work: do it from button handling in the panel path or from a LOAD chain, in a low priority context, without re-entry. Skip it during recording, dialogs and the screensaver. Files on B: from those contexts have worked on a unit. Work in SMPL TASK priority 6 outranks PlayTask 13.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "private build saved settings without SD on the owner's unit, 2026-10-30"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "general rule, not proven safe in all states"
+    }
+   ]
+  },
+  {
+   "id": "hk.ctx.irq",
+   "claim": "DMA interrupts have NVIC value 0x70, so kernel critical sections (BASEPRI 0x60) delay them. In interrupt context a hook must not block or call task-only kernel functions. Tallfree does its speech in its own task at priority 30 and only mixes in the ISR.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "st.rtos.critical"
+    },
+    {
+     "label": "DOC",
+     "source": "Tallfree engine/device.c, service.c"
+    }
+   ]
+  },
+  {
+   "id": "hk.ctx.lock",
+   "claim": "Holding off task switching with 0x800DED08 delays audio too. Keep such sections very short. A private build copied up to 5,120 bytes under it, and that was flagged as a latency risk.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800DED08, 0x800DECF8"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "latency not measured"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.counter",
+   "claim": "Lesson: a counter that does not run looks like a frozen feature. Animations timed by CYCCNT froze on a unit while the emulator passed, because the stand advanced the counter always. Enable it yourself and have a fallback when it does not move, and model hardware by its documented rules on the stand.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, private builds, 2026-11"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "test_hw_dwt on the owner's research stand: DWT device model reproduced the freeze on the old source, 2026-11-05"
+    },
+    {
+     "label": "BYTES",
+     "source": "hw.dwt.stock"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.stock-first",
+   "claim": "Lesson: stock must keep working. The owner rejected builds where a stock function such as TRUNCATE worked only every other time. Never consume events outside your own screen, and do not stop a needed stock function to hide a symptom. Compare with the base image, not only with your last build.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner, 2026-10-30"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.overload",
+   "claim": "Lesson: heavy work outside audio still causes audio-like faults. Hashing a whole project file in SMPL TASK cost 1.75 to 2.89 million instructions, and SMPL TASK outranks PlayTask, so after-menu lag on a unit fits starved sequencing. Those are instruction counts, not time. A cut-off guard that drops effect tails was disliked on the unit, and its load figure was also corrupted by using the shortest interval ever seen as the period.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "lag and tail complaints from the owner, 2026-10"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "private stand runs of the hash and of the load calculation, 2026-10"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "cause of the lag"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.changes",
+   "claim": "Lesson: changes piled into one line of builds gave hangs on LOAD and a very loud squeal in one version, and no cause was isolated before that line was dropped. Keep one small change per test, and treat a hang, a loud noise or data loss as a stop for new features.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, a private build series, 2026-10-26 and 2026-10-27"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.sd",
+   "claim": "Lesson: SD trouble can look like a firmware fault. With one card the unit hung or failed to start even on plain DOOM OS 0.7.2, the card and reader gave CRC errors on a PC, and its FAT was damaged. A full reinstall and a new card fixed it. Who damaged the FAT is unknown. So: never require a card, and compare the hash of an image on the card before use.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner, 2026-10-30"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "cause of the FAT damage is open"
+    }
+   ]
+  },
+  {
+   "id": "hk.storage.sidecar",
+   "claim": "Where a mod can keep settings: not inside PADCONF (st.storage.padconf). A separate file in the project works for LOAD and SAVE, but stock COPY and EXPORT drop it unless it passes a filter, so a copy of the project opens without it. In PTN only *.BIN and *.MID pass, and PICTURE passes *.BMP. On DOOM OS 0.7.3 the DOOMOS folder travels when the target has none. Check IMPORT, BACKUP and RESTORE per case. A record in a .BMP container is an untested idea.",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "st.storage.ops, st.storage.ptn-filter, hk.doom.files"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "test_stock_copy_filters on the owner's research stand, 2026-11-05"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "behaviour on a unit, and the .BMP idea"
+    }
+   ]
+  },
+  {
+   "id": "hk.storage.order",
+   "claim": "A safer save order, as used by DOOM OS: write TMP, read back and compare, rename main to BAK, rename TMP to main, remove BAK. Stock rename fails onto an existing name, so the old file must move first. On a power-cut model with atomic rename this keeps old or new data. Rename atomicity on the unit is an assumption.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "DOOM OS 0.7.2 file code around 0x6033494C; stock rename 0x800100D0"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "power-loss test on the owner's research stand, model assumes atomic rename, 2026-11-05"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "real FAT behaviour"
+    }
+   ]
+  },
+  {
+   "id": "hk.loaded-code",
+   "claim": "If a mod loads code at run time, clean the D-cache for it and invalidate the I-cache before jumping, as Tallfree boot.c does. Payload placed by a COPY row is copied during startup; no cache problem with that method has been reported on a unit.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree image/boot.c at commit 2d44c6e5"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "private builds using a COPY row ran on the owner's unit, 2026-10"
+    }
+   ]
+  },
+  {
+   "id": "hk.fault-visibility",
+   "claim": "A crash in a hook usually shows only as a hang, since stock fault vectors are bx lr (hw.faults.vectors). Debug builds can replace those vectors, but a record kept in cached SDRAM may be lost (hw.reset.sdram). This has not been shown to work on a unit. Plan to reproduce faults by steps, not by a crash log.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "hw.faults.vectors"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no report that a crash record survived on a unit"
+    }
+   ]
+  },
+  {
+   "id": "hk.stand-limits",
+   "claim": "A stand pass says little about real timing. The stand counts instructions only and has no caches, DMA, RTOS, or second processor. Every hook candidate needs a short check on a real unit by its owner.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "lab404/stand.py module description"
+    },
+    {
+     "label": "DOC",
+     "source": "docs/PLAN.md stand order"
+    }
+   ]
+  },
+  {
+   "id": "hook.helper-15fee-not-on-pad-path",
+   "topic": "hooks",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "claim": "The mixer helper at 0x15FEE was not called while pads played ordinarily, whereas the voice renderer at 0x14B88 was. A comparison on that helper therefore says nothing about ordinary pad playing. Check that a hook point is on the real path before trusting a comparison there.",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "tests/test_emulator.py: test_the_mixer_helper_is_not_on_the_ordinary_pad_path, test_a_hook_in_the_voice_renderer_fires_and_pads_sound_the_same; one project, pads 1 to 4"
+    }
+   ]
+  },
+  {
+   "id": "emulator.screen-saver-timing",
+   "topic": "hooks",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "claim": "On the emulator the stock and DOOM OS 0.7.3 screen stays still from boot until about a minute later, then the screen saver animates and differs between runs. Screen comparisons must finish before that.",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "screen change log of a 90 second idle run, 2026-11-09; the rule is applied in tests/test_emulator.py"
+    }
+   ]
+  },
+  {
+   "id": "hk.key-event",
+   "claim": "A key event reaches the handler with r1 pointing at three 16-bit values: type, code, value. Type 5 is a press and 6 a release. VALUE turns are reported as type 7 (code 0) and knobs as type 9: CTRL1-3 are codes 1-3, value 0-127. A pad hit is several events: 5 the press, 16 the hit with its velocity, 17 its release, 18 the pressure. The stock plays a pad from type 16, so a mod screen that takes pad presses must also keep 16-18 from the stock. Another knob, type 9 code 0, was seen on the emulator while the analog inputs other than CTRL1-3 were turned; that it is VOLUME is a guess. VOLUME does go through these events on a unit, whatever its code: on the owner's unit it stopped working while a mod screen kept every event (this disagrees with DM-404's note, used in lab404/emulator.py, that VOLUME is analog after the firmware). A hook sees r0 and r1 as the handler does.",
+   "topic": "hook-site",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "types 5 and 6 with HOLD and ROLL: test_the_chord_opens_system_on_the_candidate_only_and_exit_returns"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: events logged in a mod's key handler for VALUE, CTRL1-3, the other knobs and pad hits; knob values matched what the stock marker screen uses"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-18, private builds on DOOM OS 0.7.4: VOLUME did nothing while the mod's screen kept every event; with a build that let all but types 5, 7 and 9/1-3 go on to the stock, pads played their own samples on the mod's screen. One unit; the later build that passes only type 6 and type 9 codes other than 1-3 was not reported on the unit"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "type 9 code 0 as VOLUME; type 17 as the pad release and 18 as pressure are from the event log, not from code"
+    }
+   ]
+  },
+  {
+   "id": "hk.key-codes",
+   "claim": "Key codes in key events, which is each button's light index minus 0x21: BUS FX 0x10, HOLD 0x11, EXT SOURCE 0x12, SUB PAD 0x13, PATTERN SELECT 0x14, PATTERN EDIT 0x15, RECORD SETTING 0x16, START/END 0x17, PITCH/SPEED 0x18, MARK 0x19, DEL 0x1A, REC 0x1B, RESAMPLE 0x1C, BPM SYNC 0x1D, GATE 0x1E, LOOP 0x1F, REVERSE 0x20, ROLL 0x21, EXIT 0x22, COPY 0x23, REMAIN 0x24, BANK A/F to E/J 0x25 to 0x29, SHIFT 0x2A, FILTER+DRIVE 0x2B, RESONATOR 0x2C, DELAY 0x2D, ISOLATOR 0x2E, DJFX LOOPER 0x2F, MFX 0x30, VALUE push 0x31.",
+   "topic": "hook-site",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DM-404 CLAUDE.md, key IDs, and frontend/panel.json for light indexes"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "HOLD and ROLL: test_the_chord_opens_system_on_the_candidate_only_and_exit_returns. LOOP: test_a_chord_that_already_does_something_on_the_base_is_refused. The others not run"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.veneers-rewritten",
+   "claim": "While it starts, DOOM OS 0.7.3 rewrites the words its veneers jump through. The eleven veneers at 0x80209880 to 0x802098D0 are each `ldr.w pc, [pc]` followed by a word. In the file every word points into flash (0x6033....); in the running firmware every one points into RAM (0x835A....), so DOOM OS copies those handlers to RAM and repoints the veneers. A mod that patches one of these words in the file loses its patch at start-up: put the hook in place at run time and expect to put it back, or hook somewhere DOOM OS does not rewrite. The key trampoline at 0x802097CC is not rewritten. The stock voice-launch entry 0x800D63C8 goes through the veneer at 0x80209888, and the stock LOAD entry through the one at 0x802098A0. When exactly the rewrite happens, and whether it happens again later, is not known. DOOM OS 0.7.4-651C does the same with thirteen veneers at 0x80209880 to 0x802098E0 (the file words point into 0x6033....-0x6033D...., the running words into 0x835....), and leaves 0x802097CC alone.",
+   "topic": "hook-site",
+   "firmware": [
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "test_doom_os_rewrites_the_words_of_its_veneers_and_leaves_its_key_trampoline"
+    },
+    {
+     "label": "BYTES",
+     "source": "doom-os-0.7.3: 0x80209880 holds dff800f0 and the word 0x603357D9; ten more follow at steps of 8"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "test_emulator.DoomOs074AtRunTime.test_doom_os_074_rewrites_the_words_of_its_thirteen_veneers_and_leaves_its_key_trampoline, 2026-11-15"
+    }
+   ]
+  },
+  {
+   "id": "hk.open-screen",
+   "claim": "To open a screen, call 0x800DA598 with its page number from the panel path. Page numbers are in st.ui.page-word. The firmware draws the screen and EXIT works as usual, so no drawing code is needed. Called with a Thumb address, 0x800DA599 in firmware_symbols. mods/quick_system is the example. Whether the call is safe at every moment, and what it does to hidden state, was not checked: only that the screen opens and EXIT returns.",
+   "topic": "hook-site",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "page 53 on both bases: test_the_chord_opens_system_on_the_candidate_only_and_exit_returns"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "Owner's report, 2026-11-10, on a unit running a private build on DOOM OS 0.7.3: with HOLD held, ROLL on the main screen opened SYSTEM through this call from the key handler, and no fault was noticed in ten minutes of use. One unit, one short session. The build was the owner's own, not a package of this project"
+    },
+    {
+     "label": "DOC",
+     "source": "DM-404 CLAUDE.md, firmware facts"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.limits-first",
+   "claim": "Lesson: a limit nobody proved is a gap, even when a number for it is written down. For months the largest allowed APP1 was a constant taken from a service routine, and what the loader itself would do with a longer file was unknown; only a dump of the loader settled it (hw.update.app1-range), and showed two file names that brick a unit (hw.update.whole-files). Before designing a function, list what it needs from the unit (flash room, memory, time per audio block, keys, storage) and check each against `python -m lab404 gaps`. An item that is open there is a risk to tell the user about, not a detail.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner's own account and the loader dump of 2026-11-12"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.read-what-you-can",
+   "claim": "Lesson: a mod can read parts of the unit no update file contains, and save them to the SD card with the stock file calls, without writing flash. The loader was read this way (flash 0x60000000-0x6007FFFF is mapped into memory, read only) by a key chord in a private mod, one poll at a time so the audio task is not starved. The same way could read the boot ROM, the fuse shadow registers, the boot mode registers and the last flash sector; none of that has been done yet. Such a dump is the maker's code: study it, write down facts in your own words, never publish the file.",
+   "topic": "hooks",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner, 2026-11-12: the copy ran on the owner's unit and the file was read on a computer"
+    }
+   ]
+  },
+  {
+   "id": "hk.lesson.far-jump",
+   "claim": "Mod code placed high in SDRAM is out of reach of a BL from stock code: stock runs around 0x80000000-0x80250000 and a Thumb BL reaches 16 MB either way, while free SDRAM used by mods lies near 0x83F00000. Entering mod code from the middle of a stock function therefore takes an absolute jump (movw/movt into r12, bx r12; 10 bytes), which is a jump and not a call: the mod repeats the instructions it displaced and jumps back the same way. Before using it, check that r12 is not live there and that no branch lands inside the replaced bytes.",
+   "topic": "hooks",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "Thumb-2 BL range; stock 5.52 code addresses; a private mod on DOOM OS 0.7.3 that enters its code this way from 0x80115334 and 0x801154CC"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "Unicorn: the stock loop around such a jump run to its end"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.mfx-grid-entry",
+   "claim": "How a hidden MFX type was added to the stock grid, done once and working on a unit: copy the 42 words of 0x80245D54 into the mod's own memory with the new type as word 43, point every grid reader (st.mfx.grid-readers) at the copy by changing its movw/movt pair, and raise each limit from 41 to 42 (the knob scale from x 41 to x 42). The two unrolled searches (page of the current type ending 0x80146CFC, VALUE step ending 0x801471E8) cannot see a 43rd word by a changed constant and need a small hook that also checks it; the VALUE turn 0x8006ED40 was replaced whole, because it also reads 0x80245DFC at the same index. Leave 0x80245DFC and its reader 0x8006EB00 alone, and the three non-grid readers. The new cell lands on page 3, cell 11, so no page is added. The stock then shows the type's own name and knob names and sends its own parameters. The other lists (st.mfx.other-lists) are not touched by this, so the type does not appear in FX SETTING for BUS 3/4.",
+   "topic": "hooks",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-13: the owner flashed a private build on DOOM OS 0.7.3 that adds type 29 to the MFX grid as described in hk.recipe.mfx-grid-entry, chose it on BUS 1 and played through it; reported in words, no recording yet: the type was selectable, showed on screen and changed the sound"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "Unicorn runs of each changed reader against the stock list as oracle, and full-image screenshots of grid page 3/3 with the new cell, private project, 2026-11-13"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 reader addresses, see st.mfx.grid-readers"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.automark-32",
+   "claim": "Getting more than 16 AUTO MARK marks from the stock code itself, done once in a private mod. TRANSIENT (st.chop.automark-transient): copy the whole function 0x8017C138-0x8017C768 into the mod's memory at the same address mod 4 (so pc-relative literals still line up), send its branches out of the copy through ldr.w pc,[pc] veneers, and change only the list (0x830089E0 to a list of 32 words of the mod), its fill (0x40 to 0x80 bytes) and the two cmp sb,#0xf to #0x1f. LEVEL (st.chop.automark-level): copy only the outer function 0x8017BC48-0x8017BF06 and point its two calls of the block step 0x8017BA38 at a mod function that calls the stock step, then takes the marks found, puts the last one at chopper + 0x2318 as the previous mark and clears the count at chopper + 0x2358, so the stock keeps measuring from it and never reaches 15. On the emulator the first 16 marks of both matched the stock to the frame, and the analysis went on to 32; the false LEVEL mark (st.chop.automark-level-extra-mark) did not appear, since the extra word is no longer read. Cutting 32 chops was done by calling ExeChop once per chop (st.chop.job), spread over PANEL ticks (st.ui.commit). Not reported on a unit specifically; a candidate.",
+   "topic": "hooks",
+   "firmware": "doom-os-0.7.4",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, a private mod session 2026-11-16 to 2026-11-18 on a private build based on DOOM OS 0.7.4 whose AUTO MARK, CHOP and marker screen code is the stock 5.52 code byte for byte; pad B-16 of the owner's project (404070 frames); reported by that session, not re-run here: stock against the relocated code for TRANSIENT HARD, MID, SOFT and LEVEL 3, 6, 10 on B-16"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.4 addresses as in st.chop.automark-transient and st.chop.automark-level"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "on a unit, not reported for AUTO MARK specifically"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.bus34-entry",
+   "claim": "Offering a hidden MFX type for BUS 3/4 in EFX SET, done once: copy the 41 words of 0x80245C48 into the mod's memory with the new type as word 42, point the movw/movt pair into fp at 0x800BA68C/0x800BA69E at the copy, and raise the limits at 0x800BA6BA (41 to 42) and 0x800BA6D8 (40 to 41). The MIDI readers of the list stay stock, so CC 83 keeps Roland's numbering. Works on the stand; a unit has run the build but has not yet been reported on BUS 3/4 specifically, so this is a candidate.",
+   "topic": "hooks",
+   "firmware": "doom-os-0.7.3",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "Unicorn run of the stock 0x800BA5F0 with the copied list, the parameter read 0x800D61F0 and write 0x800D3B68 answered, private project tests, 2026-11-13"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 and doom-os-0.7.3 addresses as in st.efx.bus34-list"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "on a unit, not reported yet"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.output-meter",
+   "claim": "How a mod can meter the final output (after BUS 4) in real time, done once in a private mod on DOOM OS 0.7.3 and working on a unit. Once per audio block (64 frames, 750 a second, st.audio.block), from the audio path: read TCD4 DADDR (0x400E9090), which is where the DMA writes now (hw.periph.sai-dma); take the other receive bank at 0x20008000 + bank x 0x800, which is complete, and measure each bank only once. A frame is 16 int16 values; left = slot 2 (index 1), right = slot 1 (index 0) (hw.bmc.rx-slots). Peaks: |x| per channel, sample peak, not true peak. Clip: count from -0.2 dBFS (32015), because the output does not reach 0 dBFS. Loudness by ITU-R BS.1770-4 / EBU R128: K-weighting at 48 kHz as two biquads per channel (shelf b = 1.53512485958697, -2.69169618940638, 1.19839281085285, a = -1.69065929318241, 0.73248077421585; high-pass b = 1, -2, 1, a = -1.99004745483398, 0.99007225036621), mean square of L+R summed per 100 ms (75 blocks); momentary = last 0.4 s, short-term = last 3 s, integrated = 0.4 s blocks every 100 ms gated at -70 LUFS absolute and -10 LU relative. Cost in that mod about 2970 instructions per block, about 0.4 % of the processor (counted on the emulator: instructions, not cycles). The screen shows the results about 10 times a second, outside the audio path. Not established: behaviour when the audio loop runs late by more than a block (a bank can be missed), and anything on another unit or firmware.",
+   "topic": "hooks",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit (the owner's), 2026-11-14, private build d73-H16b: 'everything is great, no bugs found'; loudness compared by eye with the Loudness Meter plugin in Reaper, the same audio played from Reaper into EXT SOURCE with both meters watched at once: 'differs within the margin of error'. No numbers were written down, so there is no measured tolerance on a unit"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "owner's mod tests 2026-11-14: integrated loudness against a reference BS.1770 implementation on synthetic signals put into the banks, within 0.1-0.15 LU; a 1 kHz tone at -20 dBFS on both channels reads -20.0 LUFS"
+    },
+    {
+     "label": "DOC",
+     "source": "ITU-R BS.1770-4 (2015), annex 1: K-weighting coefficients at 48 kHz, gating; EBU R128 / Tech 3341 for momentary and short-term windows"
+    }
+   ]
+  },
+  {
+   "id": "emulator.panel-ticks-under-load",
+   "topic": "hooks",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "claim": "On the DM-404 emulator PANEL TASK gets fewer of its 1 ms ticks (st.input.tick) than real time when the audio is busy: about 640 ticks a second idle, about 230 while a pattern plays. So anything counted in PANEL ticks (holding a button, screen timers) runs 3-4 times slower there under load: a 2.5 s hold gave about 570 ticks. A hold test on the emulator must count ticks, not seconds. On a unit the tick is 1 ms; how close a unit stays to that under load is not measured.",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "owner's mod session 2026-11-14 on doom-os-0.7.3 with a private build, tick counter read during idle and during pattern playback; reported by that session, not re-run here"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.074.diff",
+   "claim": "DOOM OS 0.7.4-651C against 0.7.3-733D: the twelve scatter rows are identical, and after startup every region is byte for byte the same (0x0, 0x400, 0x20000000, 0x2023F000, the data row 0x80245740 of 0xA20C0 bytes, 0x8383A30C, 0x83FF0000) except the main code row 0x80000000, which differs in 15 runs, all DOOM OS's own: calls into its veneers moved by +0x10 at 0x80014BE0, 0x80015ED0, 0x8004E870, 0x8004EA02, 0x8004EEFC, 0x8004EF6E, 0x800C01A2, 0x80175BFA; two new hooks 0x8004F414 and 0x80188874; its veneer and trampoline block 0x80209798-0x80209A00; the pointer 0x80224F3C. Its appended block grows from 0x303FA0 to 0x306DC0 file bytes (image end 0x60386DC0). So every stock 5.52 address outside those runs carries over from 0.7.3 unchanged; addresses inside DOOM OS's code (0x6031....-0x6038....) do not.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "region-by-region comparison of both images after the scatter table was applied, 2026-11-15"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8004F414",
+     "size": 4,
+     "sha256": "47b5a03e0862a59c7f7303d7f7ab50d8d765e06538dbe96f5c16df59a0369571"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8004F414",
+     "size": 4,
+     "sha256": "897cedbf2212c6da8e583c57e52a3fda460f2dd293c27c935020775e1f55ddbd"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.074.veneers",
+   "claim": "DOOM OS 0.7.4 has thirteen `ldr.w pc, [pc]` veneers at 0x80209880-0x802098E0 (0.7.3: eleven). The first five keep their places and callers: 0x80209888 (word 0x8020988C, voice launch, from stock 0x800D63C8) now 0x60339E31, and 0x802098A0 (word 0x802098A4, LOAD, from 0x8018AE68) now 0x603395FD. Two new ones follow: 0x802098A8 (word 0x60337C35, called from 0x80188874) and 0x802098B0 (word 0x60338905, called from 0x8004F414). The six 0.7.3 veneers that stood at 0x802098A8-0x802098D0 now stand 0x10 later, and the code trampolines after them (0.7.3 0x802098D8 on) also moved by +0x10, e.g. the SYSTEM page compare 0x8020996A -> 0x8020997A. A mod that called or patched a 0.7.3 veneer after 0x802098A4 must use the new address.",
+   "topic": "hook-site",
+   "firmware": [
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "doom-os-0.7.4 0x80209880-0x802098E8 and the callers listed, compared with doom-os-0.7.3"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80209888",
+     "size": 8,
+     "sha256": "4637c1ceb5b16eb4377d48521a85f4031f2223346f78ee53b7323d78fa0dc73e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x802098A8",
+     "size": 8,
+     "sha256": "0f6b344b4ee1574e47091bc414b69ca44cfbc97d96e615d95ad5aba0911d1f37"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x802098B0",
+     "size": 8,
+     "sha256": "5feba07dd923d6eed4d0ea68e1166f62605fd92c7f3aa9ad0bad4290b0cc48cd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8020997A",
+     "size": 12,
+     "sha256": "7962a5066eb9a7f5b2951827142ada83a77d038d6e4253f61b869f10d042ad10"
+    }
+   ]
+  },
+  {
+   "id": "hk.doom.074.moved",
+   "claim": "Places inside DOOM OS that moved from 0.7.3 to 0.7.4 and that a mod built on 0.7.3 may use: SYSTEM tab-name string 0x60382FC8 -> 0x60385DB8 (same text, loaded by movw/movt r2 at 0x60319518, which stays); the tab dispatch at 0x6031952C and the VERSION constructor at 0x60319548 stay at the same addresses with the same code, except that the constructor's bl now goes to 0x60330830 (was 0x6032F778); the seventh word of the tab table 0x60308080 is 0x60385900 (was 0x60382B10); key handler 0x6032F4DD -> 0x60330595; voice launch handler 0x6033798D -> 0x60339E31; LOAD handler 0x60337179 -> 0x603395FD. The three handlers start with the same instructions as in 0.7.3, with moved addresses. The LOAD handler gains one call (bl 0x60339448) on its repeated-LOAD branch.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "disassembly of both images at these addresses, 2026-11-15"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60319518",
+     "size": 8,
+     "sha256": "1f1ea04461684362ae7c5e46bfdfda5dcfff5f0a1228063c993f079dc9629d03"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60319548",
+     "size": 12,
+     "sha256": "b9b77a5c0e83f3d0988880036b4f90dd830fc63e080dbaf4c17f54c717cdfcf4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60385DB8",
+     "size": 13,
+     "sha256": "d11efac9a5828245a2d3c50c5c2625ddeda9d91abf7ee76ffb610cffe4be3c84"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.port-073-074",
+   "claim": "Moving a mod from DOOM OS 0.7.3 to 0.7.4: keep every stock 5.52 hook as it is (outside the runs in hk.doom.074.diff the bytes are identical) and change only the DOOM OS addresses in hk.doom.074.moved and hk.doom.074.veneers. Guard each hook by its original bytes and the parent hash, so a missed address refuses the build instead of shipping. Hooks on DOOM OS veneer words must be put in place at run time on both versions (hk.doom.veneers-rewritten). A private mod of 88 hooks was ported this way on 2026-11-15: 85 stock hooks needed no change; the three DOOM OS sites changed only in their original bytes; the same sources still rebuilt the 0.7.3 build bit for bit. Whether that port works on a unit is not established yet.",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "the port's build manifests compared hook by hook, 2026-11-15"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "that the ported build behaves on a unit as on 0.7.3: not tried yet"
+    }
+   ]
+  }
+ ]
+}

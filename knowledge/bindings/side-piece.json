@@ -1,0 +1,199 @@
+{
+ "firmware": "side-piece",
+ "inherits": "stock-5.52",
+ "coverage": {
+  "sp-fx": "unknown",
+  "sample": "partial",
+  "system": "partial",
+  "efx-set": "partial",
+  "pad-set": "partial",
+  "looper": "partial"
+ },
+ "bindings": [
+  {
+   "id": "kb-sipi-0001",
+   "screen": "sample",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the Side-Piece FX screen on its HOME menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0002",
+   "screen": "system",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the Side-Piece FX screen on its HOME menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0003",
+   "screen": "efx-set",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the Side-Piece FX screen on its HOME menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0004",
+   "screen": "pad-set",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the Side-Piece FX screen on its HOME menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0005",
+   "screen": "looper",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the Side-Piece FX screen on its HOME menu",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0006",
+   "screen": "sp-fx",
+   "keys": [
+    "EXIT"
+   ],
+   "gesture": "press",
+   "action": "Return to the screen it was opened from",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0007",
+   "screen": "sample",
+   "keys": [
+    "SHIFT",
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "Ducker setting (main screen)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece v0.1.0 does, Ducker"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0008",
+   "screen": "sample",
+   "keys": [
+    "SHIFT",
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "Ducker or tempo pump setting (main screen)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece v0.1.0 does, Ducker"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0009",
+   "screen": "sample",
+   "keys": [
+    "SHIFT",
+    "CTRL3"
+   ],
+   "gesture": "turn",
+   "action": "Input level (main screen)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece v0.1.0 does, Ducker"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0010",
+   "screen": "sample",
+   "keys": [
+    "SHIFT",
+    "PAD1"
+   ],
+   "gesture": "press",
+   "action": "SHIFT plus a pad switches a bus stack on/off (latched or held). Which pads are used and how this shares stock SHIFT+pad is not stated; listed for pad 1 as a placeholder for all 16.",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece v0.1.0 does, Stacks on a pad"
+    }
+   ]
+  },
+  {
+   "id": "kb-sipi-0011",
+   "screen": "sp-fx",
+   "keys": [
+    "VOLUME"
+   ],
+   "gesture": "turn",
+   "action": "Still works while the FX screen is open",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece changelog (freakierfirmware.com/sp-404mk2/changelog/), v0.1.0"
+    }
+   ]
+  }
+ ]
+}

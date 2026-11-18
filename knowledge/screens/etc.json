@@ -1,0 +1,18 @@
+{
+ "firmware": "etc",
+ "screens": [
+  {
+   "id": "etc-kits",
+   "name": "Etc drum kits screen",
+   "about": "Thirteen synthesized machine kits, melodic mode via SHIFT+RECORD SETTING; layout of the sub-pages from the README only.",
+   "how_to_open": "SHIFT+PATTERN EDIT",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  }
+ ]
+}

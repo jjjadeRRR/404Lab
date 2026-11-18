@@ -1,0 +1,77 @@
+{
+  "name": "quick_system",
+  "version": "0.1.0",
+  "about": "An example of a small complete mod. On the main screen, one new key chord opens Roland's own SYSTEM screen. It draws nothing of its own, so EXIT and the screen behave as they always do. On every other screen the keys stay the firmware's own.",
+  "bases": [
+    "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80",
+    "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa"
+  ],
+  "payload": {
+    "address": "0x83FD0000",
+    "max_size": "0x1000"
+  },
+  "sources": [
+    "quick_system.c"
+  ],
+  "firmware_symbols": {
+    "request_page": {
+      "address": "0x800DA599",
+      "size": 16,
+      "sha256": "3c1e3f8fc139cd21084521cde75df530489a36ce30b5be839fc55edd7f43c92f"
+    }
+  },
+  "adds": {
+    "bindings": [
+      {
+        "screen": "sample",
+        "keys": [
+          "HOLD",
+          "ROLL"
+        ],
+        "gesture": "press",
+        "action": "Open the SYSTEM screen"
+      }
+    ],
+    "demonstrate": [
+      {
+        "keys": [
+          "HOLD",
+          "ROLL"
+        ],
+        "gesture": "press",
+        "page": 53
+      }
+    ]
+  },
+  "hooks": [
+    {
+      "kind": "entry",
+      "address": "0x800A80A8",
+      "function": "quick_system_on_event",
+      "bases": [
+        "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80"
+      ],
+      "about": "stock key handler"
+    },
+    {
+      "kind": "entry",
+      "address": "0x802097CC",
+      "function": "quick_system_on_event",
+      "bases": [
+        "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa"
+      ],
+      "about": "DOOM OS trampoline, ahead of its own handler"
+    }
+  ],
+  "task": {
+    "asked": "A quick way to reach SYSTEM from the main screen, with no new screen to learn.",
+    "feasible": "Yes. The firmware has its own call for opening a screen, on both bases. Nothing new is drawn.",
+    "unit_checks": [
+      "From the main screen, hold HOLD and press ROLL: the SYSTEM screen should open. EXIT should bring you back.",
+      "Press HOLD and ROLL separately: each should do what it always did.",
+      "After playing for a while, press ROLL alone on the main screen: it should not open SYSTEM. If it does, the mod missed HOLD being let go.",
+      "While a sample or pattern plays, try the chord: playback should carry on as before.",
+      "Use the unit normally for a while, then save and reload a project: everything should behave as on the base firmware."
+    ]
+  }
+}

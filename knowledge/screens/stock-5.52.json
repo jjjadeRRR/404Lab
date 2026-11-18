@@ -1,0 +1,583 @@
+{
+ "firmware": "stock-5.52",
+ "screens": [
+  {
+   "id": "sample",
+   "name": "Sample mode (home)",
+   "about": "Pads play samples, pad colour shows the bus, effect buttons live.",
+   "how_to_open": "Power on, or press EXIT repeatedly; PATTERN SELECT off.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "pattern-select",
+   "name": "Pattern play",
+   "about": "Pads are patterns (purple); pads start, queue and stop them.",
+   "how_to_open": "Press PATTERN SELECT.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "pattern-rec",
+   "name": "Pattern record (real time)",
+   "about": "Record settings page, then looped real-time recording or rehearsal.",
+   "how_to_open": "PATTERN SELECT, REC, pick a blinking empty pad.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "tr-rec",
+   "name": "Pattern record (TR-REC)",
+   "about": "Step grid: the 16 pads are steps of one bar.",
+   "how_to_open": "In pattern record settings press REMAIN, then REC; or SHIFT+REC while a pattern plays.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "pattern-edit",
+   "name": "Pattern edit",
+   "about": "Loop start, length, duplicate, crop, quantize, motion erase.",
+   "how_to_open": "PATTERN SELECT on, then PATTERN EDIT.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "pattern-chain",
+   "name": "Pattern chain",
+   "about": "Build and play an ordered list of patterns (chain numbers 1-16).",
+   "how_to_open": "PATTERN SELECT on, hold HOLD and press a pad.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "sampling",
+   "name": "Sampling and resampling",
+   "about": "Standby and recording for REC or RESAMPLE; end snap, count-in.",
+   "how_to_open": "Press REC or RESAMPLE; empty pads blink red.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "looper",
+   "name": "Looper",
+   "about": "Live looper with overdub (MARK Function set to Looper).",
+   "how_to_open": "Press MARK when MARK Function is Looper.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "skipback",
+   "name": "Skip-back buffer",
+   "about": "Review the rolling buffer and save it to a pad.",
+   "how_to_open": "Press MARK when MARK Function is a skip-back setting and the button blinks.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "sound-gen",
+   "name": "Sound generator",
+   "about": "Simple oscillator synth played from the pads; can be exported to a pad.",
+   "how_to_open": "SHIFT+RECORD SETTING.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "sample-edit",
+   "name": "Sample edit (start/loop/end)",
+   "about": "Move start, loop and end points; truncate, normalize, emphasis menu.",
+   "how_to_open": "Press START/END and select a pad.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "marker-edit",
+   "name": "Marker edit and chop",
+   "about": "Place markers, auto mark, assign slices to pads.",
+   "how_to_open": "Select a pad, then SHIFT+START/END.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "envelope",
+   "name": "Envelope",
+   "about": "Attack, hold and release of a sample.",
+   "how_to_open": "SHIFT+PITCH/SPEED (MARK+pad opens it without playing).",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "pitch-speed",
+   "name": "Pitch, speed, volume, pan",
+   "about": "Per-sample playback parameters, tempo mode, vinyl or varispeed.",
+   "how_to_open": "Press PITCH/SPEED.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "chromatic",
+   "name": "Chromatic mode",
+   "about": "Pads play the selected sample at scale pitches.",
+   "how_to_open": "SHIFT+PAD4 after selecting a sample.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "velocity-16",
+   "name": "16 velocity mode",
+   "about": "Pads play the sample at 16 fixed velocity steps.",
+   "how_to_open": "SHIFT+PAD2 after selecting a sample.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "tempo-sel",
+   "name": "Tempo select",
+   "about": "Choose project or bank tempo, set BPM; tap tempo with SUB PAD.",
+   "how_to_open": "SHIFT+PAD11.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "efx-edit",
+   "name": "Effect edit page",
+   "about": "Main parameters on CTRL1-3, sub-parameters with VALUE held.",
+   "how_to_open": "Press an effect button; REMAIN+effect button keeps the page.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "mfx-select",
+   "name": "MFX list",
+   "about": "Choose the MFX effect by VALUE, CTRL3 or pads.",
+   "how_to_open": "Hold MFX.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "dj-mode",
+   "name": "DJ mode",
+   "about": "Two-channel mixer; pads become deck controls.",
+   "how_to_open": "Press banks D/I and E/J together.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "utility-menu",
+   "name": "Utility menu",
+   "about": "Entry to SYSTEM, IMPORT, EFX SET, PAD SET, BACKUP, FACTORY and more.",
+   "how_to_open": "SHIFT+PAD13.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "system",
+   "name": "System settings",
+   "about": "Tabs GENERAL, CLICK, MIDI, GAIN and others; CTRL3 changes tab.",
+   "how_to_open": "Utility menu, SYSTEM; SHIFT+PAD12 jumps to the GAIN tab.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "efx-set",
+   "name": "Effect settings",
+   "about": "Tabs FAVORITE, BUS 3/4, SIDE CHAIN (new in 5.x), DIRECT, OTHER; CTRL3 changes tab.",
+   "how_to_open": "SHIFT+PAD16.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), EFX SETTING tab list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), EFX SET (no SIDE CHAIN tab)"
+    }
+   ]
+  },
+  {
+   "id": "pad-set",
+   "name": "Pad settings",
+   "about": "Pad trigger curve, threshold, LED brightness, pad colour modes.",
+   "how_to_open": "SHIFT+PAD15.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "import-export",
+   "name": "Import/export menu",
+   "about": "Import and export samples and projects, format SD card.",
+   "how_to_open": "SHIFT+PAD14.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "select-project",
+   "name": "Project select",
+   "about": "Choose, copy or delete one of 16 projects.",
+   "how_to_open": "SHIFT+SUB PAD.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "input-setting",
+   "name": "Input setting",
+   "about": "External input tempo, routing and volume.",
+   "how_to_open": "SHIFT+EXT SOURCE.",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), shortcut list (SHIFT + EXT SOURCE)"
+    },
+    {
+     "label": "DOC",
+     "source": "NearTao quick reference for firmware 4.05 (One Up v1.2), SHIFT+EXT SOURCE"
+    }
+   ]
+  },
+  {
+   "id": "pad-link",
+   "name": "Pad link groups",
+   "about": "Group up to four pads so one pad plays all.",
+   "how_to_open": "SHIFT+PAD7.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "mute-group",
+   "name": "Mute group",
+   "about": "Group samples that must not sound together.",
+   "how_to_open": "SHIFT+PAD8.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "exchange",
+   "name": "Exchange pads",
+   "about": "Swap two pads (sample or pattern data).",
+   "how_to_open": "SHIFT+PAD5.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "sample-merge",
+   "name": "Sample merge",
+   "about": "Merge up to four samples into one pad (SUM or MUL).",
+   "how_to_open": "SHIFT+RESAMPLE.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "bank-volume",
+   "name": "Bank volume",
+   "about": "VALUE sets the volume of the selected bank.",
+   "how_to_open": "SHIFT+bank button.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "copy-select",
+   "name": "Copy selection",
+   "about": "Pick source then destination pad or bank, confirm with VALUE or COPY.",
+   "how_to_open": "Press COPY.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  },
+  {
+   "id": "delete-select",
+   "name": "Delete selection",
+   "about": "Pick a pad or bank to delete, confirm with VALUE or DEL.",
+   "how_to_open": "Press DEL; DEL+EXIT for a whole bank.",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v5.50 (English), Playing back samples; shortcut list"
+    },
+    {
+     "label": "DOC",
+     "source": "SP-404MK2 Reference Manual v4 (Russian translation of the Roland manual, 2024-04-24), same sections"
+    }
+   ]
+  }
+ ]
+}

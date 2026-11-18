@@ -1,0 +1,161 @@
+{
+ "firmware": "etc",
+ "inherits": "stock-5.52",
+ "coverage": {
+  "etc-kits": "partial",
+  "sample": "partial",
+  "sampling": "partial",
+  "looper": "partial"
+ },
+ "bindings": [
+  {
+   "id": "kb-etc-0001",
+   "screen": "sample",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the drum machine kits (last kit used)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0002",
+   "screen": "sampling",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the kits with a take armed (RESAMPLE screen)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0003",
+   "screen": "looper",
+   "keys": [
+    "SHIFT",
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the kits from the LOOPER screen",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0004",
+   "screen": "etc-kits",
+   "keys": [
+    "SHIFT",
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "Back to the melodic Sound Generator",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0005",
+   "screen": "etc-kits",
+   "keys": [
+    "CTRL1"
+   ],
+   "gesture": "turn",
+   "action": "Tune (plus or minus 12 semitones); after tapping SHIFT: sweep",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0006",
+   "screen": "etc-kits",
+   "keys": [
+    "CTRL2"
+   ],
+   "gesture": "turn",
+   "action": "Decay; after tapping SHIFT: noise",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0007",
+   "screen": "etc-kits",
+   "keys": [
+    "CTRL3"
+   ],
+   "gesture": "turn",
+   "action": "Tone; after tapping SHIFT: attack",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0008",
+   "screen": "etc-kits",
+   "keys": [
+    "SHIFT"
+   ],
+   "gesture": "press",
+   "action": "Tap to swap the parameter page",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  },
+  {
+   "id": "kb-etc-0009",
+   "screen": "etc-kits",
+   "keys": [
+    "PAD1",
+    "VALUE"
+   ],
+   "gesture": "turn",
+   "action": "Hold a pad and turn: step through that machine's sounds (any pad)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Using the kits (v9.46)"
+    }
+   ]
+  }
+ ]
+}

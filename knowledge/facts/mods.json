@@ -1,0 +1,1148 @@
+{
+ "facts": [
+  {
+   "id": "mod-doom-001",
+   "claim": "DOOM OS is a heavily modified copy of stock 5.52, made by Klangfeld Labs (author Quintus Oostendorp). Current release 0.7.3, build 733D, dated 2026-11-04. It first appeared as 0.6-alpha (build 0C34, 2026-09-28) for stock 5.52.",
+   "topic": "doom-identity",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS README.md, intro; DOOM OS CHANGELOG.md, 0.6-alpha, 0.7.3"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-002",
+   "claim": "Delivery: a browser-based patcher takes the user's own official stock 5.52 SP404MKII_APP1.bin and produces a patched APP1; nothing is uploaded. The patcher accepts only the official 5.52 file and checks the result against a published checksum list. The result is copied to the root of a FAT32 SD card and installed through the normal update menu (SHIFT held at power-on, then VALUE). Only APP1 is produced.",
+   "topic": "doom-delivery",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS README.md, How to install, Manual installation"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-003",
+   "claim": "Base needed: official stock 5.52 only. DOOM OS keeps all stock functions; leaving DOOM OS returns to the stock interface. Going back to stock is done by running the updater with Roland's own file.",
+   "topic": "doom-base",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS README.md, Improvements, How to install"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-004",
+   "claim": "Licence summary (current text): free to use on your own unit, commercial music included. Not allowed without written permission: passing on or hosting the patch, patcher or a patched file; changing DOOM OS; copying or closely imitating its code, screens, layouts, graphics or texts in other work; selling it; using its name or logo for anything else. Studying how it works is allowed, and what is learned about the SP and its firmware may be used in your own firmware. Permission contact: lab@klangfeldlabs.com.",
+   "topic": "doom-licence",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS LICENSE, sections 2, 3 and 4"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-005",
+   "claim": "Older DOOM OS snapshots and copies carry an MIT notice: the Etc repository keeps an MIT licence file for its 0.6.1 base, and Tampal's licence page calls DOOM OS MIT. The current LICENSE in the DOOM OS repository is not MIT. Follow the current text.",
+   "topic": "doom-licence",
+   "firmware": "doom-os-0.7.3",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README, Disclaimer; Tampal legal page (tampal.petakajaib.com/legal), Licences; DOOM OS LICENSE, section 1"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-006",
+   "claim": "Downgrade: the 0.7.3 notes say going back to an earlier DOOM OS is unsupported and does not keep instruments and EQ settings, even from a backup. Back up projects with 0.7.3 first.",
+   "topic": "doom-compat",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS CHANGELOG.md, 0.7.3, notice"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-007",
+   "claim": "Other mods on a DOOM OS base: Tampal publishes patches for DOOM OS 0.6.1, 0.6.2, 0.7, 0.7.1, 0.7.2 and 0.7.3 (applied to the image the DOOM OS patcher makes). Etc contains DOOM OS 0.6.1. Side-Piece and Tallfree are built from official stock 5.52 and have no documented DOOM OS support. Whether DOOM OS and Side-Piece can be combined is not documented.",
+   "topic": "doom-compat",
+   "firmware": "doom-os-0.7.3",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site, Install page; Etc README, intro; Side-Piece patcher page (freakierfirmware.com/sp-404mk2/patcher/), step 2"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-008",
+   "claim": "Open DOOM OS: hold REMAIN and press SUB PAD, from any screen. EXIT closes it and saves. Setting \"Hold to Exit\" (0.1 to 1.0 s) makes EXIT need a hold to close. Setting \"Boot to DOOM\" opens DOOM OS at start-up. Saving is automatic shortly after an edit.",
+   "topic": "doom-open",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Quickstart; All Controls, Basics; DOOM OS Settings"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-009",
+   "claim": "Screens DOOM OS adds: step grid (8 tracks, 16 steps = 16 pads, 5 views: GRID, LABELS, BEATS, BOTH, ZOOM with 4 tracks), piano roll, TRACK page and PATTERN panel (menus on RECORD SETTING), instrument browser (tabs INSTRUMENTS and KITS), instrument editor, parameter-lock editor, arpeggiator (ARP), pattern tools, mixer, EQ display and EQ screen, SIDECHAIN, FX Automation, bounce card, NEW NOTES settings, effect pages kept open, help mode, waveform overlay, and two tabs in SYSTEM (DOOM OS, SHORTCUT).",
+   "topic": "doom-screens",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Getting Started to DOOM OS Settings"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-010",
+   "claim": "Pattern sequencer: pads are steps of the selected track; VALUE selects the track; CTRL1/2/3 set velocity, length, nudge for the whole track or, with a step pad held, for one note. SHIFT+CTRL1 on a held step sets pitch (12 semitones either way), SHIFT+CTRL2 sets fine length. REMAIN with a held pad keeps the note selected. New pattern: hold PATTERN SELECT and press an empty pad. Switching pattern during play waits for the end of the playing one; adding SUB PAD switches at once. PATTERN SELECT starts/stops play. Existing saved patterns can be edited only after they have played once since power-on.",
+   "topic": "doom-sequencer",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Getting Started; Note Editing; All Controls, Basics, Tracks, Notes"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-011",
+   "claim": "Limits: up to 160 tracks shown, 16,384 notes per pattern (more still load and play but are not all shown), undo history about 11 to 12 steps (sources differ), patterns over 512 notes and effect movements are too big for undo. DOUBLE refuses past 64 bars or 512 notes.",
+   "topic": "doom-sequencer",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS CHANGELOG.md, 0.7, Improvements; DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel, Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-012",
+   "claim": "The two DOOM OS texts disagree on undo depth: the manual says up to 11 steps in All Controls, the README feature list says up to 12.",
+   "topic": "doom-sequencer",
+   "firmware": "doom-os-0.7.3",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Basics; DOOM OS README.md, Features"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-013",
+   "claim": "Recording: REC once = rehearse (blinks), again = record, EXIT stops recording. Record modes SINGLE, MULTI, CHROMATIC, 16 VEL, changed with SHIFT+REC or in the PATTERN panel. SHIFT+PATTERN EDIT opens NEW NOTES (quantize, swing, live or fixed velocity, live or fixed length). SHIFT+pad 1 fixed velocity, SHIFT+pad 2 turns 16 VEL on, SHIFT+pad 9 cycles metronome ON, RECPLAY, OFF. HOLD does nothing while REC is on.",
+   "topic": "doom-recording",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Recording; All Controls, Recording"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-014",
+   "claim": "Bounce in place: RESAMPLE records the selected track with its effects onto a chosen empty pad and replaces the track's notes with one note on the new pad; SHIFT+RESAMPLE records everything heard and leaves the pattern as it is. Modes CUT, TAIL (up to 30 s tail), LOOP. Undo with SHIFT+PATTERN SELECT. A pad that has a sample or notes is refused.",
+   "topic": "doom-bounce",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-015",
+   "claim": "Instruments: 20 built-in sound engines and 11 drum kits. Instruments: BASS, POLY, FM, WAVE, MALLET, PERC, Kick, Snare, Clap, Hats, Rim, Bell, Rasp, Kick8, Kick9, Snare8, Snare9, Claps, Tom8, Tom9. Kits: 909, 808, 707, 727, 606, CR-78, BOOM, LOFI, TRAP, DUST, DOOM. An instrument is loaded onto a pad by holding SUB PAD and tapping an empty pad; the sound is also saved to the pad as an ordinary sample, so the pad plays in stock screens. Instrument editor: START/END on an instrument track; VALUE selects section, CTRL1-3 set parameters, SHIFT = finer, SHIFT+pad 4 chromatic play, BANK buttons pick octave, REMAIN swaps the instrument.",
+   "topic": "doom-instruments",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS CHANGELOG.md, 0.7, New; DOOM OS manual (klangfeldlabs.com/doom-os/manual), Instruments and Kits"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-016",
+   "claim": "Loading a kit into a bank asks before overwriting a bank that holds samples (it deletes the whole bank); a protected bank cannot be loaded. Deleting an instrument's sound is done with stock DEL+pad outside DOOM OS.",
+   "topic": "doom-instruments",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Instruments and Kits, Drum Kits; Instrument Editor"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-017",
+   "claim": "Parameter locks per step on instrument tracks: MARK on the grid or in the instrument editor enters lock mode, tap a step, set CTRL knobs, MARK saves, EXIT discards, DEL resets the step. Locked steps show blue pads. Locks play only when the pattern plays the note, not when a pad is struck by hand. Limits: 4096 locks per project, 64 steps per session, 126 per track in a pattern.",
+   "topic": "doom-parameter-locks",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-018",
+   "claim": "Arpeggiator: RECORD SETTING menu, ARP. Pads become a keyboard in a chosen key and scale; HOLD latches. PLAY page: TYPE (11 types), RATE (1/4 to 1/32 with triplets), GATE. PITCH page: KEY, SCALE (40), OCT (up to 3). VALUE toggles arp on/off and switches pages. PRINT ARP writes the arpeggio into the track as notes (replaces all notes on that track, undoable).",
+   "topic": "doom-arp",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Arpeggiator, PRINT ARP"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-019",
+   "claim": "Pattern tools on PATTERN EDIT: QUANT, SWING, SHIFT, DOUBLE, HALVE, REVERSE, HUMAN, TRANSP, applied to all tracks or to one track (tap its pad). Each tool is one undo step. Quantize, swing and humanize keep chords intact since 0.7.3.",
+   "topic": "doom-pattern-tools",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Pattern Tools; DOOM OS CHANGELOG.md, 0.7.3, Fixed"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-020",
+   "claim": "Mixer: hold RECORD SETTING 0.6 s, or RECORD SETTING then MIXER. CTRL1 pan, CTRL2 bus (B1, B2, DRY), CTRL3 level. Pan, bus and level are the pad's own stock settings, so they sound in every stock screen too. SHIFT+VALUE mute, SHIFT+ROLL solo, tapping a pad mutes it, REMAIN+pad solos a track. SHIFT+RECORD SETTING cycles display style.",
+   "topic": "doom-mixer",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Mixer"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-021",
+   "claim": "Per-pad 3-band EQ (LOW, MID, HIGH; gain, frequency, Q) opened with PITCH/SPEED in the mixer. At most 16 pads can have an EQ at once. The EQ belongs to the pad and is audible in stock screens as well. It is stored per project.",
+   "topic": "doom-eq",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), EQ"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-022",
+   "claim": "Live waveform overlay (last 2 seconds): SHIFT+START/END shows output, again shows the selected track, a third time hides it.",
+   "topic": "doom-waveform",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Waveform Display"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-023",
+   "claim": "Effects inside DOOM OS: an FX button turns the effect on and keeps its page open until EXIT; second page of parameters while VALUE is held; REMAIN+FX button reopens the page of an effect that is on; MFX effect pick by holding MFX plus a pad (DJFX LOOPER or ISOLATOR held as well reaches effects 17 to 48); BUS FX switches bus; SHIFT+pad 16 opens stock bus effects settings.",
+   "topic": "doom-effects",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Effects; All Controls, Effects"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-024",
+   "claim": "Side chain editor: RECORD SETTING then SIDECHAIN. Pick a source bus and a target bus on a bus diagram, CTRL1 threshold, CTRL2 ratio, CTRL3 release, plus a GAIN item. It sets the same side chain as the SIDE CHAIN tab of the stock bus effects settings and applies to every project. DEL+VALUE on a bus turns it off.",
+   "topic": "doom-sidechain",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Side Chain"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-025",
+   "claim": "FX Automation: SHIFT+MARK opens an editor of the effect movements recorded in the pattern for the selected bus. START/END switches EFX MOTION PLAY on or off. Recording effect movement: open an effect page, press REC twice, turn knobs. Setting Motion Rec chooses OVERWRITE or OVERDUB.",
+   "topic": "doom-fx-automation",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), FX Automation; DOOM OS Settings"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-026",
+   "claim": "Help mode: hold SHIFT alone for 3 seconds, then press any control to see what it does without acting. EXIT or another 3 s hold of SHIFT leaves it.",
+   "topic": "doom-help",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Help Mode"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-027",
+   "claim": "DOOM OS settings live in a DOOM OS tab of the stock SYSTEM screen (SHIFT+pad 13, SYSTEM, CTRL3 to the tab): Mixer Level, Mixer Names, Boot Anim (GRAFFITI, VHS, HELLO, BUBBLE, SKETCH, HYPERSPACE, RANDOM), Pattern View, Grid Lines, Pattern Follow, Motion Rec, Hold to Exit, Boot to DOOM. A SHORTCUT tab next to it holds up to eight user-defined shortcuts (key combinations). The assignable combinations and their effects are not documented in the manual.",
+   "topic": "doom-settings",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), DOOM OS Settings"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-028",
+   "claim": "Because the user can define up to eight custom shortcuts, a key combination that looks free on a DOOM OS image may already be used by the user's own setting. The shortcut table is not described in public documents.",
+   "topic": "doom-shortcuts",
+   "firmware": "doom-os-0.7.3",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), DOOM OS Settings (Custom shortcuts)"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-029",
+   "claim": "Changes to stock behaviour outside DOOM OS screens: new DOOM OS and SHORTCUT tabs in SYSTEM; a choice of boot animations; instrument sounds saved as pad samples; pad EQ, pan, bus and level audible in stock screens; projects exported, imported, copied or backed up carry instruments, parameter locks and EQ; stock protected banks respected; a fix to a stock mono-recording sample-reading bug; safer pattern saving (new file written before the old one is removed).",
+   "topic": "doom-stock-changes",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS CHANGELOG.md, 0.7 Miscellaneous; 0.7.3 Fixed; DOOM OS README.md, Improvements; DOOM OS manual (klangfeldlabs.com/doom-os/manual), Instruments and Kits, EQ"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-030",
+   "claim": "Stock keys with a different meaning only while DOOM OS is open: SHIFT+pad 13 turns step 13 on instead of opening UTILITY (UTILITY opens with REMAIN+PATTERN EDIT); REMAIN+RECORD SETTING opens the stock pattern select screen; SHIFT+REVERSE is not used for mute in the mixer (pad tap instead).",
+   "topic": "doom-stock-changes",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), All Controls, Settings, Mixer"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-031",
+   "claim": "Planned but not delivered as of 0.7.3: song mode, clip launcher, advanced sample editing and chopping, and a modular system for loading custom modifications. No extension interface is documented.",
+   "topic": "doom-roadmap",
+   "firmware": "doom-os-0.7.3",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS README.md, Coming next"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-032",
+   "claim": "Version history, 0.6: 0.6-alpha (0C34) first public release. 0.6.1-alpha (ED5E): pattern follow toggle SHIFT+HOLD, solo SHIFT+ROLL, metronome SHIFT+pad 9, EXT SOURCE toggle, time signature display, empty-track patterns playable. 0.6.2-alpha (3824): fixed AUTO TRIG shortcut freezing on MARK.",
+   "topic": "doom-versions",
+   "firmware": [
+    "doom-os-0.6",
+    "doom-os-0.6.1",
+    "doom-os-0.6.2"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS CHANGELOG.md, 0.6-alpha, 0.6.1-alpha, 0.6.2-alpha"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-033",
+   "claim": "Version history, 0.7 (0D8C, 2026-10-28): instruments and kits, arpeggiator, parameter locks, waveform overlay, side chain editor, per-track EQ, bounce in place, direct mixer shortcut, new context menus, boot-to-DOOM, hold-to-exit, 16 VEL record mode, codebase rewritten. 0.7.1 (E7F5): instrument preview, instrument swap in editor, bounce to any empty pad, mixer solo moved from SHIFT+pad to REMAIN+pad. 0.7.2 (359C): GATE and instrument browser fixes. 0.7.3 (733D): project import/export/backup keep DOOM OS data, pattern copy fix, chords kept by quantize, test boot image removed.",
+   "topic": "doom-versions",
+   "firmware": [
+    "doom-os-0.7",
+    "doom-os-0.7.1",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS CHANGELOG.md, 0.7, 0.7.1, 0.7.2, 0.7.3"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-034",
+   "claim": "The online manual is headed 0.7 but describes behaviour from 0.7.1 onward (instrument swap, bounce to any pad, REMAIN solo). It is treated here as the 0.7.3 manual; anything the changelog does not confirm for 0.7.3 specifically is a small risk.",
+   "topic": "doom-manual-version",
+   "firmware": "doom-os-0.7.3",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), header; DOOM OS CHANGELOG.md, 0.7.1"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-img-0.7.3",
+   "claim": "The APP1 image of this version is 3162016 bytes; stock 5.52 is 2,652,672 bytes. The identify tool recognises it by SHA-256.",
+   "topic": "doom-image",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "lab404 identify on inputs image, whole-file size and hash"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-img-0.7.2",
+   "claim": "The APP1 image of this version is 3159344 bytes; stock 5.52 is 2,652,672 bytes. The identify tool recognises it by SHA-256.",
+   "topic": "doom-image",
+   "firmware": "doom-os-0.7.2",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "lab404 identify on inputs image, whole-file size and hash"
+    }
+   ]
+  },
+  {
+   "id": "mod-doom-img-strings",
+   "claim": "DOOM OS 0.7.3 contains text labels of its settings (Boot to DOOM, Hold to Exit, Pattern Follow, a SHORTCUT tab) at the listed addresses; none of them exists in stock 5.52. DOOM OS 0.7.3 also contains a file name BINDINGS.DAT that 0.7.2 lacks, so 0.7.3 added a data file under the DOOM OS project folder, probably for the custom shortcuts (hypothesis, purpose not read).",
+   "topic": "doom-image",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "string search in doom-os-0.7.3 image; same strings absent from stock-5.52; BINDINGS.DAT absent from doom-os-0.7.2"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60382D54",
+     "size": 12,
+     "sha256": "bed550859160dc9f95e52045330ff3b3012e0d8dfededc439c828f3ffca2f068"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60382CF0",
+     "size": 12,
+     "sha256": "b93890e58469c7ca4bc620d6edaf50f5ce87ef90d4de288dbcd463d610abadb9"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60382FBC",
+     "size": 8,
+     "sha256": "9e4ecd40e26f0118b6c0387c6103ddcd59858c84cbb50bd55dd138a7a7f48793"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6033B5E3",
+     "size": 12,
+     "sha256": "7900d39ec4df006b4f95f54177497fed23b2bbd40cba91c0caa430c0d2211479"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-035",
+   "claim": "Side-Piece (short name SiPi) is an unofficial custom OS layer for stock 5.52, by Freakier Firmware Labs LLC (Asheville NC). Version 0.1.0, build 14d, free open beta, changelog dated 2026-10-17. The VERSION tab (SHIFT+pad 13, SYSTEM, CTRL3) reads SiPi v0.1.0.",
+   "topic": "sipi-identity",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), main page; changelog page, v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-036",
+   "claim": "Delivery: browser patcher on the site. The user backs up, drops Roland's 5.52 update (zip or APP1) in, and the browser builds the patched APP1; changes come from the server as small byte lists, never as firmware. Install via SD card, SHIFT at power-on, VALUE. The patcher refuses to build a file that alters Roland's start-up and update code, so the way back to stock stays the same. APP0 is never to be put on the card.",
+   "topic": "sipi-delivery",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece patcher page (freakierfirmware.com/sp-404mk2/patcher/), steps 1-5, Going back, Never"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-037",
+   "claim": "Base: official stock 5.52 only (\"built for this version only\"). The compatibility table lists it as in beta. No other firmware or DOOM OS base is supported.",
+   "topic": "sipi-base",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "freakierfirmware.com/compatibility/, table; patcher page"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-038",
+   "claim": "Licence summary: all site content, including the mods, is copyright Freakier Firmware Labs LLC, all rights reserved. Mods are free. A user may build and flash as many of their own units as they like but may not resell, share or redistribute a mod's patch data or a build made with it; people should be sent to the patcher. No promise of updates or ports.",
+   "topic": "sipi-licence",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "freakierfirmware.com/terms, Copyright, Free packs and tips"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-039",
+   "claim": "Side-Piece is not documented to work with DOOM OS, Tampal, Etc or Tallfree; its patcher takes an official 5.52 file, so combining needs a different route and is untested.",
+   "topic": "sipi-compat",
+   "firmware": "side-piece",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "patcher page, step 2"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-040",
+   "claim": "Side-Piece FX screen: SHIFT+PATTERN EDIT opens it on a HOME menu, from the main screen, SYSTEM, EFX SETTING, PAD SETTING and the looper. EXIT returns to where you were. While it is open pads, LOOP, REVERSE, GATE, BPM SYNC, the bank buttons and VOLUME keep working; any other button returns to the main screen in one press. HOME entries: EQ, buses, LFOs, stretch, Euclidean lanes, chop, view, info.",
+   "topic": "sipi-fx-screen",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), What Side-Piece does, FX screen; changelog v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-041",
+   "claim": "FX stacks: BUS 1 to 4 and DRY each hold four effect slots in any order. Slot types: filter (low, high or band pass), lo-fi, four-band EQ, chorus, phaser, delay (up to 1 s or tempo-synced), transient shaper. SHIFT plus a pad switches a bus's whole stack on or off, latched or while held. Which pad maps to which bus, and how this coexists with stock SHIFT+pad shortcuts, is not stated.",
+   "topic": "sipi-stacks",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), FX stacks, Stacks on a pad"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-042",
+   "claim": "How SHIFT+pad stack switching coexists with stock SHIFT+pad functions (fixed velocity, 16 velocity, chromatic, tempo, utility, import/export, effect settings) is not documented.",
+   "topic": "sipi-stacks",
+   "firmware": "side-piece",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Stacks on a pad"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-043",
+   "claim": "Four LFOs with 15 shapes (sine, triangle, saw, square, sample and hold, smooth random, drunk walk, steps, drawn shape, PRESS = follows hardest pad, CHAOS, LORENZ and others), free or tempo-synced, with depth, phase, skew, smoothing, retrigger, one-shot envelope and fade-in. Targets: any stack setting or another LFO.",
+   "topic": "sipi-lfo",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Four LFOs; lessons list"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-044",
+   "claim": "EQ per bus: low and high shelf plus two mid bands with adjustable width; knobs pick up from the current value.",
+   "topic": "sipi-eq",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), EQ per bus"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-045",
+   "claim": "Four Euclidean lanes, each playing one pad while a pattern runs, with steps, hits, rotate, rate, velocity, probability, gate length.",
+   "topic": "sipi-euclid",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Euclidean lanes"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-046",
+   "claim": "Frequency chop splits one pad into four bands that sum to the original and puts the upper three on the next free pads; the source pad becomes the low band. No undo; chop a copy. GO waits while a pattern plays; a pad holding a backup from an interrupted chop is protected.",
+   "topic": "sipi-chop",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Frequency chop; changelog v0.1.0"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-047",
+   "claim": "Alternative time-stretch engine with tempo override and pitch override (plus or minus 12 semitones) per stretched pad; user can switch back to Roland's. At most 8 voices use it at once; a ninth falls back to Roland's stretch.",
+   "topic": "sipi-stretch",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Side-Piece time-stretch; changelog known issues"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-048",
+   "claim": "Ducker and tempo pump: a trigger pad turns the other buses down, or tempo-timed pumping does it. SHIFT+CTRL1 and SHIFT+CTRL2 set it from the main screen; SHIFT+CTRL3 sets input level.",
+   "topic": "sipi-ducker",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Ducker, tempo pump and input level"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-049",
+   "claim": "Main-screen views: info, pads, level meters, scope, LFO traces, a psychedelic view. The key that switches views is not stated on the pages read. A CPU guard bypasses the newest effect slot when load gets too high; the INFO page shows pad pressure, load, and what was bypassed.",
+   "topic": "sipi-views",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), Main-screen views, CPU guard"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-050",
+   "claim": "The control used to change main-screen views and the layout of the HOME sub-pages are only inside the simulator lessons, not read.",
+   "topic": "sipi-views",
+   "firmware": "side-piece",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Side-Piece site (freakierfirmware.com/sp-404mk2/), lessons list"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-051",
+   "claim": "Opening images: setting Picture Source (SYSTEM, GENERAL) defaults to SD CARD; shows a built-in mascot and name, or the user's pictures from SIDEPIECE/PICTURE on the card; PROJECT gives stock behaviour. No built-in screen savers. The separate Screen Loader tool needs no firmware: it makes 128x64 one-bit BMP files for the stock opening screen and screen saver feature (in a project folder exported to the card).",
+   "topic": "sipi-picture",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "changelog v0.1.0, Opening images; freakierfirmware.com/sp-404mk2/screens/"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-052",
+   "claim": "Known limits in 0.1.0: effects and LFO settings are not saved over a restart; chop has no undo; delay and chorus tails may stop when a bus's last voice ends; stretch PITCH may do nothing at the top steps on already pitched-up pads.",
+   "topic": "sipi-limits",
+   "firmware": "side-piece",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "changelog v0.1.0, Known issues"
+    }
+   ]
+  },
+  {
+   "id": "mod-sipi-053",
+   "claim": "Side-Piece internals (hook points, memory use, DSP code) are not published and not verified here. Anything about how it is built is unknown.",
+   "topic": "sipi-internals",
+   "firmware": "side-piece",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "patcher page, \"small lists of bytes\""
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-054",
+   "claim": "Tampal (Malay for \"to patch\") is a mod by Petak Ajaib. Engine 0.1.0, first released 2026-10-27. It adds USER FX: effects loaded from the SD card, chosen in the MFX menu next to Roland's own, usable on both buses. Menu holds at most 32 user effects.",
+   "topic": "tampal-identity",
+   "firmware": "tampal",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site (tampal.petakajaib.com), home page, changelog; Tampal catalogue.json, menu_max"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-055",
+   "claim": "Delivery: the install page builds a patched APP1 in the browser from the user's own file (stock 5.52 APP1, or the image the DOOM OS patcher made); an offline patch file is also offered. Effects are separate .BIN files copied to an FX folder on the SD card, downloaded individually or as packs. Free, no account. Install then goes through SHIFT at power-on and VALUE; uninstall by running Roland's own APP1.",
+   "topic": "tampal-delivery",
+   "firmware": "tampal",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site (tampal.petakajaib.com), install page, download page; Tampal README.txt"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-056",
+   "claim": "Bases: stock 5.52 and DOOM OS 0.6.1, 0.6.2, 0.7, 0.7.1, 0.7.2, 0.7.3 (one engine patch per base). Run on a unit: stock 5.52, DOOM OS 0.7 and 0.7.1. Not yet run on a unit: DOOM OS 0.6.1, 0.6.2, 0.7.2, 0.7.3 (passed emulator checks only).",
+   "topic": "tampal-base",
+   "firmware": "tampal",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site (tampal.petakajaib.com), changelog; Tampal manifest.json, engines[].started_on_device"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-057",
+   "claim": "Licence summary: no licence stated for Tampal's own code; effects are free to copy; the engine patches are said to carry none of Roland's or DOOM OS's bytes (the patcher copies from the user's file). Some effects derive from MIT-licensed Airwindows source. Optional paid support (EUR 5 monthly or one-off from EUR 3) buys issue priority and effect suggestions only.",
+   "topic": "tampal-licence",
+   "firmware": "tampal",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site (tampal.petakajaib.com), legal page; support page; Tampal LICENSES.txt"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-058",
+   "claim": "52 effects in three packs. Dynamics (13): 3BAND SQUASH, BASS GLUE, BUS GLUE, DUCKER, FET COMP, LOUDENIZER, MAXIMIZER, NOISE GATE, OPTO COMP, PUNCH, SLOW GLUE, SNAP COMP, TRANSIENT. Colour (22): AIR LIFT, AUTO WAH, BITCRUSH, BUS AMP, CHANNEL EQ, DERING, DESK, DUST, DYN EQ, FOLD, FULL RECT, GRIT SAMPLER, OVERTONES, SOFT CLIP, SUB BOOST, TAPE LITE, TAPE SAT, TILT, TUBE BIAS, VINTAGE EQ, SUB OCT, FORMANT. Space and time (17): BBD CHORUS, DUCK ECHO, ROOM RING, TAPE ECHO, WOBBLE, PLATE, BIG SPACE, FREEZE, SMEAR, ECHO CLOUD, PITCH DELAY, HAT MAKER, REVERSE, GRAIN, RESONANT ROOM, AMBIENT, STUTTER. Pick any 32.",
+   "topic": "tampal-effects",
+   "firmware": "tampal",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal catalogue.json, packs and effects"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-059",
+   "claim": "Every Tampal effect lists six knobs (numbered 1 to 6). The stock SP has physical CTRL1-3 only; how knobs 4 to 6 are reached (second page, other control) is not stated on the pages read.",
+   "topic": "tampal-effects",
+   "firmware": "tampal",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal catalogue.json, effects[].knobs"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-060",
+   "claim": "Tampal documents no key combinations of its own: effects are picked in the stock MFX menu and played with the stock effect controls. Its additions are menu entries, not shortcuts. Whether its entries change how a stock MFX pad-pick (hold MFX plus pad) numbers the slots is not stated.",
+   "topic": "tampal-keys",
+   "firmware": "tampal",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site (tampal.petakajaib.com), home page, install page"
+    }
+   ]
+  },
+  {
+   "id": "mod-tampal-061",
+   "claim": "Tampal is designed to sit on top of stock 5.52 or DOOM OS. Combination with Side-Piece, Etc or Tallfree is not documented (Tallfree and Side-Piece build from stock APP1 only).",
+   "topic": "tampal-compat",
+   "firmware": "tampal",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tampal site (tampal.petakajaib.com), install page"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-062",
+   "claim": "Etc is the name used here for the \"Sound Generator + Kits\" mod by tracelistener (version v9.46, 2026-10-13; Sound Generator part v9.9.3). It is built on, and includes, DOOM OS 0.6.1 (build ED5E). It extends the stock Sound Generator introduced in 5.52 with a four-voice synth, added waveforms, envelope presets, scales, arpeggiator, MIDI-in, and 13 synthesized drum machine kits.",
+   "topic": "etc-identity",
+   "firmware": "etc",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), intro, What this mod adds"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-063",
+   "claim": "Delivery: browser patcher; user loads official stock 5.52 APP1; patcher checks the result against the fork's checksums; result is used with unchanged stock APP0 for the update. The DOOM OS sequencer comes with it (REMAIN+SUB PAD).",
+   "topic": "etc-delivery",
+   "firmware": "etc",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), How to install"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-064",
+   "claim": "Licence: repository carries the MIT licence (copyright Quintus Oostendorp) for the DOOM OS 0.6.1 base, kept unchanged; synth additions are by tracelistener. Because the base is DOOM OS 0.6.1, the current DOOM OS terms may still apply to the included DOOM OS part; unresolved.",
+   "topic": "etc-licence",
+   "firmware": "etc",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Disclaimer; repository LICENSE"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-065",
+   "claim": "Sound Generator additions: four live voices, 17 added waves (FM1:1, FM1:2, FM1:7, CZSaw, CZSqr, CZRes, Sync, Fold, Drive, LPSaw, LPSqr, Organ, Vowel, Table, Logic, Metal, Grit), nine ENV presets (Pluck, Perc, Keys, Pad, Swell, Bass, Acid, Sweep, FPad; four with filter envelope), 34 scales (pads then play only scale notes), an arpeggiator (UP, DOWN, UP&DN, RAND, ORDER, CHORD; seven rates; octave range plus or minus 3; HOLD), MIDI IN to all four voices, held-chord REC. Normal sample pads and patterns do not become live synth pads.",
+   "topic": "etc-features",
+   "firmware": "etc",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), What this mod adds; envelopes; scale pads; arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-066",
+   "claim": "Thirteen synthesized kits modelled on classic drum machines (TR808, DR110, KPR77, UDS, FM, TR909, TR606, SDS-V, Mini Pops 7, CR78, CR8K, TR707, TR727). SHIFT+PATTERN EDIT opens Kits (from the main screen, the RESAMPLE screen with a take armed, and the LOOPER screen); SHIFT+RECORD SETTING returns to the melodic Sound Generator. In kits: CTRL1/2/3 = tune, decay, tone; tapping SHIFT swaps to a second parameter page; holding a pad and turning VALUE steps through that machine's sounds; VALUE menu items include ARP, RATE, HOLD, BPM, KIT, PAD, SOUND, LEVEL, M.CH, BOUNC. BOUNC writes the current kit into the 16 pads of a sample bank. REC in drum mode records the last drums struck together.",
+   "topic": "etc-kits",
+   "firmware": "etc",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Synthesized kits v9.46; Using the kits"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-067",
+   "claim": "MIDI: notes 36 to 51 play pads 1 to 16; channel set in the M.CH item (default 16); CCs control kit and synth parameters; CC 120 and 123 stop hung notes. Works while the Sound Generator is open.",
+   "topic": "etc-midi",
+   "firmware": "etc",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), New in v9.46; Using the kits"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-068",
+   "claim": "Hardware status: the author reports earlier test builds partly played on hardware (drum REC, BOUNC, looper); MIDI, resampling with the kits and the start fix have no hardware report yet; CPU headroom unmeasured; four loud voices can clip. Stock APP0 unchanged.",
+   "topic": "etc-status",
+   "firmware": "etc",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Status"
+    }
+   ]
+  },
+  {
+   "id": "mod-etc-069",
+   "claim": "Etc settings reset at power-on. It is not documented to combine with Tampal, Side-Piece or Tallfree. An earlier internal note that Etc and Tallfree overlap in SDRAM was not confirmed from public sources.",
+   "topic": "etc-compat",
+   "firmware": "etc",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Etc README (tracelistener's doom-os-etc repository, patcher at tracelistener.github.io/doom-os-etc), Status"
+    }
+   ]
+  },
+  {
+   "id": "mod-tallfree-070",
+   "claim": "Tallfree is a screen reader for the SP-404MKII, by Mudb0y (copyright holder in its LICENSE: Stanislaw Przedzinkowski). It is modified stock 5.52 that speaks screen titles, selected items, values, tab names, dialogs, bank letters, effect names and the on/off state of GATE, LOOP, REVERSE, BPM SYNC and EXT SOURCE. Voice: OpenEVV, an Eloquence-like engine running on the SP. Speech plays through the main outputs and is not recorded when sampling or resampling.",
+   "topic": "tallfree-identity",
+   "firmware": "tallfree",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), intro, What it reads"
+    }
+   ]
+  },
+  {
+   "id": "mod-tallfree-071",
+   "claim": "Delivery: a release zip laid out as the SD card: Tallfree's APP1, Roland's unchanged APP0 from 5.52, and the speech engine TALLFREE.BIN in a TALLFREE folder. Installed with the normal update (SHIFT at power-on, VALUE). The engine copies itself to internal memory a few seconds after start-up. After the update APP0 and APP1 should be deleted from the card. An empty file NOENGINE in the TALLFREE folder starts the unit without the engine.",
+   "topic": "tallfree-delivery",
+   "firmware": "tallfree",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), Installing, If something goes wrong"
+    }
+   ]
+  },
+  {
+   "id": "mod-tallfree-072",
+   "claim": "Base: stock 5.52, 13 bytes changed plus a small boot loader. Cost: the looper and skip-back buffer is halved, from 27.3 s to 13.65 s per channel, to make room for the speech engine. Nothing else is said to change.",
+   "topic": "tallfree-base",
+   "firmware": "tallfree",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), What's different"
+    }
+   ]
+  },
+  {
+   "id": "mod-tallfree-073",
+   "claim": "Licence: Tallfree code is MIT. Release zips contain Roland's system program, which is Roland's. TALLFREE.BIN includes OpenEVV (MIT) and IBM language data under OpenEVV's notice.",
+   "topic": "tallfree-licence",
+   "firmware": "tallfree",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), Licence"
+    }
+   ]
+  },
+  {
+   "id": "mod-tallfree-074",
+   "claim": "Speech settings open with SHIFT+EXIT on any screen: VALUE chooses Speed, Pitch, Voice, Volume, Abbreviations or Screen reading; EXIT saves and closes. In stock, SHIFT+EXIT is listed as a stop-everything shortcut on the main screen; whether Tallfree replaces or keeps that is not stated.",
+   "topic": "tallfree-keys",
+   "firmware": "tallfree",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), Speech settings"
+    }
+   ]
+  },
+  {
+   "id": "mod-tallfree-075",
+   "claim": "Compatibility with DOOM OS, Side-Piece, Tampal or Etc is not documented. The cut looper buffer and the engine in its own memory region are reasons to test any combination.",
+   "topic": "tallfree-compat",
+   "firmware": "tallfree",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Tallfree README (github.com/Mudb0y/tallfree), What's different"
+    }
+   ]
+  },
+  {
+   "id": "mod-cmp-076",
+   "claim": "Which mods build on which base: DOOM OS from stock 5.52; Etc from stock 5.52 and includes DOOM OS 0.6.1; Tampal from stock 5.52 or from a DOOM OS image (0.6.1 to 0.7.3); Side-Piece from stock 5.52; Tallfree from stock 5.52. Only Tampal is documented to stack on another mod. The Screen Loader tool uses Roland's own feature and changes no firmware. No other SP-404MKII firmware mod, and nothing called \"Sampled\", was found in public search.",
+   "topic": "mods-compare",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS README; Tampal install page; Etc README; Side-Piece patcher page; Tallfree README"
+    },
+    {
+     "label": "DOC",
+     "source": "public web search 2026-11-09, no other SP-404MKII firmware found"
+    }
+   ]
+  },
+  {
+   "id": "mod-cmp-077",
+   "claim": "Keys taken by mods outside their own screens: DOOM OS REMAIN+SUB PAD (open); Side-Piece SHIFT+PATTERN EDIT (FX screen) and SHIFT+CTRL1/2/3 on the main screen; Etc SHIFT+PATTERN EDIT (kits) with SHIFT+RECORD SETTING; Tallfree SHIFT+EXIT. SHIFT+PATTERN EDIT is used by both Side-Piece and Etc, and inside DOOM OS it means NEW NOTES, so these mods cannot share it.",
+   "topic": "mods-compare",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual Quickstart; Side-Piece changelog v0.1.0; Etc README; Tallfree README"
+    }
+   ]
+  },
+  {
+   "id": "mod-irakliy-001",
+   "claim": "IrakliyMOD 0.10.62 is an unofficial firmware mod for stock 5.52, delivered as a ready-made APP1 inside a zip. It replaces only APP1 and is installed through the normal update menu. The page says one person made it and that it is experimental. It is not the 404Lab owner's mod (owner's statement, 2026-11-09). Who the author is beyond the name is unknown, and no image of it has been read, so nothing here is checked against bytes.",
+   "topic": "irakliy-identity",
+   "firmware": "irakliymod",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, header, Install"
+    }
+   ]
+  },
+  {
+   "id": "mod-irakliy-002",
+   "claim": "The page publishes a SHA-256 for its 0.10.62 APP1: 9da71e3318db8f053780684a422f7923ad5e434071aa38e798201ab970347481. 404Lab does not hold this image, and it is not in the identify table.",
+   "topic": "irakliy-identity",
+   "firmware": "irakliymod",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Install"
+    }
+   ]
+  },
+  {
+   "id": "mod-irakliy-003",
+   "claim": "Adds, per its page: two sample engines on START/END (granular, and three drifting playheads); an LFO and knob-motion recorder for every effect parameter; a pitch-climbing reverb in the MFX list, BUS 1 only; a 4-voice synth and FM drum kits with a step sequencer on the Sound Generator page; scales, chords and arpeggiator; a MIDI looper; bouncing one loop cycle to a pad.",
+   "topic": "irakliy-features",
+   "firmware": "irakliymod",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Features, Effects, Synth, Drums"
+    }
+   ]
+  },
+  {
+   "id": "mod-irakliy-004",
+   "claim": "Its page credits DOOM OS 0.6.1 and Tracelistener SG / Kits as MIT-licensed bases. The terms of the mod itself were not found on the page: unknown. Do not store its files or screens.",
+   "topic": "irakliy-licence",
+   "firmware": "irakliymod",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, credits"
+    }
+   ]
+  },
+  {
+   "id": "mod-irakliy-005",
+   "claim": "It keeps user data on the SD card, at least user synth presets in a file of its own, and scale, arp and chord settings are lost at power-off.",
+   "topic": "irakliy-features",
+   "firmware": "irakliymod",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Synth presets, Scales"
+    }
+   ]
+  }
+ ]
+}
