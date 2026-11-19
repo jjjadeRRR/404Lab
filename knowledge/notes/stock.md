@@ -57,7 +57,7 @@ DMA3 IRQ -> flag + music clock -> inittsk (priority 1) -> 0x1C2D0 one block
 
 - Tick: `st.input.tick`. Ring and event layout: `st.input.ring`. Handler and method offsets: `st.input.handler`.
 - Pressed keys bit map and known codes: `st.input.keys`.
-- Page number and SYSTEM tab: `st.ui.page`. Draw commit: `st.ui.commit`. Screensaver: `st.ui.saver`.
+- Page number and SYSTEM tab: `st.ui.page`. Draw commit: `st.ui.commit`. Screensaver: `st.ui.saver`; its Custom mode leaks ~65 KB a start: `st.ui.saver-leak`.
 - Modal and screensaver flags are not settled: `st.ui.flags`. No screen map yet: `st.ui.map`.
 - Commands to SMPL TASK: `st.queue.smpl`.
 - Frame output only reaches the display in the page loop, not while PANEL TASK is busy: `st.ui.commit`.

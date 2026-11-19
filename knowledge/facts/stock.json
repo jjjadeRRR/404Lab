@@ -478,7 +478,7 @@
   },
   {
    "id": "st.import.malloc-unchecked",
-   "claim": "Stock sample import can crash when the heap is short. The function at 0x80069F80, which prepares rate conversion for an imported file, asks malloc for a large block and, if that fails, for 0x21C68 bytes at 0x8006A01C; the result of the second request is stored and used without a test for zero, so the next writes go to a near-zero address. On one unit this showed as a bus fault at 0x8006A11A during import from SD, on a mod with its own fault screen; on stock it would look like a freeze. The code is stock and identical in DOOM OS 0.7.2 and 0.7.3. What had used up the heap that time is not known. A mod that allocates from the stock heap (st.mem.heap), directly or through stock file calls, makes this more likely.",
+   "claim": "Stock sample import can crash when the heap is short. The function at 0x80069F80, which prepares rate conversion for an imported file, asks malloc for a large block and, if that fails, for 0x21C68 bytes at 0x8006A01C; the result of the second request is stored and used without a test for zero, so the next writes go to a near-zero address. On one unit this showed as a bus fault at 0x8006A11A during import from SD, on a mod with its own fault screen; on stock it would look like a freeze. The code is stock and identical in DOOM OS 0.7.2 and 0.7.3. What had used up the heap that time is not known. A mod that allocates from the stock heap (st.mem.heap), directly or through stock file calls, makes this more likely. A known way to reach that shortage in ordinary use: st.ui.saver-leak.",
    "topic": "stock",
    "firmware": "any",
    "status": "verified",
@@ -519,7 +519,7 @@
   },
   {
    "id": "st.mem.heap-measured",
-   "claim": "The stock malloc heap (3 MB, st.mem.heap) seen on a real unit with a project loaded and a mod's monitor open: about 2.2 MB free, lowest free about 2.19 MB, largest single piece about 2.19 MB. So in ordinary use the heap is mostly empty and not fragmented; a shortage (st.import.malloc-unchecked) needs something unusual. One unit, one moment.",
+   "claim": "The stock malloc heap (3 MB, st.mem.heap) seen on a real unit with a project loaded and a mod's monitor open: about 2.2 MB free, lowest free about 2.19 MB, largest single piece about 2.19 MB. So in ordinary use the heap is mostly empty and not fragmented; a shortage (st.import.malloc-unchecked) needs something unusual. One unit, one moment. Later readings on the same unit (2026-11-19) showed what that can be: the Custom screensaver leaks about 65 KB at every start (st.ui.saver-leak).",
    "topic": "stock",
    "firmware": "doom-os-0.7.3",
    "status": "verified",
@@ -2549,7 +2549,7 @@
   },
   {
    "id": "st.ui.saver",
-   "claim": "Screensaver class draws through slot word 0x8022C454, stock value 0x80175261. Custom mode is a horizontal slideshow, with images from PROJECT_xx/PICTURE/screen_saver_N.bmp up to 16, otherwise built-in images from drive G:. Menu item 316 values: 0 OldRave, 1 Naminori, 2 Custom, 3 Disp OFF. Where the setting is read was not found.",
+   "claim": "Screensaver class draws through slot word 0x8022C454, stock value 0x80175261. Custom mode is a horizontal slideshow, with images from PROJECT_xx/PICTURE/screen_saver_N.bmp up to 16, otherwise built-in images from drive G:. Menu item 316 values: 0 OldRave, 1 Naminori, 2 Custom, 3 Disp OFF. Where the setting is read was not found. Custom mode leaks about 65 KB of the malloc pool at every start: st.ui.saver-leak.",
    "topic": "stock",
    "firmware": [
     "stock-5.52",
@@ -2612,6 +2612,36 @@
      "address": "0x80241256",
      "size": 16,
      "sha256": "6cd4e0948d2f79b9ee12878946d79d5dc843c84cefcfbfa7feb61865d2901268"
+    }
+   ]
+  },
+  {
+   "id": "st.ui.saver-leak",
+   "claim": "A stock memory leak: every start of the screensaver with Scrn Saver Type = Custom (st.ui.saver) leaves about 65 KB of the malloc pool (st.mem.heap) allocated for good. The page constructor 0x80175678 (reached from the factory 0x80057AA0) tries B:/roland/sp-404mkii/project_NN/PICTURE/screen_saver_1..16.bmp through 0x800BEC28; each file found becomes a 128 x 64 16-bit image, a 16384-byte buffer (made at 0x80022826, image constructor 0x800227A8) plus an object of 0xB8 bytes; it then loads 6 small built-in pictures from G: through 0x800CD868. On wake the destructor 0x80175908 only calls 0x800BEA88(object + 0x18) and frees the page object; none of the pictures is deleted. With the 4 pictures a project usually holds that is 68,174 bytes a start. Over a day of idle minutes this drains the 3 MB pool, and the stock SD import then writes through a null pointer (st.import.malloc-unchecked). The stock type OldRave does not leak. A mod can fix it by deleting the pictures before the stock destructor runs (its destroy slots are the words 0x8022C460 and 0x8022C464); a private build does this, not yet checked on a unit. Without project pictures the 6 built-in ones would still leak about 5 KB a start (estimated from their sizes). The screen_saver_N.bmp files are in the project folder in the unit's own storage (st.storage.drives), not on the SD card, so they are easy to miss.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-19, private build d74-H23 on DOOM OS 0.7.4, Custom screensaver, MONITOR photos of the free pool after power-on and after each screensaver cycle: 2264, 2197, 2133 KB, and later 622 then 557 KB: -67, -64, -65 KB a cycle. One unit"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, private mod session 2026-11-19 on d74-H23, whose screensaver page is stock code: Custom type -66, -65, -65 KB over three cycles, OldRave 0; gdb on malloc and free and on the page functions for one cycle; reported by that session, not re-run here. Not run on a pure stock 5.52 image"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80175678, 0x80175908 (calls 0x800BEA88 then tail-calls free 0x800E11CA), 0x800BEC28, 0x800CD868, 0x800227A8, 0x80057AA0; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 identical at these addresses, re-read here 2026-11-19"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the ~5 KB leak without project pictures; that Roland puts the 4 pictures into every project; the fix on a unit"
     }
    ]
   },

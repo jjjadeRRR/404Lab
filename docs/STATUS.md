@@ -18,6 +18,14 @@ The original development milestones below describe existing work, not a mandator
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
 
+## What is new (2026-11-19, evening): a stock screensaver leak
+
+- Stock 5.52 leaks about 65 KB of the 3 MB malloc pool at every start of the Custom screensaver: the page loads its
+  pictures and never deletes them (`st.ui.saver-leak`). Found from MONITOR photos on the maintainer's unit, reproduced on
+  the emulator and traced to the destructor `0x80175908`; the code is the same in DOOM OS 0.7.2-0.7.4. Over a day it can
+  starve the stock SD import, which then crashes (`st.import.malloc-unchecked`). A private fix exists and is not yet
+  checked on a unit.
+
 ## What is new (2026-11-19): files and USB, from SparkyMK2 and 404tui
 
 - The project file formats are now described: samples (`st.storage.smp`), PADCONF.BIN (`st.storage.padconf`), patterns
