@@ -15,6 +15,15 @@ Start with `python -m lab404 ask` for the topic. The matching record in `knowled
 | [Reference Manual Version 3, English, document 02 (PDF)](https://static.roland.com/assets/media/pdf/SP-404mk2_v300_reference_eng02_W.pdf) | Stock behavior in the 3.x generation. |
 | [Roland system program 5.52 and update history](https://www.roland.com/global/support/by_product/sp-404mk2/updates_drivers/174cc2fc-ddb2-4128-87a0-848b882cdcea/) | Stock firmware changes and Roland’s update instructions. |
 
+## Related open projects
+
+They talk to the unit over USB from a computer; 404Lab looks at the firmware from inside. Both are GPL-3.0: 404Lab restates facts from their documentation in its own words with the revision read, and takes no code or text from them (see [LEGAL_NOTES.md](LEGAL_NOTES.md)).
+
+| Project | Use it for |
+|---|---|
+| [SparkyMK2](https://github.com/TuscanPL/SparkyMK2), its [protocol and file format specification](https://github.com/TuscanPL/SparkyMK2/tree/main/docs/re) | The USB serial link, the file API, pad and project parameters, and the SMP, PADCONF, pattern and picture formats (`hw.usb.link`, `st.storage.formats`). Read at revision `3007b5d4a796`. |
+| [404tui](https://github.com/moahbeatlab/404tui), its [notes on what the unit sends](https://github.com/moahbeatlab/404tui/blob/main/docs/unit-messages.md) | What the unit sends and does not send over USB MIDI and the status poll (`midi.usb.observed`). Read at revision `04156c4ae053`. |
+
 ## Processor and architecture
 
 | Document | Use it for |

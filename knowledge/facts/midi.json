@@ -398,7 +398,7 @@
   },
   {
    "id": "midi.gap.sendpc",
-   "claim": "Whether the stock unit sends program change, or sends anything on USB beyond the chart, is not stated in the manual.",
+   "claim": "Whether the stock unit sends program change, or sends anything on USB beyond the chart, is not stated in the manual. Observed since on one unit (midi.usb.observed): a pattern change sends nothing.",
    "topic": "midi",
    "firmware": "stock-5.52",
    "status": "unknown",
@@ -406,6 +406,19 @@
     {
      "label": "DOC",
      "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI implementation chart p.152 (program change transmit column is x)"
+    }
+   ]
+  },
+  {
+   "id": "midi.usb.observed",
+   "claim": "What one unit sent on its USB MIDI port, as 404tui recorded it: a pad hit gives a note on and off on the channel of its bank (1 = A); the sequencer sends clock (24 a quarter note), start and stop, and on channel 13 note 48 at the start of every loop of some patterns; SUB PAD with a pattern pad gives a stop and a start 10-40 ms apart; turning a bus effect knob sends a control change. Changing the pattern sends nothing, and the notes the sequencer plays are not sent as pad notes. A program change received switches the pattern (channel = bank, program 0-15 = pattern). Muting a pad on the unit is not visible from outside. One unit, firmware not noted.",
+   "topic": "midi",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "404tui (github.com/moahbeatlab/404tui, GPL-3.0), docs/unit-messages.md at revision 04156c4ae053, 2026-11-18; observed on one unit, firmware not noted by them; restated in our own words"
     }
    ]
   },

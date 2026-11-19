@@ -49,7 +49,7 @@ For what is free inside this map see notes/stock.md and `st.mem.free`.
 | SAI1 `0x40384000`, eDMA | audio to BMC | `hw.periph.sai` |
 | GPIO2, ADC, ADC_ETC | panel scan | `hw.panel.scan` |
 | LPSPI, uSDHC, FlexSPI | display, card, eMMC, flash; only partly confirmed | `hw.periph.spi-sd` |
-| USB | not documented | `hw.usb` |
+| USB | hub with an audio and MIDI device and a serial port; the serial link carries files and parameters; APP1's USB stack not read | `hw.usb`, `hw.usb.link` |
 
 A complete peripheral register map does not exist yet.
 

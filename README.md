@@ -112,6 +112,13 @@ For actual approval and `package` usage, see [the example](docs/EXAMPLES.md). Th
 
 An unknown image can be investigated, but the builder refuses it until support is established for that base. The whole-firmware stand needs one more step, `tools/setup_dm404.sh`, which builds DM-404 outside this repository. See [docs/STAND.md](docs/STAND.md).
 
+## Related projects
+
+- [SparkyMK2](https://github.com/TuscanPL/SparkyMK2): an open editor and librarian that talks to the unit over USB, with a specification of the protocol and file formats.
+- [404tui](https://github.com/moahbeatlab/404tui): a terminal workshop for samples, slices and patterns, built on SparkyMK2's protocol work.
+
+They work from outside the unit, over USB; 404Lab works from inside the firmware. Their findings appear here as facts with their source ([docs/SOURCES.md](docs/SOURCES.md)).
+
 ## For agents
 
 Start with [AGENTS.md](AGENTS.md). It names the few hard limits and their reasons. Everything else here, including facts, tests and tool rules, is earlier work to check and improve, not to follow blindly.

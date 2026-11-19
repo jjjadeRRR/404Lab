@@ -44,6 +44,10 @@ Do not store its patches or effect files in this repository.
 
 Its page credits DOOM OS 0.6.1 and Tracelistener SG / Kits as MIT [DOC]. No terms for the mod itself were found on the page: unknown. Do not store its files or screens. Describe it in our own words.
 
+## SparkyMK2 and 404tui
+
+Both are GPL-3.0-or-later, as their READMEs state and GitHub reports for their `LICENSE` files, read 2026-11-19 [DOC]. Facts such as byte layouts, command numbers and observed behaviour may be restated; their code, documentation text and images are not copied into 404Lab, which is MIT. Each fact taken from them names the project, the file and the revision read. SparkyMK2 follows its own clean-room rules (`docs/clean-room.md`): no Roland code, firmware or assets.
+
 ## Roland and hardware documents
 
 Roland firmware and manuals are not ours. Nothing from them goes into the repository except short facts in our own words. Byte checks store a size and a SHA-256 of the bytes they check, not the bytes, for Roland's code and for other mods' code alike. NXP and

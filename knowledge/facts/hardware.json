@@ -1933,10 +1933,10 @@
   },
   {
    "id": "hw.usb",
-   "claim": "USB: the board has a USB2422 2-port hub (IC6). Third-party notes say the main chip shows a CDC serial device and the second processor provides USB audio and MIDI. No send path from APP1 to USB-MIDI has been found; sysex at 0x800CD3A0 goes to LPUART3. The USB stack and descriptors are not documented.",
+   "claim": "USB: the board has a USB2422 2-port hub (IC6). A computer sees the hub (0424:2422) with two devices behind it: 0582:0281, a composite USB audio and MIDI device, and 0582:02E7, a CDC-ACM serial port named 'Roland SP-404MKII', which Roland's app and SparkyMK2 use for files and parameters (hw.usb.link). Third-party notes say the main chip provides the serial device and the second processor the audio and MIDI; that split is not checked here. No send path from APP1 to USB-MIDI has been found; sysex at 0x800CD3A0 goes to LPUART3. The USB stack in APP1 and its descriptors are not read.",
    "topic": "hardware",
    "firmware": "any",
-   "status": "unknown",
+   "status": "verified",
    "evidence": [
     {
      "label": "HARDWARE",
@@ -1947,8 +1947,33 @@
      "source": "dm-404 project notes, third party"
     },
     {
+     "label": "DOC",
+     "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/00-findings.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied: USB enumeration on Windows and Linux"
+    },
+    {
      "label": "HYPOTHESIS",
-     "source": "no read of the USB stack has been done"
+     "source": "which processor serves which USB device; no read of the USB stack has been done"
+    }
+   ]
+  },
+  {
+   "id": "hw.usb.link",
+   "claim": "The CDC serial device (hw.usb) runs at 921600 baud, 8N1, and carries framed messages in both directions: a 12-byte short message (kind 0x12, up to 7 payload bytes, their count in byte 11, which must not be 0) or a 16-byte header plus payload (kind 0x13); host 0x60, unit 0xE0; channel 5 for control and parameters, channel 6 for a POSIX-like file API (open, read, write, seek, stat, opendir and so on) with SysEx-shaped payloads. The file API serves two volumes: the unit's own storage under /SP404REMOTE// (projects, samples, factory data: the B: drive of st.storage.drives) and the SD card under / (IMPORT, EXPORT, BKUP and update files: the A: drive). A status poll answers with the project, bank, selected pad and the frames played by the sounding pad; the unit sends nothing by itself when a pad is hit, so following it means polling. The unit computes waveform peaks on request (min and max per point), which fits the stock peak service in st.chop.waveform (a guess). Edits are acknowledged even when they fail; the failure follows as a separate message with a negative code, and bank protect is enforced by Roland's app, not by the unit. For mods this is a possible way to get data out of a running unit without its card: a mod could write a file to B: and a computer could read it over this link; not tried.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/01-transport.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied"
+    },
+    {
+     "label": "DOC",
+     "source": "404tui (github.com/moahbeatlab/404tui, GPL-3.0), docs/unit-messages.md at revision 04156c4ae053, 2026-11-18; observed on one unit, firmware not noted by them; restated in our own words"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the link between the peaks command and st.chop.waveform; reading a mod's file over this link"
     }
    ]
   },
@@ -2191,6 +2216,23 @@
     {
      "label": "BYTES",
      "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; file search 0x8003D9EC-0x8003DA9E, start offset and sector count 0x8003F3BA-0x8003F3C4, APP0 file choice 0x8003F0B8-0x8003F0D8"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.usb-card-path",
+   "claim": "A program on a computer can write files to the SD card over USB, without the card leaving the unit: the file API of hw.usb.link serves the card's root, where update files live, and SparkyMK2 writes into IMPORT there. So such a program could also put one of the files of hw.update.whole-files on the card, and the next update would act on it. Writing those names over USB was not tried, and must not be: any host tool that writes to the card should refuse them as package does (docs/SAFETY.md).",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/01-transport.md and 02-files.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied: the card volume at /, update images listed in its root, writes into IMPORT confirmed on 5.52"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "that the loader would act on a file written this way: inferred from hw.update.whole-files, not tried"
     }
    ]
   },

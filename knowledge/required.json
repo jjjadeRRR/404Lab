@@ -355,10 +355,11 @@
    "why": "Measuring on a unit beats guessing from the stand.",
    "facts": [
     "hw.usb",
-    "hk.lesson.read-what-you-can"
+    "hk.lesson.read-what-you-can",
+    "hw.usb.link"
    ],
    "state": "partly",
-   "find_out": "Files on the SD card work. A serial channel over USB is not established."
+   "find_out": "Files on the SD card work. The USB serial link (hw.usb.link) gives a computer a file API to both drives and a status poll without any mod; a mod writing a log to B: and a computer reading it over that link was not tried. Try that first."
   },
   {
    "id": "dbg.stand",

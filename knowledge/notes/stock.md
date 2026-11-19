@@ -67,7 +67,8 @@ DMA3 IRQ -> flag + music clock -> inittsk (priority 1) -> 0x1C2D0 one block
 ## Storage
 
 - Drives: `st.storage.drives`. Project folder: `st.storage.project`.
-- `PADCONF.BIN` has no room for extra data: `st.storage.padconf`. Formats mostly unspecified: `st.storage.formats`.
+- `PADCONF.BIN` layout, and why it has no room for extra data: `st.storage.padconf`. Formats: `st.storage.formats`, with samples `st.storage.smp`, patterns `st.storage.ptn`, pictures `st.storage.picture`.
+- From a computer over USB: files on both drives and the unit's status, `hw.usb.link`. A host tool could write update files to the card: `hw.update.usb-card-path`.
 - What each operation does to files: `st.storage.ops`. PTN name check: `st.storage.ptn-filter`.
 - File call addresses: `st.storage.api`. Save is not atomic as far as known: `st.storage.atomic`.
 

@@ -18,6 +18,18 @@ The original development milestones below describe existing work, not a mandator
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
 
+## What is new (2026-11-19): files and USB, from SparkyMK2 and 404tui
+
+- The project file formats are now described: samples (`st.storage.smp`), PADCONF.BIN (`st.storage.padconf`), patterns
+  (`st.storage.ptn`) and screen pictures (`st.storage.picture`). They come from SparkyMK2's specification and were checked on
+  files the maintainer's unit wrote with stock EXPORT: 13 projects, all matching. Two of our byte facts are now confirmed
+  from outside: the zeroed tail of each pad record and the 0x80-byte mark table, which PADCONF stores as it is.
+- What SparkyMK2 could only guess, these files settle: the trailer of a pattern holds its length in bars.
+- The USB side: the hub and its two devices (`hw.usb`), the serial link with its file API and status poll (`hw.usb.link`),
+  and what the unit sends over USB MIDI (`midi.usb.observed`).
+- A new hazard: a computer program could write update files to the SD card over USB (`hw.update.usb-card-path`, docs/SAFETY.md).
+- SparkyMK2 and 404tui are GPL-3.0: their facts are restated in our own words with the revision read; no code or text taken.
+
 ## What is new (2026-11-18): CHOP, AUTO MARK and the marker screen
 
 - How stock AUTO MARK works inside: the job and dispatcher (`st.chop.automark`), TRANSIENT and LEVEL with their thresholds,
