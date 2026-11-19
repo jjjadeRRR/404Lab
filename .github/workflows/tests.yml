@@ -11,9 +11,8 @@ jobs:
   quick:
     name: quick tests, ${{ matrix.os }}, Python ${{ matrix.python }}
     runs-on: ${{ matrix.os }}
-    # macOS and Windows are new here: their jobs report problems without failing the whole run until they first pass.
-    # When they do, remove this line so they guard every change like Linux.
-    continue-on-error: ${{ matrix.os != 'ubuntu-latest' }}
+    # All four jobs guard every change. Without firmware or the emulator here, tests that need them skip on every system;
+    # on Windows two more skip, because the emulator needs Linux (WSL).
     strategy:
       fail-fast: false
       matrix:

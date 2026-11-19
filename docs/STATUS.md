@@ -123,7 +123,7 @@ The original development milestones below describe existing work, not a mandator
 - `check-keys` does not model key repeat or release sequences.
 - `quick_system` keeps HOLD's state from events. A lost release would leave it armed. Whether calling the screen function is safe at every moment is not checked.
 - The project drive is fingerprinted by size, time and its first 16 MB.
-- Development and the full suite run on Linux. CI runs the quick tests on macOS and Windows (non-blocking until their first pass). The emulator build (`tools/setup_dm404.sh`) is not tried on macOS; on Windows the emulator needs WSL, and `Emulator` says so instead of failing on a missing socket type.
+- Development and the full suite run on Linux. CI runs the quick tests on macOS and Windows on every push; they first passed on 2026-11-19 and now block a change like Linux. The emulator build (`tools/setup_dm404.sh`) is not tried on macOS; on Windows the emulator needs WSL, and `Emulator` says so instead of failing on a missing socket type.
 
 ## Known problems
 
