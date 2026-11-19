@@ -1,5 +1,7 @@
 # 404Lab
 
+**English** | [Русский](README_RU.md)
+
 Open research and tools for Roland SP-404MKII firmware modding, ready for work with AI agents.
 
 404Lab is two things in one repository:
