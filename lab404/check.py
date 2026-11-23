@@ -54,6 +54,11 @@ def check_structure(base_raw, candidate_raw, manifest):
                _result('loader-code', 'pass', f'switched off (return 0 at entry): {", ".join(off)}' if off else ''))
     out.append(_result('flash-room', 'fail', f'{len(candidate_raw)} bytes, but the loader erases only {APP1_ROOM} for APP1 (hw.update.app1-range)')
                if room(candidate_raw) < 0 else _result('flash-room', 'pass', f'{room(candidate_raw)} bytes left'))
+    if 'flash' in manifest:  # a block kept in flash after the image: its bytes must be the ones the build made
+        at = int(manifest['flash']['address'], 16)-0x60080000
+        block = candidate_raw[at:at+manifest['flash']['bytes']]
+        same = len(block) == manifest['flash']['bytes'] and sha256(block) == manifest['flash']['sha256']
+        out.append(_result('flash-block', 'pass' if same else 'fail', '' if same else f'the block at {manifest["flash"]["address"]} differs from the manifest'))
     changed = [i for i, (a, b) in enumerate(zip(base_raw, candidate_raw)) if a != b and i not in allowed]
     if len(candidate_raw) < len(base_raw) or changed:
         where = f'first at file offset 0x{changed[0]:X}' if changed else 'candidate is shorter than its base'

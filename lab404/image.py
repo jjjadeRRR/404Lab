@@ -195,8 +195,9 @@ def protected(image, address):
     return None
 
 
-def extend(raw, runtime, payload, patches=()):
-    """Append a COPY row holding payload at runtime, plus equal-length guarded patches.
+def extend(raw, runtime, payload, patches=(), flash=None):
+    """Append a COPY row holding payload at runtime, plus equal-length guarded patches, and optionally a block that stays in
+    flash at a fixed address after the image (flash = (address, bytes)), read or run in place, never copied at startup.
 
     Every existing file offset stays where it was. Only the table pointers at 0x80 and the declared patch bytes change, and the
     result is checked against that claim before it is returned.
@@ -234,6 +235,11 @@ def extend(raw, runtime, payload, patches=()):
     for row in new_rows:
         out += struct.pack('<4I', *row)
     struct.pack_into('<2I', out, 0x80, table_at-0x80, len(out)-0x80)
+    if flash:
+        address, block = flash
+        if address % 4 or not FLASH+len(out) <= address:
+            raise ImageError(f'the flash block at 0x{address:08X} must be word aligned and after the image, which ends at 0x{FLASH+len(out):08X}')
+        out += bytes(address-FLASH-len(out))+block
     if FLASH+len(out) > FLASH_LIMIT:
         raise ImageError(f'image exceeds the APP1 flash limit: {len(out)} bytes, and the loader erases only {APP1_ROOM} before it writes')
     result = bytes(out)

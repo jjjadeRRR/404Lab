@@ -67,6 +67,50 @@ Nothing else may change inside guarded code; `check` reports which routines a ca
 maintainer's own mod has carried these four since 2026-11-11 and runs on a unit; the routines themselves are not reached in normal
 use, so that shows the unit works with them off, not what a caller does with the 0.
 
+## Kinds of change for a larger mod
+
+Entry and word hooks cover small additions. A mod that changes how the firmware works, like the maintainer's own, also needs the
+kinds below. Each is checked against the bytes of the user's image; `tests/test_jump_patch.py` and `tests/test_copy_flash.py`
+use the private mod's real sites.
+
+- **`jump`**: the firmware goes to a mod function and does not come back by itself. Use it to take over a piece of a stock
+  function. The replaced instructions do not run again: the mod does their work, or jumps on to `resume`, a name the build gives
+  the first address after them. Refused where anything branches or points into the replaced bytes past the first, inside an IT
+  block, or in guarded code.
+
+  ```json
+  {"kind": "jump", "address": "0x80115334", "function": "draw_page", "resume": "after_draw"}
+  ```
+- **`patch`**: declared bytes become other bytes of the same length: an immediate, a limit, a table of pointers, calls made into
+  NOPs. The build checks the image holds `before`, that no byte is in guarded code, that the new bytes neither branch into it nor
+  hold a pointer to it, and on DOOM OS that no veneer word is covered. What the new bytes mean is the author's claim, to be tested.
+
+  ```json
+  {"kind": "patch", "address": "0x80115666", "before": "102e", "after": "202e", "about": "mute group limit: cmp r6,#16 -> #32"}
+  ```
+- **`copies`** (top level of `mod.json`): a stock function copied into the payload from the user's image, checked by SHA-256, so
+  no firmware is kept in the mod. It keeps its address mod 4, so PC-relative literals still line up; branches leaving it go
+  through veneers placed after it, or to a mod function named in `redirect`. `edits` change bytes inside it, as raw bytes or as a
+  `movw`/`movt` aimed at a mod symbol. Refused: a PC-relative load of anything outside the copy, a `cbz`/`cbnz` or short branch
+  that leaves it and cannot reach its veneers, and guarded code. Inline `tbb`/`tbh` tables are skipped as data.
+
+  ```json
+  "copies": [{"name": "transient32", "from": "0x8017C138", "to": "0x8017C768", "sha256": "f51213ad...",
+              "edits": [{"address": "0x8017C368", "before": "b9f10f0f", "after": "b9f11f0f"},
+                        {"address": "0x8017C17C", "before": "48f6e018", "movw": "am_list"}],
+              "redirect": {"0x8017BA38": "level_block"}}]
+  ```
+- **`flash`** (top level): code and data that stay in flash after the image and run or are read in place, for pictures,
+  animations and code that does not need SDRAM speed (`hk.region.flash`). It is linked together with the payload, so each can call
+  and read the other; data files from the mod folder get a symbol and a `_end` symbol. The block must start after the image and
+  end before `0x603FF000`; `check` compares its bytes with the manifest (`flash-block`).
+
+  ```json
+  "flash": {"address": "0x603C0000", "max_size": "0x1A000", "sources": ["screensaver.c"], "data": [{"file": "frames.bin", "symbol": "frames"}]}
+  ```
+
+Payload `data` files work the same way at the top level of `mod.json`.
+
 ## A shortcut using a stock screen
 
 [quick_system](../mods/quick_system/mod.json) and its [source](../mods/quick_system/quick_system.c) add HOLD + ROLL on the main screen to open the firmware's SYSTEM page. They illustrate observing events, restricting a feature to one screen and calling a guarded firmware symbol. The example has been exercised on stock 5.52 and DOOM OS 0.7.3 and 0.7.4 in the emulator. Its build on DOOM OS 0.7.4 passed the unit checks listed in its `mod.json` on one unit, once (`hk.lab404-build-on-unit`); stock and 0.7.3 builds have not been on a unit.

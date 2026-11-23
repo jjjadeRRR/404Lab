@@ -121,107 +121,140 @@ def _addend_movw(data, at):
     return value-0x10000 if value & 0x8000 else value
 
 
-def _branched_externals(objects, externals):
+def _defined(obj):
+    return {name for name, _, info, shndx in obj.symbols if name and info >> 4 in (STB_GLOBAL, STB_WEAK) and shndx in obj.sections}
+
+
+def _far_branches(objects, reachable_elsewhere):
+    """Names that code in these objects branches to but that live outside them: firmware functions, or code in another region."""
     names = set()
     for obj in objects:
         for _, rows in obj.relocs:
             for _, info in rows:
                 name, _, _, shndx = obj.symbols[info >> 8]
-                if info & 0xFF in BRANCH_KINDS and shndx == SHN_UNDEF and name in externals:
+                if info & 0xFF in BRANCH_KINDS and shndx == SHN_UNDEF and name in reachable_elsewhere:
                     names.add(name)
     return sorted(names)
 
 
 def link(object_blobs, base, externals=None):
     """Return (payload bytes, {symbol: address}). object_blobs is [(name, bytes)]; externals are firmware addresses."""
-    if base % 4:
-        raise LinkError('payload base must be word aligned')
+    blobs, symbols = link_regions([(base, object_blobs)], externals)
+    return blobs[0], symbols
+
+
+def link_regions(regions, externals=None):
+    """Link objects that live in several places at once, such as a payload in SDRAM and a block of code in flash.
+
+    regions is [(base, [(name, bytes)])]; returns ([bytes per region], {symbol: address}). Symbols are shared between regions.
+    A branch to anything outside its own region (firmware, or another region) goes through a veneer at the start of the region,
+    since regions are far apart."""
     externals = dict(externals or {})
     for name, address in externals.items():
         if not address & 1:
             raise LinkError(f'firmware function {name} needs a Thumb address, with bit 0 set')
-    objects = [Obj(name, blob) for name, blob in object_blobs]
-    veneer_names = _branched_externals(objects, externals)
-    veneers = {name: base+8*i for i, name in enumerate(veneer_names)}
-    placed = {kind: [] for kind in ORDER}
-    for obj in objects:
-        for section in obj.sections.values():
-            placed[_bucket(section)].append(section)
-    cursor = base+8*len(veneer_names)
-    for kind in ORDER:
-        for section in placed[kind]:
-            cursor = (cursor+section.align-1) & ~(section.align-1)
-            section.address = cursor
-            cursor += section.size
+    groups = []
+    for base, object_blobs in regions:
+        if base % 4:
+            raise LinkError('a region base must be word aligned')
+        groups.append((base, [Obj(name, blob) for name, blob in object_blobs]))
+    defined = [set().union(*[_defined(obj) for obj in objects]) for _, objects in groups]
+    layouts = []
+    for index, (base, objects) in enumerate(groups):
+        elsewhere = set(externals).union(*[names for i, names in enumerate(defined) if i != index])
+        veneer_names = _far_branches(objects, elsewhere)
+        veneers = {name: base+8*i for i, name in enumerate(veneer_names)}
+        placed = {kind: [] for kind in ORDER}
+        for obj in objects:
+            for section in obj.sections.values():
+                placed[_bucket(section)].append(section)
+        cursor = base+8*len(veneer_names)
+        for kind in ORDER:
+            for section in placed[kind]:
+                cursor = (cursor+section.align-1) & ~(section.align-1)
+                section.address = cursor
+                cursor += section.size
+        layouts.append((base, objects, veneer_names, veneers, placed, cursor))
     strong, weak, thumb = {}, {}, set(externals)
     tables = {}
-    for obj in objects:
-        table = []
-        for name, value, info, shndx in obj.symbols:
-            if shndx == SHN_COMMON:
-                raise LinkError(f'{obj.path}: common symbol {name}: build with -fno-common')
-            address = value if shndx == SHN_ABS else obj.sections[shndx].address+value if shndx in obj.sections else None
-            table.append((name, address, info, shndx))
-            if address is None or not name or info >> 4 not in (STB_GLOBAL, STB_WEAK):
-                continue
-            if info & 0xF == STT_FUNC:
-                thumb.add(name)
-            if info >> 4 == STB_WEAK:
-                weak.setdefault(name, address)
-            elif name in strong or name in externals:
-                raise LinkError(f'symbol {name} is defined twice')
-            else:
-                strong[name] = address
-        tables[obj] = table
-    symbols = {**weak, **externals, **strong}
-    for obj in objects:
-        table = tables[obj]
-        for target_index, rows in obj.relocs:
-            section = obj.sections.get(target_index)
-            if section is None:
-                continue
-            for at, info in rows:
-                kind, sym = info & 0xFF, info >> 8
-                if kind in (R_NONE, R_V4BX):
+    for _, objects, _, _, _, _ in layouts:
+        for obj in objects:
+            table = []
+            for name, value, info, shndx in obj.symbols:
+                if shndx == SHN_COMMON:
+                    raise LinkError(f'{obj.path}: common symbol {name}: build with -fno-common')
+                address = value if shndx == SHN_ABS else obj.sections[shndx].address+value if shndx in obj.sections else None
+                table.append((name, address, info, shndx))
+                if address is None or not name or info >> 4 not in (STB_GLOBAL, STB_WEAK):
                     continue
-                name, address, st_info, shndx = table[sym]
-                is_global = bool(name) and st_info >> 4 in (STB_GLOBAL, STB_WEAK)
-                if is_global:
-                    if name not in symbols:
-                        raise LinkError(f'{obj.path}: undefined symbol {name}')
-                    address = symbols[name]
-                    is_thumb = name in thumb
+                if info & 0xF == STT_FUNC:
+                    thumb.add(name)
+                if info >> 4 == STB_WEAK:
+                    weak.setdefault(name, address)
+                elif name in strong or name in externals:
+                    raise LinkError(f'symbol {name} is defined twice')
                 else:
-                    is_thumb = st_info & 0xF == STT_FUNC
-                # ABI: S is the symbol's address without its Thumb bit, T is that bit, and data relocations use (S + A) | T.
-                symbol, t = (address & ~1, 1) if is_thumb else (address, 0)
-                data = section.data
-                pc = section.address+at
-                if kind in BRANCH_KINDS:
-                    addend = _thumb_branch_addend(data, at, kind)
-                    if shndx == SHN_UNDEF and name in veneers:
-                        if addend != -4:
-                            raise LinkError(f'{obj.path}: branch to {name} with an offset: a veneer holds one address')
-                        symbol = veneers[name]
-                    offset = symbol+addend-pc
-                    _put_thumb_branch(data, at, offset, kind)
-                elif kind in (R_ABS32, R_TARGET1):
-                    value = (symbol+struct.unpack_from('<I', data, at)[0]) | t
-                    struct.pack_into('<I', data, at, value & 0xFFFFFFFF)
-                elif kind == R_REL32:
-                    value = ((symbol+struct.unpack_from('<I', data, at)[0]) | t)-pc
-                    struct.pack_into('<I', data, at, value & 0xFFFFFFFF)
-                elif kind == R_THM_MOVW_ABS_NC:
-                    _put_movw_movt(data, at, ((symbol+_addend_movw(data, at)) | t) & 0xFFFF)
-                elif kind == R_THM_MOVT_ABS:
-                    _put_movw_movt(data, at, (((symbol+_addend_movw(data, at)) | t) >> 16) & 0xFFFF)
-                else:
-                    raise LinkError(f'{obj.path}: relocation type {kind} against {name} is not supported')
-    out = bytearray(cursor-base)
-    for i, name in enumerate(veneer_names):
-        out[8*i:8*i+8] = bytes.fromhex('dff800f0')+struct.pack('<I', externals[name])
-    for kind in ORDER[:3]:
-        for section in placed[kind]:
-            out[section.address-base:section.address-base+len(section.data)] = section.data
-    out += bytes(-len(out) % 4)
-    return bytes(out), symbols
+                    strong[name] = address
+            tables[obj] = table
+    symbols = {**weak, **externals, **strong}
+    out_blobs = []
+    for base, objects, veneer_names, veneers, placed, cursor in layouts:
+        for obj in objects:
+            _relocate(obj, tables[obj], symbols, thumb, veneers)
+        out = bytearray(cursor-base)
+        for i, name in enumerate(veneer_names):
+            target = symbols[name]
+            if not target & 1:
+                raise LinkError(f'a branch to {name}, which is not a Thumb function')
+            out[8*i:8*i+8] = bytes.fromhex('dff800f0')+struct.pack('<I', target)
+        for kind in ORDER[:3]:
+            for section in placed[kind]:
+                out[section.address-base:section.address-base+len(section.data)] = section.data
+        out += bytes(-len(out) % 4)
+        out_blobs.append(bytes(out))
+    return out_blobs, symbols
+
+
+def _relocate(obj, table, symbols, thumb, veneers):
+    """Apply one object's relocations, branches to far names going through this region's veneers."""
+    for target_index, rows in obj.relocs:
+        section = obj.sections.get(target_index)
+        if section is None:
+            continue
+        for at, info in rows:
+            kind, sym = info & 0xFF, info >> 8
+            if kind in (R_NONE, R_V4BX):
+                continue
+            name, address, st_info, shndx = table[sym]
+            is_global = bool(name) and st_info >> 4 in (STB_GLOBAL, STB_WEAK)
+            if is_global:
+                if name not in symbols:
+                    raise LinkError(f'{obj.path}: undefined symbol {name}')
+                address = symbols[name]
+                is_thumb = name in thumb
+            else:
+                is_thumb = st_info & 0xF == STT_FUNC
+            # ABI: S is the symbol's address without its Thumb bit, T is that bit, and data relocations use (S + A) | T.
+            symbol, t = (address & ~1, 1) if is_thumb else (address, 0)
+            data = section.data
+            pc = section.address+at
+            if kind in BRANCH_KINDS:
+                addend = _thumb_branch_addend(data, at, kind)
+                if shndx == SHN_UNDEF and name in veneers:
+                    if addend != -4:
+                        raise LinkError(f'{obj.path}: branch to {name} with an offset: a veneer holds one address')
+                    symbol = veneers[name]
+                offset = symbol+addend-pc
+                _put_thumb_branch(data, at, offset, kind)
+            elif kind in (R_ABS32, R_TARGET1):
+                value = (symbol+struct.unpack_from('<I', data, at)[0]) | t
+                struct.pack_into('<I', data, at, value & 0xFFFFFFFF)
+            elif kind == R_REL32:
+                value = ((symbol+struct.unpack_from('<I', data, at)[0]) | t)-pc
+                struct.pack_into('<I', data, at, value & 0xFFFFFFFF)
+            elif kind == R_THM_MOVW_ABS_NC:
+                _put_movw_movt(data, at, ((symbol+_addend_movw(data, at)) | t) & 0xFFFF)
+            elif kind == R_THM_MOVT_ABS:
+                _put_movw_movt(data, at, (((symbol+_addend_movw(data, at)) | t) >> 16) & 0xFFFF)
+            else:
+                raise LinkError(f'{obj.path}: relocation type {kind} against {name} is not supported')

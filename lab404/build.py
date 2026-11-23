@@ -9,7 +9,8 @@ from pathlib import Path
 from . import hooks as hook_tools
 from .identify import identify
 from .image import RETURN_ZERO, Image, ImageError, extend, matches, protected, room, sha256
-from .link import link
+from .copy import place as place_copy, placeholder as copy_placeholder, plan_copy
+from .link import LinkError, link_regions
 
 CFLAGS = ('--target=arm-none-eabi', '-mcpu=cortex-m7', '-mthumb', '-mfloat-abi=soft', '-mfpu=none', '-Os', '-ffreestanding',
           '-fno-common', '-fno-builtin', '-fno-exceptions', '-fno-unwind-tables', '-fno-asynchronous-unwind-tables',
@@ -31,22 +32,58 @@ def _compile(argv):
         raise BuildError('compile failed:\n'+r.stderr)
 
 
-def compile_payload(mod_dir, mod, base_address, stubs, externals):
-    """Compile with stub addresses left to the linker. Returns (payload, symbols)."""
+def _data_source(mod_dir, items, label):
+    """Assembly that puts each declared data file in read-only data under its symbol, with a symbol for its end."""
+    out = []
+    for n, item in enumerate(items):
+        path = (mod_dir/item['file']).resolve()
+        if mod_dir.resolve() not in path.parents or not path.is_file():
+            raise BuildError(f'data file {item["file"]} must be a file inside the mod folder')
+        out.append(f"""
+    .section .rodata.lab404_{label}_{n},"a",%progbits
+    .balign {int(item.get('align', 4))}
+    .global {item['symbol']}
+{item['symbol']}:
+    .incbin "{path.as_posix()}"
+    .global {item['symbol']}_end
+{item['symbol']}_end:
+""")
+    return ''.join(out)
+
+
+def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', flash=None):
+    """Compile the payload, and the flash block when the mod declares one, and link them together so each can use the
+    other's symbols. Returns ([payload, flash block or None], symbols)."""
     with tempfile.TemporaryDirectory(prefix='lab404-') as tmp:
         tmp = Path(tmp)
-        blobs = []
-        for source in mod['sources']:
-            obj = tmp/(Path(source).name+'.o')
-            _compile([*CFLAGS, '-c', str(mod_dir/source), '-o', str(obj)])
-            blobs.append((source, obj.read_bytes()))
-        if stubs:
-            asm = tmp/'stubs.S'
-            asm.write_text('.syntax unified\n.thumb\n.text\n'+''.join(stubs), encoding='utf-8')
-            obj = tmp/'stubs.o'
-            _compile([*SFLAGS, '-c', str(asm), '-o', str(obj)])
-            blobs.append(('stubs.S', obj.read_bytes()))
-        return link(blobs, base_address, externals)
+
+        def objects(sources, asm, label):
+            blobs = []
+            for source in sources:
+                obj = tmp/f'{label}-{Path(source).name}.o'
+                _compile([*CFLAGS, '-c', str(mod_dir/source), '-o', str(obj)])
+                blobs.append((source, obj.read_bytes()))
+            if asm:
+                path = tmp/f'{label}.S'
+                path.write_text('.syntax unified\n.thumb\n.text\n'+asm, encoding='utf-8')
+                obj = tmp/f'{label}-asm.o'
+                _compile([*SFLAGS, '-c', str(path), '-o', str(obj)])
+                blobs.append((f'{label}.S', obj.read_bytes()))
+            return blobs
+        regions = [(base_address, objects(mod['sources'], ''.join(stubs)+extra_asm+_data_source(mod_dir, mod.get('data', []), 'data'), 'payload'))]
+        if flash:
+            regions.append((_int(flash['address']), objects(flash.get('sources', []), _data_source(mod_dir, flash.get('data', []), 'flash'), 'flash')))
+        try:
+            blobs, symbols = link_regions(regions, externals)
+        except LinkError as e:
+            raise BuildError(str(e)) from None
+        return blobs+([None] if not flash else []), symbols
+
+
+def compile_payload(mod_dir, mod, base_address, stubs, externals):
+    """Compile with stub addresses left to the linker. Returns (payload, symbols)."""
+    (payload, _), symbols = compile_regions(mod_dir, mod, base_address, stubs, externals)
+    return payload, symbols
 
 
 GUARD_BYTES = 8  # enough of a function's start to tell it from its neighbours
@@ -115,7 +152,7 @@ def build(mod_dir, base_path, out_dir):
     base_address = _int(mod['payload']['address'])
     limit = _int(mod['payload']['max_size'])
     externals = firmware_symbols(mod, image)
-    stubs, sites, words, disabled = [], [], [], []
+    stubs, sites, words, disabled, jumps, byte_patches = [], [], [], [], [], []
     hooks = [hook for hook in mod.get('hooks', []) if who['sha256'] in hook.get('bases', allowed)]  # addresses belong to one exact image
     for i, hook in enumerate(hooks):
         address = _int(hook['address'])
@@ -135,29 +172,70 @@ def build(mod_dir, base_path, out_dir):
                     raise BuildError(f'{hook["original"]} is named twice')
                 externals[hook['original']] = old
             words.append((address, old, hook['function']))
+        elif hook.get('kind') == 'jump':
+            declared = tuple(_int(item['address']) for item in hook.get('not_pointers', []))
+            replaced = hook_tools.check_jump_hook(image, address, declared)
+            if 'resume' in hook:  # where the mod may jump on to: the first byte after the replaced instructions
+                if hook['resume'] in externals:
+                    raise BuildError(f'{hook["resume"]} is named twice')
+                externals[hook['resume']] = (address+len(replaced)) | 1
+            jumps.append((address, hook['function'], declared))
+        elif hook.get('kind') == 'patch':
+            before, after = bytes.fromhex(hook['before']), bytes.fromhex(hook['after'])
+            hook_tools.check_byte_patch(image, address, before, after, who['family'])
+            byte_patches.append(dict(address=address, before=before, after=after))
         elif hook.get('kind') == 'disable':
             if any(address == done['address'] for done in disabled):
                 raise BuildError(f'the routine at 0x{address:08X} is disabled twice')
             disabled.append(dict(address=address, before=hook_tools.check_disable_hook(image, address), after=RETURN_ZERO))
         else:
             raise BuildError(f'hook kind {hook.get("kind")!r} is not supported')
-    payload, symbols = compile_payload(mod_dir, mod, base_address, stubs, externals)
+    copies = [plan_copy(image, spec) for spec in mod.get('copies', []) if who['sha256'] in spec.get('bases', allowed)]
+    for plan in copies:
+        if plan['name'] in externals:
+            raise BuildError(f'{plan["name"]} is named twice')
+    flash = mod.get('flash')
+    (payload, block), symbols = compile_regions(mod_dir, mod, base_address, stubs, externals,
+                                                ''.join(copy_placeholder(plan) for plan in copies), flash)
     if len(payload) > limit:
         raise BuildError(f'payload is {len(payload)} bytes, limit {limit}')
+    payload = bytearray(payload)
+    for plan in copies:  # the copies' room was reserved by the linker; now their bytes are known for their final place
+        at = symbols[plan['name']] & ~1
+        code = place_copy(plan, at, symbols)
+        payload[at-base_address:at-base_address+len(code)] = code
+    payload = bytes(payload)
+    regions = [(base_address, len(payload))]
+    if flash:
+        flash_address = _int(flash['address'])
+        if len(block) > _int(flash['max_size']):
+            raise BuildError(f'flash block is {len(block)} bytes, limit {_int(flash["max_size"])}')
+        regions.append((flash_address, len(block)))
+
+    def mod_function(name):
+        target = symbols.get(name)
+        return target is not None and target & 1 and any(lo <= target < lo+size for lo, size in regions)
     patches = [hook_tools.plan_patch(image, address, symbols[f'lab404_stub_{i}'], declared) for i, address, declared in sites]
     for address, old, function in words:
         target = symbols.get(function)
-        if target is None or not base_address <= target < base_address+len(payload):
+        if target is None or not any(lo <= target < lo+size for lo, size in regions):
             raise BuildError(f'word hook at 0x{address:08X}: {function} is not defined by the mod')
         if not target & 1:
             raise BuildError(f'word hook at 0x{address:08X}: {function} is not a Thumb function (data, or an address without bit 0)')
         patches.append(dict(address=address, before=struct.pack('<I', old), after=struct.pack('<I', target)))
-    patches += disabled
-    result = extend(raw, base_address, payload, patches)
+    for address, function, declared in jumps:
+        target = symbols.get(function)
+        if not mod_function(function):
+            raise BuildError(f'jump hook at 0x{address:08X}: {function} is not a Thumb function of the mod')
+        patches.append(hook_tools.jump_hook_patch(image, address, target, declared))
+    patches += disabled+byte_patches
+    result = extend(raw, base_address, payload, patches, (flash_address, block) if flash else None)
     manifest = dict(mod=mod['name'], mod_version=mod.get('version'), parent_sha256=who['sha256'], parent=f'{who["family"]} {who["version"]}',
                     candidate_sha256=sha256(result), size=len(result), flash_room_left=room(result), source_sha256=source_digest(mod_dir, mod), source_revision=source_revision(),
                     payload=dict(address=hex(base_address), bytes=len(payload), sha256=sha256(payload)),
                     hooks=[dict(address=hex(p['address']), before=p['before'].hex(), after=p['after'].hex()) for p in patches],
+                    **(dict(flash=dict(address=hex(flash_address), bytes=len(block), sha256=sha256(block))) if flash else {}),
+                    **(dict(copies=[dict(name=c['name'], source=f'0x{c["start"]:08X}-0x{c["end"]:08X}', placed=hex(symbols[c['name']] & ~1)) for c in copies]) if copies else {}),
                     symbols={k: hex(v) for k, v in sorted(symbols.items()) if not k.startswith('lab404_stub_')},
                     compiler=subprocess.run(['clang', '--version'], capture_output=True, text=True, encoding='utf-8').stdout.splitlines()[0],
                     status='candidate: built and structurally checked, not proven on a unit')

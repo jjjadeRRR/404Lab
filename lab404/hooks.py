@@ -148,6 +148,12 @@ def check_entry_hook(image, address, not_pointers=()):
             raise ImageError(f'0x{ins.address:08X}: {ins.mnemonic} {ins.op_str} changes control flow and cannot be displaced')
         if _uses_pc(ins):
             raise ImageError(f'0x{ins.address:08X}: {ins.mnemonic} {ins.op_str} depends on its address and cannot be displaced')
+    _nothing_lands_inside(image, address, size, not_pointers)
+    return image.read(address, size), picked
+
+
+def _nothing_lands_inside(image, address, size, not_pointers=()):
+    """No direct branch or stored pointer anywhere in the image may land inside the replaced bytes, past their first."""
     lo, hi = address+1, address+size
     branches, words = _references(image)
     for target in range(lo+1 if lo % 2 else lo, hi, 2):
@@ -161,7 +167,82 @@ def check_entry_hook(image, address, not_pointers=()):
     for source, target in _short_branch_targets(_readable(image, window, address+SHORT_RANGE-window), window):
         if lo <= target < hi:
             raise ImageError(f'0x{source:08X} branches to 0x{target:08X}, inside the bytes this hook would replace')
-    return image.read(address, size), picked
+
+
+def _whole_instructions(image, address, need):
+    """The instructions that cover at least `need` bytes from address, refusing a site inside an IT block or in guarded code."""
+    for back in range(2, 10, 2):
+        before = _readable(image, address-back, 2) if address >= back else b''
+        if len(before) == 2 and before[1] == 0xBF and before[0] & 0xF:
+            raise ImageError(f'0x{address:08X}: an IT instruction at 0x{address-back:08X} may cover this site, so this is inside an IT block')
+    picked, size = [], 0
+    for ins in _disassembler().disasm(_readable(image, address, 32), address):
+        if size >= need:
+            break
+        picked.append(ins)
+        size += ins.size
+    if size < need:
+        raise ImageError(f'0x{address:08X}: could not decode {need} bytes of instructions')
+    for at in range(address, address+size, 2):
+        zone = protected(image, at)
+        if zone:
+            raise ImageError(f'0x{address:08X}: the replaced bytes reach 0x{at:08X}, inside {zone}. This code can erase the loader and brick the unit: no hook goes here')
+    return picked, size
+
+
+def check_jump_hook(image, address, not_pointers=()):
+    """A jump hook sends the firmware to a mod function at this address and never comes back by itself: the replaced
+    instructions are not run again. The mod does their work, or jumps on to whatever comes next (`resume`).
+
+    Checked from bytes as for an entry hook: whole instructions, not in an IT block, not in guarded code, and nothing branches
+    or points into the replaced bytes past the first. Unlike an entry hook the site may be anywhere in a function, and the
+    replaced instructions may branch or read relative to PC, since they no longer run. Returns the replaced bytes."""
+    if address & 1:
+        raise ImageError('a Thumb code address must be even')
+    _, size = _whole_instructions(image, address, jump_size(address))
+    _nothing_lands_inside(image, address, size, not_pointers)
+    return image.read(address, size)
+
+
+def jump_hook_patch(image, address, target, not_pointers=()):
+    replaced = check_jump_hook(image, address, not_pointers)
+    jump = jump_patch(address, target)
+    return dict(address=address, before=replaced, after=jump+bytes.fromhex('00bf')*((len(replaced)-len(jump))//2))
+
+
+def check_byte_patch(image, address, before, after, family=None):
+    """A byte patch changes declared bytes into others of the same length: an immediate in an instruction, a limit, a table of
+    pointers, a call made into NOPs. The author states both sides; the build checks the image holds `before`, that no byte is
+    in guarded code, that `after` neither branches into guarded code nor holds a pointer to it, and on DOOM OS that it does
+    not cover a veneer word DOOM rewrites while it starts. What the new bytes mean is the author's claim, to be tested."""
+    if not before or len(before) != len(after):
+        raise ImageError(f'0x{address:08X}: a byte patch keeps its size and needs both sides')
+    if before == after:
+        raise ImageError(f'0x{address:08X}: the patch changes nothing')
+    for at in range(address, address+len(before)):
+        zone = protected(image, at)
+        if zone:
+            raise ImageError(f'0x{address:08X}: the patch reaches 0x{at:08X}, inside {zone}. Only a disable hook may change that code')
+    if image.read(address, len(before)) != before:
+        raise ImageError(f'0x{address:08X} does not hold {before.hex()} on this base')
+    if address % 2 == 0:
+        for ins in _disassembler().disasm(after, address):
+            if ins.mnemonic.split('.')[0] in BRANCHES and ins.operands and ins.operands[-1].type == cs_arm.ARM_OP_IMM:
+                zone = protected(image, ins.operands[-1].imm & 0xFFFFFFFF)
+                if zone:
+                    raise ImageError(f'0x{ins.address:08X}: the new bytes branch into {zone}: refused')
+    for at in range((-address) % 4, len(after)-3, 4):
+        value = int.from_bytes(after[at:at+4], 'little')
+        if value & 1 and protected(image, value):
+            raise ImageError(f'0x{address+at:08X}: the new bytes hold a pointer to {protected(image, value)}: refused')
+    if family == 'doom-os':
+        for word in range(address & ~3, address+len(before), 4):
+            try:
+                if image.u32(word-4) == VENEER:
+                    raise ImageError(f'0x{word:08X} is a DOOM OS veneer word, which DOOM rewrites while it starts: a patch in the file would not last')
+            except ImageError as e:
+                if 'veneer' in str(e):
+                    raise
 
 
 def check_disable_hook(image, address):
@@ -255,4 +336,4 @@ def plan_patch(image, address, stub, not_pointers=()):
     return dict(address=address, before=displaced, after=jump+bytes.fromhex('00bf')*(spare//2))
 
 
-__all__ = ['Image', 'check_entry_hook', 'check_word_hook', 'jump_patch', 'jump_size', 'plan_patch', 'stub_source']
+__all__ = ['Image', 'check_byte_patch', 'check_disable_hook', 'check_entry_hook', 'check_jump_hook', 'check_word_hook', 'jump_hook_patch', 'jump_patch', 'jump_size', 'plan_patch', 'stub_source']

@@ -18,6 +18,16 @@ The original development milestones below describe existing work, not a mandator
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
 
+## What is new (2026-11-23, night): the builder can make a mod like the maintainer's own
+
+- New kinds of change, so the private mod DEEPCUT can be described as a `mod.json` and built by `lab404 build` instead of its own
+  script: `jump` (take over a piece of a stock function), `patch` (declared bytes into others, such as the mute group limit),
+  `copies` (a stock function copied from the user's image by SHA-256, with edits and its branches aimed again) and `flash` (code and
+  data run in place in flash after the image). The linker now lays out several regions, payload and flash, that call each other.
+  See EXAMPLES.md, "Kinds of change for a larger mod". [EMULATOR] payload code calls flash code that reads payload data on the
+  Unicorn stand; the AUTO MARK copies of the private mod build on stock 5.52 and DOOM OS 0.7.4 with every outgoing branch aimed at a
+  veneer holding the old target. Not yet done: building DEEPCUT itself this way and comparing it with its own build.
+
 ## What is new (2026-11-23, evening): disable hooks
 
 - A mod may switch off the four factory service routines that can erase the loader, and nothing else in guarded code:
