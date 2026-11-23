@@ -1693,7 +1693,7 @@
   },
   {
    "id": "hw.bmc.rx",
-   "claim": "Bytes from the second processor arrive by LPUART3 interrupt (vector 0x98, stub 0x800400C8, handler 0x80090F58 with control table 0x833B708C) into a byte ring. The task loop at 0x800EBAE4 dispatches four-byte packets through the 11-entry table at 0x800EBC00 (hw.bmc.rx-table). Entry 0 is the service dispatcher 0x800665A8; its packets and address cases are described in hw.bmc.service. Other entries handle other packet channels. The nested status table under service packet 01 FF 00 value is not itemised here.",
+   "claim": "Bytes from the second processor arrive by LPUART3 interrupt. The vector table entry (0x98, stub 0x800400C8) points to a generic handler 0x80090F58 that fills a byte ring through the control table 0x833B708C, but startup replaces it for LPUART3: 0x80001930 registers 0x80003381 for IRQ 22 at priority 7 through 0x800C1568. That handler keeps the low 7 bits of each byte, gathers four into a word and puts it in the queue at 0x8059275C (flag +0, read +4, write +8, data +0xC to +0x400C), then wakes the task. The task loop at 0x800EBAE4 dispatches four-byte packets through the 11-entry table at 0x800EBC00 (hw.bmc.rx-table). Entry 0 is the service dispatcher 0x800665A8; its packets and address cases are described in hw.bmc.service. Other entries handle other packet channels. The nested status table under service packet 01 FF 00 value is not itemised here.",
    "topic": "hardware",
    "firmware": [
     "stock-5.52",
@@ -1710,6 +1710,10 @@
     {
      "label": "BYTES",
      "source": "stock-5.52: dispatch loop 0x800EBAE4-0x800EBB0A and all 11 pointers at 0x800EBC00, re-read 2026-11-14"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80001930, 0x80003380-0x80003420 (and #0x7f, cmp r3,#4, wake 0x800D316C), read 2026-11-23 after the private mod's protocol study of 2026-11-06"
     }
    ],
    "checks": [
@@ -1784,6 +1788,28 @@
      "address": "0x800665A8",
      "size": 8,
      "sha256": "92d5915fd2085e59f719c909b0f1df0f61bea83dbd64b653b695bd731817b836"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.commands",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "What APP1 sends to the second processor besides effect parameters: of about 300 calls of the sender 0x800D93F0, 46 send BMC commands of four bytes, 33 of the form 01 FE code value and 13 of the form 01 FF code argument; most of the rest are DT1 effect messages (hw.bmc.sysex, first byte 04-07) and two are pad lights (01 05, 01 09). 01 FE codes seen: 00, 0A, 0B, 0C, 0D, 10, 11, 20 (for example 01 FE 00 00 at 0x8014469E). 01 FF codes: 00, 05, 10, 20, 30, 50, 70, 90, plus two sent another way: 01 FF 02 00, which enters the APP0 update and is sent from a DMA callback 0x80040009 set up at 0x8017D322, and 01 FF FE mode, a report of the start mode built at 0x80591CDC+2 and sent from 0x80142B98. Coming back, 01 FE packets do something only for code 0x20 (0x80056C20 with the value, stored at 0x80249A64); 01 FF goes through the 256-way table of hw.bmc.service. What each command means is not established; a mod should not send them.",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "private mod's study of stock 5.52 and DOOM OS 0.7.2, 2026-11-06, every call of 0x800D93F0 traced from the writes into the buffer it passes; 0x8014469E re-read 2026-11-23"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the meaning of each code; 16 call sites whose first byte comes from memory were not resolved"
     }
    ]
   },

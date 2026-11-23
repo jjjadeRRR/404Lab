@@ -143,12 +143,13 @@ def link(object_blobs, base, externals=None):
     return blobs[0], symbols
 
 
-def link_regions(regions, externals=None):
+def link_regions(regions, externals=None, spans=None):
     """Link objects that live in several places at once, such as a payload in SDRAM and a block of code in flash.
 
-    regions is [(base, [(name, bytes)])]; returns ([bytes per region], {symbol: address}). Symbols are shared between regions.
-    A branch to anything outside its own region (firmware, or another region) goes through a veneer at the start of the region,
-    since regions are far apart."""
+    regions is [(base, [(name, bytes) or (name, bytes, fixed address)])]; returns ([bytes per region], {symbol: address}).
+    Symbols are shared between regions. An object with a fixed address has all its sections laid out from there, in the order
+    text, rodata, data, bss, for code that other code reaches by a literal address; everything else flows around it. A branch to
+    anything outside its own region (firmware, or another region) goes through a veneer, since regions are far apart."""
     externals = dict(externals or {})
     for name, address in externals.items():
         if not address & 1:
@@ -157,24 +158,62 @@ def link_regions(regions, externals=None):
     for base, object_blobs in regions:
         if base % 4:
             raise LinkError('a region base must be word aligned')
-        groups.append((base, [Obj(name, blob) for name, blob in object_blobs]))
+        objects = []
+        for entry in object_blobs:
+            obj = Obj(entry[0], entry[1])
+            obj.fixed = entry[2] if len(entry) > 2 else None
+            objects.append(obj)
+        groups.append((base, objects))
     defined = [set().union(*[_defined(obj) for obj in objects]) for _, objects in groups]
     layouts = []
     for index, (base, objects) in enumerate(groups):
         elsewhere = set(externals).union(*[names for i, names in enumerate(defined) if i != index])
         veneer_names = _far_branches(objects, elsewhere)
-        veneers = {name: base+8*i for i, name in enumerate(veneer_names)}
+        taken = []
+
+        def free_at(cursor, size, align):
+            at = (cursor+align-1) & ~(align-1)
+            while True:
+                clash = next((hi for lo, hi in taken if lo < at+size and at < hi), None)
+                if clash is None:
+                    return at
+                at = (clash+align-1) & ~(align-1)
         placed = {kind: [] for kind in ORDER}
+        end = base
         for obj in objects:
-            for section in obj.sections.values():
-                placed[_bucket(section)].append(section)
-        cursor = base+8*len(veneer_names)
+            if obj.fixed is None:
+                continue
+            if obj.fixed < base or obj.fixed % 2:
+                raise LinkError(f'{obj.path}: fixed address 0x{obj.fixed:08X} is not in its region from 0x{base:08X}')
+            cursor = obj.fixed
+            for kind in ORDER:
+                for section in obj.sections.values():
+                    if _bucket(section) == kind:
+                        cursor = (cursor+section.align-1) & ~(section.align-1)
+                        section.address = cursor
+                        cursor += section.size
+                        placed[kind].append(section)
+            if any(lo < cursor and obj.fixed < hi for lo, hi in taken):
+                raise LinkError(f'{obj.path}: its fixed place 0x{obj.fixed:08X}-0x{cursor:08X} overlaps another fixed object')
+            taken.append((obj.fixed, cursor))
+            if spans is not None:
+                spans[obj.path] = (obj.fixed, cursor)
+            end = max(end, cursor)
+        veneer_at = free_at(base, 8*len(veneer_names), 4)
+        taken.append((veneer_at, veneer_at+8*len(veneer_names)))
+        veneers = {name: veneer_at+8*i for i, name in enumerate(veneer_names)}
+        cursor = veneer_at+8*len(veneer_names)
         for kind in ORDER:
-            for section in placed[kind]:
-                cursor = (cursor+section.align-1) & ~(section.align-1)
-                section.address = cursor
-                cursor += section.size
-        layouts.append((base, objects, veneer_names, veneers, placed, cursor))
+            for obj in objects:
+                if obj.fixed is not None:
+                    continue
+                for section in obj.sections.values():
+                    if _bucket(section) == kind:
+                        section.address = free_at(cursor, section.size, section.align)
+                        cursor = section.address+section.size
+                        placed[kind].append(section)
+        end = max(end, cursor, veneer_at+8*len(veneer_names))
+        layouts.append((base, objects, veneer_names, veneers, placed, end))
     strong, weak, thumb = {}, {}, set(externals)
     tables = {}
     for _, objects, _, _, _, _ in layouts:
@@ -202,11 +241,11 @@ def link_regions(regions, externals=None):
         for obj in objects:
             _relocate(obj, tables[obj], symbols, thumb, veneers)
         out = bytearray(cursor-base)
-        for i, name in enumerate(veneer_names):
-            target = symbols[name]
+        for name in veneer_names:
+            target, at = symbols[name], veneers[name]-base
             if not target & 1:
                 raise LinkError(f'a branch to {name}, which is not a Thumb function')
-            out[8*i:8*i+8] = bytes.fromhex('dff800f0')+struct.pack('<I', target)
+            out[at:at+8] = bytes.fromhex('dff800f0')+struct.pack('<I', target)
         for kind in ORDER[:3]:
             for section in placed[kind]:
                 out[section.address-base:section.address-base+len(section.data)] = section.data

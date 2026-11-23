@@ -51,6 +51,23 @@ def _data_source(mod_dir, items, label):
     return ''.join(out)
 
 
+# Per-source compiler options a mod may ask for, beyond the defaults: optimisation, the FPU for audio code, and macros.
+ALLOWED_FLAGS = ('-O0', '-O1', '-O2', '-O3', '-Os', '-Oz', '-mfpu=fpv5-sp-d16', '-mfpu=fpv5-d16', '-mfloat-abi=softfp',
+                 '-mfloat-abi=hard', '-ffp-contract=off', '-ffp-contract=fast', '-fno-jump-tables', '-fjump-tables')
+
+
+def _source_items(sources):
+    """A source is a file name, or {"file", "address" (fixed place), "max_size", "flags"}."""
+    items = []
+    for source in sources:
+        item = dict(file=source) if isinstance(source, str) else dict(source)
+        for flag in item.get('flags', []):
+            if flag not in ALLOWED_FLAGS and not (flag.startswith('-D') and flag[2:3].isalpha() and ' ' not in flag):
+                raise BuildError(f'{item["file"]}: compiler option {flag} is not one a mod may set ({", ".join(ALLOWED_FLAGS)}, or -DNAME[=value])')
+        items.append(item)
+    return items
+
+
 def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', flash=None):
     """Compile the payload, and the flash block when the mod declares one, and link them together so each can use the
     other's symbols. Returns ([payload, flash block or None], symbols)."""
@@ -59,10 +76,12 @@ def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', 
 
         def objects(sources, asm, label):
             blobs = []
-            for source in sources:
-                obj = tmp/f'{label}-{Path(source).name}.o'
-                _compile([*CFLAGS, '-c', str(mod_dir/source), '-o', str(obj)])
-                blobs.append((source, obj.read_bytes()))
+            for item in _source_items(sources):
+                obj = tmp/f'{label}-{Path(item["file"]).name}.o'
+                flags = SFLAGS if item['file'].endswith(('.S', '.s')) else CFLAGS
+                _compile([*flags, *item.get('flags', []), '-c', str(mod_dir/item['file']), '-o', str(obj)])
+                fixed = _int(item['address']) if 'address' in item else None
+                blobs.append((item['file'], obj.read_bytes(), fixed) if fixed is not None else (item['file'], obj.read_bytes()))
             if asm:
                 path = tmp/f'{label}.S'
                 path.write_text('.syntax unified\n.thumb\n.text\n'+asm, encoding='utf-8')
@@ -70,13 +89,33 @@ def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', 
                 _compile([*SFLAGS, '-c', str(path), '-o', str(obj)])
                 blobs.append((f'{label}.S', obj.read_bytes()))
             return blobs
-        regions = [(base_address, objects(mod['sources'], ''.join(stubs)+extra_asm+_data_source(mod_dir, mod.get('data', []), 'data'), 'payload'))]
+        def fixed_data(items, label):
+            # Data with a fixed address gets an object of its own, so the linker can put it exactly there.
+            blobs = []
+            for n, item in enumerate(i for i in items if 'address' in i):
+                path = tmp/f'{label}-fixed-{n}.S'
+                path.write_text('.syntax unified\n.thumb\n.text\n'+_data_source(mod_dir, [item], f'{label}_fixed_{n}'), encoding='utf-8')
+                _compile([*SFLAGS, '-c', str(path), '-o', str(path.with_suffix('.o'))])
+                blobs.append((item['file'], path.with_suffix('.o').read_bytes(), _int(item['address'])))
+            return blobs
+
+        data = mod.get('data', [])
+        regions = [(base_address, objects(mod['sources'], ''.join(stubs)+extra_asm+_data_source(mod_dir, [i for i in data if 'address' not in i], 'data'), 'payload')
+                    + fixed_data(data, 'data'))]
         if flash:
-            regions.append((_int(flash['address']), objects(flash.get('sources', []), _data_source(mod_dir, flash.get('data', []), 'flash'), 'flash')))
+            fdata = flash.get('data', [])
+            regions.append((_int(flash['address']), objects(flash.get('sources', []), _data_source(mod_dir, [i for i in fdata if 'address' not in i], 'flash'), 'flash')
+                            + fixed_data(fdata, 'flash')))
+        spans = {}
         try:
-            blobs, symbols = link_regions(regions, externals)
+            blobs, symbols = link_regions(regions, externals, spans)
         except LinkError as e:
             raise BuildError(str(e)) from None
+        for item in _source_items(mod['sources']+(flash or {}).get('sources', [])):
+            if 'address' in item and 'max_size' in item and item['file'] in spans:
+                start, end = spans[item['file']]
+                if end-start > _int(item['max_size']):
+                    raise BuildError(f'{item["file"]} takes {end-start} bytes at 0x{start:08X}, more than its max_size {_int(item["max_size"])}')
         return blobs+([None] if not flash else []), symbols
 
 

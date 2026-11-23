@@ -111,6 +111,12 @@ use the private mod's real sites.
 
 Payload `data` files work the same way at the top level of `mod.json`.
 
+A source can also be an object instead of a file name, for code that other code reaches by a literal address, or audio code that
+needs the FPU: `{"file": "meter.c", "address": "0x83FD0400", "max_size": "0xC00", "flags": ["-O3", "-mfpu=fpv5-sp-d16",
+"-mfloat-abi=softfp"]}`. A fixed object is laid out from its address; everything else flows around it; overlaps and a module larger
+than its `max_size` are refused. `flags` accepts optimisation levels, the FPU and float ABI, `-ffp-contract`, jump tables and
+`-DNAME[=value]`, nothing else. Data files take an `address` the same way (`tests/test_fixed_places.py`).
+
 ## A shortcut using a stock screen
 
 [quick_system](../mods/quick_system/mod.json) and its [source](../mods/quick_system/quick_system.c) add HOLD + ROLL on the main screen to open the firmware's SYSTEM page. They illustrate observing events, restricting a feature to one screen and calling a guarded firmware symbol. The example has been exercised on stock 5.52 and DOOM OS 0.7.3 and 0.7.4 in the emulator. Its build on DOOM OS 0.7.4 passed the unit checks listed in its `mod.json` on one unit, once (`hk.lab404-build-on-unit`); stock and 0.7.3 builds have not been on a unit.
