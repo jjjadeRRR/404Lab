@@ -57,7 +57,7 @@ Two kinds of hook exist. An `entry` hook (above) runs a mod function before a fi
 
 ## A shortcut using a stock screen
 
-[quick_system](../mods/quick_system/mod.json) and its [source](../mods/quick_system/quick_system.c) add HOLD + ROLL on the main screen to open the firmware's SYSTEM page. They illustrate observing events, restricting a feature to one screen and calling a guarded firmware symbol. The example has been exercised on stock 5.52 and DOOM OS 0.7.3 in the emulator, not on a unit.
+[quick_system](../mods/quick_system/mod.json) and its [source](../mods/quick_system/quick_system.c) add HOLD + ROLL on the main screen to open the firmware's SYSTEM page. They illustrate observing events, restricting a feature to one screen and calling a guarded firmware symbol. The example has been exercised on stock 5.52 and DOOM OS 0.7.3 and 0.7.4 in the emulator. Its build on DOOM OS 0.7.4 passed the unit checks listed in its `mod.json` on one unit, once (`hk.lab404-build-on-unit`); stock and 0.7.3 builds have not been on a unit.
 
 It can be built and checked like `demo_counter`. For screen and event experiments, [STAND.md](STAND.md) describes the external DM-404 emulator and the tests that exercise it. Inspecting existing examples does not require agreeing to use their interface in a new mod.
 

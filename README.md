@@ -11,7 +11,7 @@ Open research and tools for Roland SP-404MKII firmware modding, ready for work w
 
 It is for mod developers, researchers and owners who want to change their instrument, alone or together with a coding agent of their choice. There is no mandatory agent workflow, and no promise that an arbitrary request can become a working mod without further research.
 
-**Early research tooling.** The examples have been exercised on the emulator, but no package built by these tools has been tested on a unit yet. Most hardware facts come from one unit. See [docs/STATUS.md](docs/STATUS.md) for current capabilities and limits.
+**Early research tooling.** The examples have been exercised on the emulator. One build of these tools (`quick_system` on DOOM OS 0.7.4) has passed its checks on one unit, once; nothing made through `package` has been on a unit. Most hardware facts come from one unit. See [docs/STATUS.md](docs/STATUS.md) for current capabilities and limits.
 
 This project ships no firmware. You bring your own `SP404MKII_APP1.bin`. Unofficial: not affiliated with or endorsed by Roland.
 
@@ -29,7 +29,7 @@ This project ships no firmware. You bring your own `SP404MKII_APP1.bin`. Unoffic
 | Exact stand | Runs pieces of firmware code on an emulated processor, for exact comparison of results |
 | Whole-firmware stand | Boots the firmware on the separate [DM-404](https://github.com/nickpetty/dm-404) emulator, presses keys and reads its screen |
 
-Documentation coverage, build support and hardware validation are separate. Knowledge of a firmware does not mean the builder supports it. `identify` knows stock 3.02 to 5.52, DOOM OS 0.6 to 0.7.4 and Tampal builds by hash. The knowledge base carries byte checks for stock 5.52 and DOOM OS 0.7.2, 0.7.3 and 0.7.4; the build examples target stock 5.52 and DOOM OS 0.7.3 and 0.7.4 (0.7.4 tried on the emulator only), and the builder accepts only declared, identified bases. Research directions are in [docs/PLAN.md](docs/PLAN.md).
+Documentation coverage, build support and hardware validation are separate. Knowledge of a firmware does not mean the builder supports it. `identify` knows stock 3.02 to 5.52, DOOM OS 0.6 to 0.7.4 and Tampal builds by hash. The knowledge base carries byte checks for stock 5.52 and DOOM OS 0.7.2, 0.7.3 and 0.7.4; the build examples target stock 5.52 and DOOM OS 0.7.3 and 0.7.4 (on 0.7.4 one build has run on a unit), and the builder accepts only declared, identified bases. Research directions are in [docs/PLAN.md](docs/PLAN.md).
 
 ## Start from an example or a question
 

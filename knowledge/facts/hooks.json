@@ -1691,6 +1691,25 @@
      "source": "that the ported build behaves on a unit as on 0.7.3: not tried yet"
     }
    ]
+  },
+  {
+   "id": "hk.lab404-build-on-unit",
+   "claim": "The first APP1 built by these tools to run on a unit: mods/quick_system on DOOM OS 0.7.4-651C, built with `build` from commit 1299144 and checked with `check` (all structural results pass, including loader-code and flash-room; key freedom and compatibility unknown), candidate SHA-256 65eb1dfbdf69ba0946341d18abbabaa3e04cb8c13f56a0d4877ed574ff98641d, one entry hook at the DOOM key trampoline 0x802097CC and one call to 0x800DA599. It was not made through `package`. On the unit it started as DOOM OS does; on the main screen HOLD + ROLL opened SYSTEM and EXIT returned; HOLD and ROLL alone did what they always do; ROLL alone after playing did not open SYSTEM; the chord during playback left playback going; on DOOM OS's own screen HOLD + ROLL did nothing; 10-15 minutes of ordinary use with a project saved and loaded again showed nothing unusual. This shows that the build route, the entry-hook stub, the payload row added to the scatter table and a guarded firmware call work on hardware at least once. Not shown: other bases (stock 5.52 and DOOM OS 0.7.3 were not flashed), word hooks, the `package` route, long use, sound bit for bit, other units, and whether DOOM OS's own screen does anything with HOLD + ROLL on unmodified 0.7.4 (it was not compared on the unit).",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-23, the candidate above written to the SD card with its SHA-256 checked on the card after remounting, flashed by the owner, who answered the seven unit checks of the example: start, chord opens SYSTEM and EXIT returns, single keys unchanged, ROLL alone after playing does not open SYSTEM, playback goes on, on DOOM OS's own screen the chord does nothing, normal use with save and load fine. The answer to the ROLL-alone check was 'yes', read as the check passing. One unit, once"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "tests/test_emulator.py on the same base the same day: QuickSystem (chord, other screens, DOOM's own screen, whole package route) and WholeFirmware.test_candidate_matches_its_base_screen_for_screen"
+    }
+   ]
   }
  ]
 }

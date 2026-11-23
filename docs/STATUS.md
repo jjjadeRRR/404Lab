@@ -2,7 +2,7 @@
 
 Current capabilities and known limits. The project purpose is in `docs/REQUIREMENTS.md`; research directions are in `docs/PLAN.md`. Examples and hardware hazards have separate guides.
 
-Last update: 2026-11-23. **Early work. No package built by these tools has been on a unit yet.**
+Last update: 2026-11-23. **Early work. One APP1 built by these tools has run on a unit: `quick_system` on DOOM OS 0.7.4, one unit, once (`hk.lab404-build-on-unit`). Nothing made through `package` has.**
 
 The original development milestones below describe existing work, not a mandatory sequence for new tasks.
 
@@ -14,12 +14,16 @@ The original development milestones below describe existing work, not a mandator
 | 3 Identifying APP1 | Done for images with known hashes. Side-Piece has no image yet |
 | 4 Knowledge | Bindings of stock 5.52 checked against Roland's 5.x manuals and tried on the emulator. No screen marked complete |
 | 5 Stand | Unicorn for exact checks, DM-404 for the whole firmware. Coverage and further directions are in `STAND.md` and `PLAN.md` |
-| 6 Pipeline | Optional `preview`, `approve`, `package` route for conservative additions, with refusal regressions. `mods/quick_system` runs from APP1 to package on stock and DOOM OS on the emulator. Not tried on a unit. Hold-repeat analysis and three contract lines stay `unknown`. A new input is also pressed on four other screens (`contained`); other screens are not tried. Intentional replacements are not supported by this packaging route |
+| 6 Pipeline | Optional `preview`, `approve`, `package` route for conservative additions, with refusal regressions. `mods/quick_system` runs from APP1 to package on stock and DOOM OS 0.7.3 and 0.7.4 on the emulator. Its `build` output on 0.7.4 passed its unit checks on one unit (2026-11-23); the `package` route itself was not tried on a unit. Hold-repeat analysis and three contract lines stay `unknown`. A new input is also pressed on four other screens (`contained`); other screens are not tried. Intentional replacements are not supported by this packaging route |
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
 
 ## What is new (2026-11-23): DOOM OS 0.7.4 for the examples, word hooks, a stock CHOP crash path
 
+- **First build of these tools on a unit.** `quick_system` built with `build` on DOOM OS 0.7.4 and checked with `check`,
+  candidate `65eb1dfb…641d`, was flashed by the maintainer: it started normally, HOLD + ROLL opened SYSTEM on the main screen
+  and EXIT returned, single keys, playback, DOOM's own screen and a save and load behaved as before. One unit, once, entry hooks
+  only, not through `package` (`hk.lab404-build-on-unit`).
 - Both example mods now declare DOOM OS 0.7.4-651C. `demo_counter` needs its own `not_pointers` entry there (DOOM's table of
   integers moved to 0x60379DE4); `quick_system` uses the same key trampoline 0x802097CC. [EMULATOR] On 0.7.4 HOLD + ROLL opens
   SYSTEM on the main screen and EXIT returns, DOOM's own screen keeps the keys, and the demo candidate matches its base screen
