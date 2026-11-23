@@ -1,4 +1,4 @@
-"""Check a function-entry hook site and produce its patch and stub.
+"""Check hook sites and produce their patches: function-entry hooks with a stub, and word hooks that repoint a code pointer.
 
 An entry hook replaces the first instructions of a function with a jump to a generated stub. The stub saves the caller-saved
 integer registers and the flags, calls the mod's function, restores them, runs the displaced instructions and jumps back.
@@ -135,6 +135,12 @@ def check_entry_hook(image, address, not_pointers=()):
         size += ins.size
     if size < need:
         raise ImageError(f'0x{address:08X}: could not decode {need} bytes of instructions')
+    # The patch rewrites every displaced byte, which can be two more than the jump when the last instruction is 32-bit.
+    # The check above only saw the jump's own span, so a site just before guarded code could still overwrite its first bytes.
+    for at in range(address, address+size, 2):
+        zone = protected(image, at)
+        if zone:
+            raise ImageError(f'0x{address:08X}: the displaced bytes reach 0x{at:08X}, inside {zone}. This code can erase the loader and brick the unit: no hook goes here')
     if picked[0].mnemonic.split('.')[0] != 'push':
         raise ImageError(f'0x{address:08X}: first instruction is {picked[0].mnemonic}, not push, so this does not look like a function entry')
     for ins in picked:
@@ -156,6 +162,47 @@ def check_entry_hook(image, address, not_pointers=()):
         if lo <= target < hi:
             raise ImageError(f'0x{source:08X} branches to 0x{target:08X}, inside the bytes this hook would replace')
     return image.read(address, size), picked
+
+
+VENEER = 0xF000F8DF  # ldr.w pc, [pc]: the word after it is where the veneer jumps
+
+
+def check_word_hook(image, address, expect, family=None):
+    """A word hook replaces one aligned word that holds a Thumb code pointer, such as a vector, a table entry or a vtable slot,
+    with the address of a mod function. Returns the word's present value or raises ImageError saying why this word is refused.
+
+    Checked from bytes: the word is aligned and mapped, holds exactly the value the mod's author saw there, and that value is a
+    Thumb address of code that exists in this image and is not code that can erase the loader. Refused on DOOM OS: a word right
+    after a DOOM veneer, which DOOM OS rewrites while it starts (hk.doom.veneers-rewritten), so a patch in the file would not last.
+    Not visible from bytes: who else reads the word, and whether some code writes it at run time. The mod function is called
+    exactly as the original would be, with its arguments, context and stack, and must keep the original's contract.
+    """
+    if address % 4:
+        raise ImageError(f'0x{address:08X}: a word hook needs a word-aligned address')
+    zone = protected(image, address)
+    if zone:
+        raise ImageError(f'0x{address:08X} is inside {zone}. This code can erase the loader and brick the unit: no hook goes here')
+    value = image.u32(address)
+    if value != expect:
+        raise ImageError(f'0x{address:08X} holds 0x{value:08X}, not the 0x{expect:08X} the mod expects: this is not that word on this base')
+    if not value & 1:
+        raise ImageError(f'0x{address:08X} holds 0x{value:08X}, which is not a Thumb code address: a word hook replaces pointers to code only')
+    zone = protected(image, value)
+    if zone:
+        raise ImageError(f'0x{address:08X} points to {zone}. Redirecting a pointer to code that can erase the loader is hooking it: refused')
+    try:
+        image.read(value & ~1, 2)
+    except ImageError:
+        raise ImageError(f'0x{address:08X} holds 0x{value:08X}, which is not inside this image, so it is not code the firmware carries') from None
+    if family == 'doom-os':
+        try:
+            before = image.u32(address-4)
+        except ImageError:
+            before = None
+        if before == VENEER:
+            raise ImageError(f'0x{address:08X} is the word of a DOOM OS veneer at 0x{address-4:08X}. DOOM OS rewrites these words while it starts '
+                             '(hk.doom.veneers-rewritten), so a patch in the file would not last: hook somewhere DOOM OS leaves alone')
+    return value
 
 
 def stub_source(index, address, function, displaced):
@@ -193,4 +240,4 @@ def plan_patch(image, address, stub, not_pointers=()):
     return dict(address=address, before=displaced, after=jump+bytes.fromhex('00bf')*(spare//2))
 
 
-__all__ = ['Image', 'check_entry_hook', 'jump_patch', 'jump_size', 'plan_patch', 'stub_source']
+__all__ = ['Image', 'check_entry_hook', 'check_word_hook', 'jump_patch', 'jump_size', 'plan_patch', 'stub_source']

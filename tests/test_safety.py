@@ -11,7 +11,7 @@ from lab404.hooks import check_entry_hook
 from lab404.image import APP1_ROOM, Image, ImageError, extend, protected, room
 from lab404.knowledge import Knowledge
 from lab404.pipeline import PackageRefused, refuse_dangerous_files
-from helpers import DOOM73, STOCK, tiny_image
+from helpers import COPY, DOOM73, STOCK, rows_image, tiny_image
 
 
 class Size(unittest.TestCase):
@@ -43,6 +43,18 @@ class LoaderEraseCode(unittest.TestCase):
         for path in (STOCK, DOOM73):
             with self.assertRaisesRegex(ImageError, 'loader'):
                 check_entry_hook(Image(path.read_bytes()), 0x80065838)
+
+    def test_a_hook_just_before_it_may_not_displace_its_first_bytes(self):
+        # 2026-11-23: the guard saw only the 8 bytes of the jump, but a 32-bit instruction at the end is displaced whole,
+        # so the patch could overwrite two bytes more. Built around the real guarded bytes, read from the user's image.
+        start = 0x80065838
+        guarded = Image(STOCK.read_bytes()).read(start, 0x10)
+        code = bytes.fromhex('10b5')+bytes.fromhex('00bf')*2+bytes.fromhex('4ff0')+guarded  # push, nop, nop, a 32-bit mov.w over the guarded start
+        raw = rows_image(code+bytes(-len(code) % 4), [(start-8, len(code)+(-len(code) % 4), COPY, 0)])
+        image = Image(raw)
+        self.assertIsNone(protected(image, start-8+7), 'the jump itself stays outside the guarded code')
+        with self.assertRaisesRegex(ImageError, 'reach 0x80065838'):
+            check_entry_hook(image, start-8)
 
     def test_a_mod_may_not_call_it(self):
         image = Image(STOCK.read_bytes())

@@ -99,6 +99,32 @@ class Candidate(unittest.TestCase):
         (package/'manifest.json').write_text(json.dumps(manifest), encoding='utf-8')
         self.assertEqual(states(check_candidate(package, MOD, STOCK))['undeclared-changes'], 'fail')
 
+    def resign(self, package, manifest, raw):
+        (package/'SP404MKII_APP1.bin').write_bytes(raw)
+        manifest['candidate_sha256'] = __import__('hashlib').sha256(bytes(raw)).hexdigest()
+        (package/'manifest.json').write_text(json.dumps(manifest), encoding='utf-8')
+
+    def test_a_declared_patch_over_loader_erase_code_is_caught(self):
+        # Consistent with its own manifest, so only an independent look at the addresses can catch it (added 2026-11-23).
+        from lab404.image import file_offset
+        package = self.copy_package('loader')
+        manifest = json.loads((package/'manifest.json').read_text(encoding='utf-8'))
+        raw = bytearray((package/'SP404MKII_APP1.bin').read_bytes())
+        at = file_offset(STOCK.read_bytes(), 0x80065838, 4)
+        before = bytes(raw[at:at+4])
+        raw[at:at+4] = bytes.fromhex('00207047')
+        manifest['hooks'].append(dict(address='0x80065838', before=before.hex(), after='00207047'))
+        self.resign(package, manifest, raw)
+        got = states(check_candidate(package, MOD, STOCK))
+        self.assertEqual((got['hooks'], got['undeclared-changes'], got['loader-code']), ('pass', 'pass', 'fail'))
+
+    def test_a_candidate_past_the_app1_room_is_caught(self):
+        package = self.copy_package('big')
+        manifest = json.loads((package/'manifest.json').read_text(encoding='utf-8'))
+        raw = (package/'SP404MKII_APP1.bin').read_bytes()
+        self.resign(package, manifest, raw+bytes(0x37F000-len(raw)+4))
+        self.assertEqual(states(check_candidate(package, MOD, STOCK))['flash-room'], 'fail')
+
     def test_occupied_free_and_unknown_keys(self):
         knowledge = keys_tree(self.tmp/'k1') if (self.tmp/'k1').mkdir() is None else None
         cases = [(dict(screen='main', keys=['SHIFT', 'PAD1']), 'fail'), (dict(screen='main', keys=['SHIFT', 'PAD2']), 'pass'),

@@ -11,7 +11,7 @@
 
 ## Extend examples where there is a real question
 
-Candidate examples include audio processing in APP1, drawing a screen, storing a setting and showing a fault. Add a new hook mechanism when an example requires it: vectors, veneers, fixed-address modules and data tables have different constraints from function-entry hooks.
+Candidate examples include audio processing in APP1, drawing a screen, storing a setting and showing a fault. Add a new hook mechanism when an example requires it. Function-entry hooks and word hooks (vectors, table entries, vtable slots) exist; veneers rewritten at run time, fixed-address modules and data tables have different constraints still to design.
 
 Each example should explain its intended behaviour, supported bases, relevant resource/context assumptions, how it was tested and what remains unknown. Examples can stop at a local experiment. A candidate intended for hardware needs the separate considerations in [SAFETY.md](SAFETY.md).
 

@@ -29,7 +29,7 @@ This project ships no firmware. You bring your own `SP404MKII_APP1.bin`. Unoffic
 | Exact stand | Runs pieces of firmware code on an emulated processor, for exact comparison of results |
 | Whole-firmware stand | Boots the firmware on the separate [DM-404](https://github.com/nickpetty/dm-404) emulator, presses keys and reads its screen |
 
-Documentation coverage, build support and hardware validation are separate. Knowledge of a firmware does not mean the builder supports it. `identify` knows stock 3.02 to 5.52, DOOM OS 0.6 to 0.7.4 and Tampal builds by hash. The knowledge base carries byte checks for stock 5.52 and DOOM OS 0.7.2, 0.7.3 and 0.7.4; the build examples target stock 5.52 and DOOM OS 0.7.3, and the builder accepts only declared, identified bases. Research directions are in [docs/PLAN.md](docs/PLAN.md).
+Documentation coverage, build support and hardware validation are separate. Knowledge of a firmware does not mean the builder supports it. `identify` knows stock 3.02 to 5.52, DOOM OS 0.6 to 0.7.4 and Tampal builds by hash. The knowledge base carries byte checks for stock 5.52 and DOOM OS 0.7.2, 0.7.3 and 0.7.4; the build examples target stock 5.52 and DOOM OS 0.7.3 and 0.7.4 (0.7.4 tried on the emulator only), and the builder accepts only declared, identified bases. Research directions are in [docs/PLAN.md](docs/PLAN.md).
 
 ## Start from an example or a question
 

@@ -4326,6 +4326,106 @@
    ]
   },
   {
+   "id": "st.chop.copy-null-check",
+   "claim": "A stock crash path: when the pad copy that CHOP starts with fails, the firmware jumps to address 0. 0x800AE700(object, from, to, progress, [sp] cancel check) copies one pad's sample to another and passes the check on to 0x8004A8F8 (as r3, kept in r4). There 0x8005C850 does the work (malloc of 0x8000 bytes at 0x8005C862, then opening both files); when it returns a negative result, 0x8004A960 branches to 0x8004A984, which calls the check with blx r4 without testing it for zero, and returns -117 if the check answered non-zero, else -63. Stock CHOP (st.chop.job) passes 0: 0x80047EB0 sets r7 to 0 at 0x80047EC4 and stores it as the fifth argument at 0x800480DC. Two more callers pass 0 (0x8004E488 and 0x8004E5A2, ahead of the calls at 0x8004E48C and 0x8004E5AE; which operations these are is not identified). The callers at 0x8004F7DE and 0x8006928E pass 0x8004BFC1, a function that returns the byte at 0x802496D8 + 8. So on stock, a CHOP assign whose copy fails, for example because the 3 MB malloc pool is short (st.mem.heap, st.ui.saver-leak), should end in a fault with PC 0 and LR 0x8004A987. A mod that calls 0x800AE700 should pass a real check, such as 0x8004BFC1, rather than 0. Not established: the crash on an unmodified stock unit, which failures of 0x8005C850 occur in practice besides malloc, and what the byte at 0x802496D8 + 8 stands for.",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800AE700 (ldr.w r8,[sp,#0x18], then r3 = r8 for bl 0x8004A8F8 at 0x800AE750), 0x8004A8F8-0x8004A992, 0x8005C850, 0x80047EB0-0x800480DE, 0x8004E47E-0x8004E48C, 0x8004E5A0-0x8004E5AE, 0x8004F7C6-0x8004F7E4, 0x80069274-0x80069292, 0x8004BFC0; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 identical at all of them, re-read here 2026-11-23. First found by a private mod session on 2026-11-23"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-23, private build d74-H24 on DOOM OS 0.7.4 whose own CHOP screen called 0x800AE700 with 0 as stock does: its fault screen showed USAGE FAULT, PC 00000000, LR 8004A987, CFSR 00020000, on the third assign to pads in a row. One unit, once. Why the copy failed that time is not known (a short malloc pool is a guess)"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "that unmodified stock crashes the same way when the CHOP copy fails; the malloc pool as the usual cause"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8004A956",
+     "size": 60,
+     "sha256": "4c2c46a29571a9a1037dd6d6c44b3e22f98ca2b14bebc239a9cec61829714dda"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8004A956",
+     "size": 60,
+     "sha256": "4c2c46a29571a9a1037dd6d6c44b3e22f98ca2b14bebc239a9cec61829714dda"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8004A956",
+     "size": 60,
+     "sha256": "4c2c46a29571a9a1037dd6d6c44b3e22f98ca2b14bebc239a9cec61829714dda"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8004A956",
+     "size": 60,
+     "sha256": "4c2c46a29571a9a1037dd6d6c44b3e22f98ca2b14bebc239a9cec61829714dda"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800480D8",
+     "size": 8,
+     "sha256": "9f54a976bec5de61a25e03836d0937000997c0ca57c515b35bc683f67ad58730"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800480D8",
+     "size": 8,
+     "sha256": "9f54a976bec5de61a25e03836d0937000997c0ca57c515b35bc683f67ad58730"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800480D8",
+     "size": 8,
+     "sha256": "9f54a976bec5de61a25e03836d0937000997c0ca57c515b35bc683f67ad58730"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800480D8",
+     "size": 8,
+     "sha256": "9f54a976bec5de61a25e03836d0937000997c0ca57c515b35bc683f67ad58730"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8004BFC0",
+     "size": 12,
+     "sha256": "eebbf8ec3aebd126127f83efd1da805ecf5977757b2fc81c7529d3aded1ee2c0"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8004BFC0",
+     "size": 12,
+     "sha256": "eebbf8ec3aebd126127f83efd1da805ecf5977757b2fc81c7529d3aded1ee2c0"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8004BFC0",
+     "size": 12,
+     "sha256": "eebbf8ec3aebd126127f83efd1da805ecf5977757b2fc81c7529d3aded1ee2c0"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8004BFC0",
+     "size": 12,
+     "sha256": "eebbf8ec3aebd126127f83efd1da805ecf5977757b2fc81c7529d3aded1ee2c0"
+    }
+   ]
+  },
+  {
    "id": "st.chop.automark",
    "claim": "AUTO MARK analysis: 0x8017B410(0x80B499EC, job), the object being the chopper (CChop). The stock AUTO MARK screen builds the job at 0x80048198 after calling 0x8010E980(project). Job words: 0 bank (0-9; 10 is the temporary pad 160), 1 pad 0-15, 2 mode (project value 0x9D), 3 LEVEL 1-10 (0x9F), 4 the value 0xA1 (meaning not found), 5 TIME DIVISION (0x9E), 6 TRANSIENT 0 HARD, 1 MID, 2 SOFT (0xA0), 7-22 (+0x1C) the answer: up to 16 marks in frames, -1 for unused, 23-38 (+0x5C) the pad of each mark, used when cutting (st.chop.job). A tbb at 0x8017B424 switches on word 2: 0 TIME DIVISION, done in the dispatcher itself; 1 LEVEL 0x8017BC48 (st.chop.automark-level); 2 TRANSIENT 0x8017C138 (st.chop.automark-transient); 4 0x8017B920, equal parts from project value 0x6F and a table of 10 words (perhaps division by tempo: a guess); 3 nothing. The analysis reads some of its settings from the project values, not from the job, so 0x9D, 0x9F, 0xA0 and 0x9E must be set before the call: without them TRANSIENT found nothing on the emulator. The return value is not a count: TRANSIENT returns -127 (0xFFFFFF81) even when it found marks, and the stock screen does not look at it; read the job instead. The analysis always runs from the first frame of the sample file to the pad's end point (0x66); the pad's start point (0xAB) is ignored, so a copy of a pad with its start in the middle gave the marks of the first half, and analysing a sample in halves this way does not work. The limit is 16 marks counting the start (mark 0). Sound is read through 0x800D9158(0x82F5C760, pad, -1) for the sample record (+0xC the channel count), 0x800D9000(0x82F5C760, record, byte offset) for a cache block, offset = frame x 2 x channels + 0x200 for the header, and 0x800D3090 for each 16-bit sample. TIME DIVISION splits the length into 2-16 equal parts, step = length / N; how the remainder is spread (perhaps one frame to each of the first parts) is not decoded. None of this was measured separately on a unit.",
    "topic": "editing",

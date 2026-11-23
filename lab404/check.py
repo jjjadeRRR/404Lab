@@ -10,7 +10,7 @@ from pathlib import Path
 
 from .build import source_digest, source_revision
 from .identify import TABLE
-from .image import Image, ImageError, file_offset, scatter, sha256
+from .image import APP1_ROOM, Image, ImageError, file_offset, protected, room, scatter, sha256
 from .knowledge import Knowledge, firmware_id_of
 from .stand import Boundary, Machine
 
@@ -39,6 +39,13 @@ def check_structure(base_raw, candidate_raw, manifest):
         if base_raw[at:at+len(before)] != before or candidate_raw[at:at+len(after)] != after:
             bad_hook = hook['address']
     out.append(_result('hooks', 'fail', f'hook at {bad_hook} does not match the manifest') if bad_hook else _result('hooks', 'pass'))
+    # Checked again here, not only trusted from the build: a candidate can come from elsewhere, or from a build tool with a hole.
+    image = Image(base_raw)
+    guarded = next((f'{hook["address"]} touches {zone}' for hook in manifest['hooks'] for at in range(int(hook['address'], 16), int(hook['address'], 16)+len(bytes.fromhex(hook['before'])))
+                    for zone in [protected(image, at)] if zone), None)
+    out.append(_result('loader-code', 'fail', f'{guarded}: this code can erase the loader') if guarded else _result('loader-code', 'pass'))
+    out.append(_result('flash-room', 'fail', f'{len(candidate_raw)} bytes, but the loader erases only {APP1_ROOM} for APP1 (hw.update.app1-range)')
+               if room(candidate_raw) < 0 else _result('flash-room', 'pass', f'{room(candidate_raw)} bytes left'))
     changed = [i for i, (a, b) in enumerate(zip(base_raw, candidate_raw)) if a != b and i not in allowed]
     if len(candidate_raw) < len(base_raw) or changed:
         where = f'first at file offset 0x{changed[0]:X}' if changed else 'candidate is shorter than its base'

@@ -19,6 +19,9 @@ from lab404.observe import ROUTE_PAGE, ROUTES, classify, control_id, do_step, jo
 from helpers import DOOM73, DOOM74, PROJECT_DRIVE, ROOT, STOCK
 
 MOD = ROOT/'mods/demo_counter'
+# Bases the example mods are tried on. DOOM OS 0.7.4 joins when its image is present, since 2026-11-23: the mods declare it.
+BASES = (('stock', STOCK), ('doom', DOOM73))+((('doom74', DOOM74),) if DOOM74.exists() else ())
+DOOM_BASES = (DOOM73,)+((DOOM74,) if DOOM74.exists() else ())
 KEY_HANDLER = '0x800A80A8'  # [BYTES] stock function that receives key events
 VOICE_RENDERER = '0x14B88'  # [BYTES] renders one voice
 PADS_PLAYED = ('PAD1', 'PAD2', 'PAD3', 'PAD4')
@@ -102,7 +105,7 @@ class WholeFirmware(unittest.TestCase):
             self.assertEqual(unit.frame, main, 'EXIT did not return to the main screen')
 
     def test_candidate_matches_its_base_screen_for_screen(self):
-        for name, base in (('stock', STOCK), ('doom', DOOM73)):
+        for name, base in BASES:
             package = self.tmp/f'pkg-{name}'
             build(MOD, base, package)
             with Emulator(base.read_bytes()) as a, Emulator((package/'SP404MKII_APP1.bin').read_bytes()) as b:
@@ -197,12 +200,36 @@ class DoomOs074AtRunTime(unittest.TestCase):
 
 
 @unittest.skipUnless(available() and STOCK.exists() and DOOM73.exists(), 'emulator or firmware inputs not present')
+class WordHookAtRunTime(unittest.TestCase):
+    """A word hook on the panel tick's vtable word is called by the running firmware, and the original it calls keeps the unit as it was."""
+
+    @units(2)
+    def test_the_repointed_tick_runs_and_the_screens_stay_the_bases(self):
+        from test_word_hooks import TICK, TICK_SLOT, mod_with
+        from lab404.identify import identify
+        for name, base in BASES:
+            with tempfile.TemporaryDirectory() as d:
+                mod = mod_with(Path(d)/'mod', dict(address=hex(TICK_SLOT), expect=hex(TICK)), bases=(identify(base.read_bytes())['sha256'],))
+                manifest = build(mod, base, Path(d)/'pkg')
+                candidate = (Path(d)/'pkg/SP404MKII_APP1.bin').read_bytes()
+            calls = int(manifest['symbols']['word_hook_calls'], 16)
+            with Emulator(base.read_bytes()) as a, Emulator(candidate) as b:
+                together(boot, a, b)
+                first = b.read_u32(calls)
+                time.sleep(1)
+                self.assertGreater(b.read_u32(calls), first, f'{name}: the tick never came through the word')
+                one, two = together(walk, a, b)
+            for (key, x), (_, y) in zip(one, two):
+                self.assertEqual(x, y, f'{name}: screen differs after {key}')
+
+
+@unittest.skipUnless(available() and STOCK.exists() and DOOM73.exists(), 'emulator or firmware inputs not present')
 class QuickSystem(unittest.TestCase):
     """A real mod with a visible function, on two bases. HOLD + ROLL opens the SYSTEM screen on the candidate and does nothing on the base."""
 
     def test_the_chord_does_nothing_away_from_the_screen_it_was_declared_for(self):
         # Declared and checked for the main screen only. Elsewhere those keys are the firmware's own.
-        for name, base in (('stock', STOCK), ('doom', DOOM73)):
+        for name, base in BASES:
             with tempfile.TemporaryDirectory() as d:
                 build(ROOT/'mods/quick_system', base, Path(d)/'pkg')
                 candidate = (Path(d)/'pkg/SP404MKII_APP1.bin').read_bytes()
@@ -231,8 +258,13 @@ class QuickSystem(unittest.TestCase):
         self.assertEqual(got['state'], 'unknown', got)
 
     def test_on_doom_os_its_own_screen_keeps_the_keys(self):
+        for base in DOOM_BASES:
+            with self.subTest(base=base.parent.name):
+                self.own_screen_keeps_the_keys(base)
+
+    def own_screen_keeps_the_keys(self, base):
         with tempfile.TemporaryDirectory() as d:
-            build(ROOT/'mods/quick_system', DOOM73, Path(d)/'pkg')
+            build(ROOT/'mods/quick_system', base, Path(d)/'pkg')
             candidate = (Path(d)/'pkg/SP404MKII_APP1.bin').read_bytes()
 
         def go(unit):
@@ -249,7 +281,7 @@ class QuickSystem(unittest.TestCase):
             unit.release('HOLD')
             time.sleep(0.6)
             return opened, unit.read_u32(MAIN_PAGE_WORD) & 0xFFFF, unit.frame
-        with Emulator(DOOM73.read_bytes()) as a, Emulator(candidate) as b:
+        with Emulator(base.read_bytes()) as a, Emulator(candidate) as b:
             first, second = together(go, a, b)
         self.assertEqual(first, second)
 
@@ -267,9 +299,9 @@ class QuickSystem(unittest.TestCase):
 
     @units(4)
     def test_a_whole_task_from_app1_to_package_on_two_bases(self):
-        # Works in a clean install too: with no project drive, the check that needs samples answers unknown.
+        # Works in a clean install too: with no project drive, the check that needs samples answers unknown. DOOM OS 0.7.4 is a third base when present.
         drive = PROJECT_DRIVE if PROJECT_DRIVE.exists() else BLANK_DRIVE
-        for base in (STOCK, DOOM73):
+        for _, base in BASES:
             with tempfile.TemporaryDirectory() as d:
                 mod = Path(d)/'mod'
                 shutil.copytree(ROOT/'mods/quick_system', mod)
@@ -344,7 +376,7 @@ class QuickSystem(unittest.TestCase):
         return unit.read_u32(MAIN_PAGE_WORD) & 0xFFFF
 
     def test_the_chord_opens_system_on_the_candidate_only_and_exit_returns(self):
-        for name, base in (('stock', STOCK), ('doom', DOOM73)):
+        for name, base in BASES:
             with tempfile.TemporaryDirectory() as d:
                 build(ROOT/'mods/quick_system', base, Path(d)/'pkg')
                 candidate = (Path(d)/'pkg/SP404MKII_APP1.bin').read_bytes()

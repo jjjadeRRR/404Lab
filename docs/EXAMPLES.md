@@ -45,7 +45,15 @@ python -m lab404 check out/demo-1 mods/demo_counter SP404MKII_APP1.bin
 
 Each build uses a new output directory. `build` and `check` do not need interface approval, and their output alone is not a hardware-ready release. Read [SAFETY.md](SAFETY.md) before considering installation.
 
-For another hook, `python -m lab404 check-hook FILE ADDRESS` checks the entry instructions and known references. Firmware functions called by the payload are declared in `firmware_symbols` in `mod.json`, with an address and a fingerprint of at least eight bytes read from the base: `"size"` and `"sha256"` from `python -m lab404 read FILE ADDRESS SIZE --sha256`. A private mod may give the bytes themselves as `"expect"`; shared examples use the fingerprint, so they carry no firmware. This prevents silently reusing an address whose contents differ. Currently only function-entry hooks are implemented.
+For another hook, `python -m lab404 check-hook FILE ADDRESS` checks the entry instructions and known references. Firmware functions called by the payload are declared in `firmware_symbols` in `mod.json`, with an address and a fingerprint of at least eight bytes read from the base: `"size"` and `"sha256"` from `python -m lab404 read FILE ADDRESS SIZE --sha256`. A private mod may give the bytes themselves as `"expect"`; shared examples use the fingerprint, so they carry no firmware. This prevents silently reusing an address whose contents differ.
+
+Two kinds of hook exist. An `entry` hook (above) runs a mod function before a firmware function. A `word` hook repoints one aligned word that holds a code pointer, such as a vector, a table entry or a vtable slot, at a mod function:
+
+```json
+{"kind": "word", "address": "0x8021D018", "expect": "0x80072CF1", "function": "my_tick", "original": "stock_tick"}
+```
+
+`expect` is the value the word holds on that base (`python -m lab404 read FILE ADDRESS 4`). `original` is optional: it names the code the word pointed to, so the mod can call it as an ordinary function. The mod function is called exactly as the original would be, with its arguments and in its context, so it must keep the original's contract. The build refuses a word that does not hold `expect`, does not point to code, points to code that can erase the loader, or is a DOOM OS veneer word that DOOM rewrites while it starts (`hk.doom.veneers-rewritten`). Who else reads the word, and whether code writes it at run time, is not visible from bytes. Veneers, fixed-address modules and data tables are not implemented.
 
 ## A shortcut using a stock screen
 

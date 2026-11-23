@@ -18,6 +18,7 @@ AUTO MARK 0x8017B410(job)                                  st.chop.automark
    LEVEL 0x8017BC48                                        st.chop.automark-level
    TRANSIENT 0x8017C138                                    st.chop.automark-transient
 cutting: 0x80047EB0 -> ExeChop 0x8017C828                  st.chop.job
+   its pad copy 0x800AE700, cancel check 0                 st.chop.copy-null-check
 ```
 
 ## Things that surprise
@@ -27,6 +28,8 @@ cutting: 0x80047EB0 -> ExeChop 0x8017C828                  st.chop.job
 - Set the project values 0x9D, 0x9F, 0xA0 and 0x9E before calling it. The analysis reads them, not only the job.
 - Stock LEVEL can hand back one false mark near the start. The 16th word it copies is its own counter. See
   `st.chop.automark-level-extra-mark`.
+- If the pad copy that starts CHOP fails, stock calls its cancel check without testing it, and CHOP passes 0: a jump to
+  address 0 (PC 0, LR 0x8004A987). A mod that copies pads should pass a real check. See `st.chop.copy-null-check`.
 - A mark closer than 1000 frames to its neighbour is refused by the setter. The low level writer `0x800CDB90` does not check.
 - The stock cuts a copy of the pad in the temporary pad 160. Every chop but the last is one frame longer than its gap.
 - A chop range set on a pad's player stays there for ordinary play until it is set back.

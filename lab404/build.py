@@ -1,6 +1,7 @@
 """Build a mod described by mod.json on a user's APP1. Writes a new package and never replaces an existing one."""
 import hashlib
 import json
+import struct
 import subprocess
 import tempfile
 from pathlib import Path
@@ -114,20 +115,39 @@ def build(mod_dir, base_path, out_dir):
     base_address = _int(mod['payload']['address'])
     limit = _int(mod['payload']['max_size'])
     externals = firmware_symbols(mod, image)
-    stubs, sites = [], []
+    stubs, sites, words = [], [], []
     hooks = [hook for hook in mod.get('hooks', []) if who['sha256'] in hook.get('bases', allowed)]  # addresses belong to one exact image
     for i, hook in enumerate(hooks):
-        if hook.get('kind') != 'entry':
-            raise BuildError(f'hook kind {hook.get("kind")!r} is not supported')
         address = _int(hook['address'])
-        declared = tuple(_int(item['address']) for item in hook.get('not_pointers', []))
-        displaced, _ = hook_tools.check_entry_hook(image, address, declared)
-        stubs.append(hook_tools.stub_source(i, address, hook['function'], displaced))
-        sites.append((i, address, declared))
+        if hook.get('kind') == 'entry':
+            declared = tuple(_int(item['address']) for item in hook.get('not_pointers', []))
+            displaced, _ = hook_tools.check_entry_hook(image, address, declared)
+            stubs.append(hook_tools.stub_source(i, address, hook['function'], displaced))
+            sites.append((i, address, declared))
+        elif hook.get('kind') == 'word':
+            if 'expect' not in hook:
+                raise BuildError(f'word hook at 0x{address:08X} needs "expect": the value the word holds on this base, read with `read BASE ADDRESS 4`')
+            if any(address == done for done, _, _ in words):
+                raise BuildError(f'two word hooks replace the same word at 0x{address:08X}')
+            old = hook_tools.check_word_hook(image, address, _int(hook['expect']), who['family'])
+            if 'original' in hook:  # the mod may call the code the word pointed to, by this name
+                if hook['original'] in externals:
+                    raise BuildError(f'{hook["original"]} is named twice')
+                externals[hook['original']] = old
+            words.append((address, old, hook['function']))
+        else:
+            raise BuildError(f'hook kind {hook.get("kind")!r} is not supported')
     payload, symbols = compile_payload(mod_dir, mod, base_address, stubs, externals)
     if len(payload) > limit:
         raise BuildError(f'payload is {len(payload)} bytes, limit {limit}')
     patches = [hook_tools.plan_patch(image, address, symbols[f'lab404_stub_{i}'], declared) for i, address, declared in sites]
+    for address, old, function in words:
+        target = symbols.get(function)
+        if target is None or not base_address <= target < base_address+len(payload):
+            raise BuildError(f'word hook at 0x{address:08X}: {function} is not defined by the mod')
+        if not target & 1:
+            raise BuildError(f'word hook at 0x{address:08X}: {function} is not a Thumb function (data, or an address without bit 0)')
+        patches.append(dict(address=address, before=struct.pack('<I', old), after=struct.pack('<I', target)))
     result = extend(raw, base_address, payload, patches)
     manifest = dict(mod=mod['name'], mod_version=mod.get('version'), parent_sha256=who['sha256'], parent=f'{who["family"]} {who["version"]}',
                     candidate_sha256=sha256(result), size=len(result), flash_room_left=room(result), source_sha256=source_digest(mod_dir, mod), source_revision=source_revision(),

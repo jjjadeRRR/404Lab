@@ -2,7 +2,7 @@
    Everywhere else these keys stay the firmware's own, because that is the only place they were checked to be free. */
 enum { KEY_DOWN = 5, KEY_UP = 6, HOLD = 0x11, ROLL = 0x21, MAIN_PAGE = 1, SYSTEM_PAGE = 53 };
 
-#define CURRENT_PAGE (*(volatile unsigned short *)0x80245880) /* stock 5.52 and DOOM OS 0.7.3 */
+#define CURRENT_PAGE (*(volatile unsigned short *)0x80245880) /* stock 5.52 and DOOM OS 0.7.3 and 0.7.4 */
 
 struct event { short type, code, value; };
 

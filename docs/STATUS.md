@@ -2,7 +2,7 @@
 
 Current capabilities and known limits. The project purpose is in `docs/REQUIREMENTS.md`; research directions are in `docs/PLAN.md`. Examples and hardware hazards have separate guides.
 
-Last update: 2026-11-18. **Early work. No package built by these tools has been on a unit yet.**
+Last update: 2026-11-23. **Early work. No package built by these tools has been on a unit yet.**
 
 The original development milestones below describe existing work, not a mandatory sequence for new tasks.
 
@@ -17,6 +17,27 @@ The original development milestones below describe existing work, not a mandator
 | 6 Pipeline | Optional `preview`, `approve`, `package` route for conservative additions, with refusal regressions. `mods/quick_system` runs from APP1 to package on stock and DOOM OS on the emulator. Not tried on a unit. Hold-repeat analysis and three contract lines stay `unknown`. A new input is also pressed on four other screens (`contained`); other screens are not tried. Intentional replacements are not supported by this packaging route |
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
+
+## What is new (2026-11-23): DOOM OS 0.7.4 for the examples, word hooks, a stock CHOP crash path
+
+- Both example mods now declare DOOM OS 0.7.4-651C. `demo_counter` needs its own `not_pointers` entry there (DOOM's table of
+  integers moved to 0x60379DE4); `quick_system` uses the same key trampoline 0x802097CC. [EMULATOR] On 0.7.4 HOLD + ROLL opens
+  SYSTEM on the main screen and EXIT returns, DOOM's own screen keeps the keys, and the demo candidate matches its base screen
+  for screen (`tests/test_emulator.py`, which now tries every example on 0.7.4 when its image is present). This answers the
+  older line below that `build`/`package` was not tried on 0.7.4, for the emulator only.
+- **Word hooks** (`"kind": "word"`): repoint one aligned code pointer, such as a vector, a table entry or a vtable slot, at a mod
+  function, optionally keeping the old one callable by name. Refused: a word that does not hold the declared value, does not
+  point to code, points to code that can erase the loader, or is a DOOM OS veneer word. [EMULATOR] a word hook on the panel
+  tick's vtable word runs in the firmware on stock, 0.7.3 and 0.7.4 with the screens unchanged. The design follows a private
+  mod that repointed such words on one unit. Tests: `tests/test_word_hooks.py`, `WordHookAtRunTime`.
+- `check` now looks again at what `build` promised: no declared patch byte may lie in code that can erase the loader
+  (`loader-code`), and the candidate must fit what the loader erases for APP1 (`flash-room`). Before, a candidate whose manifest
+  agreed with its bytes passed whatever those bytes were.
+- A hole in the entry-hook guard was closed: the guard looked at the 8 or 10 bytes of the jump, but the patch rewrites every
+  displaced byte, which can be two more when the last instruction is 32-bit (`tests/test_safety.py`).
+- `st.chop.copy-null-check`: when the pad copy at the start of stock CHOP fails, the firmware calls a cancel check it was given
+  as 0, a jump to address 0 (PC 0, LR 0x8004A987). Read in bytes on all four images; seen once on one unit running a private
+  mod that called the copy the same way.
 
 ## What is new (2026-11-19, evening): a stock screensaver leak
 
@@ -124,8 +145,9 @@ The original development milestones below describe existing work, not a mandator
 1. **Make the existing research and examples reproducible outside the author's setup.** Record the exact base, commands,
    observations and limits. Hardware trials are a separate source of evidence, not a prerequisite for sharing a useful local
    experiment. Further examples could cover audio, a custom screen, saving a setting and fault visibility. Source only, never a built APP1.
-2. **More kinds of hook, as an example needs them.** Only function-entry hooks exist. Real mods also replace a word in a vector
-   or veneer, take a word at run time and give it back, place a module at a fixed address, and add a table of labels. Design each
+2. **More kinds of hook, as an example needs them.** Function-entry hooks and word hooks (a vector, table entry or vtable
+   slot) exist since 2026-11-23. Real mods also repoint a DOOM veneer word at run time and give it back, place a module at a
+   fixed address, change a constant or a compare in place, and add a table of labels. Design each
    from a working mod, with its own refusals and tests.
 3. **Close the open items in `python -m lab404 gaps`**, the ones a mod can answer on a unit first: stack and heap low-water marks,
    block time on stock under load, and fault visibility.

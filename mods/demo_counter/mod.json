@@ -4,13 +4,18 @@
   "about": "Smallest possible mod: counts calls of one stock mixer helper. It exists to exercise the tools. It changes no sound and adds no interface.",
   "bases": [
     "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80",
-    "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa"
+    "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa",
+    "aaec78ada566ba8aa59602694984ca6fbb229baa1dbcaefac813430da49bbada"
   ],
   "payload": {"address": "0x83FD0000", "max_size": "0x1000"},
   "sources": ["counter.c"],
   "scenarios": ["mixer_output_unchanged"],
   "hooks": [
-    {"kind": "entry", "address": "0x15FEE", "function": "demo_counter_hook", "about": "stock mixer helper in ITCM, same bytes on both bases",
-     "not_pointers": [{"address": "0x60377440", "why": "DOOM OS 0.7.3 only: an increasing table of integers (... 80279, 85049, 90103, 95457 ...), not an address"}]}
+    {"kind": "entry", "address": "0x15FEE", "function": "demo_counter_hook", "about": "stock mixer helper in ITCM, same bytes on every base",
+     "bases": ["4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80", "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa"],
+     "not_pointers": [{"address": "0x60377440", "why": "DOOM OS 0.7.3 only: an increasing table of integers (... 80279, 85049, 90103, 95457 ...), not an address"}]},
+    {"kind": "entry", "address": "0x15FEE", "function": "demo_counter_hook", "about": "the same site on DOOM OS 0.7.4, where DOOM's table of integers has moved",
+     "bases": ["aaec78ada566ba8aa59602694984ca6fbb229baa1dbcaefac813430da49bbada"],
+     "not_pointers": [{"address": "0x60379DE4", "why": "DOOM OS 0.7.4: the same increasing table of integers as 0x60377440 on 0.7.3, moved with DOOM's own code (63726 ... 90103, 95457 ..., read 2026-11-23), not an address"}]}
   ]
 }
