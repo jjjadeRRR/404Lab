@@ -4,7 +4,7 @@
 
 **English** | [Русский](README_RU.md)
 
-Open research and tools for Roland SP-404MKII firmware modding, ready for work with AI agents.
+Open research and tools for Roland SP-404MKII firmware modding, ready for work with AI agents. Bring your own firmware file and an idea, and get back a new firmware file with your mod in it.
 
 404Lab is two things in one repository:
 
@@ -16,6 +16,26 @@ It is for mod developers, researchers and owners who want to change their instru
 **Early research tooling.** The examples have been exercised on the emulator. One build of these tools (`quick_system` on DOOM OS 0.7.4) has passed its checks on one unit, once; nothing made through `package` has been on a unit. Most hardware facts come from one unit. See [docs/STATUS.md](docs/STATUS.md) for current capabilities and limits.
 
 This project ships no firmware. You bring your own `SP404MKII_APP1.bin`. Unofficial: not affiliated with or endorsed by Roland.
+
+## How it works
+
+```mermaid
+flowchart LR
+    A["Your SP404MKII_APP1.bin<br/>stock 5.52 or DOOM OS"] --> C
+    B["Your idea<br/>for example a key chord"] --> C
+    C["An agent writes the mod<br/>C code and mod.json"] --> D["build<br/>adds the mod to your image"]
+    D --> E["check and emulator<br/>refuse what can brick"]
+    E --> F["New SP404MKII_APP1.bin"]
+    F --> G["You install it<br/>from the SD card"]
+```
+
+1. **Bring your own APP1.** The `SP404MKII_APP1.bin` from Roland's 5.52 update, or a DOOM OS build made from it. 404Lab ships no firmware; `identify` tells you which one you have.
+2. **Say what you want.** Tell a coding agent (Claude Code, Codex or another) in plain words, or write the mod yourself. The agent looks up addresses and free keys in the knowledge base and writes a small mod: C code and a `mod.json` that says where it hooks in.
+3. **Build.** `build` adds the mod to your image. The firmware stays as it was, the mod's code goes after it, and a few declared bytes change so the firmware calls it. The new file goes into a new folder with a `manifest.json` that ties it to your exact image and sources.
+4. **Check.** `check` makes sure nothing else changed, no code that can erase the loader is touched, and the file fits the flash. The emulator can boot it, press keys and compare its screens with the original.
+5. **Install it yourself.** Copy the new `SP404MKII_APP1.bin` to the root of the SD card, compare its hash with `manifest.json`, and update the usual way (SHIFT at power-on, then VALUE). To go back, update with your original file.
+
+The result is a candidate: the checks and the emulator do not prove that a mod works on a unit. See [Trust](#trust).
 
 ## What is in it
 
