@@ -1,3 +1,5 @@
+<p align="center"><img src="../docs/logo/banner.svg" alt="404Lab: SP-404MKII mod tools" width="640"></p>
+
 # Historical clean-agent exam
 
 This records the original 2026-11-09 workflow evaluation. `tasks.json` preserves its prompts and grading criteria so the reported result remains interpretable. Those criteria include the old mandatory workflow and are not current project instructions or a gate for research. They have not been rerun or revalidated against the documentation changes of 2026-11-14.

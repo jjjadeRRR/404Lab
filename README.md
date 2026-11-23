@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo/banner.svg" alt="404Lab: SP-404MKII mod tools" width="640"></p>
+
 # 404Lab
 
 **English** | [Русский](README_RU.md)
