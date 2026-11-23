@@ -2264,7 +2264,7 @@
   },
   {
    "id": "hw.service.loader-erase",
-   "claim": "APP1 itself carries factory service code that can erase the loader, and a mod must never call or hook it. In stock 5.52: 0x80065838 (console command fnu) erases flash 0-0x7EFFF first and only then opens a:/SP404MKII_APP1U.bin; 0x80064E48 (fnc) erases the whole chip through 0x8019D348; 0x80064E70 (fnv) and 0x8017D3C8 write a:MIRXRT1060-EVK.bin from offset 0 after a whole-chip erase. They are reached from a text console whose input was not found on USB, and nothing in normal use calls them; a stray jump into them would brick the unit. A cautious mod can put a return at their entries. The loader carries a similar console of its own.",
+   "claim": "APP1 itself carries factory service code that can erase the loader, and a mod must never call or hook it. In stock 5.52: 0x80065838 (console command fnu) erases flash 0-0x7EFFF first and only then opens a:/SP404MKII_APP1U.bin; 0x80064E48 (fnc) erases the whole chip through 0x8019D348; 0x80064E70 (fnv) and 0x8017D3C8 write a:MIRXRT1060-EVK.bin from offset 0 after a whole-chip erase. They are reached from a text console whose input was not found on USB, and nothing in normal use calls them; a stray jump into them would brick the unit. A cautious mod can put a return at their entries: `movs r0,#0; bx lr` over the first four bytes of each of the four, which is the one change the tools allow there (`\"kind\": \"disable\"`). The three low-level flash routines under them stay untouched, since stock code may use them for its own writes. The loader carries a similar console of its own.",
    "topic": "hardware",
    "firmware": "any",
    "status": "verified",
@@ -2276,6 +2276,10 @@
     {
      "label": "BYTES",
      "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; EVK branch 0x80024BB0, console task name at 0x8004C9B8"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: the maintainer's private mod has switched off all four entries this way since d73-H2, 2026-11-11, in every later build up to d74-H27; the unit runs normally. The routines are not reached in normal use, so this does not show what a caller does with the 0"
     }
    ],
    "checks": [

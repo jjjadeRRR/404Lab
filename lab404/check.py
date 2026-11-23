@@ -10,7 +10,7 @@ from pathlib import Path
 
 from .build import source_digest, source_revision
 from .identify import TABLE
-from .image import APP1_ROOM, Image, ImageError, file_offset, protected, room, scatter, sha256
+from .image import APP1_ROOM, DISABLEABLE, RETURN_ZERO, Image, ImageError, file_offset, protected, room, scatter, sha256
 from .knowledge import Knowledge, firmware_id_of
 from .stand import Boundary, Machine
 
@@ -41,9 +41,17 @@ def check_structure(base_raw, candidate_raw, manifest):
     out.append(_result('hooks', 'fail', f'hook at {bad_hook} does not match the manifest') if bad_hook else _result('hooks', 'pass'))
     # Checked again here, not only trusted from the build: a candidate can come from elsewhere, or from a build tool with a hole.
     image = Image(base_raw)
-    guarded = next((f'{hook["address"]} touches {zone}' for hook in manifest['hooks'] for at in range(int(hook['address'], 16), int(hook['address'], 16)+len(bytes.fromhex(hook['before'])))
+    # The one change allowed inside that code: a guarded service routine made to return at once (hooks.check_disable_hook).
+    def switched_off(hook):
+        address = int(hook['address'], 16)
+        return (address in DISABLEABLE and bytes.fromhex(hook['after']) == RETURN_ZERO and len(bytes.fromhex(hook['before'])) == len(RETURN_ZERO)
+                and (protected(image, address) or '').startswith(f'0x{address:08X}'))
+    off = [hook['address'] for hook in manifest['hooks'] if switched_off(hook)]
+    guarded = next((f'{hook["address"]} touches {zone}' for hook in manifest['hooks'] if not switched_off(hook)
+                    for at in range(int(hook['address'], 16), int(hook['address'], 16)+len(bytes.fromhex(hook['before'])))
                     for zone in [protected(image, at)] if zone), None)
-    out.append(_result('loader-code', 'fail', f'{guarded}: this code can erase the loader') if guarded else _result('loader-code', 'pass'))
+    out.append(_result('loader-code', 'fail', f'{guarded}: this code can erase the loader') if guarded else
+               _result('loader-code', 'pass', f'switched off (return 0 at entry): {", ".join(off)}' if off else ''))
     out.append(_result('flash-room', 'fail', f'{len(candidate_raw)} bytes, but the loader erases only {APP1_ROOM} for APP1 (hw.update.app1-range)')
                if room(candidate_raw) < 0 else _result('flash-room', 'pass', f'{room(candidate_raw)} bytes left'))
     changed = [i for i, (a, b) in enumerate(zip(base_raw, candidate_raw)) if a != b and i not in allowed]

@@ -18,6 +18,13 @@ The original development milestones below describe existing work, not a mandator
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
 
+## What is new (2026-11-23, evening): disable hooks
+
+- A mod may switch off the four factory service routines that can erase the loader, and nothing else in guarded code:
+  `"kind": "disable"` puts `movs r0,#0; bx lr` at the entry (`hw.service.loader-erase`). The maintainer decided this so that the
+  private mod, which has carried these patches since 2026-11-11, can be built by these tools. `check` accepts exactly that patch and
+  still fails any other byte in guarded code (`tests/test_disable_hook.py`, `tests/test_check.py`).
+
 ## What is new (2026-11-23, later): what the private mod showed on a unit, a fault screen example
 
 - [ON_A_UNIT.md](ON_A_UNIT.md) lists what mods built with these methods have done on the maintainer's unit, and what failed

@@ -8,7 +8,7 @@ from pathlib import Path
 
 from . import hooks as hook_tools
 from .identify import identify
-from .image import Image, ImageError, extend, matches, protected, room, sha256
+from .image import RETURN_ZERO, Image, ImageError, extend, matches, protected, room, sha256
 from .link import link
 
 CFLAGS = ('--target=arm-none-eabi', '-mcpu=cortex-m7', '-mthumb', '-mfloat-abi=soft', '-mfpu=none', '-Os', '-ffreestanding',
@@ -115,7 +115,7 @@ def build(mod_dir, base_path, out_dir):
     base_address = _int(mod['payload']['address'])
     limit = _int(mod['payload']['max_size'])
     externals = firmware_symbols(mod, image)
-    stubs, sites, words = [], [], []
+    stubs, sites, words, disabled = [], [], [], []
     hooks = [hook for hook in mod.get('hooks', []) if who['sha256'] in hook.get('bases', allowed)]  # addresses belong to one exact image
     for i, hook in enumerate(hooks):
         address = _int(hook['address'])
@@ -135,6 +135,10 @@ def build(mod_dir, base_path, out_dir):
                     raise BuildError(f'{hook["original"]} is named twice')
                 externals[hook['original']] = old
             words.append((address, old, hook['function']))
+        elif hook.get('kind') == 'disable':
+            if any(address == done['address'] for done in disabled):
+                raise BuildError(f'the routine at 0x{address:08X} is disabled twice')
+            disabled.append(dict(address=address, before=hook_tools.check_disable_hook(image, address), after=RETURN_ZERO))
         else:
             raise BuildError(f'hook kind {hook.get("kind")!r} is not supported')
     payload, symbols = compile_payload(mod_dir, mod, base_address, stubs, externals)
@@ -148,6 +152,7 @@ def build(mod_dir, base_path, out_dir):
         if not target & 1:
             raise BuildError(f'word hook at 0x{address:08X}: {function} is not a Thumb function (data, or an address without bit 0)')
         patches.append(dict(address=address, before=struct.pack('<I', old), after=struct.pack('<I', target)))
+    patches += disabled
     result = extend(raw, base_address, payload, patches)
     manifest = dict(mod=mod['name'], mod_version=mod.get('version'), parent_sha256=who['sha256'], parent=f'{who["family"]} {who["version"]}',
                     candidate_sha256=sha256(result), size=len(result), flash_room_left=room(result), source_sha256=source_digest(mod_dir, mod), source_revision=source_revision(),

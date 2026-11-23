@@ -55,6 +55,18 @@ Two kinds of hook exist. An `entry` hook (above) runs a mod function before a fi
 
 `expect` is the value the word holds on that base (`python -m lab404 read FILE ADDRESS 4`). `original` is optional: it names the code the word pointed to, so the mod can call it as an ordinary function. The mod function is called exactly as the original would be, with its arguments and in its context, so it must keep the original's contract. The build refuses a word that does not hold `expect`, does not point to code, points to code that can erase the loader, or is a DOOM OS veneer word that DOOM rewrites while it starts (`hk.doom.veneers-rewritten`). Who else reads the word, and whether code writes it at run time, is not visible from bytes. Veneers, fixed-address modules and data tables are not implemented.
 
+A third kind, `disable`, switches off a factory service routine that can erase the loader (`hw.service.loader-erase`): its first
+four bytes become `movs r0,#0; bx lr`, so anything that calls it gets 0 back and nothing is erased. It takes only an address, which
+must be one of the four entries in `lab404/image.py` `DISABLEABLE`:
+
+```json
+{"kind": "disable", "address": "0x80065838", "about": "service command that erases the loader: return at once"}
+```
+
+Nothing else may change inside guarded code; `check` reports which routines a candidate switched off (`loader-code`). The
+maintainer's own mod has carried these four since 2026-11-11 and runs on a unit; the routines themselves are not reached in normal
+use, so that shows the unit works with them off, not what a caller does with the 0.
+
 ## A shortcut using a stock screen
 
 [quick_system](../mods/quick_system/mod.json) and its [source](../mods/quick_system/quick_system.c) add HOLD + ROLL on the main screen to open the firmware's SYSTEM page. They illustrate observing events, restricting a feature to one screen and calling a guarded firmware symbol. The example has been exercised on stock 5.52 and DOOM OS 0.7.3 and 0.7.4 in the emulator. Its build on DOOM OS 0.7.4 passed the unit checks listed in its `mod.json` on one unit, once (`hk.lab404-build-on-unit`); stock and 0.7.3 builds have not been on a unit.

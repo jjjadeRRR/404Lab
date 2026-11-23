@@ -20,6 +20,11 @@ PROTECTED = ((0x80065838, 8, 'a1d67c24114605b938f05cae78f7f9082c1cf4e0bd06ebcbe8
              (0x8019D348, 8, '5872028ffe00bbcfe49f3ef2bf9bad43f85c6c5697eb2b2a11db1ff1a29c4014', 0x80, 'flash chip erase'),
              (0x8001ACB0, 8, '0e1ad64b707954cadf0d74c9e449f8de063760f880409bcf27c2ac26d114eaf6', 0x80, 'flash sector erase'),
              (0x800D5FD8, 8, 'aa7c6802c6f35c2ffcfc0b76c820738a71e65f7b2b86aba346a2e62fb7371bbb', 0x80, 'flash page program'))
+# The four service entry points above that a mod may switch off, and the only bytes it may put there: movs r0,#0; bx lr, so the
+# routine returns at once without erasing anything (hw.service.loader-erase, the maintainer's decision of 2026-11-23). The three
+# low-level flash routines stay untouchable: stock code may use them for its own writes.
+DISABLEABLE = (0x80065838, 0x80064E48, 0x80064E70, 0x8017D3C8)
+RETURN_ZERO = bytes.fromhex('00207047')
 FLEXSPI = (0x60000000, 0x70000000)
 HANDLER_NAMES = {COPY: 'COPY', ZERO: 'ZERO', DECOMPRESS: 'DECOMPRESS'}
 MAX_DECOMPRESSED = 1024*1024

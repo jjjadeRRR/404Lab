@@ -13,7 +13,7 @@ import struct
 import capstone
 from capstone import arm as cs_arm
 
-from .image import Image, ImageError, protected
+from .image import DISABLEABLE, RETURN_ZERO, Image, ImageError, protected
 
 BRANCH_PREFIXES = ('b.', 'bl', 'bx', 'cbz', 'cbnz', 'tbb', 'tbh', 'it', 'udf', 'svc', 'bkpt')
 BRANCHES = {'b', 'beq', 'bne', 'bhs', 'blo', 'bmi', 'bpl', 'bvs', 'bvc', 'bhi', 'bls', 'bge', 'blt', 'bgt', 'ble', 'bl', 'cbz', 'cbnz'}
@@ -162,6 +162,21 @@ def check_entry_hook(image, address, not_pointers=()):
         if lo <= target < hi:
             raise ImageError(f'0x{source:08X} branches to 0x{target:08X}, inside the bytes this hook would replace')
     return image.read(address, size), picked
+
+
+def check_disable_hook(image, address):
+    """A disable hook makes one factory service routine that can erase the loader return at once: its first four bytes become
+    movs r0,#0; bx lr. Allowed only at the entry of the routines in image.DISABLEABLE, and only where this image holds the
+    guarded bytes there. Returns the four bytes it replaces or raises ImageError saying why it is refused.
+
+    This takes a way to lose the loader away; it adds none. A caller that runs the routine gets 0 back and nothing is erased."""
+    if address not in DISABLEABLE:
+        listed = ', '.join(f'0x{a:08X}' for a in DISABLEABLE)
+        raise ImageError(f'0x{address:08X}: a disable hook goes only at the entry of a guarded service routine ({listed})')
+    zone = protected(image, address)
+    if not zone or not zone.startswith(f'0x{address:08X}'):
+        raise ImageError(f'0x{address:08X} does not hold the guarded routine on this image, so switching it off is not known to be safe here')
+    return image.read(address, len(RETURN_ZERO))
 
 
 VENEER = 0xF000F8DF  # ldr.w pc, [pc]: the word after it is where the veneer jumps
