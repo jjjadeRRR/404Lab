@@ -1224,8 +1224,12 @@
      "source": "test_stock_copy_filters on the owner's research stand, 2026-11-05"
     },
     {
+     "label": "HARDWARE",
+     "source": "owner's unit: a private mod's per-pad settings file in the project folder was kept across LOAD and power-off, d73-H8c 2026-11-13 and later builds, also without an SD card"
+    },
+    {
      "label": "HYPOTHESIS",
-     "source": "behaviour on a unit, and the .BMP idea"
+     "source": "COPY, EXPORT, IMPORT, BACKUP and RESTORE of such a file on a unit; the .BMP idea"
     }
    ]
   },
@@ -1269,18 +1273,18 @@
   },
   {
    "id": "hk.fault-visibility",
-   "claim": "A crash in a hook usually shows only as a hang, since stock fault vectors are bx lr (hw.faults.vectors). Debug builds can replace those vectors, but a record kept in cached SDRAM may be lost (hw.reset.sdram). This has not been shown to work on a unit. Plan to reproduce faults by steps, not by a crash log.",
+   "claim": "A crash in a hook shows only as a hang on the base firmware, since its four fault vectors point to a lone bx lr (hw.faults.vectors). A mod can make faults visible: point the four vector words at its own handler that draws the fault on the display and stands (hk.fault-screen, example mods/fault_screen). On the owner's unit such a screen showed three real faults, and each led to a stock bug that bytes alone had not shown: st.import.malloc-unchecked (twice) and st.chop.copy-null-check. Keep the record on the screen rather than in SDRAM, which may not survive a reset (hw.reset.sdram). Without such a screen, reproduce faults by steps.",
    "topic": "hooks",
    "firmware": "any",
-   "status": "unknown",
+   "status": "verified",
    "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, photos of a private mod's fault screen: 2026-11-11 d73-G6 BUS FAULT PC 8006A11A LR 8006A0E1 CFSR 00000400 ADDR 0 during sample import from SD; 2026-11-18 d74-H18 the same PC and LR, again during import; 2026-11-23 d74-H24 USAGE FAULT PC 0 LR 8004A987 CFSR 00020000 after a third CHOP assign"
+    },
     {
      "label": "BYTES",
      "source": "hw.faults.vectors"
-    },
-    {
-     "label": "HYPOTHESIS",
-     "source": "no report that a crash record survived on a unit"
     }
    ]
   },
@@ -1708,6 +1712,110 @@
     {
      "label": "EMULATOR",
      "source": "tests/test_emulator.py on the same base the same day: QuickSystem (chord, other screens, DOOM's own screen, whole package route) and WholeFirmware.test_candidate_matches_its_base_screen_for_screen"
+    }
+   ]
+  },
+  {
+   "id": "hk.fault-screen",
+   "topic": "hooks",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "How a mod shows a processor fault, done in a private mod and working on a unit, and kept as the example mods/fault_screen. Word hooks replace the four fault vector words in ITCM, 0x0C HardFault (stock 0x8003C921), 0x10 MemManage (0x800406A9), 0x14 BusFault (0x80036119) and 0x18 UsageFault (0x800437D1), the same on stock 5.52 and DOOM OS 0.7.2-0.7.4. The handler takes the stacked PC (+24) and LR (+20) from MSP or PSP by EXC_RETURN bit 2, reads IPSR for the kind, moves SP to a stack of its own (the fault may be a broken stack), then draws by polling the display port (hw.display.port) and stands in a loop. CFSR is 0xE000ED28; the faulting address is in BFAR 0xE000ED38 when CFSR bit 15 is set, in MMFAR 0xE000ED34 when bit 7 is set. It uses no task, lock, DMA, allocation or file: the firmware may be what broke. Every wait on the port is bounded. A power cycle leaves the screen; the firmware then starts normally. The same drawing can serve a stall alarm: the private mod counted audio blocks with no new panel tick and drew where things stood after 8 s, for freezes in which screen, keys and VOLUME were dead while USB audio still played; whether that alarm ever fired on a unit is not known.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: three faults photographed on the private mod's screen, 2026-11-11, 2026-11-18 and 2026-11-23 (hk.fault-visibility); freezes with dead keys and running USB audio reported on d73-F2, 2026-11-10"
+    },
+    {
+     "label": "BYTES",
+     "source": "vector words 0x0C-0x18 read on stock-5.52, doom-os-0.7.3 and doom-os-0.7.4, 2026-11-23"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "tests/test_fault_screen.py: the example's drawing rebuilt from the recorded port writes, the handler run from a fault frame on the Unicorn stand"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the stall alarm on a unit"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0000000C",
+     "size": 16,
+     "sha256": "9bc36f8d0a1d3785573ea3020521d06b912984f9b0645c74845115e8fa9faf08"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0000000C",
+     "size": 16,
+     "sha256": "9bc36f8d0a1d3785573ea3020521d06b912984f9b0645c74845115e8fa9faf08"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0000000C",
+     "size": 16,
+     "sha256": "9bc36f8d0a1d3785573ea3020521d06b912984f9b0645c74845115e8fa9faf08"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0000000C",
+     "size": 16,
+     "sha256": "9bc36f8d0a1d3785573ea3020521d06b912984f9b0645c74845115e8fa9faf08"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.mute-32",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "Mute groups of up to 32 pads, done in a private mod and working on a unit. The group is a number per pad (st.mute.groups), so the mute loop already handles any size; only the add handler's cmp r6,#16 at 0x80115666 limits it (bytes 10 2E, changed to 20 2E). The MUTE GROUP screen draws at most 16 members (st.mute.screen), so the mod hooked its draw loop at 0x80115334 to draw one page of 16 and its key handler at 0x801154CC so a VALUE press turns the page, with a 1/2 mark. Stock projects stay readable: the saved value per pad does not change form.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-13, private build d73-H6 on DOOM OS 0.7.3: 'H6 works wonderfully'; kept in every later build, d74 included"
+    },
+    {
+     "label": "BYTES",
+     "source": "st.mute.groups, st.mute.screen; the private mod's build script for the three patch sites"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "st.mute.groups: stock save, load and mute loop with groups of 17, 32 and 48 pads"
+    }
+   ]
+  },
+  {
+   "id": "hk.recipe.pad-effects",
+   "topic": "hooks",
+   "firmware": [
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "An effect on each pad, done in a private mod and working on a unit: a 12 dB low or high pass filter with resonance on up to 48 pads, and a sample-rate reducer with a mono switch on up to 32 pads, set per pad from a menu and saved with the project. The audio part sits at the per-voice site (hk.site.audio-voice, veneer 0x1008E, called 32 times per block from 0x1C71E): a voice whose pad has no setting takes exactly the stock call, so its sound stays bit-identical; a voice whose pad has a setting goes through the mod's own path, which keeps 64 words of state per voice slot. Settings are one word per pad in a file of the mod in the project folder (hk.storage.sidecar), read in the LOAD chain (hk.site.load) and written when its menu closes (hk.ctx.files), so they work without an SD card. Measured on the unit with the filter running: audio about 10 % of the block on average, 18 % at peak, no overruns (hw.cycles.measured). Earlier builds that did file work and allocation from drawing crashed or hung (hk.ctx.draw); delay and reverb per pad were tried and dropped as too heavy and poor in sound.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: filter d72-F1 2026-11-02 (bugs fixed later), filter and lofi d73-H8c 2026-11-13 'everything is great', settings kept across LOAD and power-off; monitor photo 2026-11-12 (hw.cycles.measured); still in d74-H27, 2026-11-23"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "private stand: a pad without a setting bit-identical to stock in a 32-voice loop; the lofi output bit-identical to its model"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the limits of 48 and 32 pads were chosen for CPU headroom, not measured as the edge"
     }
    ]
   }

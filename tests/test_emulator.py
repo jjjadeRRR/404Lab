@@ -388,6 +388,37 @@ class QuickSystem(unittest.TestCase):
                 self.assertEqual(a.frame, b.frame, f'{name}: after EXIT the screen differs from the base')
 
 
+@unittest.skipUnless(available() and STOCK.exists() and DOOM73.exists(), 'emulator or firmware inputs not present')
+class FaultScreen(unittest.TestCase):
+    """mods/fault_screen on the whole firmware: HOLD + ROLL faults on purpose, the four hooked vectors reach the handler, and the
+    screen it draws by polling the display port is what the controller model shows, on every base."""
+
+    @units(1)
+    def test_a_fault_on_purpose_is_shown_and_the_unit_stands(self):
+        from test_fault_screen import expected
+        for name, base in BASES:
+            with self.subTest(base=name), tempfile.TemporaryDirectory() as d:
+                manifest = build(ROOT/'mods/fault_screen', base, Path(d)/'pkg')
+                candidate = (Path(d)/'pkg/SP404MKII_APP1.bin').read_bytes()
+                shown = int(manifest['symbols']['fault_screen_shown'], 16)
+                with Emulator(candidate) as unit:
+                    boot(unit)
+                    self.assertEqual(unit.read_u32(shown), 0)
+                    unit.hold('HOLD')
+                    time.sleep(0.1)
+                    unit.press('ROLL')
+                    unit.release('HOLD')
+                    time.sleep(3)
+                    self.assertEqual(unit.read_u32(shown), 1)
+                    first = unit.frame
+                    time.sleep(3)
+                    self.assertEqual(unit.frame, first, 'the unit should stand on the fault screen')
+                px = [[bool(first[y*16+x//8] & (0x80 >> (x % 8))) for x in range(128)] for y in range(64)]
+                want = expected({0: ['404LAB FAULT SCREEN'], 2: ['USAGE FAULT'], 5: ['CFSR', '00010000'], 7: ['PHOTO THIS, POWER OFF']})
+                for y in list(range(0, 24))+list(range(40, 48))+list(range(56, 64)):
+                    self.assertEqual(px[y], want[y], f'{name}, row {y}')
+
+
 @unittest.skipUnless(available() and STOCK.exists() and PROJECT_DRIVE.exists(), 'emulator, firmware or a project drive not present')
 class WithAProject(unittest.TestCase):
     """A real project on the internal drive, so pads make sound. The drive is the user's own and is not in this repository."""
@@ -464,6 +495,63 @@ class WithAProject(unittest.TestCase):
                 unit.press(pad, hold=0.3, settle=0.7)
             self.assertGreater(unit.audio_peak, 0)
             self.assertEqual(unit.read_u32(int(manifest['symbols']['demo_counter_calls'], 16)), 0)
+
+
+@unittest.skipUnless(available() and STOCK.exists() and PROJECT_DRIVE.exists(), 'emulator, firmware or a project drive not present')
+class StockSaverLeak(unittest.TestCase):
+    """st.ui.saver-leak on unmodified stock 5.52: each start of the Custom screensaver keeps about 66 KB of the malloc pool when
+    the project holds its four screen_saver pictures. The other types keep nothing. Measured with the pool walk of
+    Emulator.malloc_pool, which reads the RTOS records from outside."""
+
+    @staticmethod
+    def choose_custom(unit):
+        # SYSTEM (SHIFT + pad 12), GENERAL tab (CTRL3 to one end), row 7 Scrn Saver Type, two steps from OldRave to Custom.
+        unit.shift(True)
+        unit.press('PAD12')
+        unit.shift(False)
+        time.sleep(1.5)
+        unit.turn_control('CTRL3', 5)
+        time.sleep(1)
+        for _ in range(6):
+            unit.turn(1, settle=0.4)
+        unit.press('VALUE', settle=0.8)
+        unit.turn(1, settle=0.5)
+        unit.turn(1, settle=0.5)
+        unit.press('VALUE', settle=0.8)
+        for _ in range(8):
+            if unit.read_u32(MAIN_PAGE_WORD) & 0xFFFF == MAIN_PAGE:
+                break
+            unit.press('EXIT', settle=1.2)
+        assert unit.read_u32(MAIN_PAGE_WORD) & 0xFFFF == MAIN_PAGE, 'could not leave SYSTEM'
+
+    @staticmethod
+    def cycle(unit):
+        """One screensaver start and wake. The screensaver object word 0x80249730 is non-zero while it runs (st.ui.flags)."""
+        start = time.time()
+        while time.time()-start < 150 and not unit.read_u32(0x80249730):
+            time.sleep(2)
+        assert unit.read_u32(0x80249730), 'the screensaver did not start'
+        time.sleep(5)
+        unit.press('EXIT', settle=2)
+        assert not unit.read_u32(0x80249730), 'the screensaver did not end'
+        time.sleep(2)
+        return unit.malloc_pool()['free']
+
+    @units(1)
+    def test_custom_keeps_about_66_kb_a_start_and_the_default_type_nothing(self):
+        with Emulator(STOCK.read_bytes(), drive=str(PROJECT_DRIVE)) as unit:
+            boot(unit)
+            time.sleep(2)
+            start = unit.malloc_pool()['free']
+            default = self.cycle(unit)
+            self.choose_custom(unit)
+            time.sleep(2)
+            before = unit.malloc_pool()['free']
+            first = self.cycle(unit)
+            second = self.cycle(unit)
+        self.assertEqual(default, start, 'the default type (OldRave) should give back what it took')
+        for lost in (before-first, first-second):
+            self.assertTrue(60000 <= lost <= 72000, lost)
 
 
 if __name__ == '__main__':

@@ -314,6 +314,40 @@ class Emulator:
         text = re.sub(r'\x1b\[[0-9;]*[A-Za-z]', '', data.decode(errors='replace')).replace('\r', '')  # the monitor redraws its line with terminal codes
         return text.split('\n', 1)[-1].split('(qemu)', 1)[0].strip() if command not in text else text.split(command, 1)[-1].split('(qemu)', 1)[0].strip()
 
+    def words(self, address, count):
+        """count words of the running firmware's memory, read in one go through the monitor."""
+        text = self._monitor(f'xp /{count}wx 0x{address:08X}')
+        out = [int(x, 16) for line in text.splitlines() if ':' in line for x in re.findall(r'0x([0-9a-f]{8})', line.split(':', 1)[1])]
+        if len(out) != count:
+            raise RuntimeError(f'read {len(out)} of {count} words at 0x{address:08X}')
+        return out
+
+    def malloc_pool(self):
+        """The stock malloc pool as the RTOS keeps it: free bytes, the biggest free piece, the number of free pieces (st.mem.heap-walk).
+
+        Walked from outside, so it works on any image with the stock heap, with or without a mod's own monitor. Raises RuntimeError
+        when the walk leaves the pool, which means the layout is not the one described in the fact."""
+        pool_id = self.words(0x80245820, 1)[0]
+        if not 1 <= pool_id <= 8:
+            raise RuntimeError(f'malloc pool id {pool_id}')
+        block = 0x202BA8EC+60*(pool_id-1)
+        w = self.words(block, 15)
+        start, size, head = w[12], w[5], block+0x20
+        end = start+size
+        free = biggest = pieces = 0
+        node = w[8]
+        while node != head:
+            if pieces >= 4000 or not start+8 <= node < end:
+                raise RuntimeError(f'the pool walk left the pool at 0x{node:08X}')
+            piece = node-8
+            following = self.words(piece, 1)[0] & ~7
+            stop = following if piece < following <= end else end
+            free += stop-piece
+            biggest = max(biggest, stop-piece)
+            pieces += 1
+            node = self.words(node, 1)[0]
+        return dict(free=free, biggest=biggest, pieces=pieces, start=start, size=size)
+
     def diagnose(self):
         """What a stuck unit was doing, for the record of a failure: where the processor is, whether it moves, whether frames and audio still arrive, and the host's condition."""
         def threads():

@@ -13,7 +13,7 @@ Open research and tools for Roland SP-404MKII firmware modding, ready for work w
 
 It is for mod developers, researchers and owners who want to change their instrument, alone or together with a coding agent of their choice. There is no mandatory agent workflow, and no promise that an arbitrary request can become a working mod without further research.
 
-**Early research tooling.** The examples have been exercised on the emulator. One build of these tools (`quick_system` on DOOM OS 0.7.4) has passed its checks on one unit, once; nothing made through `package` has been on a unit. Most hardware facts come from one unit. See [docs/STATUS.md](docs/STATUS.md) for current capabilities and limits.
+**Early research tooling.** The examples have been exercised on the emulator. One build of these tools (`quick_system` on DOOM OS 0.7.4) has passed its checks on one unit, once; nothing made through `package` has been on a unit. Most hardware facts come from one unit. See [docs/STATUS.md](docs/STATUS.md) for current capabilities and limits, and [docs/ON_A_UNIT.md](docs/ON_A_UNIT.md) for what the maintainer's own mod, built with these methods, has done on a unit: an effect on each pad, an output meter that matches a DAW, mute groups of 32 pads, a fault screen and more.
 
 This project ships no firmware. You bring your own `SP404MKII_APP1.bin`. Unofficial: not affiliated with or endorsed by Roland.
 
@@ -55,7 +55,7 @@ Documentation coverage, build support and hardware validation are separate. Know
 
 ## Start from an example or a question
 
-- [Research commands and source examples](docs/EXAMPLES.md): inspect an image, reproduce a finding, or try `demo_counter` and `quick_system`.
+- [Research commands and source examples](docs/EXAMPLES.md): inspect an image, reproduce a finding, or try `demo_counter`, `quick_system` and `fault_screen`.
 - [Reference documents](docs/SOURCES.md) for stock controls and MIDI, the processor, and board components.
 - [Hardware hazards](docs/SAFETY.md): known paths to loader loss and the limits of recovery.
 - [The stand](docs/STAND.md): which questions each emulator can answer.
@@ -124,7 +124,7 @@ python -m lab404 build mods/demo_counter SP404MKII_APP1.bin out/demo-1
 python -m lab404 check out/demo-1 mods/demo_counter SP404MKII_APP1.bin
 ```
 
-The optional packaging route needs the emulator. `mods/quick_system` adds one key chord that opens Roland's own SYSTEM screen. It has only been tried on the emulator. Start with its preview:
+The optional packaging route needs the emulator. `mods/quick_system` adds one key chord that opens Roland's own SYSTEM screen. Its `build` output has run on one unit; the packaging route has only been tried on the emulator. Start with its preview:
 
 ```bash
 python -m lab404 preview mods/quick_system SP404MKII_APP1.bin

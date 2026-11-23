@@ -34,7 +34,8 @@ These are working choices, not limits. Improve them if you can do better, and re
 
 - [README.md](README.md): purpose, setup and entry points.
 - [docs/STATUS.md](docs/STATUS.md): capabilities, limits and known problems.
-- [docs/EXAMPLES.md](docs/EXAMPLES.md): research commands, two source examples and the optional packaging route.
+- [docs/EXAMPLES.md](docs/EXAMPLES.md): research commands, three source examples and the optional packaging route.
+- [docs/ON_A_UNIT.md](docs/ON_A_UNIT.md): what mods built this way have done on a real unit, and what failed there, with the facts behind each line.
 - [docs/SOURCES.md](docs/SOURCES.md) links to the Roland manuals, NXP and Arm references, and component datasheets. When a result from `ask` needs checking, read its `evidence.source` in `knowledge/facts/` and match the document revision before citing it.
 - [docs/SAFETY.md](docs/SAFETY.md): known paths to loader loss and limits of recovery. Read before preparing anything for a real unit.
 - [docs/STAND.md](docs/STAND.md): what each emulator can establish.

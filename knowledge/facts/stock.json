@@ -531,6 +531,31 @@
    ]
   },
   {
+   "id": "st.mem.heap-walk",
+   "topic": "stock",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "How to read the malloc pool from outside, as the RTOS keeps it: the pool id is the word at 0x80245820 (st.mem.heap); its control block is 0x202BA8EC + 60 x (id - 1). In that block word 5 is the size (0x300000), word 12 the start, word 8 the first free node, and the list head is the block + 0x20. Each free node sits 8 bytes into its piece; the piece runs to the address in the piece's first word with the low 3 bits cleared (or to the pool end), and the next node is the node's first word, until the head comes back. Summing the pieces gives free bytes, the biggest piece and their number. On stock 5.52 just after boot with a project: 2,645,664 bytes free in 3 pieces, the biggest 2,641,160. A mod's monitor can do the same walk on the unit; Emulator.malloc_pool does it on the emulator.",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "DM-404, stock 5.52 and DOOM OS 0.7.4 images, 2026-11-19 and 2026-11-23; the free total moved by exactly the screensaver allocations (st.ui.saver-leak)"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: a private mod's monitor screen showing the free pool by the same walk, 2026-11-12 and 2026-11-19 (st.mem.heap-measured)"
+    },
+    {
+     "label": "DOC",
+     "source": "T-Kernel specification, variable-size memory pool, for the record layout"
+    }
+   ]
+  },
+  {
    "id": "st.mem.gap-trap",
    "claim": "A range missing from the scatter table is not free. The stock heap is the proof: it sits in the gap between ZERO rows. Check code references too, and treat absence of references as evidence, not proof.",
    "topic": "stock",
@@ -2617,7 +2642,7 @@
   },
   {
    "id": "st.ui.saver-leak",
-   "claim": "A stock memory leak: every start of the screensaver with Scrn Saver Type = Custom (st.ui.saver) leaves about 65 KB of the malloc pool (st.mem.heap) allocated for good. The page constructor 0x80175678 (reached from the factory 0x80057AA0) tries B:/roland/sp-404mkii/project_NN/PICTURE/screen_saver_1..16.bmp through 0x800BEC28; each file found becomes a 128 x 64 16-bit image, a 16384-byte buffer (made at 0x80022826, image constructor 0x800227A8) plus an object of 0xB8 bytes; it then loads 6 small built-in pictures from G: through 0x800CD868. On wake the destructor 0x80175908 only calls 0x800BEA88(object + 0x18) and frees the page object; none of the pictures is deleted. With the 4 pictures a project usually holds that is 68,174 bytes a start. Over a day of idle minutes this drains the 3 MB pool, and the stock SD import then writes through a null pointer (st.import.malloc-unchecked). The stock type OldRave does not leak. A mod can fix it by deleting the pictures before the stock destructor runs (its destroy slots are the words 0x8022C460 and 0x8022C464); a private build does this, not yet checked on a unit. Without project pictures the 6 built-in ones would still leak about 5 KB a start (estimated from their sizes). The screen_saver_N.bmp files are in the project folder in the unit's own storage (st.storage.drives), not on the SD card, so they are easy to miss.",
+   "claim": "A stock memory leak: every start of the screensaver with Scrn Saver Type = Custom (st.ui.saver) keeps about 66 KB of the malloc pool (st.mem.heap) for good when the project holds its four screen_saver pictures. Measured on unmodified stock 5.52 on the emulator, free bytes after each of four starts: -67,768, then -66,404, -66,400 and -66,400 more. Without project pictures the first start keeps 6,304 bytes and later starts keep nothing more; the default type OldRave keeps nothing. The page constructor 0x80175678 (reached from the factory 0x80057AA0) tries B:/roland/sp-404mkii/project_NN/PICTURE/screen_saver_1..16.bmp through 0x800BEC28; each file found becomes a 128 x 64 16-bit image, a 16384-byte buffer (made at 0x80022826, image constructor 0x800227A8) plus an object of 0xB8 bytes; it then loads 6 small built-in pictures from G: through 0x800CD868. On wake the destructor 0x80175908 calls 0x800BEA88 on the object at +0x18, which releases the entries of that object's own list, and frees the page; the project pictures are not released. Over a day of idle minutes this can drain the 3 MB pool, and the stock SD import then writes through a null pointer (st.import.malloc-unchecked). A mod can fix it by deleting the pictures before the stock destructor runs (its destroy slots are the words 0x8022C460 and 0x8022C464); a private build does this. The screen_saver_N.bmp files are in the project folder in the unit's own storage (st.storage.drives), not on the SD card, so they are easy to miss: the owner, who saw the leak on the unit, counted no such files, but where they looked is not known.",
    "topic": "stock",
    "firmware": [
     "stock-5.52",
@@ -2628,20 +2653,20 @@
    "status": "verified",
    "evidence": [
     {
-     "label": "HARDWARE",
-     "source": "owner's unit, 2026-11-19, private build d74-H23 on DOOM OS 0.7.4, Custom screensaver, MONITOR photos of the free pool after power-on and after each screensaver cycle: 2264, 2197, 2133 KB, and later 622 then 557 KB: -67, -64, -65 KB a cycle. One unit"
+     "label": "EMULATOR",
+     "source": "DM-404 full-image emulator, unmodified stock 5.52, 2026-11-23: pool walk (st.mem.heap-walk) after each of four screensaver cycles with a project holding screen_saver_1..4.bmp, the same project with those four entries removed, and the default type; tests/test_emulator.py StockSaverLeak"
     },
     {
-     "label": "EMULATOR",
-     "source": "DM-404 full-image emulator, private mod session 2026-11-19 on d74-H23, whose screensaver page is stock code: Custom type -66, -65, -65 KB over three cycles, OldRave 0; gdb on malloc and free and on the page functions for one cycle; reported by that session, not re-run here. Not run on a pure stock 5.52 image"
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-19, private build d74-H23 on DOOM OS 0.7.4, Custom screensaver, monitor photos of the free pool after power-on and after each screensaver cycle: 2264, 2197, 2133 KB, and later 622 then 557 KB: -67, -64, -65 KB a cycle. One unit"
     },
     {
      "label": "BYTES",
-     "source": "stock-5.52 0x80175678, 0x80175908 (calls 0x800BEA88 then tail-calls free 0x800E11CA), 0x800BEC28, 0x800CD868, 0x800227A8, 0x80057AA0; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 identical at these addresses, re-read here 2026-11-19"
+     "source": "stock-5.52 0x80175678, 0x80175908 (calls 0x800BEA88 then tail-calls free 0x800E11CA), 0x800BEC28, 0x800CD868, 0x800227A8, 0x80057AA0; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 identical at these addresses, re-read 2026-11-19; 0x800BEA88 read 2026-11-23"
     },
     {
      "label": "HYPOTHESIS",
-     "source": "the ~5 KB leak without project pictures; that Roland puts the 4 pictures into every project; the fix on a unit"
+     "source": "that Roland's projects usually hold the four pictures; the private fix on a unit; what the 6,304 bytes kept once without pictures are"
     }
    ]
   },

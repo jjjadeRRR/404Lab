@@ -18,6 +18,21 @@ The original development milestones below describe existing work, not a mandator
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
 
+## What is new (2026-11-23, later): what the private mod showed on a unit, a fault screen example
+
+- [ON_A_UNIT.md](ON_A_UNIT.md) lists what mods built with these methods have done on the maintainer's unit, and what failed
+  there, from the private mod DEEPCUT (DOOM OS 0.6.1 to 0.7.4, 2026-10-23 to 2026-11-23). Each line points to the facts. New or
+  corrected facts: `hk.fault-screen`, `hk.fault-visibility` (was "not shown on a unit"; three faults were photographed),
+  `hw.display.port`, `hk.recipe.pad-effects`, `hk.recipe.mute-32`, `st.mem.heap-walk`, and unit evidence for `hk.storage.sidecar`.
+- **Example `mods/fault_screen`**: four word hooks on the fault vectors and a screen drawn by polling the display port, so a
+  crash shows the kind of fault, PC, LR, CFSR and the address instead of a frozen picture. HOLD + ROLL on the main screen faults on
+  purpose. [EMULATOR] on stock 5.52 and DOOM OS 0.7.3 and 0.7.4 the whole firmware shows the screen and stands
+  (`tests/test_emulator.py` FaultScreen, `tests/test_fault_screen.py`). Adapted from the private mod, whose screen showed three real
+  faults on a unit; this build itself has not been on a unit.
+- `st.ui.saver-leak` measured on **unmodified** stock 5.52: about 66 KB kept at every Custom screensaver start when the project holds
+  its four pictures; without them 6 KB once; the default type nothing. Before, it had been measured only on the private mod.
+  `Emulator.malloc_pool` walks the pool from outside (`st.mem.heap-walk`), and `StockSaverLeak` is a test of it.
+
 ## What is new (2026-11-23): DOOM OS 0.7.4 for the examples, word hooks, a stock CHOP crash path
 
 - **First build of these tools on a unit.** `quick_system` built with `build` on DOOM OS 0.7.4 and checked with `check`,
@@ -47,7 +62,7 @@ The original development milestones below describe existing work, not a mandator
 
 - Stock 5.52 leaks about 65 KB of the 3 MB malloc pool at every start of the Custom screensaver: the page loads its
   pictures and never deletes them (`st.ui.saver-leak`). Found from MONITOR photos on the maintainer's unit, reproduced on
-  the emulator and traced to the destructor `0x80175908`; the code is the same in DOOM OS 0.7.2-0.7.4. Over a day it can
+  the emulator with the private mod (on unmodified stock only on 2026-11-23, see above) and traced to the destructor `0x80175908`; the code is the same in DOOM OS 0.7.2-0.7.4. Over a day it can
   starve the stock SD import, which then crashes (`st.import.malloc-unchecked`). A private fix exists and is not yet
   checked on a unit.
 

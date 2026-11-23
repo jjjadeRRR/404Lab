@@ -61,6 +61,19 @@ Two kinds of hook exist. An `entry` hook (above) runs a mod function before a fi
 
 It can be built and checked like `demo_counter`. For screen and event experiments, [STAND.md](STAND.md) describes the external DM-404 emulator and the tests that exercise it. Inspecting existing examples does not require agreeing to use their interface in a new mod.
 
+## A fault screen
+
+[fault_screen](../mods/fault_screen/mod.json) and its [source](../mods/fault_screen/fault_screen.c) make a crash visible. The
+firmware's fault handlers only return, so a fault leaves a frozen screen (`hw.faults.vectors`). The example points the four fault
+vector words at its own handler with `word` hooks. The handler takes PC and LR from the exception frame, moves to its own stack, and
+draws the kind of fault, PC, LR, CFSR and the faulting address straight into the display controller by polling its SPI port
+(`hw.display.port`). Then it stands until the power is switched off. HOLD + ROLL on the main screen faults on purpose, to see it
+work. Use it while developing a mod, and put the same handler into your own mod: a photo of the screen names the instruction that
+failed. Three such photos found three stock bugs (`hk.fault-visibility`).
+
+It has run on stock 5.52 and DOOM OS 0.7.3 and 0.7.4 in the whole-firmware emulator. The private mod it was adapted from showed real
+faults on a unit; this build has not been on a unit yet.
+
 ## Optional packaging for conservative additions
 
 `preview`, `approve` and `package` form one existing delivery route. It compares a fixed walk on the base and candidate, exercises declared inputs, and prepares a report and `UNIT_CHECKS.md`. It is designed for additions that preserve the checked base behaviour. It still refuses occupied controls and failed comparisons, even if a different behaviour was intentional. Arbitrary replacements need different validation that this route does not yet implement; do not disable checks to make such a mod appear to pass.

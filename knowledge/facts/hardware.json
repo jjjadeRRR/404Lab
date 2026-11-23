@@ -1569,6 +1569,32 @@
    ]
   },
   {
+   "id": "hw.display.port",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "How the display is driven: the SSD1309 (hw.display) sits on LPSPI4 at 0x403A0000, chip select 0, with its data/command line on GPIO2 pin 1 (DR_SET 0x401BC084, DR_CLEAR 0x401BC088, mask 2: low for commands, high for data). The firmware sends a frame from a command table at 0x83FF1000: horizontal addressing (20 00), then columns 21 00 7F and pages 22 00 07, then 1024 data bytes, one per column of each 8-row page, bit 0 the top row. A mod can draw without the firmware by polling the port: DMA requests off (DER 0x1C), FIFOs emptied (CR 0x10 bits 8-9), flags cleared (SR 0x14), 8-bit frames with receive masked in TCR (0x60), each byte into TDR (0x64) when the transmit FIFO count in FSR (0x5C) is below 12, and the D/C pin moved only after FSR and SR bit 24 show the port idle. Put DER and TCR back afterwards if the firmware is to go on.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: a private mod's fault screen drawn this way was photographed three times, 2026-11-11 to 2026-11-23 (hk.fault-visibility)"
+    },
+    {
+     "label": "BYTES",
+     "source": "the firmware's display command table at 0x83FF1000 and its LPSPI driver (hw.periph.spi-sd), read in the private mod's work"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 reference manual, LPSPI and GPIO chapters; DM-404 machine model for the pin and the controller"
+    }
+   ]
+  },
+  {
    "id": "hw.bmc.chip",
    "claim": "The second processor is a Roland custom chip marked Roland BMC, with its own 32 MB SDRAM. No public datasheet exists. Roland describes the family as arrays of DSP and CPU cores. It runs APP0 and handles effects, converters (PCM4104 DAC, PCM1802 ADC on the board) and, by third-party notes, USB audio. Mods reach it only through messages from APP1. Trade records list a custom IC MB8AL1031 (BMC) from Fujitsu shipped to Roland, and the same Roland BMC marking is reported on BOSS GT-1000CORE and Roland AX-Edge boards; collected by a second agent on 2026-11-12 and not re-checked here.",
    "topic": "hardware",
