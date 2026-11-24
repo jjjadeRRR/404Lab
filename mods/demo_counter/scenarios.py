@@ -22,7 +22,9 @@ def mixer_output_unchanged(base, candidate):
         for frame in (0, 1, 31, 63):
             for route in (0, 1, 4, 6):
                 a, b = _mix(base, mode, frame, route), _mix(candidate, mode, frame, route)
-                assert any(a), f'silent fixture at {mode}, {frame}, {route}: the comparison would be empty'
-                assert a == b, f'output differs at mode {mode}, frame {frame}, route {route}'
+                if not any(a):
+                    raise AssertionError(f'silent fixture at {mode}, {frame}, {route}: the comparison would be empty')
+                if a != b:
+                    raise AssertionError(f'output differs at mode {mode}, frame {frame}, route {route}')
                 compared += 1
     return compared

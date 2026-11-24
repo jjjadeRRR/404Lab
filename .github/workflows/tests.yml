@@ -11,7 +11,7 @@ jobs:
   quick:
     name: quick tests, ${{ matrix.os }}, Python ${{ matrix.python }}
     runs-on: ${{ matrix.os }}
-    # All four jobs guard every change. Without firmware or the emulator here, tests that need them skip on every system;
+    # All four jobs run on pushes and pull requests. Without firmware or the emulator here, tests that need them skip on every system;
     # on Windows two more skip, because the emulator needs Linux (WSL).
     strategy:
       fail-fast: false

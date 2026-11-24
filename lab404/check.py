@@ -6,11 +6,12 @@ A clean report still means "candidate": nothing here shows it works on a unit.
 """
 import json
 import runpy
+import sys
 from pathlib import Path
 
 from .build import source_digest, source_revision
 from .identify import TABLE
-from .image import APP1_ROOM, DISABLEABLE, RETURN_ZERO, Image, ImageError, file_offset, protected, room, scatter, sha256
+from .image import APP1_ROOM, COPY, FLASH, DISABLEABLE, RETURN_ZERO, Image, ImageError, file_offset, protected, room, scatter, sha256
 from .knowledge import Knowledge, firmware_id_of
 from .stand import Boundary, Machine
 
@@ -29,6 +30,16 @@ def check_structure(base_raw, candidate_raw, manifest):
         out.append(_result('scatter', 'pass'))
     overlap = next((row for row in rows_base for added in rows_new[len(rows_base):] if max(row[1], added[1]) < min(row[1]+row[2], added[1]+added[2])), None)
     out.append(_result('allocation', 'fail', f'the added block overwrites memory at 0x{overlap[1]:08X}') if overlap else _result('allocation', 'pass'))
+    payload = manifest.get('payload')
+    valid = False
+    if isinstance(payload, dict) and len(rows_new) == len(rows_base)+1:
+        load, runtime, size, handler = rows_new[-1]
+        offset = load-FLASH
+        expected_offset = (len(base_raw)+15) & ~15
+        valid = (handler == COPY and offset == expected_offset
+                 and payload.get('address') == hex(runtime) and payload.get('bytes') == size
+                 and payload.get('sha256') == sha256(candidate_raw[offset:offset+size]))
+    out.append(_result('payload', 'pass' if valid else 'fail', '' if valid else 'COPY row or payload differs from manifest'))
     allowed = set(range(0x80, 0x88))
     bad_hook = None
     for hook in manifest['hooks']:
@@ -92,6 +103,8 @@ def check_scenarios(mod_dir, mod, base_raw, candidate_raw):
     if not names:
         return [_result('compatibility', 'unknown', 'the mod declares no compatibility scenarios')]
     out = []
+    if sys.flags.optimize:
+        return [_result('compatibility', 'fail', 'restart Python without optimization to run scenario assertions')]
     module = runpy.run_path(str(Path(mod_dir)/'scenarios.py'))
     for name in names:
         try:
@@ -118,9 +131,17 @@ def check_candidate(package_dir, mod_dir, base_path, knowledge=None):
     parent = sha256(base_raw)
     results.append(_result('parent', 'pass' if parent == manifest['parent_sha256'] else 'fail',
                            '' if parent == manifest['parent_sha256'] else 'this is not the base it was built on'))
-    digest = source_digest(mod_dir, mod)
-    results.append(_result('sources', 'pass' if digest == manifest['source_sha256'] else 'fail',
-                           '' if digest == manifest['source_sha256'] else 'the mod sources changed after this build'))
+    inputs = manifest.get('external_source_inputs')
+    try:
+        digest = source_digest(mod_dir, mod, inputs or ())
+    except (OSError, TypeError, ValueError):
+        digest = None
+    if digest is None or digest != manifest['source_sha256']:
+        results.append(_result('sources', 'fail', 'a source input changed or is unavailable'))
+    elif inputs is None:
+        results.append(_result('sources', 'unknown', 'rebuild to verify external compiler inputs'))
+    else:
+        results.append(_result('sources', 'pass'))
     entry = next((e for e in TABLE if e['sha256'] == parent), None)
     if results[1]['state'] == 'fail' or entry is None:
         results.append(_result('structure', 'unknown', 'not checked: wrong or unidentified base'))

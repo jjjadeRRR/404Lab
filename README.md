@@ -9,7 +9,7 @@ Open research and tools for Roland SP-404MKII firmware modding, ready for work w
 404Lab is two things in one repository:
 
 - **A research base.** What is known about the hardware, the stock firmware and other mods, written as checkable facts. Every fact says where it comes from: read in the bytes of a named image, seen on the emulator, reported from a unit, taken from a document, or only a hypothesis. Byte facts can be re-checked on your own image with one command.
-- **A workbench for building mods, with an AI agent or by hand.** An agent asks the knowledge base for what it needs (`ask`, `topics`, `gaps`) instead of reading everything. The tools identify your image, build a mod onto it, tie the result to its exact base and sources, run it on the emulator, and refuse known ways to brick a unit. Two small source examples show the whole route.
+- **A workbench for building mods, with an AI agent or by hand.** An agent asks the knowledge base for what it needs (`ask`, `topics`, `gaps`) instead of reading everything. The tools identify your image, build a mod onto it, tie the result to its exact base and sources, run it on the emulator, and refuse known ways to brick a unit. Three source examples exercise different parts of the workbench.
 
 It is for mod developers, researchers and owners who want to change their instrument, alone or together with a coding agent of their choice. There is no mandatory agent workflow, and no promise that an arbitrary request can become a working mod without further research.
 
@@ -24,7 +24,7 @@ flowchart LR
     A["Your SP404MKII_APP1.bin<br/>stock 5.52 or DOOM OS"] --> C
     B["Your idea<br/>for example a key chord"] --> C
     C["An agent writes the mod<br/>C code and mod.json"] --> D["build<br/>adds the mod to your image"]
-    D --> E["check and emulator<br/>refuse what can brick"]
+    D --> E["check and emulator<br/>check known hazards"]
     E --> F["New SP404MKII_APP1.bin"]
     F --> G["You install it<br/>from the SD card"]
 ```
@@ -80,7 +80,7 @@ You need Python 3.10 or newer, and clang for `build`. The tools are plain Python
 | `build` and `check` (needs clang) | yes | expected | expected |
 | Exact stand (Unicorn) | yes | expected | expected |
 | Whole-firmware emulator (DM-404): `preview`, `package`, `sweep` | yes | not tried | in WSL only |
-| How it is tested | every change, full suite | quick tests in CI | quick tests in CI |
+| How it is tested | quick tests in CI | quick tests in CI | quick tests in CI |
 
 Development happens on Linux. CI runs the quick tests on macOS and Windows on every push; "expected" means the code is written for it but no person has reported it yet. Tell us what `doctor` says on your machine.
 

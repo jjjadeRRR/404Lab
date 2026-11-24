@@ -110,7 +110,11 @@ def main(argv=None):
         return 0
     if a.command == 'record-sweep':
         from .observe import record_sweep
-        print(record_sweep(a.firmware, a.runs))
+        try:
+            print(record_sweep(a.firmware, a.runs))
+        except ValueError as e:
+            print(f'refused: {e}', file=sys.stderr)
+            return 2
         return 0
     try:
         if a.command == 'identify':
@@ -171,6 +175,9 @@ def main(argv=None):
                 print('unknown image: byte facts cannot be assumed to apply. '+identify(image.raw)['sha256'])
                 return 3
             results = Knowledge().verify(image, firmware_id_of(entry))
+            if not results:
+                print(f'unknown: no byte checks recorded for {firmware_id_of(entry)}')
+                return 3
             failed = [r for r in results if r[1] != 'pass']
             print(f'{len(results)-len(failed)} of {len(results)} byte checks pass on {firmware_id_of(entry)}')
             for fact_id, _, detail in failed:
@@ -179,8 +186,12 @@ def main(argv=None):
         if a.command == 'sweep':
             from pathlib import Path
             from .emulator import BLANK_DRIVE
-            from .knowledge import Knowledge
+            from .identify import TABLE
+            from .knowledge import Knowledge, firmware_id_of
             from .observe import experiment_of, failed_ids, jobs_for, run_job, select, sweep
+            if not any(e['sha256'] == image.sha256 and firmware_id_of(e) == a.firmware for e in TABLE):
+                print(f'refused: image does not match firmware profile {a.firmware}', file=sys.stderr)
+                return 2
             jobs, skipped = jobs_for(Knowledge().bindings[a.firmware]['bindings'])
             if a.only:
                 jobs = [j for j in jobs if j['screen'] in a.only.split(',')]

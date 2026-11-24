@@ -1,4 +1,5 @@
 """What the emulator can see after an input, and how inputs are performed. No emulator or firmware needed: these run on a fake unit."""
+import hashlib
 import json
 import socket
 import sys
@@ -339,10 +340,10 @@ class Classify(unittest.TestCase):
     """A verdict needs a declared signature, a valid arrival and a matching control. Silence is never a contradiction."""
 
     def record(self, **fields):
-        return dict(id='k', state='observed', screen='s', arrived='arrived', frame='f', keys=['A'], gesture='press', changes={}, phases={}, **fields)
+        return dict(id='k', state='observed', screen='s', arrived='arrived', settled=True, frame='f', keys=['A'], gesture='press', changes={}, phases={}, **fields)
 
     def control(self, **changes):
-        return dict(state='observed', frame='f', changes=changes)
+        return dict(state='observed', arrived='arrived', settled=True, frame='f', changes=changes)
 
     def test_a_declared_page_reached_is_confirmed(self):
         record = self.record(after_page=4)
@@ -422,7 +423,7 @@ class Recording(unittest.TestCase):
                 dict(id='c', screen='sample', keys=['DEL'], gesture='press', action='Other thing'), dict(id='d', screen='power-on', keys=['SHIFT'], gesture='power_on', action='Update')]
 
     def runs(self):
-        common = dict(state='observed', screen='sample', arrived='arrived', frame='f', gesture='press', after_page=1, phases={}, control=False)
+        common = dict(state='observed', screen='sample', arrived='arrived', settled=True, frame='f', gesture='press', after_page=1, phases={}, control=False)
         control = dict(id=control_id('sample', 'press'), **{**common, 'control': True}, changes={}, keys=['X'])
         first = [control, dict(id='a', **common, keys=['LOOP'], changes={'leds': {'0x40': ['steady:31', 'steady:255']}, 'audio_peak': 77}), dict(id='b', **common, keys=['GATE'], changes={'screen': True}),
                  dict(id='c', state='failed', error='hung')]
@@ -450,6 +451,9 @@ class Recording(unittest.TestCase):
         self.assertEqual(evidence_for('a', record)['label'], 'EMULATOR')
 
 
+STOCK_SHA = '4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80'
+
+
 class RecordingKeepsFiles(unittest.TestCase):
     def test_the_binding_file_keeps_its_compact_form(self):
         binding = dict(id='a', screen='sample', keys=['LOOP'], gesture='press', action='Toggle loop', status='verified', evidence=[dict(label='DOC', source='s')])
@@ -459,7 +463,7 @@ class RecordingKeepsFiles(unittest.TestCase):
             path = root/'bindings/stock-5.52.json'
             path.write_text(json.dumps(dict(firmware='stock-5.52', coverage={}, bindings=[binding]), separators=(',', ':'), ensure_ascii=False)+'\n', encoding='utf-8')
             run = root/'run.jsonl'
-            run.write_text(json.dumps(dict(experiment=dict(firmware='stock-5.52', drive='x')))+'\n', encoding='utf-8')
+            run.write_text(json.dumps(dict(experiment=dict(firmware='stock-5.52', drive='x', image_sha256=STOCK_SHA, bindings_sha256=hashlib.sha256(path.read_bytes()).hexdigest())))+'\n', encoding='utf-8')
             record_sweep('stock-5.52', [run], root)
             self.assertEqual(path.read_text(encoding='utf-8').count('\n'), 1)
             self.assertNotIn('drive', json.loads((root/'observations/stock-5.52.json').read_text(encoding='utf-8'))['experiments'][0])

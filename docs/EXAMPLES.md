@@ -47,13 +47,13 @@ Each build uses a new output directory. `build` and `check` do not need interfac
 
 For another hook, `python -m lab404 check-hook FILE ADDRESS` checks the entry instructions and known references. Firmware functions called by the payload are declared in `firmware_symbols` in `mod.json`, with an address and a fingerprint of at least eight bytes read from the base: `"size"` and `"sha256"` from `python -m lab404 read FILE ADDRESS SIZE --sha256`. A private mod may give the bytes themselves as `"expect"`; shared examples use the fingerprint, so they carry no firmware. This prevents silently reusing an address whose contents differ.
 
-Two kinds of hook exist. An `entry` hook (above) runs a mod function before a firmware function. A `word` hook repoints one aligned word that holds a code pointer, such as a vector, a table entry or a vtable slot, at a mod function:
+An `entry` hook (above) runs a mod function before a firmware function. A `word` hook repoints one aligned word that holds a code pointer, such as a vector, a table entry or a vtable slot, at a mod function:
 
 ```json
 {"kind": "word", "address": "0x8021D018", "expect": "0x80072CF1", "function": "my_tick", "original": "stock_tick"}
 ```
 
-`expect` is the value the word holds on that base (`python -m lab404 read FILE ADDRESS 4`). `original` is optional: it names the code the word pointed to, so the mod can call it as an ordinary function. The mod function is called exactly as the original would be, with its arguments and in its context, so it must keep the original's contract. The build refuses a word that does not hold `expect`, does not point to code, points to code that can erase the loader, or is a DOOM OS veneer word that DOOM rewrites while it starts (`hk.doom.veneers-rewritten`). Who else reads the word, and whether code writes it at run time, is not visible from bytes. Veneers, fixed-address modules and data tables are not implemented.
+`expect` is the value the word holds on that base (`python -m lab404 read FILE ADDRESS 4`). `original` is optional: it names the code the word pointed to, so the mod can call it as an ordinary function. The mod function is called exactly as the original would be, with its arguments and in its context, so it must keep the original's contract. The build refuses a word that does not hold `expect`, does not point to code, points to code that can erase the loader, or is a DOOM OS veneer word that DOOM rewrites while it starts (`hk.doom.veneers-rewritten`). Who else reads the word, and whether code writes it at run time, is not visible from bytes. Fixed-address modules and data tables are described below.
 
 A third kind, `disable`, switches off a factory service routine that can erase the loader (`hw.service.loader-erase`): its first
 four bytes become `movs r0,#0; bx lr`, so anything that calls it gets 0 back and nothing is erased. It takes only an address, which
@@ -109,12 +109,14 @@ use the private mod's real sites.
   "flash": {"address": "0x603C0000", "max_size": "0x1A000", "sources": ["screensaver.c"], "data": [{"file": "frames.bin", "symbol": "frames"}]}
   ```
 
+The build fingerprint covers files inside the mod directory and any external source files and project headers reported by Clang. Rebuild older candidates to record these external inputs. In assembly, use preprocessed `.S` files with `#include` for headers and declare binary assets through `data`. Flash sources may contain code and read-only constants. Put writable globals in a payload source.
+
 Payload `data` files work the same way at the top level of `mod.json`.
 
 A source can also be an object instead of a file name, for code that other code reaches by a literal address, or audio code that
 needs the FPU: `{"file": "meter.c", "address": "0x83FD0400", "max_size": "0xC00", "flags": ["-O3", "-mfpu=fpv5-sp-d16",
 "-mfloat-abi=softfp"]}`. A fixed object is laid out from its address; everything else flows around it; overlaps and a module larger
-than its `max_size` are refused. `flags` accepts optimisation levels, the FPU and float ABI, `-ffp-contract`, jump tables and
+than its `max_size` are refused. `flags` accepts optimisation levels, the FPU with the base calling convention (softfp), `-ffp-contract`, jump tables and
 `-DNAME[=value]`, nothing else. Data files take an `address` the same way (`tests/test_fixed_places.py`).
 
 ## A shortcut using a stock screen

@@ -146,14 +146,28 @@ def _walk(unit, firmware):
     return states
 
 
+def _at_binding_screen(unit, firmware, screen):
+    if screen not in ROUTES:
+        return None
+    for step in ROUTES[screen]:
+        do_step(unit, step)
+    watcher = Watcher(unit, firmware)
+    if watcher.settle() and watcher.look().page == ROUTE_PAGE[screen]:
+        return watcher
+    return None
+
+
 def _demonstrate(item, base_raw, candidate_raw, drive, firmware):
     """The added function really appears on the candidate, not on the base, and EXIT leaves both on the same screen."""
     def run(image):
         with Emulator(image, drive=drive) as unit:
             if not unit.wait_for_main(45, 3):
                 raise RuntimeError('no main screen')
+            screen = item.get('screen', 'sample')
+            watcher = _at_binding_screen(unit, firmware, screen)
+            if watcher is None:
+                raise RuntimeError(f'could not confirm screen {screen}')
             perform(unit, _join_filter_drive(item['keys']), item.get('gesture', 'press'), lambda: None)
-            watcher = Watcher(unit, firmware)
             watcher.settle()
             page = unit.read_u32(MAIN_PAGE_WORD) & 0xFFFF
             do_step(unit, 'EXIT')
@@ -209,10 +223,9 @@ def _unused_on_base(item, base_raw, drive, firmware):
     with Emulator(base_raw, drive=drive) as unit:
         if not unit.wait_for_main(45, 3):
             raise RuntimeError('no main screen')
-        for step in ROUTES[item['screen']]:
-            do_step(unit, step)
-        watcher = Watcher(unit, firmware)
-        watcher.settle()
+        watcher = _at_binding_screen(unit, firmware, item['screen'])
+        if watcher is None:
+            return dict(check=name, state='unknown', detail=f'could not confirm screen {item["screen"]}')
         before = watcher.look()
         watcher.reset_counts()
         seen = perform(unit, _join_filter_drive(item['keys']), item.get('gesture', 'press'), watcher.look)
@@ -297,15 +310,18 @@ def package(mod_dir, base_path, out_dir, accepted=None, drive=None, replay=repla
         raise PackageRefused('the interface changed since the user approved it: show it again')
     if not mod.get('task', {}).get('unit_checks'):
         raise PackageRefused('the task does not say what to check on the unit')
-    declared = {tuple(item['keys']) for item in mod.get('adds', {}).get('bindings', [])}
-    shown = {tuple(item['keys']) for item in mod.get('adds', {}).get('demonstrate', [])}
+    def binding_id(item):
+        return (item.get('screen', 'sample'), tuple(item['keys']), item.get('gesture', 'press'))
+
+    declared = {binding_id(item) for item in mod.get('adds', {}).get('bindings', [])}
+    shown = {binding_id(item) for item in mod.get('adds', {}).get('demonstrate', [])}
     if shown and shown != declared:
-        raise PackageRefused(f'the keys to demonstrate are not the keys declared: {sorted(shown)} against {sorted(declared)}')
+        raise PackageRefused(f'screen, keys and gesture to demonstrate must match the declaration: {sorted(shown)} against {sorted(declared)}')
     drive = drive or BLANK_DRIVE
     building = out_dir.with_name(f'{out_dir.name}.building-{uuid.uuid4().hex}')
     refuse_dangerous_files(mod_dir)
     try:
-        build(mod_dir, base_path, building)
+        manifest = build(mod_dir, base_path, building)
         report = check_candidate(building, mod_dir, base_path, knowledge)
         base_raw = Path(base_path).read_bytes()
         candidate_raw = (building/'SP404MKII_APP1.bin').read_bytes()
@@ -337,7 +353,7 @@ def package(mod_dir, base_path, out_dir, accepted=None, drive=None, replay=repla
                                                +''.join(f'{i}. {text}\n' for i, text in enumerate(checks, 1))+f'\n## Not established by any test\n\n{open_list}', encoding='utf-8')
         if sha256((building/'SP404MKII_APP1.bin').read_bytes()) != report['candidate_sha256']:
             raise PackageRefused('the candidate changed after it was checked')
-        if source_digest(mod_dir, mod) != report['source_sha256']:
+        if source_digest(mod_dir, mod, manifest['external_source_inputs']) != report['source_sha256']:
             raise PackageRefused('the mod sources changed after they were checked: build and check them again')
         refuse_dangerous_files(building)
         building.rename(out_dir)

@@ -64,18 +64,21 @@ covers it.
 ## Key bindings on the emulator
 
 `python -m lab404 sweep` presses each recorded binding on a fresh boot, and `record-sweep` writes the outcome to `knowledge/observations/<firmware>.json`.
+Import requires a log for a known image matching the selected profile and the current binding definitions. Changes to generated evidence citations leave the definition fingerprint unchanged.
 
 | Verdict | Meaning |
 |---|---|
 | `confirmed` | A sign declared in advance appeared: the expected page, the key's own light, or sound. A page or light still shows only that the firmware responded as described, on this emulator. |
 | `reacted` | Something changed and no control explains it. What it means is not proven. |
 | `no-reaction` | Nothing attributable was seen. No evidence either way: the action may need a condition the run lacked, such as a sample playing or a loaded deck. |
-| `unobserved` | The run did not start where it should have. |
+| `unobserved` | The run or its control lacked a confirmed screen or stable starting state, or could not be compared. |
 | `contradicted` | A different page appeared than the one declared. Needs a person or agent to look. |
 
 Only `confirmed` and `reacted` become `[EMULATOR]` evidence. A verdict depends on the project on the drive. It never makes a key `free`: that takes a screen marked complete.
 
 Stock 5.52 result, 2026-11-09: 784 bindings tried, 3 not tried (two skip-back keys need recorded audio, one needs power-on). Of 120 repeated at random, 119 verdicts matched and all 120 final pages matched. Only about a fifth of bindings have a declared sign at all, so most can reach `reacted` at best.
+
+The published stock results now classify 47 more entries as `unobserved`. The original logs lacked a stable, confirmed starting state for the input or its control.
 
 Limits: `RESAMPLE`'s page was declared wrongly, then corrected after the run and checked by eye. PAD5 and PAD8 of the project on this drive showed no sound though the screen shows samples there; the cause is unknown.
 

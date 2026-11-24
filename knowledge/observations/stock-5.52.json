@@ -3998,8 +3998,8 @@
 ]
 },
 "kb-stock-0508": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x00', '0x01', '0x02']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4007,8 +4007,8 @@
 ]
 },
 "kb-stock-0511": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x09', '0x0A', '0x0B']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4016,8 +4016,8 @@
 ]
 },
 "kb-stock-0512": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x0C', '0x0D', '0x0E']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4025,8 +4025,8 @@
 ]
 },
 "kb-stock-0513": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x0F', '0x10', '0x11']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4043,8 +4043,8 @@
 ]
 },
 "kb-stock-0509": {
-"verdict": "reacted",
-"why": "something changed, but not the declared signature {'led': ['0x03', '0x04', '0x05']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4052,8 +4052,8 @@
 ]
 },
 "kb-stock-0510": {
-"verdict": "reacted",
-"why": "something changed, but not the declared signature {'led': ['0x06', '0x07', '0x08']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4079,8 +4079,8 @@
 ]
 },
 "kb-stock-0517": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x1B', '0x1C', '0x1D']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4097,8 +4097,8 @@
 ]
 },
 "kb-stock-0519": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x21', '0x22', '0x23']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4106,8 +4106,8 @@
 ]
 },
 "kb-stock-0520": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x24', '0x25', '0x26']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4115,8 +4115,8 @@
 ]
 },
 "kb-stock-0521": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x27', '0x28', '0x29']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4133,8 +4133,8 @@
 ]
 },
 "kb-stock-0523": {
-"verdict": "confirmed",
-"why": "declared signature met: {'led': ['0x2D', '0x2E', '0x2F']}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4142,8 +4142,8 @@
 ]
 },
 "kb-stock-0524": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4160,8 +4160,8 @@
 ]
 },
 "kb-stock-0526": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4169,8 +4169,8 @@
 ]
 },
 "kb-stock-0527": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4178,8 +4178,8 @@
 ]
 },
 "kb-stock-0528": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4187,8 +4187,8 @@
 ]
 },
 "kb-stock-0529": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4241,8 +4241,8 @@
 ]
 },
 "kb-stock-0535": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4259,8 +4259,8 @@
 ]
 },
 "kb-stock-0537": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4277,8 +4277,8 @@
 ]
 },
 "kb-stock-0539": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4286,8 +4286,8 @@
 ]
 },
 "kb-stock-0540": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4303,8 +4303,8 @@
 ]
 },
 "kb-stock-0542": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4321,8 +4321,8 @@
 ]
 },
 "kb-stock-0543": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4330,8 +4330,8 @@
 ]
 },
 "kb-stock-0545": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4339,8 +4339,8 @@
 ]
 },
 "kb-stock-0547": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4348,8 +4348,8 @@
 ]
 },
 "kb-stock-0548": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4358,8 +4358,8 @@
 ]
 },
 "kb-stock-0549": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4367,8 +4367,8 @@
 ]
 },
 "kb-stock-0550": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4376,8 +4376,8 @@
 ]
 },
 "kb-stock-0551": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4385,8 +4385,8 @@
 ]
 },
 "kb-stock-0546": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4421,8 +4421,8 @@
 ]
 },
 "kb-stock-0555": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4439,8 +4439,8 @@
 ]
 },
 "kb-stock-0557": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4448,8 +4448,8 @@
 ]
 },
 "kb-stock-0558": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4475,8 +4475,8 @@
 ]
 },
 "kb-stock-0561": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4502,8 +4502,8 @@
 ]
 },
 "kb-stock-0564": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4511,8 +4511,8 @@
 ]
 },
 "kb-stock-0566": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4520,8 +4520,8 @@
 ]
 },
 "kb-stock-0565": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4529,8 +4529,8 @@
 ]
 },
 "kb-stock-0567": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4538,8 +4538,8 @@
 ]
 },
 "kb-stock-0569": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4568,8 +4568,8 @@
 "signals": []
 },
 "kb-stock-0568": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -4582,8 +4582,8 @@
 "signals": []
 },
 "kb-stock-0571": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -6033,8 +6033,8 @@
 ]
 },
 "kb-stock-0779": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "lights",
@@ -6042,39 +6042,39 @@
 ]
 },
 "kb-stock-0780": {
-"verdict": "no-reaction",
-"why": "nothing attributable was seen; the action may need a condition this run lacks",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "sound"
 ]
 },
 "kb-stock-0781": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "sound"
 ]
 },
 "kb-stock-0782": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "sound"
 ]
 },
 "kb-stock-0783": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "sound"
 ]
 },
 "kb-stock-0784": {
-"verdict": "reacted",
-"why": "something changed; no declared signature says what it means",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "picture",
 "sound"
@@ -6088,8 +6088,8 @@
 ]
 },
 "kb-stock-0785": {
-"verdict": "confirmed",
-"why": "declared signature met: {'left': True}",
+"verdict": "unobserved",
+"why": "the screen or its stable starting state was not confirmed",
 "signals": [
 "page",
 "picture",

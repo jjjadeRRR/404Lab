@@ -364,10 +364,11 @@ def classify(record, control, signature):
     """(verdict, reason). confirmed, reacted, no-reaction, contradicted or unobserved."""
     if record.get('state') != 'observed':
         return 'unobserved', record.get('error', 'not observed')
-    if record.get('arrived') == 'missed':
-        return 'unobserved', 'the route did not reach the screen'
     if not control or control.get('state') != 'observed':
         return 'unobserved', 'no usable control for this screen and gesture'
+    for observation in (record, control):
+        if observation.get('arrived') != 'arrived' or observation.get('settled') is not True:
+            return 'unobserved', 'the screen or its stable starting state was not confirmed'
     noise = {}
     for seen in [control.get('changes', {}), *control.get('phases', {}).values()]:
         for key, value in seen.items():
@@ -432,6 +433,20 @@ def record_sweep(firmware, paths, root=None):
     binding_path = root/'bindings'/f'{firmware}.json'
     data = json.loads(binding_path.read_text(encoding='utf-8'))
     runs = [[json.loads(line) for line in Path(path).read_text(encoding='utf-8').splitlines() if line.strip()] for path in paths]
+    from .identify import TABLE
+    from .knowledge import firmware_id_of
+    image_hashes = {e['sha256'] for e in TABLE if firmware_id_of(e) == firmware}
+    legacy_digest = hashlib.sha256(binding_path.read_bytes()).hexdigest()
+    definitions = _binding_digest(data)
+    for run in runs:
+        headers = [line['experiment'] for line in run if 'experiment' in line]
+        if len(headers) != 1 or not isinstance(headers[0], dict) or headers[0].get('firmware') != firmware:
+            raise ValueError('missing or mismatched experiment firmware')
+        header = headers[0]
+        if header.get('image_sha256') not in image_hashes:
+            raise ValueError('experiment image hash does not match the firmware')
+        if header.get('bindings_sha256') not in (definitions, legacy_digest):
+            raise ValueError('experiment binding definitions differ from the current bindings')
     _, not_tried = jobs_for(data['bindings'])
     record = summarise(runs, data['bindings'], not_tried)
     record = dict(firmware=firmware, meaning='What the whole-firmware emulator showed. Never proof of behaviour on a unit. no-reaction and unobserved are no evidence either way: the action may need a condition these runs lacked.',
@@ -448,10 +463,19 @@ def record_sweep(firmware, paths, root=None):
     return f'{len(record["verdicts"])} observed, {len(record["not_tried"])} not tried: {counts}'
 
 
+def _binding_digest(data):
+    # Recording a run updates EMULATOR citations. Those are outputs of the experiment.
+    bindings = [{**b, 'evidence': [e for e in b['evidence'] if e['label'] != 'EMULATOR']}
+                for b in data['bindings']]
+    content = json.dumps({**data, 'bindings': bindings}, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(content.encode()).hexdigest()
+
+
 def experiment_of(firmware, image, drive):
     """What a sweep's results depend on. The drive is too large to hash whole each time, so it is named by size, modified time and its first 16 MB."""
     source = Path(__file__).read_bytes()+Path(emulator_module.__file__).read_bytes()
-    bindings = hashlib.sha256((Path(__file__).parents[1]/'knowledge/bindings'/f'{firmware}.json').read_bytes()).hexdigest()
+    binding_path = Path(__file__).parents[1]/'knowledge/bindings'/f'{firmware}.json'
+    bindings = _binding_digest(json.loads(binding_path.read_text(encoding='utf-8')))
     with open(drive, 'rb') as f:
         start = hashlib.sha256(f.read(16*1024*1024)).hexdigest()
     stat = os.stat(drive)

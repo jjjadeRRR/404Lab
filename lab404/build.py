@@ -1,6 +1,8 @@
 """Build a mod described by mod.json on a user's APP1. Writes a new package and never replaces an existing one."""
 import hashlib
 import json
+import os
+import re
 import struct
 import subprocess
 import tempfile
@@ -26,10 +28,33 @@ def _int(value):
     return int(value, 0) if isinstance(value, str) else value
 
 
-def _compile(argv):
-    r = subprocess.run(['clang', *argv], capture_output=True, text=True, encoding='utf-8')
+def _compile(argv, cwd=None):
+    r = subprocess.run(['clang', *argv], cwd=cwd, capture_output=True, text=True, encoding='utf-8')
     if r.returncode:
         raise BuildError('compile failed:\n'+r.stderr)
+
+
+def _hashed_input(root, path):
+    return (path.is_relative_to(root) and path.is_file()
+            and path.name != 'approval.json' and '__pycache__' not in path.relative_to(root).parts)
+
+
+def _dependencies(deps):
+    # Clang quotes spaces and # with backslashes and $ as $$ in makefile dependencies.
+    deptext = deps.read_text(encoding='utf-8').replace('\\\n', ' ')
+    for token in re.findall(r'(?:\\.|[^\s\\])+', deptext.split(':', 1)[1]):
+        name = re.sub(r'\\([\s#$])', r'\1', token).replace('$$', '$')
+        yield name
+
+
+def _external_source(root, path, inputs):
+    if inputs is None or _hashed_input(root, path.resolve()):
+        return
+    try:
+        name = Path(os.path.relpath(path, root))
+    except ValueError:  # A Windows dependency may be on another drive.
+        name = path
+    inputs.add(name.as_posix())
 
 
 def _data_source(mod_dir, items, label):
@@ -37,7 +62,7 @@ def _data_source(mod_dir, items, label):
     out = []
     for n, item in enumerate(items):
         path = (mod_dir/item['file']).resolve()
-        if mod_dir.resolve() not in path.parents or not path.is_file():
+        if not _hashed_input(mod_dir.resolve(), path):
             raise BuildError(f'data file {item["file"]} must be a file inside the mod folder')
         out.append(f"""
     .section .rodata.lab404_{label}_{n},"a",%progbits
@@ -53,7 +78,7 @@ def _data_source(mod_dir, items, label):
 
 # Per-source compiler options a mod may ask for, beyond the defaults: optimisation, the FPU for audio code, and macros.
 ALLOWED_FLAGS = ('-O0', '-O1', '-O2', '-O3', '-Os', '-Oz', '-mfpu=fpv5-sp-d16', '-mfpu=fpv5-d16', '-mfloat-abi=softfp',
-                 '-mfloat-abi=hard', '-ffp-contract=off', '-ffp-contract=fast', '-fno-jump-tables', '-fjump-tables')
+                 '-ffp-contract=off', '-ffp-contract=fast', '-fno-jump-tables', '-fjump-tables')
 
 
 def _source_items(sources):
@@ -68,18 +93,35 @@ def _source_items(sources):
     return items
 
 
-def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', flash=None):
+def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', flash=None, source_inputs=None):
     """Compile the payload, and the flash block when the mod declares one, and link them together so each can use the
     other's symbols. Returns ([payload, flash block or None], symbols)."""
     with tempfile.TemporaryDirectory(prefix='lab404-') as tmp:
         tmp = Path(tmp)
+        root = mod_dir.resolve()
 
         def objects(sources, asm, label):
             blobs = []
-            for item in _source_items(sources):
-                obj = tmp/f'{label}-{Path(item["file"]).name}.o'
-                flags = SFLAGS if item['file'].endswith(('.S', '.s')) else CFLAGS
-                _compile([*flags, *item.get('flags', []), '-c', str(mod_dir/item['file']), '-o', str(obj)])
+            for index, item in enumerate(_source_items(sources)):
+                obj = tmp/f'{label}-{index}.o'
+                source = root/item['file']
+                _external_source(root, source, source_inputs)
+                options = item.get('flags', [])
+                flags = SFLAGS if source.suffix in ('.s', '.S') else CFLAGS
+                text_input = source
+                dependency_flags = []
+                if source.suffix != '.s':
+                    text_input = obj.with_suffix('.preprocessed')
+                    deps = obj.with_suffix('.d')
+                    dependency_flags = ['-MMD', '-MF', str(deps), '-MT', 'object']
+                    _compile([*flags, *options, '-E', str(source), '-o', str(text_input)], cwd=root)
+                # These assembler directives read files outside Clang's dependency tracking.
+                if re.search(r'\.(?:include|incbin)\b', text_input.read_text(encoding='utf-8')):
+                    raise BuildError(f'{item["file"]}: use a project #include in .S or declare binary files in mod data')
+                _compile([*flags, *options, *dependency_flags, '-c', str(source), '-o', str(obj)], cwd=root)
+                if dependency_flags:
+                    for dependency in _dependencies(deps):
+                        _external_source(root, root/dependency, source_inputs)
                 fixed = _int(item['address']) if 'address' in item else None
                 blobs.append((item['file'], obj.read_bytes(), fixed) if fixed is not None else (item['file'], obj.read_bytes()))
             if asm:
@@ -108,7 +150,7 @@ def compile_regions(mod_dir, mod, base_address, stubs, externals, extra_asm='', 
                             + fixed_data(fdata, 'flash')))
         spans = {}
         try:
-            blobs, symbols = link_regions(regions, externals, spans)
+            blobs, symbols = link_regions(regions, externals, spans, readonly_bases={_int(flash['address'])} if flash else ())
         except LinkError as e:
             raise BuildError(str(e)) from None
         for item in _source_items(mod['sources']+(flash or {}).get('sources', [])):
@@ -155,12 +197,14 @@ def firmware_symbols(mod, image):
     return out
 
 
-def source_digest(mod_dir, mod=None):
-    """Every file in the mod folder, headers and notes included, except the user's approval, which is about the interface and not the code."""
+def source_digest(mod_dir, mod=None, external_inputs=()):
+    """Hash mod files and the compiler's external dependencies. User approval is separate."""
     mod_dir = Path(mod_dir)
     h = hashlib.sha256()
     for path in sorted(p for p in mod_dir.rglob('*') if p.is_file() and p.name != 'approval.json' and '__pycache__' not in p.parts):
         h.update(str(path.relative_to(mod_dir)).encode()+b'\0'+path.read_bytes())
+    for name in sorted(external_inputs):
+        h.update(b'\0external\0'+name.encode()+b'\0'+hashlib.sha256((mod_dir/name).read_bytes()).digest())
     return h.hexdigest()
 
 
@@ -234,8 +278,9 @@ def build(mod_dir, base_path, out_dir):
         if plan['name'] in externals:
             raise BuildError(f'{plan["name"]} is named twice')
     flash = mod.get('flash')
+    source_inputs = set()
     (payload, block), symbols = compile_regions(mod_dir, mod, base_address, stubs, externals,
-                                                ''.join(copy_placeholder(plan) for plan in copies), flash)
+                                                ''.join(copy_placeholder(plan) for plan in copies), flash, source_inputs)
     if len(payload) > limit:
         raise BuildError(f'payload is {len(payload)} bytes, limit {limit}')
     payload = bytearray(payload)
@@ -270,7 +315,8 @@ def build(mod_dir, base_path, out_dir):
     patches += disabled+byte_patches
     result = extend(raw, base_address, payload, patches, (flash_address, block) if flash else None)
     manifest = dict(mod=mod['name'], mod_version=mod.get('version'), parent_sha256=who['sha256'], parent=f'{who["family"]} {who["version"]}',
-                    candidate_sha256=sha256(result), size=len(result), flash_room_left=room(result), source_sha256=source_digest(mod_dir, mod), source_revision=source_revision(),
+                    candidate_sha256=sha256(result), size=len(result), flash_room_left=room(result),
+                    source_sha256=source_digest(mod_dir, mod, source_inputs), external_source_inputs=sorted(source_inputs), source_revision=source_revision(),
                     payload=dict(address=hex(base_address), bytes=len(payload), sha256=sha256(payload)),
                     hooks=[dict(address=hex(p['address']), before=p['before'].hex(), after=p['after'].hex()) for p in patches],
                     **(dict(flash=dict(address=hex(flash_address), bytes=len(block), sha256=sha256(block))) if flash else {}),

@@ -143,7 +143,7 @@ def link(object_blobs, base, externals=None):
     return blobs[0], symbols
 
 
-def link_regions(regions, externals=None, spans=None):
+def link_regions(regions, externals=None, spans=None, readonly_bases=()):
     """Link objects that live in several places at once, such as a payload in SDRAM and a block of code in flash.
 
     regions is [(base, [(name, bytes) or (name, bytes, fixed address)])]; returns ([bytes per region], {symbol: address}).
@@ -162,6 +162,8 @@ def link_regions(regions, externals=None, spans=None):
         for entry in object_blobs:
             obj = Obj(entry[0], entry[1])
             obj.fixed = entry[2] if len(entry) > 2 else None
+            if base in readonly_bases and any(s.size and s.flags & SHF_WRITE for s in obj.sections.values()):
+                raise LinkError(f'{obj.path}: writable data belongs in RAM, outside the flash block')
             objects.append(obj)
         groups.append((base, objects))
     defined = [set().union(*[_defined(obj) for obj in objects]) for _, objects in groups]
@@ -185,14 +187,17 @@ def link_regions(regions, externals=None, spans=None):
                 continue
             if obj.fixed < base or obj.fixed % 2:
                 raise LinkError(f'{obj.path}: fixed address 0x{obj.fixed:08X} is not in its region from 0x{base:08X}')
+            sections = [s for kind in ORDER for s in obj.sections.values() if _bucket(s) == kind]
+            alignment = next((s.align for s in sections if s.size), 1)
+            if obj.fixed % alignment:
+                raise LinkError(f'{obj.path}: fixed address needs {alignment}-byte alignment')
             cursor = obj.fixed
-            for kind in ORDER:
-                for section in obj.sections.values():
-                    if _bucket(section) == kind:
-                        cursor = (cursor+section.align-1) & ~(section.align-1)
-                        section.address = cursor
-                        cursor += section.size
-                        placed[kind].append(section)
+            for section in sections:
+                if section.size:
+                    cursor = (cursor+section.align-1) & ~(section.align-1)
+                section.address = cursor
+                cursor += section.size
+                placed[_bucket(section)].append(section)
             if any(lo < cursor and obj.fixed < hi for lo, hi in taken):
                 raise LinkError(f'{obj.path}: its fixed place 0x{obj.fixed:08X}-0x{cursor:08X} overlaps another fixed object')
             taken.append((obj.fixed, cursor))
