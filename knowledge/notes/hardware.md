@@ -63,6 +63,7 @@ A complete peripheral register map does not exist yet.
 
 ## Second processor link
 
+- The editor's USB serial device is provided by APP1. See the [USB and live readback study](app0-live-observation.md) for the other USB device and the limits of the editor protocol.
 - Effect parameters: Roland DT1 packets, address rules in `hw.bmc.sysex`. Sent with `0x800CD3A0`.
 - From the BMC: 4 byte frames on LPUART3, see `hw.bmc.rx`.
 - SAI and frame slots: `hw.periph.sai`, `st.audio.pack`, `st.audio.routes`.

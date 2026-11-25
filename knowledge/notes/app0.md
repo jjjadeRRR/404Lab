@@ -1,6 +1,6 @@
 # APP0
 
-Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. The [APP0 update and recovery study](app0-update-safety.md) traces the stock updater, its checks and the remaining limits.
+Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. The [APP0 update and recovery study](app0-update-safety.md) traces the stock updater. The [USB study](app0-live-observation.md) compares the editor port, the internal BMC log and SYSTEM-8 live readback.
 
 ## What it is
 

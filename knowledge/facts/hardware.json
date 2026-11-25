@@ -1998,7 +1998,7 @@
   },
   {
    "id": "hw.usb",
-   "claim": "USB: the board has a USB2422 2-port hub (IC6). A computer sees the hub (0424:2422) with two devices behind it: 0582:0281, a composite USB audio and MIDI device, and 0582:02E7, a CDC-ACM serial port named 'Roland SP-404MKII', which Roland's app and SparkyMK2 use for files and parameters (hw.usb.link). Third-party notes say the main chip provides the serial device and the second processor the audio and MIDI; that split is not checked here. No send path from APP1 to USB-MIDI has been found; sysex at 0x800CD3A0 goes to LPUART3. The USB stack in APP1 and its descriptors are not read.",
+   "claim": "The board has a USB2422 two-port hub (IC6). A computer sees the hub (0424:2422), the composite audio and MIDI device 0582:0281, and the CDC-ACM editor port 0582:02E7 (hw.usb.link). In stock APP1 5.52 on the NXP, the descriptor path at 0x800427CE and 0x80043698 returns the 0582:02E7 descriptor at 0x20009060, confirming which processor serves the editor port. The 0582:0281 device is attributed to the BMC in third-party notes. Incoming USB MIDI was observed at the APP1 internal receive table (hw.bmc.host-midi). See knowledge/notes/app0-live-observation.md.",
    "topic": "hardware",
    "firmware": "any",
    "status": "verified",
@@ -2016,8 +2016,28 @@
      "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/00-findings.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied: USB enumeration on Windows and Linux"
     },
     {
-     "label": "HYPOTHESIS",
-     "source": "which processor serves which USB device; no read of the USB stack has been done"
+     "label": "BYTES",
+     "source": "Stock APP1 5.52, read 2026-11-25 after scatter decoding. Branch at 0x800427CE and descriptor getter at 0x80043698; device descriptor at 0x20009060 and CDC configuration at 0x20009080."
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x20009060",
+     "size": 18,
+     "sha256": "eaef446369e54c8bb4019ed543e7118c4d1919d3c00f22f5d72daa407362ac11"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x20009080",
+     "size": 67,
+     "sha256": "fae2d61a23e2e716dd9683ad92e7393767db4431adb1d8604b016e19b5f80cf2"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80043698",
+     "size": 18,
+     "sha256": "025bc24b3876e158cfc8e45ff5503ef979829add3f800b9aca87080f0ebcefc6"
     }
    ]
   },
@@ -2603,14 +2623,14 @@
   },
   {
    "id": "hw.bmc.no-read",
-   "claim": "A Roland data request (RQ1) sent from APP1 for the effect type of slot 1 got no reply from the second processor: not one packet followed it. So its memory cannot be read with the standard Roland request over this link, as far as one try on one unit shows. A different address, size or device id was not tried.",
+   "claim": "One Roland RQ1 request sent from APP1 for the effect type of slot 1 yielded no observed reply on the internal receive path. The private hardware log has the same 3170-packet counter before and after the request. This tests one request on one unit and leaves other readback mechanisms open. See knowledge/notes/app0-live-observation.md.",
    "topic": "hardware",
-   "firmware": "stock-5.52",
+   "firmware": "doom-os-0.7.3",
    "status": "verified",
    "evidence": [
     {
      "label": "HARDWARE",
-     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card: the request F0 41 10 00 00 00 00 08 11 02 02 00 08 00 00 00 02 72 F7 was sent once; the packet count before and after was the same"
+     "source": "One unit, 2026-11-12/13, private d73-H5 diagnostic based on DOOM OS 0.7.3. Rechecked the private log on 2026-11-25: 32-byte header and 3170 records of eight bytes, all 3170 present at both counter samples. The test targeted the first slot's effect type."
     }
    ]
   },
