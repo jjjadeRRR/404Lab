@@ -79,7 +79,7 @@
     "app0.crc"
    ],
    "state": "open",
-   "find_out": "Needs a read of the second processor flash with a programmer; nothing a mod can read."
+   "find_out": "Identify the SP BMC's resident recovery path and verify restoration independently of a working APP0. The NXP UPD1 dump covers the host side."
   },
   {
    "id": "safe.watchdog",
@@ -314,17 +314,19 @@
   {
    "id": "dsp.own",
    "ask": "Can a mod add an effect on the second processor?",
-   "why": "The obvious wish; the honest answer is no for now.",
+   "why": "It would run new sound processing on the second processor.",
    "facts": [
     "app0.own-effects",
     "app0.unknowns",
     "app0.encrypted",
     "app0.pairs",
     "app0.crc",
+    "app0.dsp-sdk-roundtrip",
+    "app0.dsp-sdk-bypass",
     "hw.bmc.no-read"
    ],
    "state": "open",
-   "find_out": "Needs the instruction set of the chip and the key of the closed block; both need hardware access to the second processor."
+   "find_out": "Trace the SP MFX descriptor through the BMC's DSP copy and scheduling paths using the cross-device signatures. Confirm the SP transfer semantics and audio routing, and establish the updater checks and a BMC recovery path before any unit trial."
   },
   {
    "id": "dsp.bus34-list",

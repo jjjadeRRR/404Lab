@@ -61,7 +61,7 @@
   },
   {
    "id": "hw.cpu.part",
-   "claim": "On the unit photographed the main chip is marked MIMXRT1062 DVJ6B. Main board 5100074762, front board 5100074765. A 2021 public teardown video shows main board 5100074760, an earlier revision, so board details may differ between units.",
+   "claim": "On the unit photographed the main chip is marked MIMXRT1062 DVJ6B. Main board 5100074762, front board 5100074765. At 7:02 the public teardown also shows main board 5100074762. An earlier version of this fact recorded 5100074760 for the video.",
    "topic": "hardware",
    "firmware": "any",
    "status": "verified",
@@ -72,7 +72,7 @@
     },
     {
      "label": "DOC",
-     "source": "YouTube, Taking Apart The Roland SP-404 MKII, 2021 teardown (for the earlier board number)"
+     "source": "Taking Apart The Roland SP-404 MKII at 7:02, frame read on 2026-11-25: https://www.youtube.com/watch?v=wTqpxwjcDRg&t=422s"
     }
    ]
   },
@@ -1616,6 +1616,19 @@
     {
      "label": "HYPOTHESIS",
      "source": "public customs listings and teardown photos gathered on 2026-11-12, kept outside the repository; that MB8AL1031 is the chip on this board is an inference from the shared BMC name"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.shared-part",
+   "claim": "One filmed SP-404MKII and one filmed MC-101 both show Roland BMC 5100040716 on the package. A photographed BOSS GT-1000CORE shows the same part number. The filmed SP board is 5100074762, the same board number as the maintainer's SP. Exact silicon stepping and electrical compatibility were outside this comparison.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "Package markings read on 2026-11-25 from SP-404MKII at 7:02 (https://www.youtube.com/watch?v=wTqpxwjcDRg&t=422s), MC-101 at 7:30 (https://www.youtube.com/watch?v=gkUMut_N0N4&t=450s), and GT-1000CORE board close-up (https://kanengomibako.github.io/pages/img/09_346_08_gtsc_pic08.jpg); one board per model"
     }
    ]
   },

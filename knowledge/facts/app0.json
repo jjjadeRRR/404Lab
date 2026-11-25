@@ -73,7 +73,7 @@
   },
   {
    "id": "app0.transfer",
-   "claim": "APP1 sends APP0 to the second processor only during a firmware update. 0x8017D218 opens A:/SP404MKII_APP0.bin (string at 0x8023C375) or a service alternative A:/TD003_ROM.bin (0x8023C3B6). Worker 0x8017D2C0 reads 4096 bytes at a time into the non-cacheable buffer at 0x83FF0000 and passes each block on through a callback that ends at LPUART3. In this path APP1 treats the file as opaque data.",
+   "claim": "APP1 has a service path that forwards APP0 to the second processor. 0x8017D218 opens A:/SP404MKII_APP0.bin (string at 0x8023C375) or a service alternative A:/TD003_ROM.bin (0x8023C3B6). Worker 0x8017D2C0 reads 4096 bytes at a time into the non-cacheable buffer at 0x83FF0000 and passes each block on through a callback that ends at LPUART3. In this path APP1 treats the file as opaque data. The resident updater has its own path, app0.upd1-transfer.",
    "topic": "app0",
    "firmware": [
     "stock-5.52",
@@ -525,14 +525,14 @@
   },
   {
    "id": "app0.unknowns",
-   "claim": "Not known: the instruction set and format of BMC programs, its memory map and command set, its boot and update check, what happens inside on a failed update, and which NOR chip holds it. The second processor cannot be emulated, so effect output stays on the unit-only list.",
+   "claim": "The SP-specific DSP memory and scheduling behavior, APP0 update checks, BMC recovery and the ownership of each NOR chip remain open. Earlier notes treated the instruction format as wholly unknown and said the second processor could not be emulated. The comparisons in app0.dsp-sdk-roundtrip and app0.dsp-sdk-bypass establish shared format features and one local model test. Full SP BMC emulation and native SP effect output remain unverified.",
    "topic": "app0",
    "firmware": "any",
    "status": "unknown",
    "evidence": [
     {
      "label": "HYPOTHESIS",
-     "source": "no public documentation; the readable parts do not explain the receiver"
+     "source": "2026-11-25, knowledge/notes/bmc-cross-device.md records the device sources, byte tests and emulator limits"
     }
    ]
   },
@@ -555,14 +555,14 @@
   },
   {
    "id": "app0.own-effects",
-   "claim": "New effects on the second processor are not possible with what is known. Custom sound work must run on the main processor in APP1, inside the audio block budget, before audio reaches the second processor.",
+   "claim": "404Lab has demonstrated custom sound processing on the main processor in APP1. Custom MFX execution on the SP BMC has yet to be demonstrated. The earlier record described the present APP1 route as the only possible route. Related Roland devices run custom DSP programs and the local SP tests support further investigation of its MFX loader, see app0.dsp-sdk-bypass.",
    "topic": "app0",
    "firmware": "any",
    "status": "verified",
    "evidence": [
     {
-     "label": "BYTES",
-     "source": "see app0.unknowns and st.audio.chain"
+     "label": "DOC",
+     "source": "2026-11-25, knowledge/notes/bmc-cross-device.md records the published hardware and the limits of the SP model"
     },
     {
      "label": "HARDWARE",
@@ -601,6 +601,78 @@
     {
      "label": "BYTES",
      "source": "five APP0 files: the stored word against zlib.crc32, computed twice by two agents independently; in 5.52 the word is at 0x4BBFC and reads 0x1A05DABA"
+    }
+   ]
+  },
+  {
+   "id": "app0.upd1-transfer",
+   "claim": "The resident NXP updater UPD1 reads the APP0 file and forwards it to the BMC in 4096-byte blocks. The host tracks replies during the transfer. Acceptance and recovery on the BMC side, whose updater is named UPD0, remain unknown. See hw.boot.loader-image for the host dump.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "UPD1 version 1.10 from one unit, dump read 2026-11-12, transfer at 0x8003F158 and block send at 0x8003F20A in the unpacked code; see hw.boot.loader-image for the dump SHA-256"
+    }
+   ]
+  },
+  {
+   "id": "app0.shared-container",
+   "claim": "SP APP0 5.52 and the MC-101, MC-707 and MV-1 C0A updates at 1.82 share an App1_Main container layout and an identical 696-byte span in their opaque payloads. The three groovebox C0A files name destination 0x60000000 and the SP container names 0x01000000. The comparison establishes shared stored data and related layouts. SP plaintext and update acceptance remain open.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "Official Roland 5.52 and 1.82 archives, compared on 2026-11-25; 8-byte-aligned windows inside the declared payloads, procedure and archive links in knowledge/notes/bmc-cross-device.md"
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-sdk-roundtrip",
+   "claim": "All 49 main SP MFX catalogue programs in 5.52 share the SYSTEM-1 opening and documented SYSTEM-1/8 closing. Of 5249 instructions, 1781 reassemble to their original words with the published SDK. Another 3247 reassemble to their normalized words when only transfer mode FF is treated as FE, a documented equivalence on the reference hardware. These are offline encoding results. SP execution semantics remain unverified.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "Stock 5.52 APP0 catalogue at 0x15D698, SDK 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2, checked on 2026-11-25; inputs, references and method in knowledge/notes/bmc-cross-device.md"
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-sdk-bypass",
+   "claim": "A local DSP model ran a stock SP 5.52 Bypass program with its FF transfers interpreted as FE. The test used synthetic memory and isolated left and right samples, and a coefficient of 0.5 halved both outputs. The unadapted model did no I/O on this program. The test did not execute on SP hardware.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "2026-11-25, stock 5.52 type 0 program from app0.pairs; SDK dspref at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2, left and right isolation and scale tests with synthetic memory; knowledge/notes/bmc-cross-device.md"
+    }
+   ]
+  },
+  {
+   "id": "app0.djfx-delay-change",
+   "claim": "Between stock SP 3.02 and 4.04, only type 48 of MFX types 0 through 48 changed its APP0 catalogue payloads, from 66 and 8 bytes to 1398 and 48 bytes. The corresponding APP1 label changed from Torcido to DJFX Delay. The update establishes a factory change to the DSP program pair. It leaves the SP acceptance rules for other changes open.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, official SP-404MKII 3.02 and 4.04 APP0 catalogue pair hashes compared and both APP1 name tables read"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland System Program update history, Ver.4.04, April 2024, DJFX Delay addition"
     }
    ]
   },

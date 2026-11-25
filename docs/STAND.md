@@ -21,7 +21,7 @@ A pass means the code did this on the emulator. It never means it works on a uni
 | Timing, cycles, caches, SDRAM | Instruction counts are not cycles. Arm publishes no cycle tables [DOC] | Unit only |
 | Peripherals | Reads of unknown registers stop the run | Later stages, unit |
 | Interrupts and the RTOS | Unicorn has no interrupt controller. Task switching and preemption do not happen | Whole firmware level below |
-| Second processor (BMC/DSP) | Its code is encrypted, so effects cannot run | Unit only |
+| Second processor (BMC/DSP) | The stand does not run the BMC firmware or its MFX programs | Unit for complete SP behavior. See [separate DSP model experiments](../knowledge/notes/bmc-cross-device.md#sp-mfx-with-the-dsp-sdk). |
 | FAT and SD | Not modelled yet | Later stages, unit |
 
 ## Whole firmware: `lab404/emulator.py`

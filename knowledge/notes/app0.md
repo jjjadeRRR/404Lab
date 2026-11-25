@@ -1,6 +1,6 @@
 # APP0
 
-Facts: `knowledge/facts/app0.json`. Read-only investigation and documentation are in scope. Hardware writes and recovery are separate questions; see [hardware hazards](../../docs/SAFETY.md).
+Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. Recovery is tracked in [hardware hazards](../../docs/SAFETY.md).
 
 ## What it is
 
@@ -20,8 +20,10 @@ Sent alone, without its own parameters, it changed nothing.
 
 ## How it reaches the chip
 
-Only during a firmware update, from the SD root, in 4096 byte blocks over LPUART3, with APP1 passing the file through unchanged
-(`app0.transfer`).
+During a firmware update, the resident NXP updater UPD1 reads APP0 from the SD
+root and forwards it over LPUART3. The host transfer is present in the UPD1
+dump (`app0.upd1-transfer`) and in a service path in APP1 (`app0.transfer`).
+The receiver and persistent write are on the BMC side.
 
 ## What is in the file
 
@@ -43,5 +45,4 @@ The header block carries a CRC-32 anyone can recompute (`app0.crc`). The catalog
 ## For a mod author
 
 - Read-only research can extend these findings. The current builder does not modify APP0; a recovery procedure after damaged APP0 is not established (`app0.recovery`). Keep APP0 writes out of ordinary mod experiments.
-- Own effects on this chip are not possible today. Do sound work on the main processor (`app0.own-effects`).
-- It cannot run on the stand, so what effects do to sound is unit-only (`app0.unknowns`).
+- Published tools for related Roland devices can decode much of the SP MFX catalogue. A local Bypass experiment ran in an adapted DSP model. Custom MFX on the SP itself remains unverified (`app0.dsp-sdk-roundtrip`, `app0.dsp-sdk-bypass`, `app0.own-effects`).
