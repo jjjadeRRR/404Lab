@@ -73,7 +73,7 @@
   },
   {
    "id": "app0.transfer",
-   "claim": "APP1 sends APP0 to the second processor only during a firmware update. 0x8017D218 opens A:/SP404MKII_APP0.bin (string at 0x8023C375) or a service alternative A:/TD003_ROM.bin (0x8023C3B6). Worker 0x8017D2C0 reads 4096 bytes at a time into the non-cacheable buffer at 0x83FF0000 and passes each block on through a callback that ends at LPUART3. In this path APP1 treats the file as opaque data.",
+   "claim": "APP1 has a service path that forwards APP0 to the BMC. 0x8017D218 opens A:/SP404MKII_APP0.bin (string at 0x8023C375) or a service alternative A:/TD003_ROM.bin (0x8023C3B6). Worker 0x8017D2C0 reads 4096 bytes at a time into the non-cacheable buffer at 0x83FF0000 and passes each block on through a callback that ends at LPUART3. The resident updater has a separate path (app0.upd1-transfer).",
    "topic": "app0",
    "firmware": [
     "stock-5.52",
@@ -230,7 +230,7 @@
   },
   {
    "id": "app0.encrypted",
-   "claim": "Part of APP0 is encrypted. The first block of about 310 KB after the header cannot be read as code or data, third-party analysis calls it encrypted, and no public document describes it. Bytes alone cannot separate encrypted from compressed. The rest of the file is not encrypted.",
+   "claim": "SP APP0 5.52 has an opaque 310160-byte block at file offsets 0x60 through 0x4BBEF. The App1_Main header names destination 0x01000000 and entry word 0x01000001, consistent with ARM Thumb code. The control word 0xB6020001 matches the verified 3DES mode and slot 0xB6 on MC-101 and SYSTEM-8. Both published parsers locate the block on SP, but the local decrypt runs ended for lack of compatible key material. ARM control code is the leading interpretation. The exact contents and SP cipher compatibility remain unverified. The open DSP catalogue is outside this block.",
    "topic": "app0",
    "firmware": "any",
    "status": "hypothesis",
@@ -241,11 +241,15 @@
     },
     {
      "label": "DOC",
-     "source": "dm-404 project notes, third party"
+     "source": "MC-101 boot ROM study at 6b62129b7a2fcb74f73e690e357c2f3cde255ef6 and Roland Plug-Out SDK container formats at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2. See knowledge/notes/APP0_DECRYPTION_REPORT.md."
+    },
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, shared ciphertext counts and known zero positions in knowledge/notes/APP0_DECRYPTION_REPORT.md. A common key is strongly supported by shifted-control and multi-block comparisons. No keyed decryption on SP has been verified."
     },
     {
      "label": "HYPOTHESIS",
-     "source": "the word encrypted is not confirmed by Roland"
+     "source": "SP block contents inferred from the header fields and decrypted payloads described for related devices"
     }
    ]
   },
@@ -525,14 +529,14 @@
   },
   {
    "id": "app0.unknowns",
-   "claim": "Not known: the instruction set and format of BMC programs, its memory map and command set, its boot and update check, what happens inside on a failed update, and which NOR chip holds it. The second processor cannot be emulated, so effect output stays on the unit-only list.",
+   "claim": "The SP BMC runtime, DSP scheduling and signal routing, update validation, flash ownership and recovery remain open. The Roland DSP reference model reproduces observed Bypass behavior for synthetic inputs. It leaves the SP-specific control code and hardware behavior unverified (app0.dsp-sdk-bypass).",
    "topic": "app0",
    "firmware": "any",
    "status": "unknown",
    "evidence": [
     {
      "label": "HYPOTHESIS",
-     "source": "no public documentation; the readable parts do not explain the receiver"
+     "source": "The DSP and APP0 studies in knowledge/notes/app0.md do not establish SP runtime behavior, update validation or recovery."
     }
    ]
   },
@@ -555,14 +559,14 @@
   },
   {
    "id": "app0.own-effects",
-   "claim": "New effects on the second processor are not possible with what is known. Custom sound work must run on the main processor in APP1, inside the audio block budget, before audio reaches the second processor.",
+   "claim": "Custom MFX execution on the SP BMC remains unverified. An original stereo saturation program ran in the DSP reference model (app0.dsp-model-update). The SP loader and update acceptance remain open. Custom processing in APP1 has run on a physical unit.",
    "topic": "app0",
    "firmware": "any",
-   "status": "verified",
+   "status": "unknown",
    "evidence": [
     {
-     "label": "BYTES",
-     "source": "see app0.unknowns and st.audio.chain"
+     "label": "EMULATOR",
+     "source": "knowledge/notes/app0-factory-mfx-update.md, original program tested in the Roland Plug-Out SDK model"
     },
     {
      "label": "HARDWARE",
@@ -869,6 +873,222 @@
      "address": "0x801AD820",
      "size": 4,
      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    }
+   ]
+  },
+  {
+   "id": "app0.cross-device-cipher-blocks",
+   "claim": "SP 5.52 APP0 shares 2839, 1708, 2995 and 3030 distinct aligned ciphertext words with the 1.82 MC-101, MC-707 and MV-1 C0A and SYSTEM-8 1.32 C0A respectively. Shifting the reference grid one byte yields zero matches for every device. All five contain a common 696-byte sequence with 86 distinct eight-byte words. Using known plaintext from the MC-101 1.82 patch manifest identifies 370 zero words in SP, or 2960 bytes. None of the nonzero manifest words mapped into SP. Actual SP plaintext code remains unavailable.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, stock SP 5.52, MC-101, MC-707 and VERSELAB MV-1 1.82 and SYSTEM-8 1.32. Input hashes, cross-model offsets and exact method in knowledge/notes/APP0_DECRYPTION_REPORT.md."
+    }
+   ]
+  },
+  {
+   "id": "app0.mfx-parameter-map",
+   "claim": "In the five examined stock SP versions, the APP1 encoder's 12-byte parameter map has five records per non-Bypass MFX type. Its APP0 copy matches APP1 in 4.04 through 5.52. In 3.02 only the five type-16 rows differ, with range sizes 16 in APP1 and 18 in APP0. Type 48 changes from size 2 to 22 in both maps in 4.04, matching one to eleven APP1 parameters. Type 49's five records disappear. Type 45 has size 2 in all five versions. The BMC's use of the map and the meaning of the 3.02 runtime discrepancy have not been observed.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, 5.52 encoder disassembly and row-by-row comparison of stock APP0 and APP1 maps and APP1 parameter intervals. Offsets and method in knowledge/notes/app0-mfx-selection-trace.md."
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80231408",
+     "size": 2940,
+     "sha256": "14fff7e411feeda28b9518330db61e8ce5cde757e931e1a47e907997d6f81fa6"
+    }
+   ]
+  },
+  {
+   "id": "app0.mfx-thumb-groups",
+   "claim": "Immediately after the open APP0 parameter map and 20 zero bytes are groups of 38 to 40 odd values in the declared load interval of the closed block. Two zero words separate consecutive groups. There are 49 groups in stock 3.02 and 48 in 4.04 through 5.52, matching the counts of non-Bypass MFX types. The values are consistent with Thumb function pointers. The dispatch order and the handler implementing MFX selection remain unverified.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, checked each group against the APP0 header's length and load address in five stock files. Offsets and method in knowledge/notes/app0-mfx-selection-trace.md."
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "Pointer and function-table interpretation inferred from odd addresses in the load interval and the table structure."
+    }
+   ]
+  },
+  {
+   "id": "app0.upd1-transfer",
+   "claim": "In the SP UPD1 1.10 dump, the standard APP0 path marks a file FOUND when it opens, uses its length for the progress count, and sends the file in 4096-byte blocks on BMC requests. The traced host path performs no APP0 content or fixed-length check. It displays APP0 UPDATER OK on the BMC completion reply, without an independent host readback or reboot. UPD0 validation, flash write order and recovery remain unknown. See hw.boot.loader-image for the dump identifier and docs/SAFETY.md for recovery limits.",
+   "topic": "app0",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25 inspection of the UPD1 1.10 dump read from one unit on 2026-11-12. Unpacked code: file discovery 0x8003D9EC, open and size 0x8003F0B0, worker 0x8003F158, block send 0x8003F20A, receive handler 0x8003F048, completion callback 0x8003DF90 and OK display 0x8003DCEC. See hw.boot.loader-image for the dump SHA-256."
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-loader-trace",
+   "claim": "In stock 5.52 APP0 the words at file offsets 0x15D62C and 0x15D680 reference the two DSP4 lists at 0x146010 and 0x1460C8 using the file-to-pointer bias. In SP 4.04, 5.01, 5.50 and 5.52, the 39 words before the shared DSP register table at 0x206014 are distinct odd addresses in the closed payload's declared load interval. These are consistent with Thumb pointers. Their assignments and the routine selecting the DSP program for a type remain unverified.",
+   "topic": "app0",
+   "firmware": [
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, compared four stock SP APP0 images against their load address and length fields. Checked the two 5.52 list pointers and the 1.82 MC-101 loader's table reference. See knowledge/notes/app0-dsp-prototype.md."
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "Pointer type inferred from alignment, range and systematic address changes across revisions."
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-sdk-roundtrip",
+   "claim": "All 49 main SP MFX catalogue programs in 5.52 share the SYSTEM-1 opening and documented SYSTEM-1/8 closing. Of 5249 instructions, 1781 reassemble to their original words with the published SDK. Another 3247 reassemble to their normalized words when only transfer mode FF is treated as FE, a documented equivalence on the reference hardware. These are offline encoding results. SP execution semantics remain unverified.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "Stock 5.52 APP0 catalogue at 0x15D698, SDK 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2, checked on 2026-11-25. See knowledge/notes/app0-dsp-prototype.md."
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-sdk-bypass",
+   "claim": "A local DSP model ran a stock SP 5.52 Bypass program with its FF transfers interpreted as FE. The test used synthetic memory and isolated left and right samples, and a coefficient of 0.5 halved both outputs. The unadapted model did no I/O on this program. The test did not execute on SP hardware.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "2026-11-25, stock 5.52 type 0 program from app0.pairs. SDK dspref at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2 with left and right isolation and scale tests in synthetic memory. See knowledge/notes/app0-dsp-prototype.md."
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-stereo-addresses",
+   "claim": "Every catalogue program in SP APP0 3.02, 4.04, 5.01, 5.50 and 5.52 contains direct FE or FF reads of DSP words 0x2C00 and 0x2C01 and direct writes to 0x0C00/0x0C01 and 0x2C02/0x2C03. A direct read of 0xC800 was decoded in all except types 2, 18, 29 and 36. The stock type 45 duplicate of Bypass uses that word as a gain in the reference model. The SP hardware routing and how it sets that word remain open.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, all five factory catalogues with Roland Plug-Out SDK layout decoder at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2. Method and scope in knowledge/notes/app0-dsp-interface-trace.md."
+    },
+    {
+     "label": "EMULATOR",
+     "source": "2026-11-25, stock 5.52 type 45 and the gain-adjusted framed saturation prototype tested at gains 0, 0.5 and 1. 147 stereo cases per program, both output pairs, SDK reference C interpreter."
+    }
+   ]
+  },
+  {
+   "id": "app0.open-data-address-bias",
+   "claim": "With a bias of 0x00F10000, 511 words in the open APP0 3.02 data and 512 in each later checked release point to file positions exactly 20, 32 or 36 bytes earlier. The pattern supports mapping the start of the tested region from file 0x1F0000 to address 0x01100000. A scan for aligned literal references to the candidate Thumb group starts or their preceding two words found no hits with this bias or the DSP file bias. The full runtime mapping and the actual selector remain unknown.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, counts over aligned words from the start of the readable APP0 data to the candidate function groups. Positive example at file 0x1F0120. Scan bounds and method in knowledge/notes/app0-dsp-interface-trace.md."
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "The repeated backward references support the data base. The actual runtime mapping was not observed on SP."
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-sdk-saturation",
+   "claim": "A 12-instruction stereo program for y = x - x^3/3 ran in the Roland DSP SDK reference model. In a 2049-point sweep with separate and opposed channels it stayed within 4.66e-9 of the formula. The stock SP Bypass tested under the FF/FE transfer alias matched 72 stereo reference cases. The tests used synthetic memory and audio sources. Execution on SP hardware is unverified.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "2026-11-25, C reference interpreter from Roland Plug-Out SDK 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2. Method, tone measurements and model limits in knowledge/notes/app0-dsp-prototype.md."
+    }
+   ]
+  },
+  {
+   "id": "app0.djfx-delay-change",
+   "claim": "Between stock SP 3.02 and 4.04, type 48 changed from the Bypass duplicate Torcido (66-byte program, 8-byte companion and one APP1 parameter) to DJFX Delay (1398-byte program, 48-byte companion and 11 APP1 parameters). Types 0 through 47 kept the same payloads, and the trailing Bypass duplicate type 49 disappeared. The first shared DSP4 program grew from 1122 to 1140 bytes and the closed payload changed. The comparison establishes the paired APP1 and APP0 changes and leaves the dependencies of the new MFX and the BMC acceptance rules open.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, official SP-404MKII 3.02 and 4.04 APP0 catalogues and APP1 name and parameter tables. Offsets and method in knowledge/notes/app0-factory-mfx-update.md."
+    },
+    {
+     "label": "DOC",
+     "source": "Roland System Program update history, Ver.4.04, April 2024, DJFX Delay addition"
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp-model-update",
+   "claim": "A read-only 5.52 experiment replaced catalogue type 45 in the reference model with an original 72-byte framed saturation program, leaving its eight-byte companion and the other 48 entries unchanged. The test selected the entry by index and verified both output pairs for 49 stereo inputs before and after the replacement. DSP loading and update acceptance on SP remain unverified.",
+   "topic": "app0",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "EMULATOR",
+     "source": "2026-11-25, Roland Plug-Out SDK reference model at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2. See knowledge/notes/app0-factory-mfx-update.md."
     }
    ]
   }

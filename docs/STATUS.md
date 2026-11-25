@@ -9,7 +9,7 @@
 | Capability | Coverage | Notes |
 |---|---|---|
 | `identify` | Stock 3.02–5.52, DOOM OS 0.6–0.7.4, Tampal | Hash-based identification; Side-Piece hash not yet recorded |
-| `verify-knowledge` | Stock 5.52, DOOM OS 0.7.2, 0.7.3, 0.7.4 | 851 byte checks across stock/DOOM facts (204 checks on 0.7.4) |
+| `verify-knowledge` | Stock 5.52, DOOM OS 0.7.2, 0.7.3, 0.7.4 | 868 byte checks across stock and DOOM OS facts (208 checks on 0.7.4) |
 | `mods/` examples | Stock 5.52, DOOM OS 0.7.3, DOOM OS 0.7.4 | `demo_counter`, `quick_system`, `fault_screen` verified on DM-404 |
 | `package` route | Stock 5.52, DOOM OS 0.7.3, DOOM OS 0.7.4 | Verified on DM-404 for additive mods (`quick_system`) |
 
@@ -31,6 +31,7 @@ Supported `mod.json` patch mechanisms:
 - **Project drive fingerprinting:** `inputs/project-drive.img` is fingerprinted by size, mtime, and the first 16 MB.
 - **Platforms:** Full test suite (including DM-404) runs on Linux. CI runs `--quick` on Linux, macOS, and Windows. DM-404 (`tools/setup_dm404.sh`) requires Linux (WSL on Windows) and is untested on macOS.
 - **Orphaned QEMU processes:** Interrupted emulator runs may leave `qemu-system-arm` processes running (identifiable by `lab404-unit-` in the command line).
+- **APP0 / BMC:** The DSP reference model runs a factory Bypass program and an original saturation program. Custom DSP execution on the SP and recovery from damaged APP0 remain unverified. [APP0 research](../knowledge/notes/app0.md).
 
 ## Directory Map
 

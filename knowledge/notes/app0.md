@@ -13,15 +13,19 @@ Runs the built-in MFX effects: type numbers 0-48 in 5 slots, Input FX and BUS 1-
 parameters (`hw.bmc.sysex`). Parameter tables in APP1: `app0.params`. No program load was seen on an effect change
 (`app0.no-runtime-load`).
 
-Types 29 and 45 exist only in tables and in no selection list (`app0.hidden-types`). 45 shares its program with Bypass, and three
-more pairs share one program (`app0.pairs`). 29, COMPRESSOR 2, has its own program and works on a unit once the MFX grid offers it
-(`app0.type29-on-unit`); how the grid works and how an entry was added: `st.mfx.grid`, `st.mfx.grid-readers`, `hk.recipe.mfx-grid-entry`.
-Sent alone, without its own parameters, it changed nothing.
+Stock selection lists omit types 29 (Compressor 2) and 45 (Sub Sonic).
+Compressor 2 has its own program and worked on one unit once an experimental
+APP1 offered it with its own parameters (`app0.type29-on-unit`).
+Sub Sonic stores a separate copy of the Bypass program and companion data.
+An [APP1 test](app1-sub-sonic-grid.md) exposed it in the grid and verified
+selection on an emulator. Its sound on hardware remains untested.
 
 ## How it reaches the chip
 
-Only during a firmware update, from the SD root, in 4096 byte blocks over LPUART3, with APP1 passing the file through unchanged
-(`app0.transfer`).
+The resident UPD1 updater forwards APP0 from the SD root in 4,096-byte
+blocks (`app0.upd1-transfer`). APP1 has a separate service path that
+also forwards the file over LPUART3 (`app0.transfer`). BMC-side
+validation and recovery remain open. See [hardware hazards](../../docs/SAFETY.md).
 
 ## What is in the file
 
@@ -30,7 +34,7 @@ Map in `app0.layout`:
 | Offset | Content |
 |---|---|
 | `0x000000` | readable header and descriptor |
-| `0x000060` | opaque block, 310,160 bytes in 5.52; suspected encryption |
+| `0x000060` | opaque block, 310,160 bytes in 5.52, with 3DES metadata shared by related devices |
 | `0x04BBF0` | tail with a version string |
 | `0x140000` | readable program data and catalogue |
 | `0x1F0000` | readable tables |
@@ -38,10 +42,12 @@ Map in `app0.layout`:
 
 Evidence and uncertainty about encryption: `app0.encrypted`. Readable parts: `app0.readable`.
 
-The header block carries a CRC-32 anyone can recompute (`app0.crc`). The catalogue and its descriptors: `app0.pairs`.
+The known outer CRC-32 ends before the MFX catalogue (`app0.crc`).
+See `app0.pairs` for catalogue descriptors.
 
-## For a mod author
+## Research notes
 
-- Read-only research can extend these findings. The current builder does not modify APP0; a recovery procedure after damaged APP0 is not established (`app0.recovery`). Keep APP0 writes out of ordinary mod experiments.
-- Own effects on this chip are not possible today. Do sound work on the main processor (`app0.own-effects`).
-- It cannot run on the stand, so what effects do to sound is unit-only (`app0.unknowns`).
+- [Decryption report](APP0_DECRYPTION_REPORT.md) compares aligned ciphertext with four related Roland devices. Published MC-101 plaintext identifies 2,960 bytes of zeros. The SP ARM code remains unread.
+- [Factory MFX updates](app0-factory-mfx-update.md) compares changes to APP0 and APP1 when Roland added DJFX Delay. An original replacement for the type 45 DSP program ran in the SDK reference model.
+- [MFX selection trace](app0-mfx-selection-trace.md) compares the parameter map across both processors and identifies candidate Thumb function tables.
+- [DSP prototype](app0-dsp-prototype.md) and [DSP audio addresses](app0-dsp-interface-trace.md) describe the Bypass control, the stereo saturation program and its gain behavior. The SP selector, signal routing and execution of custom DSP code remain unverified.

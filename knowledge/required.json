@@ -314,17 +314,19 @@
   {
    "id": "dsp.own",
    "ask": "Can a mod add an effect on the second processor?",
-   "why": "The obvious wish; the honest answer is no for now.",
+   "why": "An original DSP program ran in the reference model. Its selection and execution on the SP remain open.",
    "facts": [
     "app0.own-effects",
     "app0.unknowns",
+    "app0.dsp-model-update",
+    "app0.mfx-thumb-groups",
     "app0.encrypted",
     "app0.pairs",
     "app0.crc",
     "hw.bmc.no-read"
    ],
    "state": "open",
-   "find_out": "Needs the instruction set of the chip and the key of the closed block; both need hardware access to the second processor."
+   "find_out": "Validate SP ARM plaintext with a compatible key or reference data, then trace the effect selector and DSP loader. Verify BMC update acceptance and recovery before any persistent write."
   },
   {
    "id": "dsp.bus34-list",
