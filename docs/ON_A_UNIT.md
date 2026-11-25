@@ -17,7 +17,7 @@ The owner's own words, dates and build names are in each fact's evidence.
 | An effect on each pad: low/high pass filter with resonance, sample-rate reducer, mono | "Everything is great"; settings kept across LOAD and power-off, also without an SD card | 2026-11-13 d73-H8c, kept to d74-H27 | `hk.recipe.pad-effects`, `hk.site.audio-voice`, `hk.storage.sidecar` | |
 | Output meter: peaks, CLIP, loudness M, S and I | Integrated loudness matched a DAW loudness meter within rounding | 2026-11-14 d73-H16b | `hk.recipe.output-meter`, `hw.bmc.rx-slots` | |
 | Mute groups of up to 32 pads, in two pages | "Works wonderfully" | 2026-11-13 d73-H6 | `hk.recipe.mute-32`, `st.mute.groups`, `st.mute.screen` | |
-| A hidden MFX type, COMPRESSOR 2, in the MFX grid | Its knobs act; TONE barely does; MODE = LIMIT mutes the bus | 2026-11-13 d73-H9 | `hk.recipe.mfx-grid-entry`, `app0.type29-on-unit` | |
+| COMPRESSOR 2 (stock MFX type 29) exposed by the DEEPCUT APP1 mod | On BUS 1, the BMC runs the factory DSP effect. SUSTAIN, ATTACK and RATIO audibly change the sound. In this build TONE had little effect and LIMIT muted the bus. | 2026-11-13 d73-H9 | `hk.recipe.mfx-grid-entry`, `app0.type29-on-unit` | |
 | A monitor screen: audio load, peak, overruns, panel gap, CPU clock, malloc pool | Photos: audio 10 % average and 18 % peak, 599-600 MHz, 2.2 MB of the pool free | 2026-11-12 d73-H2b, 2026-11-19 d74-H23 | `hw.cycles.measured`, `st.mem.heap-measured`, `st.mem.heap-walk` | the pool walk is `Emulator.malloc_pool` |
 | Reading the loader into a file on the SD card | The dump was read on a computer, the same bytes twice | 2026-11-12 d73-H3, d73-H4b | `hk.lesson.read-what-you-can`, `hw.boot.loader-image` | |
 | A key chord that opens a stock screen | HOLD + ROLL opened SYSTEM and EXIT came back | 2026-11-23, built by 404Lab | `hk.lab404-build-on-unit`, `hk.open-screen` | [`mods/quick_system`](../mods/quick_system/mod.json) |
@@ -27,6 +27,11 @@ The owner's own words, dates and build names are in each fact's evidence.
 
 The latest build, d74-H27 on DOOM OS 0.7.4, runs on the owner's unit (2026-11-23). It also carries a fix for the stock screensaver
 leak (`st.ui.saver-leak`); nobody has measured that fix on the unit yet.
+
+On 2026-11-25, the maintainer confirmed that COMPRESSOR 2 functions in their
+current DEEPCUT build on the same unit. The build identifier and current
+LIMIT behavior were unspecified. See [the APP0 notes](../knowledge/notes/app0.md#hidden-effects-in-stock-552)
+for the other hidden entry, Sub Sonic, and the file evidence for both.
 
 ## Did not work, or cost a lot
 

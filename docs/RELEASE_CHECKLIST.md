@@ -74,8 +74,8 @@ tests; a real package requires the user's actual decision.
   use of names and logos, and the statement that the project is unofficial and not
   affiliated with Roland. The tests check documentation consistency, not legal
   permission.
-- [ ] Resolve withheld findings with the maintainer before including them. In particular,
-  the proposed APP0 block-pattern finding remains outside the committed facts
-  pending the maintainer's decision; the existing encryption hypothesis is unchanged.
+- [ ] Resolve withheld findings with the maintainer before including them.
+  Use the dated [APP0 research](../knowledge/notes/app0.md) for the current
+  stock-file comparisons and their limits.
 - [ ] Record the exact commit, checks, skips, known limitations and the maintainer's
   publication decision. Do not infer permission to push from a local commit.

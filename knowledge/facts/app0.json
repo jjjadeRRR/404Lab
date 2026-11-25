@@ -572,18 +572,22 @@
   },
   {
    "id": "app0.type29-on-unit",
-   "claim": "Type 29, COMPRESSOR 2 (app0.hidden-types), works on a unit. Chosen in the grid on BUS 1 (hk.recipe.mfx-grid-entry), the screen shows BUS 1 COMPRESSOR 2 with the knobs SUSTAIN, ATTACK and RATIO, and the knobs change the sound clearly. TONE across its whole range, -100 to 100, changes it very little. MODE = LIMIT silences everything on the bus. By ear it is harsher than the ordinary Compressor (28), and its settings act more strongly. It is not offered for BUS 3 or 4 in FX SETTING, which uses another list (st.mfx.other-lists). An earlier try, 2026-11-13, set only the type by a DT1 (hw.bmc.sysex) while the knobs went on sending the parameters of the effect chosen before: there a bass note through type 29 was identical, sample for sample, to the dry note. So with the parameters of another effect it changed nothing; with its own, sent by the stock grid, it works. Why LIMIT mutes the bus and why TONE does so little is not known: a property of this program, or of the parameter values the stock sends for it. Its parameter records and the DT1 a MODE turn sends: app0.comp2-params.",
+   "claim": "DEEPCUT d73-H9 exposes the hidden COMPRESSOR 2 (type 29) in APP1's MFX grid (hk.recipe.mfx-grid-entry). On the maintainer's SP-404MKII, selecting it on BUS 1 ran the existing factory program in APP0, with audible changes from SUSTAIN, ATTACK and RATIO. In that build TONE had little audible effect across its full range and LIMIT muted the bus. The owner described the compression as harsher and stronger than type 28. That build omitted type 29 from the separate BUS 3/4 FX SETTING lists. An earlier test set the type alone and left the previous effect's parameters in use. In that session one bass note recorded through type 29 matched the dry note sample for sample. The DEEPCUT grid uses the stock parameter path for type 29. The maintainer confirmed on 2026-11-25 that COMPRESSOR 2 works in the current DEEPCUT build on the unit. The current build identifier and behavior in LIMIT were unspecified. See app0.comp2-params.",
    "topic": "app0",
    "firmware": "doom-os-0.7.3",
    "status": "verified",
    "evidence": [
     {
      "label": "HARDWARE",
-     "source": "one unit, 2026-11-13: the owner flashed a private build on DOOM OS 0.7.3 that adds type 29 to the MFX grid as described in hk.recipe.mfx-grid-entry, chose it on BUS 1 and played through it; reported in words, no recording yet; one session"
+     "source": "One unit, 2026-11-13: the owner selected type 29 from the MFX grid on BUS 1 in private DEEPCUT d73-H9 based on DOOM OS 0.7.3. The owner reported the effects of the knobs and LIMIT in that session. No audio recording of that grid test was supplied."
     },
     {
      "label": "HARDWARE",
      "source": "one unit, 2026-11-13, earlier try: three recordings of one bass-generator note made by the owner in a DAW, aligned and subtracted; the residual of dry against type 29 was exactly zero over 2.5 s, while Compressor (28) at full settings dropped the level by about 6 dB after 80 ms"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "Same unit, 2026-11-25: the maintainer reported that COMPRESSOR 2 functions in their current DEEPCUT APP1 mod. The exact current build and its parameter coverage were not specified."
     },
     {
      "label": "HYPOTHESIS",

@@ -13,10 +13,21 @@ Runs the built-in MFX effects: type numbers 0-48 in 5 slots, Input FX and BUS 1-
 parameters (`hw.bmc.sysex`). Parameter tables in APP1: `app0.params`. No program load was seen on an effect change
 (`app0.no-runtime-load`).
 
-Types 29 and 45 exist only in tables and in no selection list (`app0.hidden-types`). Type 45 has the same program bytes as Bypass in a
-separate file range. Three other pairs also have identical bytes stored separately (`app0.pairs`). Type 29, COMPRESSOR 2, has its own program and works on a unit once the MFX grid offers it
-(`app0.type29-on-unit`); how the grid works and how an entry was added: `st.mfx.grid`, `st.mfx.grid-readers`, `hk.recipe.mfx-grid-entry`.
-Sent alone, without its own parameters, it changed nothing.
+## Hidden effects in stock 5.52
+
+The stock APP1 has names and parameter records for both effects, and omits
+both from its selection lists (`app0.hidden-types`).
+
+| Effect | What the research established |
+|---|---|
+| COMPRESSOR 2 (type 29) | The private DEEPCUT mod exposes type 29 in the APP1 MFX grid. On one SP-404MKII, the maintainer selected it on BUS 1 and heard the sound change with SUSTAIN, ATTACK and RATIO. APP1 selects the effect and supplies its parameters. The BMC runs the distinct factory DSP program already in APP0. See [the hardware record](../../docs/ON_A_UNIT.md) and `app0.type29-on-unit`. |
+| Sub Sonic (type 45) | Stock APP0 5.52 stores its program and companion block at their own offsets. Both are byte-identical to Bypass (type 0). A separate sub-bass algorithm has not been identified for this slot. The file comparison leaves runtime parameter handling open. See `app0.pairs`. |
+
+The first test of type 29 sent a type change alone and left the previous
+effect's parameters active. The test recording matched the dry input.
+The later DEEPCUT grid test let the stock selection path send type 29's own
+parameters. The grid and parameter paths are documented in `st.mfx.grid`,
+`hk.recipe.mfx-grid-entry` and `app0.comp2-params`.
 
 ## How it reaches the chip
 
@@ -44,6 +55,18 @@ Map in `app0.layout`:
 Evidence and uncertainty about encryption: `app0.encrypted`. Readable parts: `app0.readable`.
 
 The header block carries a CRC-32 anyone can recompute (`app0.crc`). The catalogue and its descriptors: `app0.pairs`.
+
+### Decryption attempt
+
+Both published parsers located the same 310,160-byte block in SP 5.52.
+Its header matches the documented 3DES mode and key slot `0xB6` in
+MC-101 and SYSTEM-8. Both tools stopped for lack of compatible key
+material and produced no validated SP plaintext. The published 238-byte
+SYSTEM-8 startup excerpt provided no matching ciphertext blocks on the
+SP's eight-byte grid. The APP0 header points to Thumb code as the likely
+contents. The readable MFX programs lie beyond the closed block.
+[MC-101 parser](https://github.com/edco/mc-101-re/blob/6b62129b7a2fcb74f73e690e357c2f3cde255ef6/tools/decrypt_c0a.py),
+[SYSTEM-8 container reference](https://github.com/enorrmann/roland-plugout-reveng/blob/83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2/docs/vol4_firmware_container_protocol/container_formats.md).
 
 ## For a mod author
 

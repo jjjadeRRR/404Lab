@@ -2,7 +2,7 @@
 
 Current capabilities and known limits. The project purpose is in `docs/REQUIREMENTS.md`; research directions are in `docs/PLAN.md`. Examples and hardware hazards have separate guides.
 
-Last update: 2026-11-23. **Early work. One APP1 built by these tools has run on a unit: `quick_system` on DOOM OS 0.7.4, one unit, once (`hk.lab404-build-on-unit`). Nothing made through `package` has.**
+Last update: 2026-11-25. **Early work. One APP1 built by these tools has run on a unit: `quick_system` on DOOM OS 0.7.4, one unit, once (`hk.lab404-build-on-unit`). Nothing made through `package` has.**
 
 The original development milestones below describe existing work, not a mandatory sequence for new tasks.
 
@@ -17,6 +17,24 @@ The original development milestones below describe existing work, not a mandator
 | 6 Pipeline | Optional `preview`, `approve`, `package` route for conservative additions, with refusal regressions. `mods/quick_system` runs from APP1 to package on stock and DOOM OS 0.7.3 and 0.7.4 on the emulator. Its `build` output on 0.7.4 passed its unit checks on one unit (2026-11-23); the `package` route itself was not tried on a unit. Hold-repeat analysis and three contract lines stay `unknown`. A new input is also pressed on four other screens (`contained`); other screens are not tried. Intentional replacements are not supported by this packaging route |
 | 7 Exam | Historical run passed 9 of 9 and found 4 holes, closed. Its original workflow criteria are preserved in `exam/` and do not describe the current research approach. Independent-user validation of the new documentation remains open |
 | 8 Publication | Repository prepared for a public release: provenance checks, CI for the quick tests, issue templates. The release itself is the maintainer's decision |
+
+## Sound-chip research (2026-11-25)
+
+- DEEPCUT exposes factory COMPRESSOR 2 in APP1, and the maintainer confirmed
+  it works on their SP. Sub Sonic also has a hidden entry. Its stock 5.52
+  program and companion block match Bypass in separate file ranges.
+  [Hidden MFX and hardware evidence](../knowledge/notes/app0.md#hidden-effects-in-stock-552).
+- Hardware photos show the same BMC part marking on SP-404MKII and MC-101.
+  The factory files share DSP register tables and container features with
+  related Roland devices. A stock SP Bypass program ran in a DSP model on
+  synthetic inputs. The SP control block remains undecoded.
+  [Cross-device comparisons and DSP model](../knowledge/notes/bmc-cross-device.md).
+- UPD1 passes APP0 to the BMC and takes its success indication from the
+  BMC's reply. BMC validation and recovery after damage remain open.
+  The USB editor protocol provides file and parameter access on APP1.
+  No live read of SP BMC firmware has been shown.
+  [Update trace](../knowledge/notes/app0-update-safety.md),
+  [USB and live readback](../knowledge/notes/app0-live-observation.md).
 
 ## What is new (2026-11-23, night): the builder can make a mod like the maintainer's own
 
@@ -158,8 +176,8 @@ The original development milestones below describe existing work, not a mandator
   read from separate max/min tables (`app0.knob-ranges`).
 - The SAI1/eDMA setup includes a receive path from the second processor
   (`hw.periph.sai-dma`); what it carries is open.
-- The proposed APP0 block-pattern finding is still withheld pending the maintainer's
-  decision. Other open questions remain visible through `gaps`.
+- An APP0 block-pattern observation was withheld at this stage. See the
+  2026-11-25 research above for reproducible stock-file comparisons.
 - [Publication checks](RELEASE_CHECKLIST.md) cover local-data exclusions and running
   the README CLI examples. They do not grant permission to publish.
 
