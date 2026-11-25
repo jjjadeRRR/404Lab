@@ -1,0 +1,232 @@
+{
+ "firmware": "irakliymod",
+ "inherits": "stock-5.52",
+ "coverage": {
+  "any": "partial",
+  "sample": "partial",
+  "sample-edit": "partial",
+  "sound-gen": "partial"
+ },
+ "bindings": [
+  {
+   "id": "kb-ik-0001",
+   "screen": "sample",
+   "keys": [
+    "RECORD SETTING",
+    "FILTER+DRIVE"
+   ],
+   "gesture": "press",
+   "action": "Open FX MOD for this effect (the page says the order of the two buttons does not matter)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0002",
+   "screen": "sample",
+   "keys": [
+    "RECORD SETTING",
+    "RESONATOR"
+   ],
+   "gesture": "press",
+   "action": "Open FX MOD for this effect (the page says the order of the two buttons does not matter)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0003",
+   "screen": "sample",
+   "keys": [
+    "RECORD SETTING",
+    "DELAY"
+   ],
+   "gesture": "press",
+   "action": "Open FX MOD for this effect (the page says the order of the two buttons does not matter)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0004",
+   "screen": "sample",
+   "keys": [
+    "RECORD SETTING",
+    "ISOLATOR"
+   ],
+   "gesture": "press",
+   "action": "Open FX MOD for this effect (the page says the order of the two buttons does not matter)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0005",
+   "screen": "sample",
+   "keys": [
+    "RECORD SETTING",
+    "DJFX LOOPER"
+   ],
+   "gesture": "press",
+   "action": "Open FX MOD for this effect (the page says the order of the two buttons does not matter)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0006",
+   "screen": "sample",
+   "keys": [
+    "RECORD SETTING",
+    "MFX"
+   ],
+   "gesture": "press",
+   "action": "Open FX MOD for this effect (the page says the order of the two buttons does not matter)",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0007",
+   "screen": "sample-edit",
+   "keys": [
+    "SHIFT",
+    "MARK"
+   ],
+   "gesture": "press",
+   "action": "Open or leave the last-used sample engine",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0008",
+   "screen": "sample-edit",
+   "keys": [
+    "SHIFT",
+    "REVERSE"
+   ],
+   "gesture": "press",
+   "action": "Open the three-playhead engine; on an engine screen, switch engines",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0009",
+   "screen": "sound-gen",
+   "keys": [
+    "SHIFT",
+    "PAD4"
+   ],
+   "gesture": "press",
+   "action": "Open the scales and arpeggiator screen",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0010",
+   "screen": "sound-gen",
+   "keys": [
+    "SHIFT",
+    "RECORD SETTING"
+   ],
+   "gesture": "press",
+   "action": "Switch between synth and drum kits",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0011",
+   "screen": "sound-gen",
+   "keys": [
+    "PATTERN EDIT"
+   ],
+   "gesture": "press",
+   "action": "Open the MIDI looper, or the step sequencer on the drum kits",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0012",
+   "screen": "sound-gen",
+   "keys": [
+    "SHIFT",
+    "RESAMPLE"
+   ],
+   "gesture": "press",
+   "action": "Bounce one cycle of the playing loop or pattern to a free pad",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  },
+  {
+   "id": "kb-ik-0013",
+   "screen": "sound-gen",
+   "keys": [
+    "SHIFT",
+    "REC"
+   ],
+   "gesture": "press",
+   "action": "Record the played phrase into a pad",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "IrakliyMOD page, claude.ai/artifact/NkLkdAdwhBRY6Duw2gS5Ch, read 2026-11-09, Shortcuts"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,239 @@
+{
+ "firmware": "doom-os-0.7.3",
+ "screens": [
+  {
+   "id": "doom-grid",
+   "name": "DOOM OS step grid",
+   "about": "Home screen of DOOM OS: pads are the steps of the selected track; five views.",
+   "how_to_open": "REMAIN+SUB PAD",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Getting Started; Grid Views"
+    }
+   ]
+  },
+  {
+   "id": "doom-piano-roll",
+   "name": "Piano roll",
+   "about": "Pitch of every note on the selected track.",
+   "how_to_open": "VALUE on the grid",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Piano Roll"
+    }
+   ]
+  },
+  {
+   "id": "doom-track-page",
+   "name": "TRACK page",
+   "about": "Menu with EDIT, PATTERN, GENERATE, VIEWS rows for the selected track.",
+   "how_to_open": "RECORD SETTING",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel"
+    }
+   ]
+  },
+  {
+   "id": "doom-pattern-panel",
+   "name": "PATTERN panel",
+   "about": "Tempo, length, record mode and actions.",
+   "how_to_open": "RECORD SETTING twice",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), TRACK Page and PATTERN Panel"
+    }
+   ]
+  },
+  {
+   "id": "doom-mixer",
+   "name": "Mixer",
+   "about": "One strip per track: pan, bus, level.",
+   "how_to_open": "Hold RECORD SETTING 0.6 s, or menu MIXER",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Mixer"
+    }
+   ]
+  },
+  {
+   "id": "doom-eq",
+   "name": "Pad EQ",
+   "about": "3-band EQ display and screen, opened from the mixer.",
+   "how_to_open": "PITCH/SPEED in the mixer",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), EQ"
+    }
+   ]
+  },
+  {
+   "id": "doom-instrument-browser",
+   "name": "Instrument browser",
+   "about": "INSTRUMENTS and KITS tabs.",
+   "how_to_open": "SUB PAD held, tap an empty pad",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Instrument Browser"
+    }
+   ]
+  },
+  {
+   "id": "doom-instrument-editor",
+   "name": "Instrument editor",
+   "about": "Sections of an instrument's sound, set with the CTRL knobs.",
+   "how_to_open": "START/END on an instrument track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Instrument Editor"
+    }
+   ]
+  },
+  {
+   "id": "doom-param-lock",
+   "name": "Parameter lock editor",
+   "about": "Per-step instrument parameters.",
+   "how_to_open": "MARK on an instrument track",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Parameter Locks"
+    }
+   ]
+  },
+  {
+   "id": "doom-arp",
+   "name": "Arpeggiator",
+   "about": "PLAY and PITCH pages; pads become a keyboard.",
+   "how_to_open": "RECORD SETTING menu, ARP",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Arpeggiator"
+    }
+   ]
+  },
+  {
+   "id": "doom-pattern-tools",
+   "name": "Pattern tools",
+   "about": "QUANT, SWING, SHIFT, DOUBLE, HALVE, REVERSE, HUMAN, TRANSP.",
+   "how_to_open": "PATTERN EDIT",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Pattern Tools"
+    }
+   ]
+  },
+  {
+   "id": "doom-sidechain",
+   "name": "Side chain",
+   "about": "Bus diagram with source, target, threshold, ratio, release.",
+   "how_to_open": "RECORD SETTING menu, SIDECHAIN",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Side Chain"
+    }
+   ]
+  },
+  {
+   "id": "doom-fx-automation",
+   "name": "FX Automation",
+   "about": "Recorded effect movements by parameter and step.",
+   "how_to_open": "SHIFT+MARK",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), FX Automation"
+    }
+   ]
+  },
+  {
+   "id": "doom-bounce",
+   "name": "Bounce card",
+   "about": "Choose CUT, TAIL or LOOP and an empty pad.",
+   "how_to_open": "RESAMPLE or SHIFT+RESAMPLE",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Bounce in Place"
+    }
+   ]
+  },
+  {
+   "id": "doom-fx-page",
+   "name": "Effect page",
+   "about": "Stock effect parameters, kept open until EXIT.",
+   "how_to_open": "An FX button",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Effects"
+    }
+   ]
+  },
+  {
+   "id": "doom-new-notes",
+   "name": "NEW NOTES",
+   "about": "Quantize, swing, velocity, length of recorded notes.",
+   "how_to_open": "SHIFT+PATTERN EDIT",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Recording"
+    }
+   ]
+  },
+  {
+   "id": "doom-help",
+   "name": "Help mode",
+   "about": "Press a control to see its function.",
+   "how_to_open": "Hold SHIFT 3 s",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), Help Mode"
+    }
+   ]
+  },
+  {
+   "id": "doom-settings-tab",
+   "name": "DOOM OS and SHORTCUT tabs of SYSTEM",
+   "about": "Settings of DOOM OS, plus eight user shortcut slots, inside the stock SYSTEM screen.",
+   "how_to_open": "SHIFT+pad 13, SYSTEM, CTRL3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (klangfeldlabs.com/doom-os/manual), DOOM OS Settings"
+    }
+   ]
+  }
+ ]
+}

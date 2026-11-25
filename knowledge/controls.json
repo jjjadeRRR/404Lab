@@ -1,0 +1,289 @@
+{
+ "controls": [
+  {
+   "name": "SHIFT",
+   "kind": "button",
+   "about": "Modifier. Held together with a pad or button it gives the alternate function. Held with REVERSE and REMAIN it latches."
+  },
+  {
+   "name": "REMAIN",
+   "kind": "button",
+   "about": "Shows the data of the last pad while held; modifier for bus assignment and group edits; mode switch inside several screens (chromatic play mode, TR-REC, start-point lock)."
+  },
+  {
+   "name": "EXIT",
+   "kind": "button",
+   "about": "Back or cancel; four quick presses stop everything; with DEL deletes a bank, with COPY copies a bank, with a pad stops it."
+  },
+  {
+   "name": "DEL",
+   "kind": "button",
+   "about": "Delete. Alone opens pad delete selection; also an erase modifier inside pattern recording and marker editing."
+  },
+  {
+   "name": "COPY",
+   "kind": "button",
+   "about": "Copy. Alone starts a copy selection; modifier for group edits and bank copy."
+  },
+  {
+   "name": "REC",
+   "kind": "button",
+   "about": "Start or stop sampling and pattern recording."
+  },
+  {
+   "name": "RESAMPLE",
+   "kind": "button",
+   "about": "Resample; zero-cross snap in edit screens; overdub in the looper."
+  },
+  {
+   "name": "RECORD SETTING",
+   "kind": "button",
+   "about": "Opens sampling and pattern-recording settings."
+  },
+  {
+   "name": "PATTERN SELECT",
+   "kind": "button",
+   "about": "Switches between sample mode and the pattern sequencer."
+  },
+  {
+   "name": "PATTERN EDIT",
+   "kind": "button",
+   "about": "Opens the pattern edit screen while the pattern sequencer is on."
+  },
+  {
+   "name": "START/END",
+   "kind": "button",
+   "about": "Start, loop and end point editing; end snap while sampling."
+  },
+  {
+   "name": "PITCH/SPEED",
+   "kind": "button",
+   "about": "Opens the pitch, speed, volume and pan screen for a sample."
+  },
+  {
+   "name": "MARK",
+   "kind": "button",
+   "about": "Markers; also skip-back or looper depending on the MARK Function system setting."
+  },
+  {
+   "name": "BPM SYNC",
+   "kind": "button",
+   "about": "Syncs the sample to the bank or project tempo."
+  },
+  {
+   "name": "GATE",
+   "kind": "button",
+   "about": "Gate playback on or off."
+  },
+  {
+   "name": "LOOP",
+   "kind": "button",
+   "about": "Loop on or off."
+  },
+  {
+   "name": "REVERSE",
+   "kind": "button",
+   "about": "Reverse playback on or off; pad mute with SHIFT."
+  },
+  {
+   "name": "ROLL",
+   "kind": "button",
+   "about": "Roll (repeat) playback."
+  },
+  {
+   "name": "HOLD",
+   "kind": "button",
+   "about": "Keeps pads playing after release; selects the chain number in pattern chain; switches DJ mode and pad mode."
+  },
+  {
+   "name": "BUS FX",
+   "kind": "button",
+   "about": "Switches the bus that the effect buttons control."
+  },
+  {
+   "name": "EXT SOURCE",
+   "kind": "button",
+   "about": "External input on or off."
+  },
+  {
+   "name": "SUB PAD",
+   "kind": "button",
+   "about": "Extra velocity-sensitive pad; tap tempo, pattern start/stop, sample select in TR-REC, preview."
+  },
+  {
+   "name": "BANK A/F",
+   "kind": "button",
+   "about": "Bank button. Pressing again switches between the A-E and F-J bank of the same button (F-J blink)."
+  },
+  {
+   "name": "BANK B/G",
+   "kind": "button",
+   "about": "Bank button. Pressing again switches between the A-E and F-J bank of the same button (F-J blink)."
+  },
+  {
+   "name": "BANK C/H",
+   "kind": "button",
+   "about": "Bank button. Pressing again switches between the A-E and F-J bank of the same button (F-J blink)."
+  },
+  {
+   "name": "BANK D/I",
+   "kind": "button",
+   "about": "Bank button. Pressing again switches between the A-E and F-J bank of the same button (F-J blink)."
+  },
+  {
+   "name": "BANK E/J",
+   "kind": "button",
+   "about": "Bank button. Pressing again switches between the A-E and F-J bank of the same button (F-J blink)."
+  },
+  {
+   "name": "FILTER+DRIVE",
+   "kind": "button",
+   "about": "Effect button for BUS 1 or BUS 2 (MFX selects from the effect list)."
+  },
+  {
+   "name": "RESONATOR",
+   "kind": "button",
+   "about": "Effect button for BUS 1 or BUS 2 (MFX selects from the effect list)."
+  },
+  {
+   "name": "DELAY",
+   "kind": "button",
+   "about": "Effect button for BUS 1 or BUS 2 (MFX selects from the effect list)."
+  },
+  {
+   "name": "ISOLATOR",
+   "kind": "button",
+   "about": "Effect button for BUS 1 or BUS 2 (MFX selects from the effect list)."
+  },
+  {
+   "name": "DJFX LOOPER",
+   "kind": "button",
+   "about": "Effect button for BUS 1 or BUS 2 (MFX selects from the effect list)."
+  },
+  {
+   "name": "MFX",
+   "kind": "button",
+   "about": "Effect button for BUS 1 or BUS 2 (MFX selects from the effect list)."
+  },
+  {
+   "name": "CTRL1",
+   "kind": "knob",
+   "about": "Control knob 1. Main parameter 1 of the current screen or effect."
+  },
+  {
+   "name": "CTRL2",
+   "kind": "knob",
+   "about": "Control knob 2."
+  },
+  {
+   "name": "CTRL3",
+   "kind": "knob",
+   "about": "Control knob 3. Also chooses SYSTEM and EFX SET tabs."
+  },
+  {
+   "name": "VALUE",
+   "kind": "encoder",
+   "about": "Endless encoder with push. Turn selects or edits, press confirms. Also used as a held modifier."
+  },
+  {
+   "name": "VOLUME",
+   "kind": "knob",
+   "about": "Master output volume."
+  },
+  {
+   "name": "INPUT GAIN",
+   "kind": "knob",
+   "about": "Analog gain of the front INPUT jack (not the GAIN item of the SYSTEM menu)."
+  },
+  {
+   "name": "MIC/GUITAR",
+   "kind": "switch",
+   "about": "Input impedance switch for the INPUT jack."
+  },
+  {
+   "name": "POWER",
+   "kind": "switch",
+   "about": "Power slide switch."
+  },
+  {
+   "name": "PAD1",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 1 of the 4x4 grid."
+  },
+  {
+   "name": "PAD2",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 2 of the 4x4 grid."
+  },
+  {
+   "name": "PAD3",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 3 of the 4x4 grid."
+  },
+  {
+   "name": "PAD4",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 4 of the 4x4 grid."
+  },
+  {
+   "name": "PAD5",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 5 of the 4x4 grid."
+  },
+  {
+   "name": "PAD6",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 6 of the 4x4 grid."
+  },
+  {
+   "name": "PAD7",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 7 of the 4x4 grid."
+  },
+  {
+   "name": "PAD8",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 8 of the 4x4 grid."
+  },
+  {
+   "name": "PAD9",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 9 of the 4x4 grid."
+  },
+  {
+   "name": "PAD10",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 10 of the 4x4 grid."
+  },
+  {
+   "name": "PAD11",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 11 of the 4x4 grid."
+  },
+  {
+   "name": "PAD12",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 12 of the 4x4 grid."
+  },
+  {
+   "name": "PAD13",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 13 of the 4x4 grid."
+  },
+  {
+   "name": "PAD14",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 14 of the 4x4 grid."
+  },
+  {
+   "name": "PAD15",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 15 of the 4x4 grid."
+  },
+  {
+   "name": "PAD16",
+   "kind": "pad",
+   "about": "Velocity-sensitive pad 16 of the 4x4 grid."
+  }
+ ]
+}

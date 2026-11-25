@@ -1,0 +1,40 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quick:
+    name: quick tests, ${{ matrix.os }}, Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    # All four jobs run on pushes and pull requests. Without firmware or the emulator here, tests that need them skip on every system;
+    # on Windows two more skip, because the emulator needs Linux (WSL).
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: ubuntu-latest, python: "3.10"}
+          - {os: ubuntu-latest, python: "3.12"}
+          - {os: macos-latest, python: "3.12"}
+          - {os: windows-latest, python: "3.12"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: What this machine has
+        run: python -m lab404 doctor
+        continue-on-error: true
+      - name: Quick tests (no firmware here, so tests that need an image skip)
+        run: python tools/run_tests.py --quick
+        env:
+          # On Linux, turn every read or write without an explicit encoding into an error: on Windows the default is not
+          # UTF-8, so such a call breaks there even though it works here.
+          PYTHONWARNDEFAULTENCODING: ${{ matrix.os == 'ubuntu-latest' && '1' || '' }}
+          PYTHONWARNINGS: ${{ matrix.os == 'ubuntu-latest' && 'error::EncodingWarning' || '' }}

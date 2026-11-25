@@ -1,0 +1,27 @@
+# Never commit firmware, samples or user inputs
+*.bin
+*.BIN
+*.patch
+*.wav
+*.WAV
+*.aif
+*.aiff
+inputs/
+private/
+
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+out/
+
+# Local tool and editor state
+.serena/
+.claude/settings.local.json
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.egg-info/
+.pytest_cache/

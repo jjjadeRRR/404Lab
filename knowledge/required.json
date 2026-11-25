@@ -1,0 +1,396 @@
+{
+ "about": "What a mod author must know before building, each question tied to the facts that answer it. known: every fact behind it is verified. partly: some of it is. open: not known; find_out says how. Checked by tests/test_gaps.py; listed by `python -m lab404 gaps`.",
+ "questions": [
+  {
+   "id": "safe.app1-size",
+   "ask": "How large may an APP1 file be?",
+   "why": "A longer file is written past what the loader erased.",
+   "facts": [
+    "hw.update.app1-range"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "safe.loader-checks",
+   "ask": "Does the loader check APP1 before starting it?",
+   "why": "Decides whether a changed APP1 can be refused at boot.",
+   "facts": [
+    "hw.boot.no-app1-check",
+    "hw.boot.loader-image"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "safe.bad-app1",
+   "ask": "Can a broken APP1 lock the user out of the update screen?",
+   "why": "This is the way back after every failed mod.",
+   "facts": [
+    "hw.boot.select-pin",
+    "hw.update.stalled"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "safe.select-pin",
+   "ask": "What drives the pin that selects the update screen?",
+   "why": "If it is the second processor, the way back depends on its loader.",
+   "facts": [
+    "hw.boot.select-pin-driver",
+    "hw.bmc.shift"
+   ],
+   "state": "open",
+   "find_out": "One session on a unit saw the pin low throughout. Sample it in the first moments of APP1, find who configures pad GPIO_AD_B0_02 in APP1 and the loader, or trace the board."
+  },
+  {
+   "id": "safe.brick-files",
+   "ask": "Which files on a card can brick a unit?",
+   "why": "A package is copied to a card by a user who trusts it.",
+   "facts": [
+    "hw.update.whole-files"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "safe.brick-code",
+   "ask": "Which code inside APP1 can erase the loader?",
+   "why": "A hook or call there bricks a unit.",
+   "facts": [
+    "hw.service.loader-erase"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "safe.loader-lost",
+   "ask": "Is there a way back when the loader itself is erased?",
+   "why": "Says how bad the worst case is.",
+   "facts": [
+    "hw.boot.mode",
+    "hw.boot.recovery-usb"
+   ],
+   "state": "partly",
+   "find_out": "The registers say the ROM falls back to its Serial Downloader. Find out, without erasing anything, whether the processor USB port reaches the connector: trace the hub, or look for the boot mode pins on the board and enter the downloader with them."
+  },
+  {
+   "id": "safe.app0",
+   "ask": "Can a damaged APP0 be recovered?",
+   "why": "Why no mod touches the second processor.",
+   "facts": [
+    "app0.recovery",
+    "app0.crc"
+   ],
+   "state": "open",
+   "find_out": "Needs a read of the second processor flash with a programmer; nothing a mod can read."
+  },
+  {
+   "id": "safe.watchdog",
+   "ask": "Does anything reset a hung unit?",
+   "why": "Decides whether a mod needs its own fault handling.",
+   "facts": [
+    "hw.boot.watchdogs",
+    "hw.watchdogs.runtime",
+    "hw.faults.vectors"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "safe.verify",
+   "ask": "Is a written APP1 verified?",
+   "why": "An unnoticed bad write looks like a bug in the mod.",
+   "facts": [
+    "hw.update.no-verify"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "mem.payload",
+   "ask": "Where can a mod put its code and data, and how much?",
+   "why": "Every mod needs room that nothing else uses.",
+   "facts": [
+    "st.mem.free",
+    "hk.region.sdram"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "mem.flash-room",
+   "ask": "How much flash is left after the image?",
+   "why": "Pictures and tables go there.",
+   "facts": [
+    "hk.region.flash",
+    "hw.update.app1-range"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "mem.fast",
+   "ask": "Is there free room in the fast memories (ITCM, DTCM, OCRAM)?",
+   "why": "Audio code in SDRAM is slower when it falls out of the cache.",
+   "facts": [
+    "hk.region.itcm",
+    "hk.region.tcm-ocram"
+   ],
+   "state": "open",
+   "find_out": "Map every reference into those ranges on each base; the audio DMA banks are known to live there."
+  },
+  {
+   "id": "mem.heap",
+   "ask": "How big is the stock heap and how full is it in use?",
+   "why": "A mod that allocates can starve stock code.",
+   "facts": [
+    "st.mem.heap",
+    "st.mem.heap-measured",
+    "st.import.malloc-unchecked"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "mem.other-mods",
+   "ask": "Is the free SDRAM also free on DOOM OS?",
+   "why": "The same address must be safe on every base a mod declares.",
+   "facts": [
+    "hk.doom.free"
+   ],
+   "state": "partly",
+   "find_out": "No direct reference was found; run-time use has only been watched on the emulator. Fill the range with a pattern in a test build and check it after a long session on a unit."
+  },
+  {
+   "id": "mem.reset",
+   "ask": "Does memory survive a reset?",
+   "why": "A crash record kept in RAM depends on it.",
+   "facts": [
+    "hw.reset.sdram"
+   ],
+   "state": "open",
+   "find_out": "Write a marker, reset from a mod, read it back; on a unit only."
+  },
+  {
+   "id": "mem.stacks",
+   "ask": "How much stack does each task have left?",
+   "why": "A hook runs on the stack of whatever called it.",
+   "facts": [
+    "st.tasks.list",
+    "st.tasks.others"
+   ],
+   "state": "partly",
+   "find_out": "Stack sizes of the named tasks are known, their use is not. Fill stacks with a pattern in a test build and read the low-water mark on a unit."
+  },
+  {
+   "id": "time.block",
+   "ask": "How long is one audio block?",
+   "why": "Everything in the audio path must fit in it.",
+   "facts": [
+    "st.audio.block"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "time.headroom",
+   "ask": "How much of a block does stock leave free?",
+   "why": "Says how heavy an effect may be.",
+   "facts": [
+    "st.audio.headroom",
+    "hw.cycles.measured",
+    "hw.cycles.cost"
+   ],
+   "state": "partly",
+   "find_out": "One measurement on one unit exists. Measure with the cycle counter on stock with many voices and effects, on more than one unit."
+  },
+  {
+   "id": "time.contexts",
+   "ask": "What may run in the audio, draw, file and interrupt contexts?",
+   "why": "The wrong work in the wrong place hung real units.",
+   "facts": [
+    "hk.ctx.audio",
+    "hk.ctx.irq",
+    "hk.ctx.draw",
+    "hk.ctx.files",
+    "hk.ctx.lock"
+   ],
+   "state": "partly",
+   "find_out": "The audio and interrupt rules are from bytes. The draw, file and lock rules come from failures on one unit and are not proven as rules."
+  },
+  {
+   "id": "time.float",
+   "ask": "Is floating point safe in a hook?",
+   "why": "Filters want it.",
+   "facts": [
+    "st.rtos.fpu",
+    "hk.ctx.audio-fpu"
+   ],
+   "state": "partly",
+   "find_out": "Safe in the audio task by its attribute; other tasks and interrupts are not checked."
+  },
+  {
+   "id": "time.leds",
+   "ask": "How much LED traffic can the shared serial line take?",
+   "why": "Lights share the line with effect parameters.",
+   "facts": [
+    "hw.leds.path",
+    "hw.leds.budget"
+   ],
+   "state": "partly",
+   "find_out": "The cost per message is computed, the effect on a unit under load is not measured."
+  },
+  {
+   "id": "ui.keys",
+   "ask": "Is a key or chord free on a screen?",
+   "why": "A mod must not take an input the user already has.",
+   "facts": [
+    "hk.key-event",
+    "hk.key-codes"
+   ],
+   "state": "partly",
+   "find_out": "No screen is marked complete, so `check-keys` never answers free. Finish the sweep of each screen on stock and on DOOM OS 0.7.3."
+  },
+  {
+   "id": "ui.screen",
+   "ask": "How does a mod open and draw a screen?",
+   "why": "Most functions need one.",
+   "facts": [
+    "hk.open-screen",
+    "hk.site.draw"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "ui.panel",
+   "ask": "How are buttons, pads and knobs read?",
+   "why": "Needed to add an input without losing events.",
+   "facts": [
+    "hw.panel.scan",
+    "st.input.handler"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "store.where",
+   "ask": "Where can a mod keep settings?",
+   "why": "Settings must survive power off and travel with a project.",
+   "facts": [
+    "hk.storage.sidecar",
+    "st.storage.project"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "store.safe",
+   "ask": "Is a save safe against power loss?",
+   "why": "A half-written file loses a user's work.",
+   "facts": [
+    "st.storage.atomic",
+    "hk.storage.order"
+   ],
+   "state": "open",
+   "find_out": "Stock writes its project file in place. Cut power during a save on the emulator with a drive image, then on a unit."
+  },
+  {
+   "id": "store.copy",
+   "ask": "Do a mod's files follow a project on copy and export?",
+   "why": "Users move projects between slots and cards.",
+   "facts": [
+    "st.storage.ptn-filter"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "dsp.control",
+   "ask": "How are the built-in effects controlled?",
+   "why": "A mod can drive them without touching APP0.",
+   "facts": [
+    "hw.bmc.sysex",
+    "app0.role",
+    "app0.params",
+    "hw.bmc.packets",
+    "hw.bmc.rx-table",
+    "st.mfx.grid",
+    "st.mfx.grid-readers",
+    "hk.recipe.mfx-grid-entry",
+    "app0.type29-on-unit",
+    "app0.comp2-params",
+    "app0.knob-ranges"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "dsp.own",
+   "ask": "Can a mod add an effect on the second processor?",
+   "why": "The obvious wish; the honest answer is no for now.",
+   "facts": [
+    "app0.own-effects",
+    "app0.unknowns",
+    "app0.encrypted",
+    "app0.pairs",
+    "app0.crc",
+    "hw.bmc.no-read"
+   ],
+   "state": "open",
+   "find_out": "Needs the instruction set of the chip and the key of the closed block; both need hardware access to the second processor."
+  },
+  {
+   "id": "dsp.bus34-list",
+   "ask": "Which list does FX SETTING use to offer effects for BUS 3 and BUS 4?",
+   "why": "A type added to the MFX grid is not offered there, so a mod that adds an effect for every bus must change that list too.",
+   "facts": [
+    "st.efx.bus34-list",
+    "st.mfx.other-lists",
+    "hk.recipe.bus34-entry"
+   ],
+   "state": "partly",
+   "find_out": "The list and its reader are known. Still to see: a type added this way, chosen for BUS 3 or 4 on a unit."
+  },
+  {
+   "id": "dbg.fault",
+   "ask": "How does a mod show a crash?",
+   "why": "Without it every fault is a frozen unit and a guess.",
+   "facts": [
+    "hk.fault-visibility",
+    "hw.faults.vectors"
+   ],
+   "state": "open",
+   "find_out": "A private mod has a fault screen that worked on a unit once (st.import.malloc-unchecked). Make it a public example and prove it on stock."
+  },
+  {
+   "id": "dbg.channel",
+   "ask": "Is there a way to get data out of a running unit?",
+   "why": "Measuring on a unit beats guessing from the stand.",
+   "facts": [
+    "hw.usb",
+    "hk.lesson.read-what-you-can",
+    "hw.usb.link"
+   ],
+   "state": "partly",
+   "find_out": "Files on the SD card work. The USB serial link (hw.usb.link) gives a computer a file API to both drives and a status poll without any mod; a mod writing a log to B: and a computer reading it over that link was not tried. Try that first."
+  },
+  {
+   "id": "dbg.stand",
+   "ask": "What does a pass on the stand prove?",
+   "why": "So nobody calls a candidate fixed.",
+   "facts": [
+    "hk.stand-limits"
+   ],
+   "state": "known"
+  },
+  {
+   "id": "hw.sai-rx",
+   "ask": "What does the second processor send back to APP1 on SAI1 receive?",
+   "why": "An output level meter or a recording of a bus reads it. A mod meter already uses slots 1-2 (hk.recipe.output-meter); what the stock does with it is not known.",
+   "facts": [
+    "hw.periph.sai-dma",
+    "hw.bmc.rx-slots"
+   ],
+   "state": "partly",
+   "find_out": "Find the stock readers of 0x20008000-0x20008FFF (watchpoint on the emulator during RESAMPLE), compare slots 1-2 with a RESAMPLE recording bit for bit, and find what slots 3-4 are."
+  },
+  {
+   "id": "ui.effect-cells",
+   "ask": "Where does the stock decide how many knob cells an effect shows?",
+   "why": "Hiding a parameter, such as COMPRESSOR 2 MODE, needs it.",
+   "facts": [
+    "st.efx.knob-pages",
+    "app0.comp2-params"
+   ],
+   "state": "open",
+   "find_out": "The group table 0x8022E1C8 does not decide it. Trace the effect screen and the EFX SET draw on the emulator for COMPRESSOR 2 against Compressor, which has five cells."
+  }
+ ]
+}

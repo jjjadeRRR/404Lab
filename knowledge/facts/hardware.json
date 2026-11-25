@@ -1,0 +1,2618 @@
+{
+ "facts": [
+  {
+   "id": "hw.cpu.family",
+   "claim": "The main processor is an NXP i.MX RT106x (Arm Cortex-M7). The firmware addresses SAI1 at 0x40384000, LPUART3 at 0x4018C000 and the CCM at 0x400FC000, which match that family, and photos show the chip marking.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: 0x1CFE0 (SAI1 base built by movt), 0x800D9412 (LPUART3 base)"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, chapter 3 memory map, p.35"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001CFD6",
+     "size": 4,
+     "sha256": "270441d5c1a7c752d60c1b7902a7b2df331a51663b45b183cf0027414725d077"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001CFD6",
+     "size": 4,
+     "sha256": "270441d5c1a7c752d60c1b7902a7b2df331a51663b45b183cf0027414725d077"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001CFD6",
+     "size": 4,
+     "sha256": "270441d5c1a7c752d60c1b7902a7b2df331a51663b45b183cf0027414725d077"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D940E",
+     "size": 8,
+     "sha256": "83ff17008faf74a91d5e96f1724d2906370194594e89ad0e139f1307911d451c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D940E",
+     "size": 8,
+     "sha256": "83ff17008faf74a91d5e96f1724d2906370194594e89ad0e139f1307911d451c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D940E",
+     "size": 8,
+     "sha256": "83ff17008faf74a91d5e96f1724d2906370194594e89ad0e139f1307911d451c"
+    }
+   ]
+  },
+  {
+   "id": "hw.cpu.part",
+   "claim": "On the unit photographed the main chip is marked MIMXRT1062 DVJ6B. Main board 5100074762, front board 5100074765. A 2021 public teardown video shows main board 5100074760, an earlier revision, so board details may differ between units.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    },
+    {
+     "label": "DOC",
+     "source": "YouTube, Taking Apart The Roland SP-404 MKII, 2021 teardown (for the earlier board number)"
+    }
+   ]
+  },
+  {
+   "id": "hw.cpu.marking",
+   "claim": "Decoding the marking DVJ6B with the NXP part number table: D = consumer grade, 0 to +95 C junction; VJ = 196 MAPBGA, 12 x 12 mm, 0.8 mm pitch; 6 = 600 MHz rating; B = silicon revision A1. Older project notes called this part industrial and 10 x 10 mm; the table does not support that.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 data sheet for consumer products, Rev. 4, Figure 1 part number nomenclature, p.11"
+    }
+   ]
+  },
+  {
+   "id": "hw.cpu.silicon",
+   "claim": "Silicon revision of the fleet is unknown. The B suffix is known only from one photographed unit, it has not been read from the chip (USB_ANALOG_DIGPROG at 0x400D8260 holds it), and the firmware image does not tell. Use the errata of both revisions unless a unit says otherwise.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, register USB_ANALOG_DIGPROG"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ]
+  },
+  {
+   "id": "hw.cpu.clock",
+   "claim": "The expected core clock is 600 MHz: the part is rated for it and startup code stores the constant 600000000 at 0x802468D4. A mod's monitor reported 599-600 MHz on one unit running a modified DOOM OS 0.7.3 (hw.cycles.measured). That supports the expectation on that unit, not every unit or unmodified stock. The stock CCM and PLL setup has not been decoded.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800012A4: movw/movt build 0x23C34600, stored to 0x802468D4"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 data sheet for consumer products, Rev. 4, Figure 1, p.11"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "hw.cycles.measured: owner's unit, 2026-11-12, photo of the private mod's monitor on DOOM OS 0.7.3; one unit, one moment"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800012A4",
+     "size": 4,
+     "sha256": "71371d44c1546391596fcaee4cd0fabeef2aa33300370e44d2a9882750c550b8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800012A4",
+     "size": 4,
+     "sha256": "71371d44c1546391596fcaee4cd0fabeef2aa33300370e44d2a9882750c550b8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800012A4",
+     "size": 4,
+     "sha256": "71371d44c1546391596fcaee4cd0fabeef2aa33300370e44d2a9882750c550b8"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800012AC",
+     "size": 4,
+     "sha256": "ebdc549748045475cecd4e447ca515d9a5db9181b1a5611c71a0856d6e604336"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800012AC",
+     "size": 4,
+     "sha256": "ebdc549748045475cecd4e447ca515d9a5db9181b1a5611c71a0856d6e604336"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800012AC",
+     "size": 4,
+     "sha256": "ebdc549748045475cecd4e447ca515d9a5db9181b1a5611c71a0856d6e604336"
+    }
+   ]
+  },
+  {
+   "id": "hw.clocks.tree",
+   "claim": "The clock tree set up by stock (SDRAM bus frequency, audio PLL, SAI dividers, FlexSPI clock) is not documented and the SDRAM bus frequency is unknown. Reference figures at 166 MHz come from an NXP board, not from this unit.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "no decode of CCM writes exists; reference pages are in NXP i.MX RT1060 Reference Manual, Rev. 3, chapter 14"
+    }
+   ]
+  },
+  {
+   "id": "hw.cpu.fpu",
+   "claim": "The core has a double and single precision FPU (FPv5). Older project notes said single precision only; that was a build flag choice, not the chip.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 data sheet for consumer products, Rev. 4, feature list, VFPv5"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, p.1462"
+    }
+   ]
+  },
+  {
+   "id": "hw.mem.chips",
+   "claim": "Memory on the photographed board: 64 MB SDRAM for the main chip (IC10, ESMT M12L5121632A), 32 MB SDRAM beside the second processor (IC5, ESMT M12L2561616A), a 16 GB eMMC (IC11), and two 4 MB SPI NOR flash chips MX25L3233F (IC4, IC9).",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ]
+  },
+  {
+   "id": "hw.mem.nor-owner",
+   "claim": "Which of the two NOR chips belongs to which processor has not been established. One holds the main processor image at 0x60000000; that the other holds APP0 is an inference.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "inference from two identical chips on the board"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ]
+  },
+  {
+   "id": "hw.mem.map",
+   "claim": "Main processor memory map as configured by stock: ITCM 0x00000000-0x00020000, DTCM 0x20000000-0x20020000, OCRAM 0x20200000-0x202C0000, FlexSPI flash from 0x60000000 (4 MB), SDRAM 0x80000000-0x84000000. Peripherals sit at 0x40000000 and up, under the default map.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "startup MPU code at 0x600803D8-0x60080526, read and decoded for this record"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, p.35"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008044C",
+     "size": 4,
+     "sha256": "0f2a9a29e69d2aca2cccb0ded015bd2bd4350560e54bf40da8b0ee84a1d7333d"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008044C",
+     "size": 4,
+     "sha256": "0f2a9a29e69d2aca2cccb0ded015bd2bd4350560e54bf40da8b0ee84a1d7333d"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008044C",
+     "size": 4,
+     "sha256": "0f2a9a29e69d2aca2cccb0ded015bd2bd4350560e54bf40da8b0ee84a1d7333d"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008045A",
+     "size": 4,
+     "sha256": "7914728f48df3555f119d4a5d8d506df0ad169d6da1fc8c027c041bbeb80e00a"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008045A",
+     "size": 4,
+     "sha256": "7914728f48df3555f119d4a5d8d506df0ad169d6da1fc8c027c041bbeb80e00a"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008045A",
+     "size": 4,
+     "sha256": "7914728f48df3555f119d4a5d8d506df0ad169d6da1fc8c027c041bbeb80e00a"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008046C",
+     "size": 4,
+     "sha256": "18175f3e599bf872cdb5543502856ef9aea5dd51fa331dd073da3879a86b9df4"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008046C",
+     "size": 4,
+     "sha256": "18175f3e599bf872cdb5543502856ef9aea5dd51fa331dd073da3879a86b9df4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008046C",
+     "size": 4,
+     "sha256": "18175f3e599bf872cdb5543502856ef9aea5dd51fa331dd073da3879a86b9df4"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008048E",
+     "size": 4,
+     "sha256": "f802f68a06d575549913a27ef4ffca17d453f5996cfaa78c334c75a6360d311e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008048E",
+     "size": 4,
+     "sha256": "f802f68a06d575549913a27ef4ffca17d453f5996cfaa78c334c75a6360d311e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008048E",
+     "size": 4,
+     "sha256": "f802f68a06d575549913a27ef4ffca17d453f5996cfaa78c334c75a6360d311e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008044C",
+     "size": 4,
+     "sha256": "0f2a9a29e69d2aca2cccb0ded015bd2bd4350560e54bf40da8b0ee84a1d7333d"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008045A",
+     "size": 4,
+     "sha256": "7914728f48df3555f119d4a5d8d506df0ad169d6da1fc8c027c041bbeb80e00a"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008046C",
+     "size": 4,
+     "sha256": "18175f3e599bf872cdb5543502856ef9aea5dd51fa331dd073da3879a86b9df4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008048E",
+     "size": 4,
+     "sha256": "f802f68a06d575549913a27ef4ffca17d453f5996cfaa78c334c75a6360d311e"
+    }
+   ]
+  },
+  {
+   "id": "hw.mpu.table",
+   "claim": "Stock MPU regions, numbered as written. 0: 0x80000000 512 MB Device. 1: 0x60000000 512 MB Device. 2: flash, 4 MB, Normal write-back, read-only (RASR 0x0603002B). 3: 0x00000000 1 GB Device. 4: ITCM 128 KB write-back attributes. 5: DTCM 128 KB. 6: 0x20200000 512 KB write-back. 7: 0x20280000 256 KB write-back. 8: SDRAM 64 MB, Normal write-back, full access, executable (RASR 0x03030033). 9: 0x83FF0000 64 KB, Normal non-cacheable (RASR 0x0308001F). Regions 0, 1 and 3 are background Device ranges that older notes left out. TCM itself does not use the cache.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x600803D8-0x60080510, writes to MPU_RBAR and MPU_RASR read from the instructions"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm ARMv7-M Architecture Reference Manual, DDI 0403E, table B3-13 and B3.5.8-B3.5.9"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm Cortex-M7 Technical Reference Manual, DDI 0489F, 5.8, TCM interfaces"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x600803F8",
+     "size": 8,
+     "sha256": "b0cd7a47fc8e58a497107c498cf22fcf5c697d5e6dccf5df041d5540d5a41ea8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x600803F8",
+     "size": 8,
+     "sha256": "b0cd7a47fc8e58a497107c498cf22fcf5c697d5e6dccf5df041d5540d5a41ea8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x600803F8",
+     "size": 8,
+     "sha256": "b0cd7a47fc8e58a497107c498cf22fcf5c697d5e6dccf5df041d5540d5a41ea8"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x60080426",
+     "size": 4,
+     "sha256": "30928fc924c1ad0d076e5c144f69899ce48fc2bb3c7b227afeb211eea9c9c43b"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60080426",
+     "size": 4,
+     "sha256": "30928fc924c1ad0d076e5c144f69899ce48fc2bb3c7b227afeb211eea9c9c43b"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60080426",
+     "size": 4,
+     "sha256": "30928fc924c1ad0d076e5c144f69899ce48fc2bb3c7b227afeb211eea9c9c43b"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008047E",
+     "size": 4,
+     "sha256": "20d291c2ddf2b30fba5ae9a1b776f77a0f893395eaa059790a1dff2db4682530"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008047E",
+     "size": 4,
+     "sha256": "20d291c2ddf2b30fba5ae9a1b776f77a0f893395eaa059790a1dff2db4682530"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008047E",
+     "size": 4,
+     "sha256": "20d291c2ddf2b30fba5ae9a1b776f77a0f893395eaa059790a1dff2db4682530"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008050C",
+     "size": 8,
+     "sha256": "e4acc37a7845e79ad6f832f10c815fbc9bdf16a7cdecb77c73fca3886252ada1"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008050C",
+     "size": 8,
+     "sha256": "e4acc37a7845e79ad6f832f10c815fbc9bdf16a7cdecb77c73fca3886252ada1"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008050C",
+     "size": 8,
+     "sha256": "e4acc37a7845e79ad6f832f10c815fbc9bdf16a7cdecb77c73fca3886252ada1"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x600803F8",
+     "size": 8,
+     "sha256": "b0cd7a47fc8e58a497107c498cf22fcf5c697d5e6dccf5df041d5540d5a41ea8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60080426",
+     "size": 4,
+     "sha256": "30928fc924c1ad0d076e5c144f69899ce48fc2bb3c7b227afeb211eea9c9c43b"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008047E",
+     "size": 4,
+     "sha256": "20d291c2ddf2b30fba5ae9a1b776f77a0f893395eaa059790a1dff2db4682530"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008050C",
+     "size": 8,
+     "sha256": "e4acc37a7845e79ad6f832f10c815fbc9bdf16a7cdecb77c73fca3886252ada1"
+    }
+   ]
+  },
+  {
+   "id": "hw.mpu.flash-base",
+   "claim": "Stock writes region 2 with base 0x60300000 although its size is 4 MB, so the base is not aligned to the size. Arm says software must align it. By the Arm pseudocode only the address bits above the size compare, which would make the region cover 0x60000000-0x60400000 as older notes state, but older notes showed base 0x60000000. How the chip treats this has not been measured.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x6008041C: movt r3,#0x6030 on the value 0x12, stored to MPU_RBAR at 0x60080420"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm ARMv7-M Architecture Reference Manual, DDI 0403E, B3.5.8 MPU_RBAR, and the ValidateAddress pseudocode in B3.5"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008041C",
+     "size": 8,
+     "sha256": "1609a517a847874e889bb3eee2718a54bade39503193fc2cc8bed3ce89e335c2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008041C",
+     "size": 8,
+     "sha256": "1609a517a847874e889bb3eee2718a54bade39503193fc2cc8bed3ce89e335c2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008041C",
+     "size": 8,
+     "sha256": "1609a517a847874e889bb3eee2718a54bade39503193fc2cc8bed3ce89e335c2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008041C",
+     "size": 8,
+     "sha256": "1609a517a847874e889bb3eee2718a54bade39503193fc2cc8bed3ce89e335c2"
+    }
+   ]
+  },
+  {
+   "id": "hw.mpu.ctrl",
+   "claim": "MPU_CTRL is written as 5: ENABLE and PRIVDEFENA on, HFNMIENA off. So inside HardFault and NMI the MPU does not apply and the default map rules, where SDRAM is write-through. Errata ERR011572 (Arm 1259864) concerns write-through accesses.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x60080510: movs r1,#5 then store to MPU_CTRL"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm ARMv7-M Architecture Reference Manual, DDI 0403E, B3.5.4 and default memory map"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP IMXRT1060CE errata, A p.4, B p.4"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x60080510",
+     "size": 6,
+     "sha256": "3eb199d39000a5967970674908be72a8f2f0aab6fff8a8c5712f61dc88e93d95"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x60080510",
+     "size": 6,
+     "sha256": "3eb199d39000a5967970674908be72a8f2f0aab6fff8a8c5712f61dc88e93d95"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x60080510",
+     "size": 6,
+     "sha256": "3eb199d39000a5967970674908be72a8f2f0aab6fff8a8c5712f61dc88e93d95"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x60080510",
+     "size": 6,
+     "sha256": "3eb199d39000a5967970674908be72a8f2f0aab6fff8a8c5712f61dc88e93d95"
+    }
+   ]
+  },
+  {
+   "id": "hw.cache.geometry",
+   "claim": "L1 caches: data 32 KB 4-way, instruction 32 KB 2-way, 32 byte lines. TCM is not cached.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP AN12042 Using the i.MX RT L1 Cache, Rev. 1, p.2"
+    }
+   ]
+  },
+  {
+   "id": "hw.cache.enable",
+   "claim": "The boot ROM turns caches off before leaving, and APP1 turns them on itself: data cache at 0x600805E6, instruction cache at 0x60080612.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, 9.5.4 Enabling Caches, p.208"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x600805E2-0x600805E6 and 0x6008060E-0x60080612: CCR bits 16 and 17 set"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x600805E0",
+     "size": 8,
+     "sha256": "6933892a495e88f7ed4967afb7a6ac522101f4043e31c20418ef9db3ffbf3b36"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x600805E0",
+     "size": 8,
+     "sha256": "6933892a495e88f7ed4967afb7a6ac522101f4043e31c20418ef9db3ffbf3b36"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x600805E0",
+     "size": 8,
+     "sha256": "6933892a495e88f7ed4967afb7a6ac522101f4043e31c20418ef9db3ffbf3b36"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x6008060C",
+     "size": 8,
+     "sha256": "cd94a8dba355fc47d806be0c56b8e32dabed026e1aa96334cce7529b8f093abf"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6008060C",
+     "size": 8,
+     "sha256": "cd94a8dba355fc47d806be0c56b8e32dabed026e1aa96334cce7529b8f093abf"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6008060C",
+     "size": 8,
+     "sha256": "cd94a8dba355fc47d806be0c56b8e32dabed026e1aa96334cce7529b8f093abf"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x600805E0",
+     "size": 8,
+     "sha256": "6933892a495e88f7ed4967afb7a6ac522101f4043e31c20418ef9db3ffbf3b36"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x6008060C",
+     "size": 8,
+     "sha256": "cd94a8dba355fc47d806be0c56b8e32dabed026e1aa96334cce7529b8f093abf"
+    }
+   ]
+  },
+  {
+   "id": "hw.cache.ops",
+   "claim": "Stock cache maintenance functions: clean by address 0x80015A60 (DCCMVAC), clean and invalidate 0x80015AB0 (DCCIMVAC), invalidate 0x800D5F68 (DCIMVAC). Arguments are address and size.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: each loads the named register, 0xE000EF68, 0xE000EF70, 0xE000EF5C"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80015A72",
+     "size": 4,
+     "sha256": "f713cc2a29b5dcf9c2909b69923dde58f82a3be013de95bd9b8708a33dc7611c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80015A72",
+     "size": 4,
+     "sha256": "f713cc2a29b5dcf9c2909b69923dde58f82a3be013de95bd9b8708a33dc7611c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80015A72",
+     "size": 4,
+     "sha256": "f713cc2a29b5dcf9c2909b69923dde58f82a3be013de95bd9b8708a33dc7611c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80015AC2",
+     "size": 4,
+     "sha256": "ec4f08fd8132dacef28ef4275871edce715e0227666e28a526d08b30a0e9ed81"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80015AC2",
+     "size": 4,
+     "sha256": "ec4f08fd8132dacef28ef4275871edce715e0227666e28a526d08b30a0e9ed81"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80015AC2",
+     "size": 4,
+     "sha256": "ec4f08fd8132dacef28ef4275871edce715e0227666e28a526d08b30a0e9ed81"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D5F7A",
+     "size": 4,
+     "sha256": "c81a133fa6d2eb7baddda4a8fe540d59e5508c70b1063c42e9222a1480a11d25"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D5F7A",
+     "size": 4,
+     "sha256": "c81a133fa6d2eb7baddda4a8fe540d59e5508c70b1063c42e9222a1480a11d25"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D5F7A",
+     "size": 4,
+     "sha256": "c81a133fa6d2eb7baddda4a8fe540d59e5508c70b1063c42e9222a1480a11d25"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80015A72",
+     "size": 4,
+     "sha256": "f713cc2a29b5dcf9c2909b69923dde58f82a3be013de95bd9b8708a33dc7611c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80015AC2",
+     "size": 4,
+     "sha256": "ec4f08fd8132dacef28ef4275871edce715e0227666e28a526d08b30a0e9ed81"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D5F7A",
+     "size": 4,
+     "sha256": "c81a133fa6d2eb7baddda4a8fe540d59e5508c70b1063c42e9222a1480a11d25"
+    }
+   ]
+  },
+  {
+   "id": "hw.cache.speed",
+   "claim": "Memory speed reference, measured by NXP on its own board: SDRAM at 166 MHz reads at 111 MB/s with D-cache and 25 MB/s without, writes about 323 MB/s. So code and tables in SDRAM are fast only while they fit in cache. These are not figures from this unit.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP AN12437 i.MX RT Series Performance Optimization, Rev. 1, table 2-3, p.3"
+    }
+   ]
+  },
+  {
+   "id": "hw.cache.dma-coherency",
+   "claim": "DMA does not see the data cache. Buffers shared with DMA must be cleaned or invalidated, or sit in TCM or non-cacheable memory. This applies to anything a mod hands to SD or uSDHC transfers.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP AN12042 Using the i.MX RT L1 Cache, Rev. 1, chapter 4, p.7-11"
+    }
+   ]
+  },
+  {
+   "id": "hw.errata.relevant",
+   "claim": "Errata most likely to matter: ERR011573 speculative reads of Normal memory, ERR011572 write-through accesses, ERR050144 SAI with FCONT=1 and TMR above 0, ERR011377 FlexSPI DLL lock status. None has been linked to a symptom on a unit.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP IMXRT1060CE errata, A Rev. 1.3 and B Rev. 1.1"
+    }
+   ]
+  },
+  {
+   "id": "hw.faults.vectors",
+   "claim": "Stock vector table in ITCM: initial stack 0x202BE008, reset 0x60080001, SVC 0xDE4D, PendSV 0xDD3D, SysTick 0xDEC5. HardFault, MemManage, BusFault and UsageFault each point to a lone bx lr, so a fault typically returns to the faulting instruction and repeats: the unit appears hung with no message. NMI spins at 0x47C4.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x00000000-0x00000040 and 0x8003C920, 0x800406A8, 0x80036118, 0x800437D0"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the repeat-forever behaviour is reasoned from Arm exception return, not measured"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x00000000",
+     "size": 16,
+     "sha256": "3fb522e0cd44f35253cf51da4071c9984551aead924f6a50d8557a4308cc5ec9"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x00000000",
+     "size": 16,
+     "sha256": "3fb522e0cd44f35253cf51da4071c9984551aead924f6a50d8557a4308cc5ec9"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x00000000",
+     "size": 16,
+     "sha256": "3fb522e0cd44f35253cf51da4071c9984551aead924f6a50d8557a4308cc5ec9"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0000002C",
+     "size": 8,
+     "sha256": "ff98ca20385dcde1c0e294d1600a9b8e1c7d21e44b32dcc915b18da3d33149b4"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0000002C",
+     "size": 8,
+     "sha256": "ff98ca20385dcde1c0e294d1600a9b8e1c7d21e44b32dcc915b18da3d33149b4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0000002C",
+     "size": 8,
+     "sha256": "ff98ca20385dcde1c0e294d1600a9b8e1c7d21e44b32dcc915b18da3d33149b4"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003C920",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003C920",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003C920",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800406A8",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800406A8",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800406A8",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x00000000",
+     "size": 16,
+     "sha256": "3fb522e0cd44f35253cf51da4071c9984551aead924f6a50d8557a4308cc5ec9"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0000002C",
+     "size": 8,
+     "sha256": "ff98ca20385dcde1c0e294d1600a9b8e1c7d21e44b32dcc915b18da3d33149b4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003C920",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800406A8",
+     "size": 4,
+     "sha256": "6c1871acd4bd9950e81b2850fac7ddd44f28500d6bba63991c2599234ddbe61c"
+    }
+   ]
+  },
+  {
+   "id": "hw.dwt.stock",
+   "claim": "Stock reads the DWT cycle counter CYCCNT (0xE0001004) at 0x80004FA6 and 0x80009E0E but contains no write to DEMCR or DWT_CTRL. CYCCNT counts only with DEMCR.TRCENA and DWT_CTRL.CYCCNTENA set. A mod must not assume the counter runs.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: full scan of ITCM and SDRAM code for DEMCR 0xE000EDFC, offset 0xDFC, and 0xE0001000 found no writes; reads at the given addresses"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm ARMv7-M Architecture Reference Manual, DDI 0403E, C1.8.3 and C1.6.5"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "a private mod timing itself with CYCCNT froze on the owner's unit, 2026-11"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80004F9E",
+     "size": 8,
+     "sha256": "e14ab40884442e8f51435bea5677bb3428e66ba4a724e179d45a0a14b35db2da"
+    }
+   ]
+  },
+  {
+   "id": "hw.dwt.doom",
+   "claim": "DOOM OS 0.7.2 and 0.7.3 contain a helper that sets TRCENA and CYCCNTENA and returns CYCCNT, at 0x6032CB20 and 0x6032CBB4. It does not touch DWT_LAR, and it runs only when one of its 8 to 10 callers runs, so the counter is not guaranteed from boot.",
+   "topic": "hardware",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "doom-os-0.7.2 0x6032CB20, doom-os-0.7.3 0x6032CBB4: same 44 byte body; callers from a scan of DOOM OS code"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x6032CB20",
+     "size": 12,
+     "sha256": "66d854b1a37d6fa4238984d97c5729a83a24f10262a61dc74ecf64d646fa22fa"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x6032CBB4",
+     "size": 12,
+     "sha256": "66d854b1a37d6fa4238984d97c5729a83a24f10262a61dc74ecf64d646fa22fa"
+    }
+   ]
+  },
+  {
+   "id": "hw.dwt.lock",
+   "claim": "Whether this chip implements the DWT software lock (DWT_LAR 0xE0001FB0, unlock value 0xC5ACCE55) is unknown. Write TRCENA, then the unlock, then CYCCNTENA, which is safe in both cases, and verify the count moves.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Arm Cortex-M7 Technical Reference Manual, DDI 0489F, chapter 11, p.142"
+    },
+    {
+     "label": "DOC",
+     "source": "Arm ARMv7-M Architecture Reference Manual, DDI 0403E, p.826"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no measurement on a unit"
+    }
+   ]
+  },
+  {
+   "id": "hw.cycles.cost",
+   "claim": "Per-instruction cycle costs on this unit have not been established. Arm publishes no Cortex-M7 cycle tables, and instruction counts from the exact stand are not cycles. Cache misses, SDRAM waits and interrupts are not in those counts. The workload measurement in hw.cycles.measured is one observation, not a general timing model. Only measurements on real units can calibrate time.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Arm Cortex-M7 Technical Reference Manual, DDI 0489F and Arm ARMv7-M Architecture Reference Manual, DDI 0403E: no instruction timing tables"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no per-instruction timing measurements; hw.cycles.measured records aggregate workload on one unit"
+    }
+   ]
+  },
+  {
+   "id": "hw.cycles.measured",
+   "claim": "First numbers from a real unit, read off a mod's own monitor screen: with a per-pad filter mod running, audio work took about 10 percent of the block time on average and 18 percent at peak, with no overruns; the cycle counter gave a core clock of 599-600 MHz. This is one unit, one project and one moment, measured by the mod itself, so it bounds nothing in general; it does show that the 600 MHz assumption in st.audio.headroom holds on that unit and that stock plus a light per-voice effect left most of a block free there.",
+   "topic": "hardware",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit, 2026-11-12, photo of the monitor screen of the owner's private mod (a per-pad filter on DOOM OS 0.7.3); one unit, one moment"
+    }
+   ]
+  },
+  {
+   "id": "hw.periph.lpuart3",
+   "claim": "LPUART3 at 0x4018C000 is the link to the second processor. It runs at 1,000,000 baud: setup at 0x80001930 writes 0xF4240 at 0x80001972 and refers to the LPUART3 base at 0x800019D2. Other LPUART bases (1, 2, 5, 6, 7) appear only in generic clock and setup tables at 0x80002B62-0x80002BD0 and 0x800401D0-0x80040378; their use is not established.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80001972, 0x800019D2"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, chapter 49, p.2897"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80001972",
+     "size": 8,
+     "sha256": "5b73a0d326f6aab3b7f6924157c26874b22ed706b5ef9aa3febd7a03c5224ef9"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80001972",
+     "size": 8,
+     "sha256": "5b73a0d326f6aab3b7f6924157c26874b22ed706b5ef9aa3febd7a03c5224ef9"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80001972",
+     "size": 8,
+     "sha256": "5b73a0d326f6aab3b7f6924157c26874b22ed706b5ef9aa3febd7a03c5224ef9"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80001972",
+     "size": 8,
+     "sha256": "5b73a0d326f6aab3b7f6924157c26874b22ed706b5ef9aa3febd7a03c5224ef9"
+    }
+   ]
+  },
+  {
+   "id": "hw.periph.send",
+   "claim": "Sending to LPUART3 goes through 0x800D93F0(buffer, length): it takes the mutex held at [0x805925E4+0x10], writes each byte to DATA (+0x1C) after polling TDRE, then releases. It blocks: at 1 Mbaud about 10 microseconds per byte, waiting in the caller. Do not call it from the audio path.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800D93F0-0x800D9436; 300 direct call sites found in a scan"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D93F0",
+     "size": 8,
+     "sha256": "99966926c90c4a6966873b9984064ff05391e28e192e2baec20a709a38c2ceaf"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D93F0",
+     "size": 8,
+     "sha256": "99966926c90c4a6966873b9984064ff05391e28e192e2baec20a709a38c2ceaf"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D93F0",
+     "size": 8,
+     "sha256": "99966926c90c4a6966873b9984064ff05391e28e192e2baec20a709a38c2ceaf"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D9406",
+     "size": 6,
+     "sha256": "67f143d7524197dec08b7f0cebf4d49e1fcddf62592f1d661786af8a318aa604"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D9406",
+     "size": 6,
+     "sha256": "67f143d7524197dec08b7f0cebf4d49e1fcddf62592f1d661786af8a318aa604"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D9406",
+     "size": 6,
+     "sha256": "67f143d7524197dec08b7f0cebf4d49e1fcddf62592f1d661786af8a318aa604"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D93F0",
+     "size": 8,
+     "sha256": "99966926c90c4a6966873b9984064ff05391e28e192e2baec20a709a38c2ceaf"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D9406",
+     "size": 6,
+     "sha256": "67f143d7524197dec08b7f0cebf4d49e1fcddf62592f1d661786af8a318aa604"
+    }
+   ]
+  },
+  {
+   "id": "hw.periph.sai",
+   "claim": "SAI1 at 0x40384000 and eDMA carry audio from main processor to second processor. Stock configures it at 0x1CFD6-0x1CFF2 and writes four DMA TCD source addresses at 0x1D014-0x1D026 (eDMA TCD base 0x400E9000, one channel per plane). DMAMUX is referred to at 0x80001C32 inside DMA setup 0x80001BE0. The DMA and SAI register setup, including a receive path from the second processor, is in hw.periph.sai-dma. Third-party notes describe TDM with 16 x 32 bit slots on 4 TX lines; slot meaning on the receiver is not documented.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x1CFD6, 0x1D004, 0x1D014-0x1D026, 0x80001C32"
+    },
+    {
+     "label": "DOC",
+     "source": "dm-404 project notes (github.com/nickpetty/dm-404), third party, for the TDM format"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, chapter 38, p.1988-1998"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001D014",
+     "size": 8,
+     "sha256": "d02b60782c2c355f362c1447e9c50d9c667c3fc70f6e96e3c027f57f058506f1"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001D014",
+     "size": 8,
+     "sha256": "d02b60782c2c355f362c1447e9c50d9c667c3fc70f6e96e3c027f57f058506f1"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001D014",
+     "size": 8,
+     "sha256": "d02b60782c2c355f362c1447e9c50d9c667c3fc70f6e96e3c027f57f058506f1"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001D014",
+     "size": 8,
+     "sha256": "d02b60782c2c355f362c1447e9c50d9c667c3fc70f6e96e3c027f57f058506f1"
+    }
+   ]
+  },
+  {
+   "id": "hw.periph.sai-dma",
+   "claim": "SAI1 and eDMA setup at 0x80001BE0 (called once, from 0x80000BEC). Transmit: TCD0-3 (eDMA TCD base 0x400E9000) each write a 32-bit word (ATTR 0x202, SOFF 4, DOFF 0) to TDR0-3 of SAI1 (0x40384020-0x4038402C), 64 bytes per request, 64 major iterations, channels linked 0->1->2->3, only channel 3 interrupts at the end of the major loop (CSR 0x0A); DMAMUX channel 0 = source 20 (SAI1 transmit). Receive: TCD4 reads RDR0 of SAI1 (SADDR 0x403840A0, SOFF 0) as 16-bit units (ATTR 0x101), 32 bytes per request, DOFF 2, 64 major iterations, CSR 0x0A; DMAMUX channel 4 = source 19 (SAI1 receive). SAI1 registers set in the same function: TCR1 16, TCR2 0x40000000 (SYNC=01, transmit synchronous with receive), TCR3 0xF0000 (four transmit lanes), TCR4 0x100F1F38 (frame 16 words, sync width 32, MSB first), TCR5 0x1F1F1300 (words 32 bits, first bit 19, so 20 significant bits per slot); RCSR 0x10000001, RCR1 16, RCR2 0, RCR3 0x10000 (one receive lane), RCR4 0x100F1F10 (16 words, MSB first), RCR5 0x1F1F0F00 (words 32 bits, first bit 15, so 16 significant bits per slot). So every frame the second processor sends 16 slots back on one lane, of which APP1 keeps 16 bits each; one receive bank is 64 frames x 32 bytes = 0x800 bytes, one transmit bank per lane 64 x 64 bytes = 0x1000. Audio start in ITCM 0x1CF9C-0x1D04E: handlers are registered through 0x10052 (-> 0x800C1568) with priority 7: DMA channel 3 -> 0x80003409, channel 4 -> 0x800034A9; NVIC enables IRQ 3 and 4; SAI receive then transmit is enabled through veneers 0x10048 (-> 0x80002D90) and 0x1003E (-> 0x80002DF8), which have the shape of the NXP SDK SAI_RxEnable/SAI_TxEnable (set RE/TE, and the partner side when synchronous); transmit sources 0x20000000 + bank x 0x1000 (+0x2000 per lane, bank index [0x80591D5C]), receive destination 0x20008000 + bank x 0x800 (bank index [0x80591D58]); SERQ (0x400E801B) is written for channels 3, 2, 1, 0, then 4. Channel 4 handler 0x800034A8 (no direct callers) calls 0x800D316C([0x80591D54], 2), clears DONE and the interrupt of channel 4 (CDNE, CINT), sets TCD4 DADDR (0x400E9090) to 0x20008000 + [0x80591D58] x 0x800 and writes SERQ for channel 4 again. Each of the two enable veneers has one direct call in the image. Neither image holds the constant 0x400E801A (CERQ) or a movw/movt pair for it, but APP1 has eDMA driver code that keeps the base 0x400E8000 in a handle (for example a create-handle routine at 0x80037B18), so a stop of channel 4 through such a handle is not ruled out. Not found: who reads the receive banks at 0x20008000 (resampling, a level meter?); no movw/movt pair outside the start code and the channel 4 handler builds that address, and readers through a pointer, for example whatever 0x800D316C wakes, are not traced. What the 16 slots carry was seen on a unit: hw.bmc.rx-slots.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "0x80001BE0-0x80001D8C, 0x1CF9C-0x1D04E, 0x10052/0x10048/0x1003E veneers, 0x80002D90, 0x80002DF8, 0x800034A8, read 2026-11-14 in stock-5.52, doom-os-0.7.2 and doom-os-0.7.3 (identical bytes)"
+    },
+    {
+     "label": "BYTES",
+     "source": "search of all mapped regions for 0x400E801A and movw/movt 0x801A/0x400E: none in stock-5.52 or doom-os-0.7.3, 2026-11-14; movw/movt pairs building 0x20008000 in doom-os-0.7.3: only 0x1D010 and 0x800034C6"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3: eDMA TCD and DMAMUX source list, SAI register chapter (field meanings)"
+    },
+    {
+     "label": "DOC",
+     "source": "first noted by a DOOM OS mod session, 2026-11-14 (in that session's private notes); every number re-read here from the bytes"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80001CC6",
+     "size": 12,
+     "sha256": "cfd09eb2b7fe824f37ba552dbf5d05f3041f6d182a53e7e14508a8bcb09a8924"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80001CC6",
+     "size": 12,
+     "sha256": "cfd09eb2b7fe824f37ba552dbf5d05f3041f6d182a53e7e14508a8bcb09a8924"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80001CC6",
+     "size": 12,
+     "sha256": "cfd09eb2b7fe824f37ba552dbf5d05f3041f6d182a53e7e14508a8bcb09a8924"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80001CF0",
+     "size": 2,
+     "sha256": "330b82b51b646675f48e333657447f0c51b2cb30977a45fa4e4c449e77b7c74d"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80001CF0",
+     "size": 2,
+     "sha256": "330b82b51b646675f48e333657447f0c51b2cb30977a45fa4e4c449e77b7c74d"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80001CF0",
+     "size": 2,
+     "sha256": "330b82b51b646675f48e333657447f0c51b2cb30977a45fa4e4c449e77b7c74d"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80001D50",
+     "size": 12,
+     "sha256": "767bc7f93c8b7a381e25e2e57a043b24e4d30396bae3c9060720b2b79eb22294"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80001D50",
+     "size": 12,
+     "sha256": "767bc7f93c8b7a381e25e2e57a043b24e4d30396bae3c9060720b2b79eb22294"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80001D50",
+     "size": 12,
+     "sha256": "767bc7f93c8b7a381e25e2e57a043b24e4d30396bae3c9060720b2b79eb22294"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001CFB8",
+     "size": 4,
+     "sha256": "05e3f4081206fe7c1d19c68d739380caa8d0321fbbd1548ea4e0ff39b1b8dba1"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001CFB8",
+     "size": 4,
+     "sha256": "05e3f4081206fe7c1d19c68d739380caa8d0321fbbd1548ea4e0ff39b1b8dba1"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001CFB8",
+     "size": 4,
+     "sha256": "05e3f4081206fe7c1d19c68d739380caa8d0321fbbd1548ea4e0ff39b1b8dba1"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x0001D044",
+     "size": 8,
+     "sha256": "cb32e247bfa60589bafad91dd4ebb304cc6e0d018aa361322490c77c3d1b23f5"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x0001D044",
+     "size": 8,
+     "sha256": "cb32e247bfa60589bafad91dd4ebb304cc6e0d018aa361322490c77c3d1b23f5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x0001D044",
+     "size": 8,
+     "sha256": "cb32e247bfa60589bafad91dd4ebb304cc6e0d018aa361322490c77c3d1b23f5"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800034E2",
+     "size": 8,
+     "sha256": "d370dabb1f21e23206a5f26ff9db12507b9c16f31e07a5bf5a1630729f101511"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800034E2",
+     "size": 8,
+     "sha256": "d370dabb1f21e23206a5f26ff9db12507b9c16f31e07a5bf5a1630729f101511"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800034E2",
+     "size": 8,
+     "sha256": "d370dabb1f21e23206a5f26ff9db12507b9c16f31e07a5bf5a1630729f101511"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80001CC6",
+     "size": 12,
+     "sha256": "cfd09eb2b7fe824f37ba552dbf5d05f3041f6d182a53e7e14508a8bcb09a8924"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80001CF0",
+     "size": 2,
+     "sha256": "330b82b51b646675f48e333657447f0c51b2cb30977a45fa4e4c449e77b7c74d"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80001D50",
+     "size": 12,
+     "sha256": "767bc7f93c8b7a381e25e2e57a043b24e4d30396bae3c9060720b2b79eb22294"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001CFB8",
+     "size": 4,
+     "sha256": "05e3f4081206fe7c1d19c68d739380caa8d0321fbbd1548ea4e0ff39b1b8dba1"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x0001D044",
+     "size": 8,
+     "sha256": "cb32e247bfa60589bafad91dd4ebb304cc6e0d018aa361322490c77c3d1b23f5"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800034E2",
+     "size": 8,
+     "sha256": "d370dabb1f21e23206a5f26ff9db12507b9c16f31e07a5bf5a1630729f101511"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.rx-slots",
+   "claim": "What the second processor sends back on SAI1 receive (hw.periph.sai-dma), as seen on one unit: sound arrives all the time, not only while resampling. Slots 1 and 2 (indices 0 and 1 of the 16 int16 values of a frame) are the final output after BUS 4: pads, the EXT SOURCE input and the BUS 3/4 effects; slot 2 is the left channel and slot 1 the right (checked with panning). They are taken before the VOLUME knob: VOLUME, even at 0, did not change the numbers. Slots 3 and 4 carry the pads without the input and without the BUS 3/4 effects (where they sit relative to BUS 1/2 was not checked); slots 5-16 were all zero every time. Peaks over two receive banks (about 2.7 ms), shown 4 times a second, slots 1-4 in dBFS: silence all zero; a melodic sample with no effects -14, -17, -13, -16; a pattern with effects on BUS 3/4 -3, -2, -14, -13; only the EXT SOURCE input -13, -13, zero, zero. On a loud pattern the output peaked at -0.1 dBFS on both channels and never reached full scale (32767); that the output has a ceiling (a limiter or headroom in the second processor) is a hypothesis. Open: whether slots 1-2 are bit for bit what RESAMPLE records, what exactly slots 3-4 are, and whether this holds on other units or firmware versions. The emulator cannot show any of this: it has no second processor.",
+   "topic": "hardware",
+   "firmware": "doom-os-0.7.3",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit (the owner's), 2026-11-14, DOOM OS 0.7.3 with a private diagnostic mod (builds d73-H12 to d73-H16b) that only reads the receive banks and shows them; photos of the screen and the owner's words, kept outside git: a table of the 16 slot peaks for silence, a sample, a pattern with BUS 3/4 effects and the input alone; VOLUME turned to 0 with no change; left/right found by panning (build d73-H14b); PEAK -0.1 -0.1 on a loud pattern. Each case once"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "output ceiling at -0.1 dBFS; that the stock RESAMPLE reads the same slots"
+    }
+   ]
+  },
+  {
+   "id": "hw.periph.spi-sd",
+   "claim": "Other peripherals referenced by stock: LPSPI1-4 in a generic driver at 0x8003E98E-0x8003F71A, uSDHC1 at 0xB4AE and uSDHC2 at 0xB452, FlexSPI 0x402A8000 at 0x80001326 and several flash routines, GPIO2 at 13 or more sites, ADC1/ADC2 at 0x8003580E-0x8003581A, ADC_ETC by offset from GPIO2 at 0x800355DC. A complete map from peripheral to user has not been made. Third-party notes place the display on LPSPI4, card slot on uSDHC1 and eMMC on uSDHC2; not confirmed here.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 reference scan of movw/movt pairs at the addresses given; meaning of each user only partly read"
+    },
+    {
+     "label": "DOC",
+     "source": "dm-404 project notes, third party"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003E9A4",
+     "size": 4,
+     "sha256": "9be58bda5385b1bcafedeb3a786f0924558100ad2844b45bcdbd0a596f84a2dd"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003E9A4",
+     "size": 4,
+     "sha256": "9be58bda5385b1bcafedeb3a786f0924558100ad2844b45bcdbd0a596f84a2dd"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003E9A4",
+     "size": 4,
+     "sha256": "9be58bda5385b1bcafedeb3a786f0924558100ad2844b45bcdbd0a596f84a2dd"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003E9A4",
+     "size": 4,
+     "sha256": "9be58bda5385b1bcafedeb3a786f0924558100ad2844b45bcdbd0a596f84a2dd"
+    }
+   ]
+  },
+  {
+   "id": "hw.panel.scan",
+   "claim": "Buttons, pads and encoder are read by the main processor itself. Panel setup at 0x80072F38 makes GPIO2 bits 23-25 and 27, 30, 31 outputs. The scan at 0x80046E90, first call of the panel tick, reads GPIO2 bits 23-25 as a multiplexer position and 12 bit values from a table at 0x80592540, and 0x800355B0 collects conversion results through ADC_ETC. That 16 pressure pads sit behind this multiplexer is inferred.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80072F48-0x80072F60, 0x80046E96-0x80046EB6, 0x800355B0-0x800355DC"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "pad and matrix wiring is inferred from these reads and from third-party dm-404 notes"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80072F54",
+     "size": 4,
+     "sha256": "94e3d35feb0d57cdd4ac19a7e9f283df3c50edc3c93d3f21cda5c5b87d5df2e0"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80072F54",
+     "size": 4,
+     "sha256": "94e3d35feb0d57cdd4ac19a7e9f283df3c50edc3c93d3f21cda5c5b87d5df2e0"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80072F54",
+     "size": 4,
+     "sha256": "94e3d35feb0d57cdd4ac19a7e9f283df3c50edc3c93d3f21cda5c5b87d5df2e0"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80046EAE",
+     "size": 4,
+     "sha256": "16485ba7b12677469911bb0fdf142d1900dea44448af9d7c44e68ac90252eaef"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80046EAE",
+     "size": 4,
+     "sha256": "16485ba7b12677469911bb0fdf142d1900dea44448af9d7c44e68ac90252eaef"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80046EAE",
+     "size": 4,
+     "sha256": "16485ba7b12677469911bb0fdf142d1900dea44448af9d7c44e68ac90252eaef"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800355DC",
+     "size": 4,
+     "sha256": "d53db72222e34e05dcb940fb762699953f2941a85c0078a4b637185839d748ab"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800355DC",
+     "size": 4,
+     "sha256": "d53db72222e34e05dcb940fb762699953f2941a85c0078a4b637185839d748ab"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800355DC",
+     "size": 4,
+     "sha256": "d53db72222e34e05dcb940fb762699953f2941a85c0078a4b637185839d748ab"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80072F54",
+     "size": 4,
+     "sha256": "94e3d35feb0d57cdd4ac19a7e9f283df3c50edc3c93d3f21cda5c5b87d5df2e0"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x80046EAE",
+     "size": 4,
+     "sha256": "16485ba7b12677469911bb0fdf142d1900dea44448af9d7c44e68ac90252eaef"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800355DC",
+     "size": 4,
+     "sha256": "d53db72222e34e05dcb940fb762699953f2941a85c0078a4b637185839d748ab"
+    }
+   ]
+  },
+  {
+   "id": "hw.panel.uart-claim",
+   "claim": "Older project notes say the panel is a separate controller on a UART sending events to PANEL TASK. The bytes do not support that for input: the panel tick scans GPIO and ADC directly. LED output does go out over LPUART3. Whether any part of the panel has its own controller is not established (photos show an unread chip, IC3, on the panel board).",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "see hw.panel.scan"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    }
+   ]
+  },
+  {
+   "id": "hw.display",
+   "claim": "The display is a 128 x 64 monochrome OLED on connector CN5. Boot animation and screen frame lines are 4 little-endian 32 bit words, the left pixel in bit 31. Boot animation lines run bottom to top. Controller SSD1309 comes from third-party notes.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: a boot animation built with the opposite bit order showed cut into 4 parts, fixed by using bit 31, 2026-10"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    },
+    {
+     "label": "DOC",
+     "source": "dm-404 project notes, third party, for SSD1309"
+    }
+   ]
+  },
+  {
+   "id": "hw.display.port",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "How the display is driven: the SSD1309 (hw.display) sits on LPSPI4 at 0x403A0000, chip select 0, with its data/command line on GPIO2 pin 1 (DR_SET 0x401BC084, DR_CLEAR 0x401BC088, mask 2: low for commands, high for data). The firmware sends a frame from a command table at 0x83FF1000: horizontal addressing (20 00), then columns 21 00 7F and pages 22 00 07, then 1024 data bytes, one per column of each 8-row page, bit 0 the top row. A mod can draw without the firmware by polling the port: DMA requests off (DER 0x1C), FIFOs emptied (CR 0x10 bits 8-9), flags cleared (SR 0x14), 8-bit frames with receive masked in TCR (0x60), each byte into TDR (0x64) when the transmit FIFO count in FSR (0x5C) is below 12, and the D/C pin moved only after FSR and SR bit 24 show the port idle. Put DER and TCR back afterwards if the firmware is to go on.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: a private mod's fault screen drawn this way was photographed three times, 2026-11-11 to 2026-11-23 (hk.fault-visibility)"
+    },
+    {
+     "label": "BYTES",
+     "source": "the firmware's display command table at 0x83FF1000 and its LPSPI driver (hw.periph.spi-sd), read in the private mod's work"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 reference manual, LPSPI and GPIO chapters; DM-404 machine model for the pin and the controller"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.chip",
+   "claim": "The second processor is a Roland custom chip marked Roland BMC, with its own 32 MB SDRAM. No public datasheet exists. Roland describes the family as arrays of DSP and CPU cores. It runs APP0 and handles effects, converters (PCM4104 DAC, PCM1802 ADC on the board) and, by third-party notes, USB audio. Mods reach it only through messages from APP1. Trade records list a custom IC MB8AL1031 (BMC) from Fujitsu shipped to Roland, and the same Roland BMC marking is reported on BOSS GT-1000CORE and Roland AX-Edge boards; collected by a second agent on 2026-11-12 and not re-checked here.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland public material on Behavior Modeling Core"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "wiring from converters to the chip is inferred"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "public customs listings and teardown photos gathered on 2026-11-12, kept outside the repository; that MB8AL1031 is the chip on this board is an inference from the shared BMC name"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.sysex",
+   "claim": "Effect parameters travel to the second processor as Roland DT1 packets over LPUART3: 0x800CD3A0 builds the request, encoder 0x800D8118, sender 0x800D93F0. Slot TYPE address is 02 02 00 (08+2 x slot). Parameter address is 03 (q>>7) (q&7F) offset, with q = 5 x (ID-1) + slot and offset 2 x parameter index, value as two nibbles, checksum minus sum mod 128. Reverb (ID 10) thus falls on 2D+slot, Lo-fi (ID 20) on 5F+slot.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800CD3A0, 0x800D8118"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "encoder run on the owner's research stand: 5540 packets over 383 parameters, 5 slots, min/mid/max, matched an independent calculation, 2026-10"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D8118",
+     "size": 8,
+     "sha256": "c9a144612d5c976ec19246922cd7bdb86dd56e6999a6478dad5efe26440d9179"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D8118",
+     "size": 8,
+     "sha256": "c9a144612d5c976ec19246922cd7bdb86dd56e6999a6478dad5efe26440d9179"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D8118",
+     "size": 8,
+     "sha256": "c9a144612d5c976ec19246922cd7bdb86dd56e6999a6478dad5efe26440d9179"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800CD3A0",
+     "size": 8,
+     "sha256": "b1055a07d58736a4985fbd22090022ccea332bccb53c63ca9ef6d95e5d5e93e8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800CD3A0",
+     "size": 8,
+     "sha256": "b1055a07d58736a4985fbd22090022ccea332bccb53c63ca9ef6d95e5d5e93e8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800CD3A0",
+     "size": 8,
+     "sha256": "b1055a07d58736a4985fbd22090022ccea332bccb53c63ca9ef6d95e5d5e93e8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D8118",
+     "size": 8,
+     "sha256": "c9a144612d5c976ec19246922cd7bdb86dd56e6999a6478dad5efe26440d9179"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800CD3A0",
+     "size": 8,
+     "sha256": "b1055a07d58736a4985fbd22090022ccea332bccb53c63ca9ef6d95e5d5e93e8"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.rx",
+   "claim": "Bytes from the second processor arrive by LPUART3 interrupt. The vector table entry (0x98, stub 0x800400C8) points to a generic handler 0x80090F58 that fills a byte ring through the control table 0x833B708C, but startup replaces it for LPUART3: 0x80001930 registers 0x80003381 for IRQ 22 at priority 7 through 0x800C1568. That handler keeps the low 7 bits of each byte, gathers four into a word and puts it in the queue at 0x8059275C (flag +0, read +4, write +8, data +0xC to +0x400C), then wakes the task. The task loop at 0x800EBAE4 dispatches four-byte packets through the 11-entry table at 0x800EBC00 (hw.bmc.rx-table). Entry 0 is the service dispatcher 0x800665A8; its packets and address cases are described in hw.bmc.service. Other entries handle other packet channels. The nested status table under service packet 01 FF 00 value is not itemised here.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x00000098, 0x80090F58, 0x800665A8, 0x800EBC00"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: dispatch loop 0x800EBAE4-0x800EBB0A and all 11 pointers at 0x800EBC00, re-read 2026-11-14"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x80001930, 0x80003380-0x80003420 (and #0x7f, cmp r3,#4, wake 0x800D316C), read 2026-11-23 after the private mod's protocol study of 2026-11-06"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x00000098",
+     "size": 4,
+     "sha256": "a71aff92aa27ea0f28791bf527f4ca754fa5feb37b5cb04e6c2a12e5ad66eda8"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x00000098",
+     "size": 4,
+     "sha256": "a71aff92aa27ea0f28791bf527f4ca754fa5feb37b5cb04e6c2a12e5ad66eda8"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x00000098",
+     "size": 4,
+     "sha256": "a71aff92aa27ea0f28791bf527f4ca754fa5feb37b5cb04e6c2a12e5ad66eda8"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800EBC00",
+     "size": 4,
+     "sha256": "a9a15c9c46c78bc111d9847b0220ae7598066ab103fcfc50aa7afa8e69f8fa01"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800EBC00",
+     "size": 4,
+     "sha256": "a9a15c9c46c78bc111d9847b0220ae7598066ab103fcfc50aa7afa8e69f8fa01"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800EBC00",
+     "size": 4,
+     "sha256": "a9a15c9c46c78bc111d9847b0220ae7598066ab103fcfc50aa7afa8e69f8fa01"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800665A8",
+     "size": 8,
+     "sha256": "92d5915fd2085e59f719c909b0f1df0f61bea83dbd64b653b695bd731817b836"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800665A8",
+     "size": 8,
+     "sha256": "92d5915fd2085e59f719c909b0f1df0f61bea83dbd64b653b695bd731817b836"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800665A8",
+     "size": 8,
+     "sha256": "92d5915fd2085e59f719c909b0f1df0f61bea83dbd64b653b695bd731817b836"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x00000098",
+     "size": 4,
+     "sha256": "a71aff92aa27ea0f28791bf527f4ca754fa5feb37b5cb04e6c2a12e5ad66eda8"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800EBC00",
+     "size": 4,
+     "sha256": "a9a15c9c46c78bc111d9847b0220ae7598066ab103fcfc50aa7afa8e69f8fa01"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800665A8",
+     "size": 8,
+     "sha256": "92d5915fd2085e59f719c909b0f1df0f61bea83dbd64b653b695bd731817b836"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.commands",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "claim": "What APP1 sends to the second processor besides effect parameters: of about 300 calls of the sender 0x800D93F0, 46 send BMC commands of four bytes, 33 of the form 01 FE code value and 13 of the form 01 FF code argument; most of the rest are DT1 effect messages (hw.bmc.sysex, first byte 04-07) and two are pad lights (01 05, 01 09). 01 FE codes seen: 00, 0A, 0B, 0C, 0D, 10, 11, 20 (for example 01 FE 00 00 at 0x8014469E). 01 FF codes: 00, 05, 10, 20, 30, 50, 70, 90, plus two sent another way: 01 FF 02 00, which enters the APP0 update and is sent from a DMA callback 0x80040009 set up at 0x8017D322, and 01 FF FE mode, a report of the start mode built at 0x80591CDC+2 and sent from 0x80142B98. Coming back, 01 FE packets do something only for code 0x20 (0x80056C20 with the value, stored at 0x80249A64); 01 FF goes through the 256-way table of hw.bmc.service. What each command means is not established; a mod should not send them.",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "private mod's study of stock 5.52 and DOOM OS 0.7.2, 2026-11-06, every call of 0x800D93F0 traced from the writes into the buffer it passes; 0x8014469E re-read 2026-11-23"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the meaning of each code; 16 call sites whose first byte comes from memory were not resolved"
+    }
+   ]
+  },
+  {
+   "id": "hw.leds.path",
+   "claim": "All LEDs share one path. 0x800D4910(idx, mode, rgb), 635 call sites, idx 0-49 of which 0-15 are pads, caches colour at 0x80BBCC34 and mode at 0x80BBCCFC and sends only on change. It calls 0x800A7DB0, which uses table 0x801E4354, then 0x8008CCC0(channel, mode, value), which makes a 4 byte message [1, cmd, channel, value] with cmd 1, 0, 6, 7, 8, 9 for modes 0-5 (a tbb at 0x8008CCD8), sent by 0x800D93F0 over LPUART3. The cache at 0x80BBCC34 and 0x80BBCCFC is written by stock code around 0x8003E1xx, 0x800C4Dxx and 0x800D49xx before anything is sent; a hook on the send 0x800A7DB0 (hk.site.led) sees the changes but leaves the cache as it is, so after a mod's own lights the cache still says what the stock last wanted.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800D4910, 0x800A7DB0, 0x8008CCC0"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x8008CCC0-0x8008CD04, and the writers of 0x80BBCC34 and 0x80BBCCFC as reported by a private mod session 2026-11-18; stock-5.52, doom-os-0.7.2, doom-os-0.7.3 and doom-os-0.7.4 compared at the addresses named: identical bytes, re-read in this repository 2026-11-18"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800D4910",
+     "size": 8,
+     "sha256": "3b870fe8c34571c5e44be018fcb5d2f2db3d7823306f2374637ac068dec52142"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800D4910",
+     "size": 8,
+     "sha256": "3b870fe8c34571c5e44be018fcb5d2f2db3d7823306f2374637ac068dec52142"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800D4910",
+     "size": 8,
+     "sha256": "3b870fe8c34571c5e44be018fcb5d2f2db3d7823306f2374637ac068dec52142"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8008CCC0",
+     "size": 8,
+     "sha256": "a688e3b7cfe75d9b3e81f514e8d76953b949b3cdc12512a9b08bb5e9efbf95d4"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8008CCC0",
+     "size": 8,
+     "sha256": "a688e3b7cfe75d9b3e81f514e8d76953b949b3cdc12512a9b08bb5e9efbf95d4"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8008CCC0",
+     "size": 8,
+     "sha256": "a688e3b7cfe75d9b3e81f514e8d76953b949b3cdc12512a9b08bb5e9efbf95d4"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800D4910",
+     "size": 8,
+     "sha256": "3b870fe8c34571c5e44be018fcb5d2f2db3d7823306f2374637ac068dec52142"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x800A7DB0",
+     "size": 8,
+     "sha256": "cfe31fc83b48549aab509c75e1d65eea6c3534ffc622e74155317213bea513b2"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8008CCC0",
+     "size": 8,
+     "sha256": "a688e3b7cfe75d9b3e81f514e8d76953b949b3cdc12512a9b08bb5e9efbf95d4"
+    }
+   ]
+  },
+  {
+   "id": "hw.leds.budget",
+   "claim": "One pad colour change is 3 messages, 12 bytes, 120 microseconds of blocking UART at 1 Mbaud. All 16 pads take about 1.92 ms, more than the 1 ms panel tick, on the same mutex and wire as effect parameters. Whether that causes audible or visible delay is unmeasured.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "byte count from hw.leds.path and baud from hw.periph.lpuart3"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "test_led_uart_budget on the owner's research stand, 2026-11-05"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "effect on a real unit not tested"
+    }
+   ]
+  },
+  {
+   "id": "hw.leds.modes",
+   "claim": "LED mode 0 is a steady idle colour, not off. Off is mode 0 with colour 0xFFFFFF through 0x8003E1F8. Mode 1 is bright or pressed, mode 2 through 0x8003E1A0. The perceived brightness curve is unmeasured.",
+   "topic": "hardware",
+   "firmware": [
+    "stock-5.52",
+    "doom-os-0.7.2",
+    "doom-os-0.7.3",
+    "doom-os-0.7.4"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 callers of 0x8003E1F8, 0x8003E1A0, 0x8003E240; read in part"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "meaning inferred from call sites, no report from a unit"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8003E1F8",
+     "size": 4,
+     "sha256": "9f488438f4a2db68c158e2fd7ece65769209db30448ce05c7b7916269b29673e"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8003E1F8",
+     "size": 4,
+     "sha256": "9f488438f4a2db68c158e2fd7ece65769209db30448ce05c7b7916269b29673e"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8003E1F8",
+     "size": 4,
+     "sha256": "9f488438f4a2db68c158e2fd7ece65769209db30448ce05c7b7916269b29673e"
+    },
+    {
+     "firmware": "doom-os-0.7.4",
+     "address": "0x8003E1F8",
+     "size": 4,
+     "sha256": "9f488438f4a2db68c158e2fd7ece65769209db30448ce05c7b7916269b29673e"
+    }
+   ]
+  },
+  {
+   "id": "hw.usb",
+   "claim": "USB: the board has a USB2422 2-port hub (IC6). A computer sees the hub (0424:2422) with two devices behind it: 0582:0281, a composite USB audio and MIDI device, and 0582:02E7, a CDC-ACM serial port named 'Roland SP-404MKII', which Roland's app and SparkyMK2 use for files and parameters (hw.usb.link). Third-party notes say the main chip provides the serial device and the second processor the audio and MIDI; that split is not checked here. No send path from APP1 to USB-MIDI has been found; sysex at 0x800CD3A0 goes to LPUART3. The USB stack in APP1 and its descriptors are not read.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "owner's board photos, 2026-11-05 (one unit)"
+    },
+    {
+     "label": "DOC",
+     "source": "dm-404 project notes, third party"
+    },
+    {
+     "label": "DOC",
+     "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/00-findings.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied: USB enumeration on Windows and Linux"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "which processor serves which USB device; no read of the USB stack has been done"
+    }
+   ]
+  },
+  {
+   "id": "hw.usb.link",
+   "claim": "The CDC serial device (hw.usb) runs at 921600 baud, 8N1, and carries framed messages in both directions: a 12-byte short message (kind 0x12, up to 7 payload bytes, their count in byte 11, which must not be 0) or a 16-byte header plus payload (kind 0x13); host 0x60, unit 0xE0; channel 5 for control and parameters, channel 6 for a POSIX-like file API (open, read, write, seek, stat, opendir and so on) with SysEx-shaped payloads. The file API serves two volumes: the unit's own storage under /SP404REMOTE// (projects, samples, factory data: the B: drive of st.storage.drives) and the SD card under / (IMPORT, EXPORT, BKUP and update files: the A: drive). A status poll answers with the project, bank, selected pad and the frames played by the sounding pad; the unit sends nothing by itself when a pad is hit, so following it means polling. The unit computes waveform peaks on request (min and max per point), which fits the stock peak service in st.chop.waveform (a guess). Edits are acknowledged even when they fail; the failure follows as a separate message with a negative code, and bank protect is enforced by Roland's app, not by the unit. For mods this is a possible way to get data out of a running unit without its card: a mod could write a file to B: and a computer could read it over this link; not tried.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/01-transport.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied"
+    },
+    {
+     "label": "DOC",
+     "source": "404tui (github.com/moahbeatlab/404tui, GPL-3.0), docs/unit-messages.md at revision 04156c4ae053, 2026-11-18; observed on one unit, firmware not noted by them; restated in our own words"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the link between the peaks command and st.chop.waveform; reading a mod's file over this link"
+    }
+   ]
+  },
+  {
+   "id": "hw.reset.sdram",
+   "claim": "Does SDRAM survive a reset? Not guaranteed: SEMC is reset and refresh is off until reinitialised. Data left in cached SDRAM may also never reach it, since a write-back line needs a clean. Do not rely on a crash record surviving.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, p.1402, p.1426-1427"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "no measurement on a unit"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.rom",
+   "claim": "The ROM boots an image from FlexSPI NOR. APP1 occupies flash from 0x60080000; the first 0x80000 bytes of flash are not part of APP1 they hold the loader: see hw.boot.loader-image, hw.boot.select-pin and hw.boot.no-app1-check.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, chapter 9, p.210-213"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 scatter rows start at 0x600806EC, reset vector 0x60080001"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x00000004",
+     "size": 4,
+     "sha256": "04a222afaa8f848332e448d56a73520365e14bcd9b912661633688c3572c4691"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x00000004",
+     "size": 4,
+     "sha256": "04a222afaa8f848332e448d56a73520365e14bcd9b912661633688c3572c4691"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x00000004",
+     "size": 4,
+     "sha256": "04a222afaa8f848332e448d56a73520365e14bcd9b912661633688c3572c4691"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.loader-image",
+   "claim": "The first 0x80000 bytes of the main processor's flash hold its loader (the version screen calls it UPD1), which no update package contains. On the one unit read: flash configuration block at file offset 0, NXP image header at 0x1000 with entry 0x60002001 and no CSF pointer, so the image is not signed for secure boot; early code runs in place from 0x60002000; the rest is copied to 0x00000400 and 0x80000000 by a table at 0x60002998 and runs on micro T-Kernel; 0x62000-0x7EFFF is zero; the last 64 bytes (0x7FFC0) hold version, date, time and a build id. Other units may carry another loader version.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; offsets as stated"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, chapter 9 (image vector table, boot data)"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.select-pin",
+   "claim": "Whether the loader starts APP1 or its own update screen is decided by one processor pin, read within the first instructions after reset and before the loader unpacks itself: pad GPIO_AD_B0_02 is muxed as GPIO1_IO02 (0x401F80C4 = 5), made an input, and bit 2 of 0x401B8000 is read. Bit set: the loader goes on to its update screen. Bit clear: it jumps to APP1. Nothing in APP1 takes part in this decision, so a broken APP1 cannot block the way into the update screen.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; 0x60002530-0x6000256C"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.select-pin-driver",
+   "claim": "What drives the loader's select pin (hw.boot.select-pin) is not known: the SHIFT key directly, or the BMC. If it is the BMC, getting into the update screen depends on the BMC's own loader being alive. The loader dump cannot answer this; tracing the board or finding a read of the same pin in APP1 could. New on 2026-11-12: on one unit the pin read low for a whole session in which the owner was asked to press SHIFT, and its pad has a pull-down. If SHIFT was indeed pressed, the key does not drive the pin directly while APP1 runs, which points to the BMC raising it at power-on. Not confirmed that SHIFT was pressed. Also from 2026-11-13: the SHIFT key is read by the second processor and reaches APP1 only as packets (hw.bmc.shift), which fits the second processor driving the pin, but does not prove it.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "both wirings fit the code at 0x60002530 in the loader dump"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "registers read out of one unit by its owner on 2026-11-12 with a private mod and saved to SD (CCM gates, SRC, fuse shadow words, GPIO1, watchdogs); one unit, one moment. The file holds the processor's unique ID and is not in this repository"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.no-app1-check",
+   "claim": "The loader checks nothing in APP1 before starting it: no checksum, signature, header or length. It branches to 0x60080001. So any file written as APP1 will be started, and the only integrity check a mod author has is comparing the hash of the file on the card.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; 0x6000255E-0x6000256A: mov r0 0x60080001, bx r0, with no read of APP1 before it"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.watchdogs",
+   "claim": "The loader turns all three watchdogs off in its first instructions (WDOG1 0x400B8000, WDOG2 0x400D0000, RTWDOG 0x400BC000), before it decides between APP1 and the update screen. So nothing resets a unit whose APP1 hangs unless APP1 itself starts a watchdog; whether stock APP1 does is not established here. Together with fault vectors that only return (hw.faults.vectors) this is why a crash looks like a frozen unit, and why a mod that wants to survive its own faults must bring its own fault screen or reset.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; 0x60002338-0x600023A2"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3, WDOG and RTWDOG register descriptions"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.mode",
+   "claim": "How the unit boots, read from its registers: SRC_SBMR2 is 0x02000009, so the boot mode pins select Internal Boot (BMOD 10), and SRC_SBMR1 and the boot configuration fuses are zero, which selects serial NOR flash on FlexSPI. Secure boot is not enabled: the security fuse word holds only the DIR_BT_DIS bit, the key hash words are empty, and the loader image has no signature block (hw.boot.loader-image). The debug port is not closed by fuses. The secret key words read as 0xBADABADA, which is how the chip answers for words closed to reading.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "registers read out of one unit by its owner on 2026-11-12 with a private mod and saved to SD (CCM gates, SRC, fuse shadow words, GPIO1, watchdogs); one unit, one moment. The file holds the processor's unique ID and is not in this repository"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3: 9.3 boot modes (table 9-2), 21.6.4 SRC_SBMR2, chapter 23 fuse controller"
+    }
+   ]
+  },
+  {
+   "id": "hw.boot.recovery-usb",
+   "claim": "There may be a way back for a unit whose loader was erased, without opening it. In Internal Boot mode (hw.boot.mode) the processor's ROM jumps to its Serial Downloader, on USB or UART, when booting from flash fails, and with secure boot off it would accept an image from a computer. Nobody has tried this on an SP-404MKII: it is not known whether the processor's USB port reaches the unit's connector through the on-board hub in that state. Treat it as a hope, not a plan, and never erase a loader to find out.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3: 9.3.5 Internal Boot mode, 9.9 Serial Downloader"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "registers read out of one unit by its owner on 2026-11-12 with a private mod and saved to SD (CCM gates, SRC, fuse shadow words, GPIO1, watchdogs); one unit, one moment. The file holds the processor's unique ID and is not in this repository"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "the USB path on this board in that state is not established (hw.usb)"
+    }
+   ]
+  },
+  {
+   "id": "hw.watchdogs.runtime",
+   "claim": "In normal running none of the three watchdogs is enabled: WDOG1 and WDOG2 control registers read 0x0030 (enable bit clear) and RTWDOG reads 0x2520 (enable bit clear), with their clocks on. Read on a unit running a mod on DOOM OS 0.7.3; the stock code that would have had to enable one is the same there. So a hung unit stays hung until the power is cut, and a mod that wants to recover from its own faults must do it itself.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "registers read out of one unit by its owner on 2026-11-12 with a private mod and saved to SD (CCM gates, SRC, fuse shadow words, GPIO1, watchdogs); one unit, one moment. The file holds the processor's unique ID and is not in this repository"
+    },
+    {
+     "label": "DOC",
+     "source": "NXP i.MX RT1060 Reference Manual, Rev. 3: WDOG WCR[WDE], RTWDOG CS[EN]"
+    }
+   ]
+  },
+  {
+   "id": "hw.emulator.ccm-differs",
+   "claim": "The clock gate registers on the whole-firmware emulator are not those of a unit: with the same firmware the emulator showed CCM_CCGR2 as 0x0CC00030 (fuse block gated) and a unit showed 0xFCFF3033 (clocked). Code that depends on which blocks are clocked cannot be judged on the emulator; read the gate before touching a block.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "registers read out of one unit by its owner on 2026-11-12 with a private mod and saved to SD (CCM gates, SRC, fuse shadow words, GPIO1, watchdogs); one unit, one moment. The file holds the processor's unique ID and is not in this repository"
+    },
+    {
+     "label": "EMULATOR",
+     "source": "DM-404 run of the same private build, 2026-11-12: read of 0x400FC070"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.app1-range",
+   "claim": "A normal APP1 update by the loader erases exactly flash offsets 0x80000-0x3FEFFF (895 sectors of 4 KB) and then writes the file from 0x80000 in 256 byte pages until the file ends. The loader's own area below 0x80000 is not touched, and the last sector 0x3FF000 is never erased. There is no size limit in the write loop: the erased room is 0x37F000 bytes (3,665,920), so an APP1 must not be larger. A longer file would be written over the unerased sector at 0x3FF000 and then past the end of the 4 MB chip; what happens there was not tried and may brick the unit. This agrees with the owner's stalled updates in hw.update.stalled: only the application area was erased.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; 0x8003F340-0x8003F4B2 (erase loop 0x8003F3BA-0x8003F3D8, write loop 0x8003F44C-0x8003F46C); flash size 0x400000 in the configuration block at 0x50"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.no-verify",
+   "claim": "The loader does not read back or compare what it wrote. A write error is noticed only if the flash driver reports one. Check the hash of the file on the card before updating.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; 0x8003F340-0x8003F4B2: no read of flash after the page writes"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.whole-files",
+   "claim": "Files that can brick a unit if they are on the SD card. SP404MKII_APP1W.bin: when no SP404MKII_APP1.bin is present the loader offers it as WHOLE, erases the flash from offset 0 (its own code included) up to 0x3FEFFF and writes the file from 0; an interrupted or wrong file leaves no loader. SP404MKII_APP0W.bin: sent to the BMC in place of the normal APP0; what the BMC does with it is not known. MIRXRT1060-EVK.bin and SP404MKII_APP1U.bin are used by factory service commands that exist in APP1 (hw.service.loader-erase). None of these belongs on a user's card, and a mod or tool must never create them.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; file search 0x8003D9EC-0x8003DA9E, start offset and sector count 0x8003F3BA-0x8003F3C4, APP0 file choice 0x8003F0B8-0x8003F0D8"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.usb-card-path",
+   "claim": "A program on a computer can write files to the SD card over USB, without the card leaving the unit: the file API of hw.usb.link serves the card's root, where update files live, and SparkyMK2 writes into IMPORT there. So such a program could also put one of the files of hw.update.whole-files on the card, and the next update would act on it. Writing those names over USB was not tried, and must not be: any host tool that writes to the card should refuse them as package does (docs/SAFETY.md).",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "SparkyMK2 (github.com/TuscanPL/SparkyMK2, GPL-3.0), docs/re/01-transport.md and 02-files.md at revision 3007b5d4a796, 2026-10-04; their facts restated here in our own words, no text or code copied: the card volume at /, update images listed in its root, writes into IMPORT confirmed on 5.52"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "that the loader would act on a file written this way: inferred from hw.update.whole-files, not tried"
+    }
+   ]
+  },
+  {
+   "id": "hw.service.loader-erase",
+   "claim": "APP1 itself carries factory service code that can erase the loader, and a mod must never call or hook it. In stock 5.52: 0x80065838 (console command fnu) erases flash 0-0x7EFFF first and only then opens a:/SP404MKII_APP1U.bin; 0x80064E48 (fnc) erases the whole chip through 0x8019D348; 0x80064E70 (fnv) and 0x8017D3C8 write a:MIRXRT1060-EVK.bin from offset 0 after a whole-chip erase. They are reached from a text console whose input was not found on USB, and nothing in normal use calls them; a stray jump into them would brick the unit. A cautious mod can put a return at their entries: `movs r0,#0; bx lr` over the first four bytes of each of the four, which is the one change the tools allow there (`\"kind\": \"disable\"`). The three low-level flash routines under them stay untouched, since stock code may use them for its own writes. The loader carries a similar console of its own.",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: 0x80065838-0x800658CC (erase loop to 0x7F000 before the file is opened), 0x80064E48-0x80064E66, 0x8019D348"
+    },
+    {
+     "label": "BYTES",
+     "source": "loader dump: flash 0x60000000-0x6007FFFF read out of one unit by its owner on 2026-11-12, loader version 1.10 dated 2025/06/10, SHA-256 19d2cee9e704a9f98e5a45b2f02e07af867d9c4f6ef180c1817e9257e8f09979. The dump is Roland's code and is not in this repository; EVK branch 0x80024BB0, console task name at 0x8004C9B8"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "owner's unit: the maintainer's private mod has switched off all four entries this way since d73-H2, 2026-11-11, in every later build up to d74-H27; the unit runs normally. The routines are not reached in normal use, so this does not show what a caller does with the 0"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80065838",
+     "size": 8,
+     "sha256": "a1d67c24114605b938f05cae78f7f9082c1cf4e0bd06ebcbe8a01e05effc7259"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80065838",
+     "size": 8,
+     "sha256": "a1d67c24114605b938f05cae78f7f9082c1cf4e0bd06ebcbe8a01e05effc7259"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80065838",
+     "size": 8,
+     "sha256": "a1d67c24114605b938f05cae78f7f9082c1cf4e0bd06ebcbe8a01e05effc7259"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80064E48",
+     "size": 8,
+     "sha256": "127b0503b4520162bb63b41fec1845fe03d5cfd5d8b4d0f25f133385fe4fb6fb"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80064E48",
+     "size": 8,
+     "sha256": "127b0503b4520162bb63b41fec1845fe03d5cfd5d8b4d0f25f133385fe4fb6fb"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80064E48",
+     "size": 8,
+     "sha256": "127b0503b4520162bb63b41fec1845fe03d5cfd5d8b4d0f25f133385fe4fb6fb"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x80064E70",
+     "size": 8,
+     "sha256": "7f603682e12aca6f5504b10f0f87350503a0dd4997a9c705cd68a3a6a92a4e5d"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x80064E70",
+     "size": 8,
+     "sha256": "7f603682e12aca6f5504b10f0f87350503a0dd4997a9c705cd68a3a6a92a4e5d"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x80064E70",
+     "size": 8,
+     "sha256": "7f603682e12aca6f5504b10f0f87350503a0dd4997a9c705cd68a3a6a92a4e5d"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8017D3C8",
+     "size": 8,
+     "sha256": "0d5341a464caf65d5dc98c3b98a69e111ef7206eaac0d4cb816d3e888e857afe"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8017D3C8",
+     "size": 8,
+     "sha256": "0d5341a464caf65d5dc98c3b98a69e111ef7206eaac0d4cb816d3e888e857afe"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8017D3C8",
+     "size": 8,
+     "sha256": "0d5341a464caf65d5dc98c3b98a69e111ef7206eaac0d4cb816d3e888e857afe"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x8019D348",
+     "size": 8,
+     "sha256": "5872028ffe00bbcfe49f3ef2bf9bad43f85c6c5697eb2b2a11db1ff1a29c4014"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x8019D348",
+     "size": 8,
+     "sha256": "5872028ffe00bbcfe49f3ef2bf9bad43f85c6c5697eb2b2a11db1ff1a29c4014"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x8019D348",
+     "size": 8,
+     "sha256": "5872028ffe00bbcfe49f3ef2bf9bad43f85c6c5697eb2b2a11db1ff1a29c4014"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.stalled",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "claim": "Owner report: in one evening a firmware update stalled about five times. The stall may have come right after the erase step of APP0 or APP1; the owner did not check which. Each time the owner forced power off by cutting the power. Afterwards the unit would not start its firmware, but its loader still started, so the unit was not bricked and could be updated again. This is one person's experience on one unit, not a guarantee that a stalled update always recovers. Not known: the date, the firmware version, which card, and which part had stalled.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner's own account, told in conversation on 2026-11-10. The date of the events was not given"
+    }
+   ]
+  },
+  {
+   "id": "hw.update.stalled-cause",
+   "topic": "hardware",
+   "firmware": "any",
+   "status": "verified",
+   "claim": "The owner attributes the stalled updates in hw.update.stalled to a faulty SD card. After the owner put in a normal card, the same update went through on the first attempt, so for this unit the card was the cause. That is one card swap on one unit. The faulty card itself was never tested, and it is not known what was wrong with it.",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "project owner's own account, told in conversation on 2026-11-10. The date of the events was not given; the owner swapped the card and the update then worked first time"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.packets",
+   "claim": "Both directions of the link to the second processor carry 4-byte packets shaped like USB-MIDI events: the low nibble of the first byte says how many of the next three bytes are meant (4 = three bytes of a longer message, 5, 6, 7 = its last one, two or three bytes), so a Roland system-exclusive message is cut into such packets. The sender 0x800D93F0(buffer, length) has about 300 callers and every one passes a multiple of 4 bytes. In memory a packet is one little-endian word, so the first byte on the wire is the low byte of the word.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock 5.52: sender 0x800D93F0 and its callers; the DT1 builder 0x800CD3A0"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card: a DT1 sent as six such packets was followed by an audible click of the effect changing"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.rx-table",
+   "claim": "Packets from the second processor are taken as words from a ring (0x8059275C) by a task loop at 0x800EBAE4, which picks a handler by the high nibble of the first byte from a table of 11 function pointers at 0x800EBC00: entry 0 is the service dispatcher 0x800665A8, entries 1-7 and 10 are 0x80066318, entry 8 is 0x80066278, entry 9 is 0x80067920. Replacing those 11 words is enough to see every incoming packet before stock does; a mod that does so must still call the handler stock would have called. The interrupt and ring path are described in hw.bmc.rx.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock 5.52: loop 0x800EBAE4, table 0x800EBC00"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card: all 11 entries pointed at a logger that passed each packet on; the unit worked as before"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52 0x800EBAAE loads mask 0x3C; 0x800EBAF8 calculates (packet >> 2) & 0x3C, a byte offset selecting the pointer by the high nibble of the first byte; matching doom-os-0.7.2 and 0.7.3"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800EBAAE",
+     "size": 2,
+     "sha256": "0c4a4e6a74d01a613a86f53a49b68865f9d56162d03482a204bd2e5031fbc319"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800EBAAE",
+     "size": 2,
+     "sha256": "0c4a4e6a74d01a613a86f53a49b68865f9d56162d03482a204bd2e5031fbc319"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800EBAAE",
+     "size": 2,
+     "sha256": "0c4a4e6a74d01a613a86f53a49b68865f9d56162d03482a204bd2e5031fbc319"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800EBAF8",
+     "size": 4,
+     "sha256": "40579d22acf7d46b1a64b94a7a27cfe386d54e8f70993ecb9b3f44930a0dfbd5"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800EBAF8",
+     "size": 4,
+     "sha256": "40579d22acf7d46b1a64b94a7a27cfe386d54e8f70993ecb9b3f44930a0dfbd5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800EBAF8",
+     "size": 4,
+     "sha256": "40579d22acf7d46b1a64b94a7a27cfe386d54e8f70993ecb9b3f44930a0dfbd5"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.service",
+   "claim": "The second processor talks to APP1 on a service channel of packets 01 FF address value, handled by 0x800665A8 through a 256-way jump table at 0x800665C6 indexed by the address byte. Seen in the table: 00 a status byte, 04 a flag, 10-16 and 20-26 groups of values, 30-43 and 50-63 the characters of two version strings, 70-84 further values, 90 an acknowledge, FE a byte converted by subtracting 0x30 and stored as a word at 0x82DFFC84 (handler 0x800668C4), FF the SHIFT key. A different packet, 01 FE 20 value, calls 0x80056C20 and stores its value as a word at 0x80249A64 (0x800667D4-0x800667EC); it is not the FF/FE table case. Most addresses do nothing. What each value means beyond these names has not been worked out.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock 5.52: dispatcher 0x800665A8, jump table 0x800665C6"
+    },
+    {
+     "label": "BYTES",
+     "source": "stock-5.52: 16-bit branch offset for FF/FE at 0x800667C2 resolves to 0x800668C4; separate FE/20 path 0x800667D4-0x800667EC; rechecked 2026-11-14, matching doom-os-0.7.2 and 0.7.3"
+    }
+   ],
+   "checks": [
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800668C4",
+     "size": 16,
+     "sha256": "7f97d0aeaa8d6367b2ed5a4b38887a5d3e25dca15d74a5adfc46f863fe8949d5"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800668C4",
+     "size": 16,
+     "sha256": "7f97d0aeaa8d6367b2ed5a4b38887a5d3e25dca15d74a5adfc46f863fe8949d5"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800668C4",
+     "size": 16,
+     "sha256": "7f97d0aeaa8d6367b2ed5a4b38887a5d3e25dca15d74a5adfc46f863fe8949d5"
+    },
+    {
+     "firmware": "stock-5.52",
+     "address": "0x800667E2",
+     "size": 12,
+     "sha256": "83e500e7a2ce0c12679d1f8fc928ee3e0d8a16c42d738c02ef7fecce956abd0f"
+    },
+    {
+     "firmware": "doom-os-0.7.2",
+     "address": "0x800667E2",
+     "size": 12,
+     "sha256": "83e500e7a2ce0c12679d1f8fc928ee3e0d8a16c42d738c02ef7fecce956abd0f"
+    },
+    {
+     "firmware": "doom-os-0.7.3",
+     "address": "0x800667E2",
+     "size": 12,
+     "sha256": "83e500e7a2ce0c12679d1f8fc928ee3e0d8a16c42d738c02ef7fecce956abd0f"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.shift",
+   "claim": "The SHIFT key is read by the second processor, not by APP1: each press arrives as the service packet 01 FF FF 01 and each release as 01 FF FF 00. An emulator or test that wants SHIFT must send those packets on the link; scanning the key matrix will never show it.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "stock 5.52: address FF of the service dispatcher 0x800665A8"
+    },
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card: 33 press and release pairs, one for each time the key was pressed"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.boot-packets",
+   "claim": "On one unit the second processor sent only three packets on its own after power-on, all on the service channel: 01 FF 05 01, 01 FF 00 10 and 01 FF FE 31. No version strings came unasked. It sent nothing in reply to an effect type change or to effect parameter changes.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.no-read",
+   "claim": "A Roland data request (RQ1) sent from APP1 for the effect type of slot 1 got no reply from the second processor: not one packet followed it. So its memory cannot be read with the standard Roland request over this link, as far as one try on one unit shows. A different address, size or device id was not tried.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card: the request F0 41 10 00 00 00 00 08 11 02 02 00 08 00 00 00 02 72 F7 was sent once; the packet count before and after was the same"
+    }
+   ]
+  },
+  {
+   "id": "hw.bmc.host-midi",
+   "claim": "MIDI from a computer on the USB port reaches APP1 through the same 11-entry table as the second processor's packets (hw.bmc.rx-table): the log held timing clock, start, stop and controller messages from a DAW, with 9 in the high nibble of the first byte. So a hook on that table also sees incoming USB MIDI, and a mod that only wants the second processor's packets must tell the two apart by that nibble.",
+   "topic": "hardware",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "HARDWARE",
+     "source": "one unit, 2026-11-12/13: a log of every packet from the second processor since power-on (3170 packets), kept in RAM by a private diagnostic mod on DOOM OS 0.7.3 and written to the card: 1897 clock bytes plus start, stop and controllers 120, 123 and 64, while a DAW was running on the computer"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,439 @@
+{
+ "facts": [
+  {
+   "id": "midi.doc.scope",
+   "claim": "The Version 5 Reference Manual says it assumes software version 5 or later, and its MIDI implementation chart is dated 2025-07-01 and labelled Version 5. It does not name a minor release such as 5.52, so every stock fact here is read from that chart and unit behaviour is not tested. A separate standalone MIDI Implementation PDF was not obtained.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Introduction and MIDI implementation chart header, pp.151-152"
+    }
+   ]
+  },
+  {
+   "id": "midi.routing.ports",
+   "claim": "MIDI goes through two paths: the MIDI IN and OUT jacks (3.5 mm TRS) and the USB-C port. USB is class compliant: no driver is needed (USB Audio Device Class 2.0), but a USB hub in between breaks the direct link between unit and computer or phone. Android is not guaranteed.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Connecting to a computer or mobile device, p.13; rear panel list, p.10"
+    }
+   ]
+  },
+  {
+   "id": "midi.routing.settings",
+   "claim": "Routing settings in UTILITY > SYSTEM > MIDI: MIDI Sync (Auto, Internal, MIDI, USB) picks the tempo source; Soft Through copies MIDI IN to MIDI OUT; USB-MIDI Thru copies USB input to MIDI OUT and MIDI IN to USB, and also feeds the internal sound engine. Both thru switches are on/off.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), System settings, MIDI table, pp.123-124"
+    }
+   ]
+  },
+  {
+   "id": "midi.sync.out",
+   "claim": "MIDI Sync Out (on/off) sends clock, start and stop to MIDI OUT. The chart says clock and start/stop are output when Sync Out is on and no external tempo is present, and are received only when the unit is in remote mode, meaning it follows an external tempo. The chart does not say whether clock is also sent on USB.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), System settings p.123; chart notes *3 *4, p.153"
+    }
+   ]
+  },
+  {
+   "id": "midi.sync.delay",
+   "claim": "SYNC Delay is 0-20 ms: higher values play the unit later relative to external gear, 0 plays and sends MIDI at the same time. Bend SYNC(DJ) (on/off) makes the clock output follow the playback speed change from the BEND pads; holding REMAIN while pressing BEND keeps the clock fixed.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), System settings, pp.123-124"
+    }
+   ]
+  },
+  {
+   "id": "midi.transport.rec",
+   "claim": "Start (FA) and stop (FC) messages from an external device can start and stop sampling/recording, as the manual says in its sampling and looper hints.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Sampling and looper memos, pp.35, 38, 41"
+    }
+   ]
+  },
+  {
+   "id": "midi.settings.notes",
+   "claim": "Note-related settings: SEQ Note Out (on/off) sends the pattern note number on MIDI OUT while a pattern plays; PAD Note Out (on/off) sends the pad note number when pads are played; PC Rx (on/off) enables program change reception; MIDI EXT SRC (Toggle, Gate, Through) decides how incoming notes drive the EXT SOURCE button.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), System settings, p.124"
+    }
+   ]
+  },
+  {
+   "id": "midi.mode.ab",
+   "claim": "MIDI Mode A or B changes the note numbering. Mode B enables two more settings: Pad MIDI Channels (range printed as 1/2, 2/3 ... 9/10, 10/11) and Note offset (-11 to 35). The 10/11 value looks odd next to the chart, which lists channels 1-10 only.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), System settings, p.124; chart header, p.151"
+    }
+   ]
+  },
+  {
+   "id": "midi.mode.a.map",
+   "claim": "Mode A: bank letter is the channel (bank A = channel 1 up to bank J = channel 10). Pads play notes 36-51 on every channel: pad 13 is note 36, pad 1 is note 48, rows rise upward in groups of four (pads 13-16 = 36-39, 9-12 = 40-43, 5-8 = 44-47, 1-4 = 48-51). EXT SOURCE is note 35. The basic-channel row of the chart prints x for mode A, while the note map shows channels 1-10.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI note map p.154-156; chart p.151-152"
+    }
+   ]
+  },
+  {
+   "id": "midi.mode.b.map",
+   "claim": "Mode B: one channel carries five banks, pad n of bank k (A=0) is note 24+16k + ((n-1)%4) - 4*((n-1)//4). So bank A pad 1 is 24, bank B pad 1 is 40, bank E pad 16 is 91, pad 13 of bank A is 12. Banks A-E are on the first channel and F-J on the next one; Pad MIDI Channels shifts that pair. EXT SOURCE is note 0. Notes outside 12-91 are unused (kept free for Note offset).",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI note map pp.154-156"
+    }
+   ]
+  },
+  {
+   "id": "midi.mode.b.maperr",
+   "claim": "The printed note map seems to list bank I instead of H in the second-channel column for bank C pads (notes 44-59), and H never appears. That is probably a misprint, since the pattern A-E / F-J would give H.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI note map pp.155-156 (inconsistent printing)"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "misprint inferred from the A-E / F-J pattern, not checked on a unit"
+    }
+   ]
+  },
+  {
+   "id": "midi.chart.notes",
+   "claim": "Chart: transmitted note range is 35-51 (mode A) or 0 and 12-91 (mode B) plus 36-60 on channel 16; recognised is the same plus 0-127 on channel 11. True Voice (the played-back voice per note) is listed for the same pad ranges. Note On carries velocity; the chart marks Note Off velocity, aftertouch and polyphonic aftertouch as not used.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI implementation chart p.152"
+    }
+   ]
+  },
+  {
+   "id": "midi.chart.noteoff",
+   "claim": "The chart says Note Off is not handled (x), while MIDI EXT SRC has a Gate option that turns EXT SOURCE off on a note-off. The two statements do not agree and neither was tested.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "disputed",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), chart p.152 versus System settings p.124"
+    }
+   ]
+  },
+  {
+   "id": "midi.chart.ch16",
+   "claim": "Chromatic mode uses MIDI channel 16, notes 36-60 (C2-C4): recognised when playing samples in chromatic mode and listed as transmitted too.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart notes *6 *7, pp.152-153"
+    }
+   ]
+  },
+  {
+   "id": "midi.chart.vocoder",
+   "claim": "With the INPUT FX set to Vocoder, channel 11 accepts notes 0-127 and pitch bend; the vocoder NOTE value follows these notes. Pitch bend is received only there; it is not transmitted.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart note *2, p.153; Vocoder NOTE parameter, p.141"
+    }
+   ]
+  },
+  {
+   "id": "midi.cc.channels",
+   "claim": "Effect control uses channels 1-4 for BUS 1-4 and channel 5 for the INPUT FX. CC 16, 17, 18 are Ctrl 1-3, CC 80, 81, 82 are Ctrl 4-6 (0-127), CC 19 is the effect switch (0-63 off, 64-127 on), CC 83 picks the effect by number. Marked transmitted and received.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart p.152 and notes *7, p.153"
+    }
+   ]
+  },
+  {
+   "id": "midi.cc.efxlist",
+   "claim": "CC 83 values map to effect names per bus group (BUS 1-2, BUS 3-4, INPUT FX); the full list is in the manual, section Control change messages and corresponding effects, and is not copied here. Value 0 is OFF and 1-5 are Direct FX 1-5 on BUS 1-2.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Control change messages and corresponding effects, p.142 onward"
+    }
+   ]
+  },
+  {
+   "id": "midi.cc.dj",
+   "claim": "In DJ mode: channel 1 is the CH1 sample and channel 2 is the CH2 sample, channel 3 is the pattern sequencer. CC 7 is the volume slider (Ctrl 1 on ch 1 and 3, Ctrl 2 on ch 2); CC 8 is the crossfader (value 127 = all CH1, 0 = all CH2, on channel 1 only). CC 20 play/pause (0/127), 21 press-hold button, 22 SYNC, 23 CUE, 24 BEND+, 25 BEND-, 26 BPM+, 27 BPM- (0 release, 127 press). CC 20-27 are sent but not received; CC 7 and 8 are both.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart p.152 and note *8, p.153"
+    }
+   ]
+  },
+  {
+   "id": "midi.cc.looper",
+   "claim": "In looper mode on channel 1: CC 87 DEL, 88 REC (127 starts, 0 stops), 89 RESAMPLE (overdub), 90 Ctrl 3 knob (BPM or play-rate), 85 EXIT (127 = stop all, like four quick presses), 86 PITCH/SPEED reset tempo, 91 undo (127) or redo (0). Buttons act at value 127.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Note *8 Looper mode, p.154"
+    }
+   ]
+  },
+  {
+   "id": "midi.pc.recv",
+   "claim": "Program change is received, not sent: values 0-15 pick pattern 1-16. The channel picks the bank (example in the chart: channel 4, value 15 means bank D pattern 16). The PC Rx setting must be on.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart p.152 and Program change numbers, p.154; System settings p.124"
+    }
+   ]
+  },
+  {
+   "id": "midi.sysex",
+   "claim": "System exclusive is neither sent nor received according to the chart; song position, song select and tune request are also not used.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI implementation chart p.152"
+    }
+   ]
+  },
+  {
+   "id": "midi.realtime",
+   "claim": "Chart lists Active Sensing as sent and received, All Sound Off as received only (all samples stop when the MIDI cable is unplugged), and Reset All Controllers, Local On/Off, All Notes Off, System Reset as not used.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart p.152 and note *5, p.153"
+    }
+   ]
+  },
+  {
+   "id": "midi.mode.omni",
+   "claim": "The chart lists the receive mode as Mode 3 (omni off, poly) and no transmit mode.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Chart p.151"
+    }
+   ]
+  },
+  {
+   "id": "midi.record.in",
+   "claim": "Note messages arriving on MIDI IN or USB can be recorded into a pattern, and in sound generator mode the synthesizer can be played from an external keyboard or a computer.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Pattern recording memo p.60; Sound generator mode memo p.43"
+    }
+   ]
+  },
+  {
+   "id": "midi.doom.docs",
+   "claim": "The DOOM OS manual, README and changelog contain no MIDI section and no mention of MIDI notes, channels, clock, program change or system exclusive. The only related sentence is that it takes the stock CHROMATIC pad layout. So its MIDI behaviour is undocumented.",
+   "topic": "midi",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (manual/index.html in the project repository), README and CHANGELOG, read 2026-11-09: searched for MIDI, clock, sync, USB, channel"
+    }
+   ]
+  },
+  {
+   "id": "midi.doom.inherit",
+   "claim": "DOOM OS is a patched stock 5.52 image, so the stock MIDI settings and routing are probably still present in the settings menu, but this was not checked in the firmware or on a unit.",
+   "topic": "midi",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "hypothesis",
+   "evidence": [
+    {
+     "label": "HYPOTHESIS",
+     "source": "DOOM OS images keep the stock image with edits (see the stock image facts); no test of MIDI"
+    }
+   ]
+  },
+  {
+   "id": "midi.doom.rec",
+   "claim": "Whether DOOM OS records incoming MIDI notes into its own tracks, and whether the stock note-record path still works inside DOOM OS patterns, is not documented.",
+   "topic": "midi",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (manual/index.html in the project repository), README and CHANGELOG, read 2026-11-09: live recording is described for pads only"
+    }
+   ]
+  },
+  {
+   "id": "midi.doom.channels",
+   "claim": "Whether DOOM OS tracks have their own MIDI channels or send MIDI notes for instruments is not documented.",
+   "topic": "midi",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (manual/index.html in the project repository), README and CHANGELOG, read 2026-11-09: no mention"
+    }
+   ]
+  },
+  {
+   "id": "midi.doom.clock",
+   "claim": "Whether DOOM OS keeps stock clock output, MIDI Sync and SYNC Delay behaviour in its own sequencer is not documented. Its changelog only mentions fixes to tempo and BPM SYNC for samples inside DOOM OS.",
+   "topic": "midi",
+   "firmware": [
+    "doom-os-0.7.2",
+    "doom-os-0.7.3"
+   ],
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "DOOM OS manual (manual/index.html in the project repository), README and CHANGELOG, read 2026-11-09: changelog 0.7.3 tempo fixes only"
+    }
+   ]
+  },
+  {
+   "id": "midi.gap.sendpc",
+   "claim": "Whether the stock unit sends program change, or sends anything on USB beyond the chart, is not stated in the manual. Observed since on one unit (midi.usb.observed): a pattern change sends nothing.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), MIDI implementation chart p.152 (program change transmit column is x)"
+    }
+   ]
+  },
+  {
+   "id": "midi.usb.observed",
+   "claim": "What one unit sent on its USB MIDI port, as 404tui recorded it: a pad hit gives a note on and off on the channel of its bank (1 = A); the sequencer sends clock (24 a quarter note), start and stop, and on channel 13 note 48 at the start of every loop of some patterns; SUB PAD with a pattern pad gives a stop and a start 10-40 ms apart; turning a bus effect knob sends a control change. Changing the pattern sends nothing, and the notes the sequencer plays are not sent as pad notes. A program change received switches the pattern (channel = bank, program 0-15 = pattern). Muting a pad on the unit is not visible from outside. One unit, firmware not noted.",
+   "topic": "midi",
+   "firmware": "any",
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "404tui (github.com/moahbeatlab/404tui, GPL-3.0), docs/unit-messages.md at revision 04156c4ae053, 2026-11-18; observed on one unit, firmware not noted by them; restated in our own words"
+    }
+   ]
+  },
+  {
+   "id": "midi.gap.firmware",
+   "claim": "Differences between 5.52 and the 2025-07-01 Version 5 manual are unknown, and the standalone Roland MIDI Implementation document was not available for check.",
+   "topic": "midi",
+   "firmware": "stock-5.52",
+   "status": "unknown",
+   "evidence": [
+    {
+     "label": "DOC",
+     "source": "Roland SP-404MK2 Reference Manual, Version 5 (document 03), Introduction; download page for the manual asks for licence acceptance before the file"
+    }
+   ]
+  }
+ ]
+}

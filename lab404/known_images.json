@@ -1,0 +1,125 @@
+{
+ "note": "Exact hashes of images people have published or that we hold. The project ships none of these files. Source says where each hash was read.",
+ "images": [
+  {
+   "sha256": "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80",
+   "family": "stock",
+   "version": "5.52",
+   "source": "[DOC] DOOM OS checksums.txt and Tampal checksums.txt"
+  },
+  {
+   "sha256": "b7badc5d075b1788e9395466539d3fef154eaa1ef9025c18d65aaa2a1bb7c3fb",
+   "family": "stock",
+   "version": "5.50",
+   "source": "[BYTES] hash of the update file held by the project owner, not published by us"
+  },
+  {
+   "sha256": "b06fb473cf6f82b8d9e35d0963f545cc34f6e45244f7b1d6fb2a50ed78ecc888",
+   "family": "stock",
+   "version": "5.01",
+   "source": "[BYTES] hash of the update file held by the project owner, not published by us"
+  },
+  {
+   "sha256": "8b236d6fb7c986ebf9f347d56e5fbf2c33a7a5e1d59920052d01dff2e5ef41cf",
+   "family": "stock",
+   "version": "4.04",
+   "source": "[BYTES] hash of the update file held by the project owner, not published by us"
+  },
+  {
+   "sha256": "1d4a806136b3ce2fe9e2bf8e051185204d4131bb0128f4d8e99b2ee10acc3dd7",
+   "family": "stock",
+   "version": "3.02",
+   "source": "[BYTES] hash of the update file held by the project owner, not published by us"
+  },
+  {
+   "sha256": "79525d514784bbdcc70cb9c05b5fb987500e99ddf02aa4ceeb875bf9070fa26d",
+   "family": "doom-os",
+   "version": "0.6 build 0C34",
+   "source": "[BYTES] version string inside an image held by the project owner"
+  },
+  {
+   "sha256": "16c0b62a1a7f385be00d1cf4222180788be1ae29bb2f280a46835a56a055afa7",
+   "family": "doom-os",
+   "version": "0.6.1",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "faa6a59be15ff6c3f628308231281288f5699c7b9cbd5733d665c0e9eedbbe8a",
+   "family": "doom-os",
+   "version": "0.6.2",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "03eaeb6e1c0464aba553a6d38dec9b85cca73bde55786b0ca6ebcadd17850553",
+   "family": "doom-os",
+   "version": "0.7",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "b8c8795ce05c7a152ab6340dba3b4ebbcd700a9506b9001e847502bcf5f2e6d5",
+   "family": "doom-os",
+   "version": "0.7.1",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "db017ffd2df46cb263536e82717ee03b544e2c198b67580f8e13ccf399ee29bd",
+   "family": "doom-os",
+   "version": "0.7.2",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa",
+   "family": "doom-os",
+   "version": "0.7.3",
+   "source": "[DOC] DOOM OS checksums.txt and Tampal checksums.txt"
+  },
+  {
+   "sha256": "aaec78ada566ba8aa59602694984ca6fbb229baa1dbcaefac813430da49bbada",
+   "family": "doom-os",
+   "version": "0.7.4",
+   "source": "[BYTES] hash of the image held by the project owner; inside it the strings DOOMOS 0.7.4 651C and v0.7.4-651C, 2026-11-15"
+  },
+  {
+   "sha256": "9d10ad905fd73139df4a0a3d8e0c39217aeb38795b7d68b900895ffad03d6b4a",
+   "family": "tampal",
+   "version": "0.1.0 on stock 5.52",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "0c12912f06075d867b37807d8a37761321350f80f93f64100b8687ac5a3cd6a6",
+   "family": "tampal",
+   "version": "0.1.0 on DOOM OS 0.6.1",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "10191c34af11fb3506da109100a1bcfb56fcf34bbf38d50fca81b0609eed6f3a",
+   "family": "tampal",
+   "version": "0.1.0 on DOOM OS 0.6.2",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "ef9f03f95807ff6f158a1371856878b03869131a53ce0c3d82baa695e43ed1b3",
+   "family": "tampal",
+   "version": "0.1.0 on DOOM OS 0.7",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "24edb43f2e9a78e413ad96e875fb88d7f054039812b764563e7fc5b0dde3fc51",
+   "family": "tampal",
+   "version": "0.1.0 on DOOM OS 0.7.1",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "c049a41001709343912363a615bf535bbe94742bb7f9bbde7a6eacea163c0599",
+   "family": "tampal",
+   "version": "0.1.0 on DOOM OS 0.7.2",
+   "source": "[DOC] Tampal checksums.txt"
+  },
+  {
+   "sha256": "47108a727af741b603f8a2faef81913862a2aaee98155943c3f46c8e66b78795",
+   "family": "tampal",
+   "version": "0.1.0 on DOOM OS 0.7.3",
+   "source": "[DOC] Tampal checksums.txt"
+  }
+ ]
+}

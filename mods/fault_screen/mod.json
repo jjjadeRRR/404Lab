@@ -1,0 +1,89 @@
+{
+  "name": "fault_screen",
+  "version": "0.1.0",
+  "about": "Shows a processor fault on the display instead of a silent hang: the kind of fault, PC, LR, CFSR and the faulting address. HOLD + ROLL on the main screen makes a fault on purpose, to see it work. A debugging aid for mod authors, not for everyday use.",
+  "bases": [
+    "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80",
+    "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa",
+    "aaec78ada566ba8aa59602694984ca6fbb229baa1dbcaefac813430da49bbada"
+  ],
+  "payload": {
+    "address": "0x83FD0000",
+    "max_size": "0x1000"
+  },
+  "sources": [
+    "fault_screen.c"
+  ],
+  "adds": {
+    "bindings": [
+      {
+        "screen": "sample",
+        "keys": [
+          "HOLD",
+          "ROLL"
+        ],
+        "gesture": "press",
+        "action": "Make a fault on purpose to show the fault screen"
+      }
+    ]
+  },
+  "hooks": [
+    {
+      "kind": "word",
+      "address": "0xC",
+      "expect": "0x8003C921",
+      "function": "fault_screen_fault",
+      "about": "HardFault vector word in ITCM; the firmware handler at 0x8003C920 is a lone bx lr"
+    },
+    {
+      "kind": "word",
+      "address": "0x10",
+      "expect": "0x800406A9",
+      "function": "fault_screen_fault",
+      "about": "MemManage vector word in ITCM; the firmware handler at 0x800406A8 is a lone bx lr"
+    },
+    {
+      "kind": "word",
+      "address": "0x14",
+      "expect": "0x80036119",
+      "function": "fault_screen_fault",
+      "about": "BusFault vector word in ITCM; the firmware handler at 0x80036118 is a lone bx lr"
+    },
+    {
+      "kind": "word",
+      "address": "0x18",
+      "expect": "0x800437D1",
+      "function": "fault_screen_fault",
+      "about": "UsageFault vector word in ITCM; the firmware handler at 0x800437D0 is a lone bx lr"
+    },
+    {
+      "kind": "entry",
+      "address": "0x800A80A8",
+      "function": "fault_screen_on_event",
+      "bases": [
+        "4a3d67711e14dcc97d50249a4eee7dd6df0251a2f37757cbbe2556c233730d80"
+      ],
+      "about": "stock key handler"
+    },
+    {
+      "kind": "entry",
+      "address": "0x802097CC",
+      "function": "fault_screen_on_event",
+      "bases": [
+        "6605af05e90578f179b5b528502aadef3b6b8497d87eaeecab6b9cf5185905aa",
+        "aaec78ada566ba8aa59602694984ca6fbb229baa1dbcaefac813430da49bbada"
+      ],
+      "about": "DOOM OS trampoline, ahead of its own handler"
+    }
+  ],
+  "task": {
+    "asked": "See what went wrong when a mod crashes the unit, instead of a frozen screen.",
+    "feasible": "Yes. The four fault vectors are plain words in ITCM, the same on every base declared here, and the display can be driven by polling its SPI port without the firmware.",
+    "unit_checks": [
+      "The unit starts and works as on the base firmware.",
+      "On the main screen hold HOLD and press ROLL: the screen shows 404LAB FAULT SCREEN with USAGE FAULT or HARD FAULT and a PC inside 0x83FD0000-0x83FD1000. Photograph it, then power off and on: the unit starts normally.",
+      "Press HOLD and ROLL separately: each does what it always did.",
+      "Use the unit normally for a while, save and reload a project: everything behaves as on the base firmware."
+    ]
+  }
+}
