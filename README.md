@@ -57,7 +57,7 @@ Documentation coverage, build support and hardware validation are separate. Know
 
 - [Research commands and source examples](docs/EXAMPLES.md): inspect an image, reproduce a finding, or try `demo_counter`, `quick_system` and `fault_screen`.
 - [Reference documents](docs/SOURCES.md) for stock controls and MIDI, the processor, and board components.
-- [Sound-chip research](knowledge/notes/app0.md) covers the two hidden MFX entries, Compressor 2 working in DEEPCUT on a unit, and the APP0, DSP and USB findings.
+- [Sound-chip research](knowledge/notes/app0.md) covers the two hidden MFX entries, Compressor 2 confirmed on a unit in an experimental build, and the APP0, DSP and USB findings. See the [research credits](docs/SOURCES.md#roland-bmc-and-dsp-research).
 - [Hardware hazards](docs/SAFETY.md): known paths to loader loss and the limits of recovery.
 - [The stand](docs/STAND.md): which questions each emulator can answer.
 - [Contributing](CONTRIBUTING.md): add findings, corrections, experiments and tests.

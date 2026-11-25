@@ -53,7 +53,7 @@ flowchart LR
 
 - [Примеры и исследовательские команды](docs/EXAMPLES.md).
 - [Первоисточники для исследований](docs/SOURCES.md) — руководства Roland, справочники NXP и Arm, даташиты компонентов.
-- [Исследование звукового чипа](knowledge/notes/app0.md) — Compressor 2, который работает в DEEPCUT на реальном SP, скрытый Sub Sonic и результаты разбора APP0, DSP и USB.
+- [Исследование звукового чипа](knowledge/notes/app0.md) — скрытые Compressor 2 и Sub Sonic, проверка Compressor 2 в экспериментальной сборке на реальном SP и результаты разбора APP0, DSP и USB. [Авторы и источники](docs/SOURCES.md#roland-bmc-and-dsp-research).
 - [Опасные операции и ограничения восстановления](docs/SAFETY.md).
 - [Что проверяют стенды](docs/STAND.md).
 - [Как добавить находку, поправку или результат со своего прибора](CONTRIBUTING.md). Вопросы и предложения — через issues и pull requests; прошивки, дампы и сэмплы не прикладывайте.

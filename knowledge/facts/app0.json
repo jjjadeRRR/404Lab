@@ -572,14 +572,14 @@
   },
   {
    "id": "app0.type29-on-unit",
-   "claim": "DEEPCUT d73-H9 exposes the hidden COMPRESSOR 2 (type 29) in APP1's MFX grid (hk.recipe.mfx-grid-entry). On the maintainer's SP-404MKII, selecting it on BUS 1 ran the existing factory program in APP0, with audible changes from SUSTAIN, ATTACK and RATIO. In that build TONE had little audible effect across its full range and LIMIT muted the bus. The owner described the compression as harsher and stronger than type 28. That build omitted type 29 from the separate BUS 3/4 FX SETTING lists. An earlier test set the type alone and left the previous effect's parameters in use. In that session one bass note recorded through type 29 matched the dry note sample for sample. The DEEPCUT grid uses the stock parameter path for type 29. The maintainer confirmed on 2026-11-25 that COMPRESSOR 2 works in the current DEEPCUT build on the unit. The current build identifier and behavior in LIMIT were unspecified. See app0.comp2-params.",
+   "claim": "An experimental APP1 build (d73-H9) exposes the hidden COMPRESSOR 2 (type 29) in APP1's MFX grid (hk.recipe.mfx-grid-entry). On the maintainer's SP-404MKII, selecting it on BUS 1 ran the existing factory program in APP0, with audible changes from SUSTAIN, ATTACK and RATIO. In that build TONE had little audible effect across its full range and LIMIT muted the bus. The owner described the compression as harsher and stronger than type 28. That build omitted type 29 from the separate BUS 3/4 FX SETTING lists. An earlier test set the type alone and left the previous effect's parameters in use. In that session one bass note recorded through type 29 matched the dry note sample for sample. The experimental build uses the stock parameter path for type 29. The maintainer confirmed on 2026-11-25 that COMPRESSOR 2 works in the current experimental APP1 build on the unit. The current build identifier and behavior in LIMIT were unspecified. See app0.comp2-params.",
    "topic": "app0",
    "firmware": "doom-os-0.7.3",
    "status": "verified",
    "evidence": [
     {
      "label": "HARDWARE",
-     "source": "One unit, 2026-11-13: the owner selected type 29 from the MFX grid on BUS 1 in private DEEPCUT d73-H9 based on DOOM OS 0.7.3. The owner reported the effects of the knobs and LIMIT in that session. No audio recording of that grid test was supplied."
+     "source": "One unit, 2026-11-13: the owner selected type 29 from the MFX grid on BUS 1 in experimental build d73-H9 based on DOOM OS 0.7.3. The owner reported the effects of the knobs and LIMIT in that session. No audio recording of that grid test was supplied."
     },
     {
      "label": "HARDWARE",
@@ -587,7 +587,7 @@
     },
     {
      "label": "HARDWARE",
-     "source": "Same unit, 2026-11-25: the maintainer reported that COMPRESSOR 2 functions in their current DEEPCUT APP1 mod. The exact current build and its parameter coverage were not specified."
+     "source": "Same unit, 2026-11-25: the maintainer reported that COMPRESSOR 2 functions in their current experimental APP1 build. The exact current build and its parameter coverage were not specified."
     },
     {
      "label": "HYPOTHESIS",

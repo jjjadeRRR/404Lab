@@ -1,6 +1,6 @@
 # APP0
 
-Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. The [APP0 update and recovery study](app0-update-safety.md) traces the stock updater. The [USB study](app0-live-observation.md) compares the editor port, the internal BMC log and SYSTEM-8 live readback.
+Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. The [APP0 update and recovery study](app0-update-safety.md) traces the stock updater. The [USB study](app0-live-observation.md) compares the editor port, the internal BMC log and SYSTEM-8 live readback. The [research credits](../../docs/SOURCES.md#roland-bmc-and-dsp-research) identify the projects behind those findings.
 
 ## What it is
 
@@ -20,12 +20,12 @@ both from its selection lists (`app0.hidden-types`).
 
 | Effect | What the research established |
 |---|---|
-| COMPRESSOR 2 (type 29) | The private DEEPCUT mod exposes type 29 in the APP1 MFX grid. On one SP-404MKII, the maintainer selected it on BUS 1 and heard the sound change with SUSTAIN, ATTACK and RATIO. APP1 selects the effect and supplies its parameters. The BMC runs the distinct factory DSP program already in APP0. See [the hardware record](../../docs/ON_A_UNIT.md) and `app0.type29-on-unit`. |
+| COMPRESSOR 2 (type 29) | The maintainer used the findings documented in 404Lab to expose type 29 in the MFX grid of an experimental APP1 build. On one SP-404MKII, selecting it on BUS 1 produced audible changes with SUSTAIN, ATTACK and RATIO. APP1 selects the effect and supplies its parameters. The BMC runs the factory DSP program in APP0. See [the hardware record](../../docs/ON_A_UNIT.md) and `app0.type29-on-unit`. |
 | Sub Sonic (type 45) | Stock APP0 5.52 stores its program and companion block at their own offsets. Both are byte-identical to Bypass (type 0). A separate sub-bass algorithm has not been identified for this slot. The file comparison leaves runtime parameter handling open. See `app0.pairs`. |
 
 The first test of type 29 sent a type change alone and left the previous
 effect's parameters active. The test recording matched the dry input.
-The later DEEPCUT grid test let the stock selection path send type 29's own
+The later grid test let the stock selection path send type 29's own
 parameters. The grid and parameter paths are documented in `st.mfx.grid`,
 `hk.recipe.mfx-grid-entry` and `app0.comp2-params`.
 

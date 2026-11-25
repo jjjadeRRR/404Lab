@@ -15,14 +15,28 @@ Start with `python -m lab404 ask` for the topic. The matching record in `knowled
 | [Reference Manual Version 3, English, document 02 (PDF)](https://static.roland.com/assets/media/pdf/SP-404mk2_v300_reference_eng02_W.pdf) | Stock behavior in the 3.x generation. |
 | [Roland system program 5.52 and update history](https://www.roland.com/global/support/by_product/sp-404mk2/updates_drivers/174cc2fc-ddb2-4128-87a0-848b882cdcea/) | Stock firmware changes and Roland’s update instructions. |
 
-## Related open projects
+## Roland BMC and DSP research
 
-They talk to the unit over USB from a computer; 404Lab looks at the firmware from inside. Both are GPL-3.0: 404Lab restates facts from their documentation in its own words with the revision read, and takes no code or text from them (see [LEGAL_NOTES.md](LEGAL_NOTES.md)).
+Thanks to the authors of these projects for publishing their research and
+tools. The linked revisions identify the material reviewed for 404Lab.
 
-| Project | Use it for |
+| Project | Contribution to this research |
 |---|---|
-| [SparkyMK2](https://github.com/TuscanPL/SparkyMK2), its [protocol and file format specification](https://github.com/TuscanPL/SparkyMK2/tree/main/docs/re) | The USB serial link, the file API, pad and project parameters, and the SMP, PADCONF, pattern and picture formats (`hw.usb.link`, `st.storage.formats`). Read at revision `3007b5d4a796`. |
-| [404tui](https://github.com/moahbeatlab/404tui), its [notes on what the unit sends](https://github.com/moahbeatlab/404tui/blob/main/docs/unit-messages.md) | What the unit sends and does not send over USB MIDI and the status poll (`midi.usb.observed`). Read at revision `04156c4ae053`. |
+| [edco / mc-101-re](https://github.com/edco/mc-101-re/tree/6b62129b7a2fcb74f73e690e357c2f3cde255ef6) | MC-101 boot ROM and recovery architecture, firmware container parsing and DSP loader signatures. These gave us reference points for comparing SP-404MKII APP0 with the MC-101, MC-707 and VERSELAB MV-1 updates. |
+| [enorrmann / Roland Plug-Out SDK](https://github.com/enorrmann/roland-plugout-reveng/tree/83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2) | SYSTEM-1 and SYSTEM-8 DSP instruction encoding, assembler, disassembler, reference model and hardware studies. 404Lab used the tools to study the SP MFX catalogue and test factory Bypass offline. The SYSTEM-8 live memory study supplied a comparison for SP readback. |
+| [edco / MC-107](https://github.com/edco/mc-107/tree/62ee091bd04167a73874ca7fe3e53631be922dfe) | Hardware results from running modified firmware on MC-101 and documentation of its stock update and rollback path. |
+| [ajmwagar / Cowbell](https://github.com/ajmwagar/cowbell/tree/38646c04851d30c49f777e6f7a9fef9810799f49) | The TR-6S board, memory and update format, with the author's TR-8S comparison. |
+| [soobrosa / mc101-firmware-re](https://github.com/soobrosa/mc101-firmware-re/tree/800241673bc0db59b4f67ba9579f3ecf38029b63) | Related MC-101 and MC-707 analysis, including SysEx parameter maps, inter-core messages and firmware version comparisons. |
+
+## SP-404MKII USB and emulation projects
+
+| Project | Contribution to this research |
+|---|---|
+| [TuscanPL / SparkyMK2](https://github.com/TuscanPL/SparkyMK2/tree/3007b5d4a796ecf752c7866c1cead87d31c5e416/docs/re) | USB device enumeration, editor transport, file API, waveform replies and project formats (`hw.usb.link`, `st.storage.formats`). |
+| [iare-digital / open404](https://github.com/iare-digital/open404/tree/294d5cb8278d07295d01c645bca67fb7b158c3a5) | A second implementation of the editor USB protocol. Its waveform request code helped identify the audio fields behind its `Memory Read` label. |
+| [moahbeatlab / 404tui](https://github.com/moahbeatlab/404tui/blob/04156c4ae053/docs/unit-messages.md) | Observations of USB MIDI traffic and the SP status poll (`midi.usb.observed`). |
+| [oblivia-simplex / 404-stems](https://github.com/oblivia-simplex/404-stems/blob/96d0b44fd88036ceb1696290a63758286cdb7a52/docs/sp404mk2-project-format.md) | Related documentation of project files and USB file access to internal storage. |
+| [nickpetty / DM-404](https://github.com/nickpetty/dm-404) | The external emulator used for whole-APP1 tests of stock firmware and experimental changes. |
 
 ## Processor and architecture
 

@@ -20,8 +20,9 @@ The original development milestones below describe existing work, not a mandator
 
 ## Sound-chip research (2026-11-25)
 
-- DEEPCUT exposes factory COMPRESSOR 2 in APP1, and the maintainer confirmed
-  it works on their SP. Sub Sonic also has a hidden entry. Its stock 5.52
+- An experimental APP1 build used findings from 404Lab to expose factory
+  COMPRESSOR 2. The maintainer confirmed it works on their SP. Sub Sonic
+  also has a hidden entry. Its stock 5.52
   program and companion block match Bypass in separate file ranges.
   [Hidden MFX and hardware evidence](../knowledge/notes/app0.md#hidden-effects-in-stock-552).
 - Hardware photos show the same BMC part marking on SP-404MKII and MC-101.
@@ -38,14 +39,15 @@ The original development milestones below describe existing work, not a mandator
 
 ## What is new (2026-11-23, night): the builder can make a mod like the maintainer's own
 
-- New kinds of change, so the private mod DEEPCUT can be described as a `mod.json` and built by `lab404 build` instead of its own
+- New kinds of change, so the experimental firmware can be described as a `mod.json` and built by `lab404 build` instead of its own
   script: `jump` (take over a piece of a stock function), `patch` (declared bytes into others, such as the mute group limit),
   `copies` (a stock function copied from the user's image by SHA-256, with edits and its branches aimed again) and `flash` (code and
   data run in place in flash after the image). The linker now lays out several regions, payload and flash, that call each other.
   See EXAMPLES.md, "Kinds of change for a larger mod". [EMULATOR] payload code calls flash code that reads payload data on the
   Unicorn stand; the AUTO MARK copies of the private mod build on stock 5.52 and DOOM OS 0.7.4 with every outgoing branch aimed at a
   veneer holding the old target. Sources and data can also sit at fixed addresses with their own compiler options (FPU, -O3),
-  as the private mod's modules do. Not yet done: building DEEPCUT itself this way and comparing it with its own build.
+  as the experimental firmware's modules do. Building the complete
+  experimental firmware with `lab404 build` and comparing the output is still open.
 
 ## What is new (2026-11-23, evening): disable hooks
 
@@ -57,7 +59,7 @@ The original development milestones below describe existing work, not a mandator
 ## What is new (2026-11-23, later): what the private mod showed on a unit, a fault screen example
 
 - [ON_A_UNIT.md](ON_A_UNIT.md) lists what mods built with these methods have done on the maintainer's unit, and what failed
-  there, from the private mod DEEPCUT (DOOM OS 0.6.1 to 0.7.4, 2026-10-23 to 2026-11-23). Each line points to the facts. New or
+  there, using experimental builds based on DOOM OS 0.6.1 to 0.7.4 from 2026-10-23 to 2026-11-23. Each line points to the facts. New or
   corrected facts: `hk.fault-screen`, `hk.fault-visibility` (was "not shown on a unit"; three faults were photographed),
   `hw.display.port`, `hk.recipe.pad-effects`, `hk.recipe.mute-32`, `st.mem.heap-walk`, and unit evidence for `hk.storage.sidecar`.
 - **Example `mods/fault_screen`**: four word hooks on the fault vectors and a screen drawn by polling the display port, so a
