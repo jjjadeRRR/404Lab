@@ -230,7 +230,7 @@
   },
   {
    "id": "app0.encrypted",
-   "claim": "Part of APP0 is encrypted. The first block of about 310 KB after the header cannot be read as code or data, third-party analysis calls it encrypted, and no public document describes it. Bytes alone cannot separate encrypted from compressed. The rest of the file is not encrypted.",
+   "claim": "SP APP0 5.52 has an opaque 310160-byte block at file offsets 0x60 through 0x4BBEF. The App1_Main header names destination 0x01000000 and entry word 0x01000001, consistent with ARM Thumb code. The control word 0xB6020001 matches the verified 3DES mode and slot 0xB6 on MC-101 and SYSTEM-8. Both published parsers locate the block on SP, but the local decrypt runs ended for lack of compatible key material. ARM control code is the leading interpretation. The exact contents and SP cipher compatibility remain unverified. The open DSP catalogue is outside this block.",
    "topic": "app0",
    "firmware": "any",
    "status": "hypothesis",
@@ -241,17 +241,17 @@
     },
     {
      "label": "DOC",
-     "source": "dm-404 project notes, third party"
+     "source": "2026-11-25, MC-101 boot ROM study at 6b62129b7a2fcb74f73e690e357c2f3cde255ef6 and Roland Plug-Out SDK container documentation at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2; see knowledge/notes/app0-update-safety.md and knowledge/notes/bmc-cross-device.md"
     },
     {
      "label": "HYPOTHESIS",
-     "source": "the word encrypted is not confirmed by Roland"
+     "source": "SP block contents inferred from the header fields and decrypted payloads described for related devices"
     }
    ]
   },
   {
    "id": "app0.readable",
-   "claim": "Readable parts: at 0x140000 a few short Thumb routines, then per-effect program data with descriptors, and at 0x15D698 a catalogue of 49 pointer pairs. At 0x1F0000 parameter and pointer tables, including 2,940 bytes at 0x203644 (245 records of 12 bytes) equal to the APP1 table at 0x80231408, so sender and receiver share one parameter address list. Which instruction set the program data uses is unknown.",
+   "claim": "In APP0 5.52 there are a few short Thumb routines at 0x140000, then per-effect program data with descriptors and a catalogue of 49 pointer pairs at 0x15D698. The tested correspondence with the Roland DSP ISA is in app0.dsp-sdk-roundtrip. The 0x1F0000 region holds parameter and pointer tables, including 2940 bytes at 0x203644 (245 records of 12 bytes) equal to the APP1 table at 0x80231408, so sender and receiver share one parameter address list.",
    "topic": "app0",
    "firmware": "any",
    "status": "verified",
@@ -297,7 +297,7 @@
   },
   {
    "id": "app0.hidden-types",
-   "claim": "Two MFX numbers exist in APP1 but appear in no selection list: 29 COMPRESSOR 2 and 45 Sub Sonic. The lists at 0x80245D54 (the grid, st.mfx.grid), 0x80245C48 and 0x80245CEC leave them out, while names, parameter ranges and addresses exist. In APP0, 45 shares its program and memory block with Bypass (app0.pairs); 29 has a program of its own. Type 29 works on a unit once it is offered in the grid (app0.type29-on-unit). Older notes calling both empty were wrong about 29.",
+   "claim": "Two MFX numbers exist in APP1 but appear in no selection list: 29 COMPRESSOR 2 and 45 Sub Sonic. The lists at 0x80245D54 (the grid, st.mfx.grid), 0x80245C48 and 0x80245CEC leave them out, while names, parameter ranges and addresses exist. In APP0, 45 has the same program and memory block contents as Bypass in separate file ranges (app0.pairs). Type 29 has a distinct program and works on a unit once it is offered in the grid (app0.type29-on-unit). Older notes calling both empty were wrong about 29.",
    "topic": "app0",
    "firmware": [
     "stock-5.52",
@@ -538,7 +538,7 @@
   },
   {
    "id": "app0.recovery",
-   "claim": "No documented way exists to recover from a damaged APP0, so mods must never touch it. Roland warns about interrupting an update. One owner report: after several interrupted updates normal firmware failed to start, yet the update menu still opened after a power cycle. That says something survived, not what, nor that APP0 is safe. The fuller account is in hw.update.stalled: the loader still started after about five stalled updates, and the owner blames a faulty SD card.",
+   "claim": "Recovery from confirmed APP0 damage on SP remains unverified. Entering the host update screen and getting the BMC to accept and write the stock image are separate conditions. In the owner's account (hw.update.stalled), the menu survived several update stalls attributed to a faulty SD card. BMC flash state was unmeasured. Roland warns that an interrupted update can require service. The documented MC-101 C0A and SP APP1 recovery paths have different scopes, described in knowledge/notes/app0-update-safety.md.",
    "topic": "app0",
    "firmware": "any",
    "status": "unknown",
@@ -606,14 +606,30 @@
   },
   {
    "id": "app0.upd1-transfer",
-   "claim": "The resident NXP updater UPD1 reads the APP0 file and forwards it to the BMC in 4096-byte blocks. The host tracks replies during the transfer. Acceptance and recovery on the BMC side, whose updater is named UPD0, remain unknown. See hw.boot.loader-image for the host dump.",
+   "claim": "In the SP UPD1 1.10 dump, the standard APP0 path marks a file FOUND when it opens, uses its length for the progress count, and sends the file in 4096-byte blocks on BMC requests. The traced host path performs no APP0 content or fixed-length check. It displays APP0 UPDATER OK on the BMC completion reply, without an independent host readback or reboot. UPD0 validation, flash write order and recovery remain unknown. See knowledge/notes/app0-update-safety.md and hw.boot.loader-image for the trace and the dump identifier.",
    "topic": "app0",
    "firmware": "any",
    "status": "verified",
    "evidence": [
     {
      "label": "BYTES",
-     "source": "UPD1 version 1.10 from one unit, dump read 2026-11-12, transfer at 0x8003F158 and block send at 0x8003F20A in the unpacked code; see hw.boot.loader-image for the dump SHA-256"
+     "source": "2026-11-25 inspection of the UPD1 1.10 dump read from one unit on 2026-11-12. Unpacked code: file discovery 0x8003D9EC, open and size 0x8003F0B0, worker 0x8003F158, block send 0x8003F20A, receive handler 0x8003F048, completion callback 0x8003DF90 and OK display 0x8003DCEC. See hw.boot.loader-image for the dump SHA-256."
+    }
+   ]
+  },
+  {
+   "id": "app0.stock-550-552-diff",
+   "claim": "Stock SP APP0 5.50 and 5.52 differ in 39 bytes: 11 header bytes, 16 encrypted bytes, four CRC bytes and eight later trailer bytes. Everything from file offset 0x4BC30 onward, including the open MFX region, is identical. Word 0x50 changes while the open MFX region stays identical, which rules out a checksum of that region alone. The scope of other BMC checks remains unknown.",
+   "topic": "app0",
+   "firmware": [
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, compared every byte of the APP0 members from the official 5.50 and 5.52 ZIP archives. SHA-256 values and ranges in knowledge/notes/app0-update-safety.md."
     }
    ]
   },
@@ -724,7 +740,7 @@
   },
   {
    "id": "app0.pairs",
-   "claim": "The APP0 catalogue at file offset 0x15D698 holds, for each type number 0-48, two pointers: the effect's program for the second processor and its memory block. The pointers are file offset + 0xC0000. Each points at a descriptor of four words: 0, size, the same size again, and the address of the bytes. In APP0 5.52 four pairs of types share both program and memory block byte for byte: 0 Bypass and 45 Sub Sonic, 10 Reverb and 37 Ha-Dou, 12 Resonator and 35 Hyper-Reso, 24 Stopper and 38 To-Gu-Ro. So within a pair the difference likely comes from elsewhere, from the parameters APP1 sends or from tables outside the catalogue; not checked. 28 Compressor and 29 COMPRESSOR 2 are different programs, 796 and 746 bytes, with memory blocks of 40 bytes each. Bypass is 66 bytes.",
+   "claim": "The 5.52 APP0 catalogue at file offset 0x15D698 holds two pointers per type (0-48), one for the effect program and one for its companion memory block. Stored addresses are file offset + 0xC0000. Each descriptor is four words: 0, size, the same size again, and the payload address. The 98 payload ranges are distinct and disjoint, and all 196 descriptor and payload pointers occur only at their expected aligned positions as literal 32-bit words in the image. Four pairs of types have identical program and companion contents stored at different addresses: 0 Bypass and 45 Sub Sonic, 10 Reverb and 37 Ha-Dou, 12 Resonator and 35 Hyper-Reso, 24 Stopper and 38 To-Gu-Ro. Earlier 'share' wording meant equal content. Runtime references and parameter differences are unresolved. Types 28 and 29 have different programs, 796 and 746 bytes, with memory blocks of 40 bytes each. Bypass is 66 bytes.",
    "topic": "app0",
    "firmware": "any",
    "status": "verified",
@@ -732,6 +748,10 @@
     {
      "label": "BYTES",
      "source": "SP404MKII_APP0.bin from the Roland 5.52 update package, SHA256 3e35ff30137f741a715566e205384f9b434ca7ac3847e247bad3f0c9c8a2bd23: all 98 catalogue pointers followed and the blocks compared, 2026-11-13, recomputed in this repository the same day"
+    },
+    {
+     "label": "BYTES",
+     "source": "Same stock image, 2026-11-25. Compared all 98 payload ranges for intersection and searched the image on a four-byte grid for each of the 196 distinct stored addresses. Method in knowledge/notes/app0-update-safety.md."
     },
     {
      "label": "HYPOTHESIS",

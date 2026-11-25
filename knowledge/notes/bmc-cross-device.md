@@ -20,7 +20,7 @@ updates. The local tests read files and run a DSP model on a computer.
   forwards `APP0` to the BMC. The BMC-side updater is called `UPD0`. Its image,
   acceptance checks for the MFX program area and recovery behavior after a bad
   write remain open. The NXP dump proves the host side of this path. See
-  `hw.boot.loader-image`, `app0.upd1-transfer` and [recovery limits](../../docs/SAFETY.md).
+  `hw.boot.loader-image`, `app0.upd1-transfer` and the [APP0 update and recovery study](app0-update-safety.md).
 - **MC-101.** The resident `App0` (`RPG69_C0L`) and the recovery updater
   `App0_UPD` live in the first part of Core 0 flash. The official SD archive
   carries four application and content files. Its `C0A` is the main ARM

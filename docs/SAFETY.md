@@ -28,4 +28,9 @@ Timing, stack use, DMA/cache interactions, storage failures and effects on the B
 
 ## APP0 research
 
-Reading and comparing APP0 files, documenting BMC communication and studying the board are valid research directions. Current limits are not a ban on learning. They also are not evidence that a particular key, debug port or recovery mechanism exists. Keep hypotheses explicit and use the versioned facts in the knowledge base.
+The [APP0 update and recovery study](../knowledge/notes/app0-update-safety.md)
+traces the stock UPD1 1.10 updater and compares five official images. The host's
+`APP0 UPDATER OK` comes from a BMC reply before reboot. The BMC's validation
+order, erase ranges and ability to receive a stock image after APP0 damage
+remain unverified. The copy of UPD1 in the main processor's flash only
+establishes the host side of the recovery path.

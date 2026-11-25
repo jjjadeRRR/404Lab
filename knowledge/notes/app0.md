@@ -1,6 +1,6 @@
 # APP0
 
-Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. Recovery is tracked in [hardware hazards](../../docs/SAFETY.md).
+Facts: `knowledge/facts/app0.json`. See [BMC across Roland devices](bmc-cross-device.md) for stock image comparisons, published DSP tools and the offline tests. The [APP0 update and recovery study](app0-update-safety.md) traces the stock updater, its checks and the remaining limits.
 
 ## What it is
 
@@ -13,8 +13,8 @@ Runs the built-in MFX effects: type numbers 0-48 in 5 slots, Input FX and BUS 1-
 parameters (`hw.bmc.sysex`). Parameter tables in APP1: `app0.params`. No program load was seen on an effect change
 (`app0.no-runtime-load`).
 
-Types 29 and 45 exist only in tables and in no selection list (`app0.hidden-types`). 45 shares its program with Bypass, and three
-more pairs share one program (`app0.pairs`). 29, COMPRESSOR 2, has its own program and works on a unit once the MFX grid offers it
+Types 29 and 45 exist only in tables and in no selection list (`app0.hidden-types`). Type 45 has the same program bytes as Bypass in a
+separate file range. Three other pairs also have identical bytes stored separately (`app0.pairs`). Type 29, COMPRESSOR 2, has its own program and works on a unit once the MFX grid offers it
 (`app0.type29-on-unit`); how the grid works and how an entry was added: `st.mfx.grid`, `st.mfx.grid-readers`, `hk.recipe.mfx-grid-entry`.
 Sent alone, without its own parameters, it changed nothing.
 
@@ -23,7 +23,10 @@ Sent alone, without its own parameters, it changed nothing.
 During a firmware update, the resident NXP updater UPD1 reads APP0 from the SD
 root and forwards it over LPUART3. The host transfer is present in the UPD1
 dump (`app0.upd1-transfer`) and in a service path in APP1 (`app0.transfer`).
-The receiver and persistent write are on the BMC side.
+In the UPD1 1.10 dump, the host forwards bytes on request and displays
+`APP0 UPDATER OK` after the BMC completion reply. The receiver's checks and
+persistent writes remain on the BMC side. See the
+[UPD1 trace](app0-update-safety.md#what-the-stock-nxp-updater-checks).
 
 ## What is in the file
 
@@ -32,7 +35,7 @@ Map in `app0.layout`:
 | Offset | Content |
 |---|---|
 | `0x000000` | readable header and descriptor |
-| `0x000060` | opaque block, 310,160 bytes in 5.52; suspected encryption |
+| `0x000060` | opaque block, 310,160 bytes in 5.52, with matching 3DES metadata on related devices |
 | `0x04BBF0` | tail with a version string |
 | `0x140000` | readable program data and catalogue |
 | `0x1F0000` | readable tables |
