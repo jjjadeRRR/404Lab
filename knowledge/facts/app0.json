@@ -631,6 +631,52 @@
    ]
   },
   {
+   "id": "app0.dsp-register-map",
+   "claim": "A 364-byte block of DSP register and memory tables in the readable SP APP0 matches the 1.82 idm1.bin for MC-101, MC-707 and MV-1. The block is at file offset 0x205C5C in SP 3.02 and 0x206014 in 4.04, 5.01, 5.50 and 5.52. It includes the seven program memory base addresses, task-mask register addresses and halfword program port addresses. The SP code that refers to these tables is still open.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, exact comparisons over official SP images and 1.82 idm1.bin for MC-101 (0x38164), MC-707 (0x38184) and MV-1 (0x39864); common block SHA-256 e3cdb91c417f1d9af04de48eae9197990c20d73441d3aa2140c7d0e36ecd6d78. Register roles in knowledge/notes/bmc-cross-device.md"
+    },
+    {
+     "label": "DOC",
+     "source": "Roland Plug-Out SDK at 83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2, SYSTEM-8 per-DSP control block and program map"
+    }
+   ]
+  },
+  {
+   "id": "app0.dsp4-layout",
+   "claim": "SP APP0 has a DSP4 program list with five 8192-byte reservations at destination offsets 0x1000, 0x3000, 0x5000, 0x7000 and 0x9000. Each is initialized by the same 30-byte DSP program. A companion list has five 512-byte reservations. The pattern is in all five checked releases. The largest 5.52 catalogue program is 6882 bytes and the largest companion is 360 bytes. The sizes and count fit the five stock MFX slots. The association of each reservation with a runtime slot is a hypothesis.",
+   "topic": "app0",
+   "firmware": [
+    "stock-3.02",
+    "stock-4.04",
+    "stock-5.01",
+    "stock-5.50",
+    "stock-5.52"
+   ],
+   "status": "verified",
+   "evidence": [
+    {
+     "label": "BYTES",
+     "source": "2026-11-25, checked all program and companion descriptors against original APP0 files; 5.52 DSP4 descriptors at file 0x145FA0 and 0x146058, maximum sizes from the 49 pairs in app0.pairs"
+    },
+    {
+     "label": "HYPOTHESIS",
+     "source": "The five program and companion reservations may correspond to Input FX and BUS 1-4 (app0.role). The mapping and scheduling have not been traced in the BMC"
+    }
+   ]
+  },
+  {
    "id": "app0.dsp-sdk-roundtrip",
    "claim": "All 49 main SP MFX catalogue programs in 5.52 share the SYSTEM-1 opening and documented SYSTEM-1/8 closing. Of 5249 instructions, 1781 reassemble to their original words with the published SDK. Another 3247 reassemble to their normalized words when only transfer mode FF is treated as FE, a documented equivalence on the reference hardware. These are offline encoding results. SP execution semantics remain unverified.",
    "topic": "app0",

@@ -321,6 +321,8 @@
     "app0.encrypted",
     "app0.pairs",
     "app0.crc",
+    "app0.dsp-register-map",
+    "app0.dsp4-layout",
     "app0.dsp-sdk-roundtrip",
     "app0.dsp-sdk-bypass",
     "hw.bmc.no-read"

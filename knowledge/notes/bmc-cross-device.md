@@ -92,6 +92,38 @@ The MC `idm1.bin` SHA-256 is
 [SYSTEM-8 memory map](https://github.com/enorrmann/roland-plugout-reveng/blob/83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2/docs/vol2_dsp_core_isa/memory_banks_dma.md),
 [SYSTEM-8 program storage](https://github.com/enorrmann/roland-plugout-reveng/blob/83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2/docs/vol4_firmware_container_protocol/plugout_virtual_machine.md#4-engine-region-1--dsp-programs).
 
+The same **364-byte table block is readable in SP APP0**, starting at file
+`0x205C5C` in 3.02 and `0x206014` in 4.04, 5.01, 5.50 and 5.52.
+It matches `idm1.bin` from all three groovebox 1.82 updates, at file offset
+`0x38164` (MC-101), `0x38184` (MC-707) and `0x39864` (MV-1). The block
+SHA-256 is `e3cdb91c417f1d9af04de48eae9197990c20d73441d3aa2140c7d0e36ecd6d78`.
+Among its values are DSP4 program base `0x41880000`, task-mask address
+`0x41108318` and halfword program-port address `0x41108700`. The register
+roles come from SYSTEM-8 documentation. The exact file match independently
+establishes that SP carries those same addresses.
+
+### Where the SP MFX programs could fit
+
+In APP0 5.52, the seven-entry DSP4 program list at file `0x146010` points
+to 16-byte descriptors at `0x145FA0`, using the same file-to-pointer bias
+as the MFX catalogue (`app0.pairs`). The five middle entries reserve
+8 KiB each at DSP program offsets `0x1000`, `0x3000`, `0x5000`,
+`0x7000` and `0x9000`. They all carry the same 30-byte initial program.
+The companion list at `0x1460C8` has five 512-byte reservations. Both
+patterns recur in 3.02, 4.04, 5.01, 5.50 and 5.52. All 49 catalogue
+pairs in 5.52 fit within those sizes. The largest program is 6,882 bytes
+and the largest companion is 360 bytes. See `app0.dsp4-layout`.
+
+The five matching reservations are candidates for Input FX and BUS 1–4.
+We observed the host send the effect type to the DT1 encoder in stock APP1
+5.52 at `0x800D0DBE`–`0x800D0DD2`. The selector on the BMC side and
+the association between the five reservations and the host slot numbers
+remain open. The stored addresses alone provide no route for sending a new
+program from APP1. A search of the two readable SP ranges for five exact
+16-byte Thumb signatures from the MC copy routines and manager yielded
+no hits. Code compiled differently or stored in the closed APP0 region
+would fall outside that test.
+
 ### SP MFX with the DSP SDK
 
 The SDK at revision `83ead8f92d3f9cf5fedfbb57a543dadcc9cc11c2` recognizes
