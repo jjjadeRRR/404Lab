@@ -286,7 +286,7 @@ class EmulatorPreview(unittest.TestCase):
 
     def test_image_is_passed_directly_and_card_images_use_the_sd_slot(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             internal, card, wav_card = root/'project-drive.img', root/'card.img', root/'wav-card.img'
             exfat_boot = bytearray(512)
             exfat_boot[3:11] = b'EXFAT   '
@@ -341,7 +341,7 @@ class EmulatorPreview(unittest.TestCase):
 
     def test_folder_is_packed_in_import_tree(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             samples = root/'samples'
             samples.mkdir()
             wav = samples/'kick.wav'
@@ -356,7 +356,7 @@ class EmulatorPreview(unittest.TestCase):
 
     def test_named_export_boots_from_the_first_internal_slot(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             project = root/'P7_PROJECT_07'
             samples = project/'SMPL'
             samples.mkdir(parents=True)
@@ -377,7 +377,7 @@ class EmulatorPreview(unittest.TestCase):
 
     def test_app_and_card_exports_are_available_in_the_import_list(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             layouts = (('App', 'Roland', 'SP-404MKII'), ('Export', 'Project'))
             for layout in layouts:
                 with self.subTest(layout=layout):
