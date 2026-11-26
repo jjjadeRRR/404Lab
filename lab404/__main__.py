@@ -66,6 +66,10 @@ def main(argv=None):
     p = sub.add_parser('preview', help='the interface of a mod in plain text, to show the user before building')
     p.add_argument('mod')
     p.add_argument('base')
+    p = sub.add_parser('gui', help='open the native 2D DM-404 firmware preview')
+    p.add_argument('app1', metavar='APP1', nargs='?', help='SP404MKII_APP1.bin to boot')
+    p.add_argument('--project', metavar='PATH', help='project folder or drive image (.img)')
+    p.add_argument('--no-audio', action='store_true', help='start with local audio muted')
     p = sub.add_parser('approve', help="record the user's agreement to the interface as it stands now")
     p.add_argument('mod')
     p.add_argument('--said', required=True, help='what the user said')
@@ -89,6 +93,13 @@ def main(argv=None):
         # Windows consoles and pipes default to a local code page; facts and notes hold UTF-8 text (dashes, Russian).
         if hasattr(stream, 'reconfigure'):
             stream.reconfigure(encoding='utf-8', errors='replace')
+    if a.command == 'gui':
+        from .gui import run
+        try:
+            return run(a.app1, a.project, a.no_audio)
+        except RuntimeError as error:
+            print(error, file=sys.stderr)
+            return 2
     if a.command in ('preview', 'approve', 'package'):
         from .build import BuildError
         from .pipeline import PackageRefused, approve, package, preview

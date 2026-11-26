@@ -8,6 +8,27 @@ Open knowledge base with SHA-256 verifiable facts and CLI toolchain (`lab404`) f
 
 Early research toolchain: 404Lab **ships no firmware** (bring your own `SP404MKII_APP1.bin`) and is **not affiliated** with or endorsed by Roland. Example mods are verified on the emulator; one `quick_system` build (DOOM OS 0.7.4) has been tested on a physical **unit**, whereas builds produced through `package` have not been run on hardware. See [Hardware Findings](docs/ON_A_UNIT.md) and [Status](docs/STATUS.md).
 
+## Desktop firmware preview
+
+`lab404 gui` boots a local APP1 image in DM-404. Use the panel or keyboard to try a mod's controls and watch the OLED and pad LEDs. **Import Project** opens a project or sample folder. **Restart** boots the same image and project from a clean session.
+
+![404Lab preview window with the control panel, OLED view and firmware and project controls](docs/screenshots/preview.svg)
+
+Install DM-404 and Tk for your Python, then launch the preview from the repository root. See the [desktop setup instructions](docs/STAND.md#native-2d-preview).
+
+```bash
+python -m lab404 gui SP404MKII_APP1.bin
+```
+
+For a fresh build, pass the APP1 from its output directory. Run `python -m lab404 gui` to reopen the last session or choose an image with **Load APP1**. Pass `--project PATH` to open a folder or an existing disk image at launch.
+
+<details>
+<summary>Keyboard and mouse controls</summary>
+
+![The 404Lab keyboard and mouse reference](docs/screenshots/keys.svg)
+
+</details>
+
 ## How it works
 
 ```mermaid
@@ -36,6 +57,7 @@ flowchart LR
 | Packaging (`preview`, `approve`, `package`) | Conservative verification route for additive mods: UI comparison on DM-404, approval recording, and `UNIT_CHECKS.md` generation |
 | Knowledge base & gaps | Versioned facts (`knowledge/facts/`) with provenance labels and open research questions (`gaps`) |
 | Emulation stands | Unicorn (`stand.py`) for instruction-exact function checks; external [DM-404](https://github.com/nickpetty/dm-404) (`emulator.py`) for full-firmware boot and UI replay |
+| Desktop preview (`gui`) | Interactive DM-404 session with panel input, project media, OLED, LEDs, and local audio |
 
 `identify` recognizes stock 3.02–5.52, DOOM OS 0.6–0.7.4, and Tampal builds by hash. Byte-level knowledge checks cover stock 5.52 and DOOM OS 0.7.2–0.7.4; build examples target stock 5.52 and DOOM OS 0.7.3–0.7.4, and `build` accepts only declared, identified base images.
 
@@ -65,7 +87,8 @@ Requires Python 3.10+ and `clang` for `build`.
 | Image tools (`identify`, `map`, `read`, `dis`, `xrefs`, `find`, `verify-knowledge`) | yes | yes | yes |
 | `build` and `check` (requires `clang`) | yes | expected | expected |
 | Function stand (Unicorn) | yes | expected | expected |
-| Full-firmware stand (DM-404: `preview`, `package`, `sweep`) | yes | untested | WSL only |
+| Full-firmware stand (DM-404: `preview`, `package`, `sweep`) | verified | untested | use WSL |
+| Desktop preview (DM-404: `gui`) | verified | experimental | experimental (native win64) |
 | CI coverage | quick tests | quick tests | quick tests |
 
 ```bash
@@ -103,6 +126,7 @@ python -m lab404 preview mods/quick_system SP404MKII_APP1.bin
 
 ## Related projects
 
+- [DM-404](https://github.com/nickpetty/dm-404) — SP-404MKII emulation core used by the whole-firmware stand and desktop preview
 - [SparkyMK2](https://github.com/TuscanPL/SparkyMK2) — open USB editor/librarian and protocol/format specification
 - [404tui](https://github.com/moahbeatlab/404tui) — terminal sample/slice/pattern manager built on SparkyMK2's protocol work
 

@@ -68,7 +68,7 @@ class ReadmeExamples(unittest.TestCase):
         self.assertTrue(commands, 'No CLI examples found')
         allowed = {'doctor', 'identify', 'ask', 'topics', 'gaps', 'check-keys',
                    'verify-knowledge', 'build', 'check', 'preview'}
-        gated = {'approve', 'package'}
+        gated = {'approve', 'package', 'gui'}
         with tempfile.TemporaryDirectory(prefix='lab404-readme-') as directory:
             paths = {'SP404MKII_APP1.bin': str(STOCK),
                      'out/demo-1': str(Path(directory)/'demo-1')}

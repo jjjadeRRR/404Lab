@@ -29,7 +29,7 @@ Unicorn executes individual Cortex-M7 firmware functions starting from scatter-t
 
 ## Whole-Firmware Stand (`lab404/emulator.py`)
 
-DM-404 is an external QEMU machine with peripheral models, interrupts, and micro T-Kernel RTOS scheduling. `tools/setup_dm404.sh` builds DM-404 outside this repository. Runs use temporary flash images and copy-on-write drive overlays over unix-socket links on Linux (WSL on Windows; untested on macOS).
+DM-404 is an external QEMU machine with peripheral models, interrupts, and micro T-Kernel RTOS scheduling. `tools/setup_dm404.sh` builds DM-404 outside this repository. Runs use temporary flash images and copy-on-write drive overlays. The link uses Unix sockets on Linux and macOS and two loopback TCP ports on Windows.
 
 | Verified Behaviour (`tests/test_emulator.py`) `[EMULATOR]` | Test |
 |---|---|
@@ -50,8 +50,30 @@ DM-404 is an external QEMU machine with peripheral models, interrupts, and micro
 
 DM-404 limits:
 - Audio tests require `inputs/project-drive.img`; peak comparisons are coarse, not bit-exact.
-- DM-404 stubs the BMC/DSP, so hardware effect audio is not modelled.
+- The optional DaisySP-based FX engine models 48 effects. Its output can differ from hardware.
 - Execution timing does not match physical hardware.
+
+### Native 2D preview
+
+The preview requires a desktop session, Python with Tk support, DM-404, and a local `SP404MKII_APP1.bin`. Run `python -m lab404 doctor` to check for Tk, QEMU, the internal drive, fatimg, and the FX library.
+
+- **Linux.** Run `tools/setup_dm404.sh`. It builds QEMU, fatimg, a blank internal drive, and the FX library under `~/lab404-deps/dm-404` by default. The build requires Git, a C/C++ toolchain, Ninja, pkg-config, GLib, and Pixman. Set `LAB404_DEPS` to use a different parent directory. Install KDialog, Zenity, or YAD for the file and folder pickers.
+- **macOS (experimental).** Run the same setup script with the build dependencies and a Tk-enabled Python.
+- **Windows (experimental).** Extract a [DM-404 win64 release](https://github.com/nickpetty/dm-404/releases) under `%USERPROFILE%\lab404-deps\dm-404`. If you set `LAB404_DEPS`, extract it under that directory's `dm-404` folder. Run the upstream app once to create its internal image. Folder import and `--project` `.img` validation require `fatimg.exe`, which can be built with the upstream `tools/build_fatimg.sh` in MSYS2.
+
+```bash
+python -m lab404 gui [APP1] [--project PATH] [--no-audio]
+```
+
+Use **Load APP1** to choose an image from the window. **Restart** boots the current APP1 again with the selected media. The preview remembers the last APP1 and project independently. Supplying a different APP1 keeps the remembered project unless you pass `--project`.
+
+**Import Project** opens a folder. A folder containing `PADCONF.BIN` is mounted as the active project in temporary internal storage. Loose WAV files, `PROJECT_*` folders, and projects from a selected `EXPORT` or app export folder go into `IMPORT` on a temporary SD card. A copied SD root keeps its `IMPORT` and `EXPORT` directories. Use the firmware's Import/Export menu to load SD content onto pads. [Hardware project import](https://static.roland.com/manuals/sp-404mk2_reference_v4/en-US/7960231578539403.html) · [App export folders](https://static.roland.com/manuals/sp-404mk2_app_v4/en-US/8032372378658955.html)
+
+Pass an existing `.img` with `--project PATH`. FAT32 and partitioned card images mount in the SD slot. DM-404 internal images mount in the internal slot. Writes go to temporary overlays and are discarded on restart or exit.
+
+The [control panel](panel-layout.svg) shows live LED levels and the OLED at its original size. The larger OLED view uses 4× scaling. **? Keys** opens the keyboard and mouse reference. Shortcuts follow physical key positions. Right-click latches a button, F2 cycles latch modes, and F3 clears latches. Middle-click or Ctrl-click holds a button for 3.2 seconds.
+
+VOLUME controls local playback gain. `--no-audio` starts muted. Linux uses PipeWire, PulseAudio, or ALSA for playback. The macOS and Windows backends use AudioToolbox and waveOut respectively. **FX: sp404fx** indicates that QEMU loaded the effects library. **FX: dry** indicates dry playback. Set `SP404_FX` to a library path or to `off`.
 
 ### Debugging with GDB
 

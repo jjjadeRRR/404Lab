@@ -11,7 +11,7 @@
 
 ## Key Paths & CLI
 
-- `lab404/` — CLI and builder/checker/stand modules (`build.py`, `check.py`, `image.py`, `stand.py`, `emulator.py`, `pipeline.py`)
+- `lab404/` — CLI, builder, checker, emulation stands and desktop preview (`gui.py`)
 - `knowledge/` — JSON facts (`facts/`), key bindings (`bindings/`), observations (`observations/`), screens (`screens/`), and notes (`notes/`)
 - `mods/` — source mod examples (`demo_counter`, `quick_system`, `fault_screen`)
 - `docs/` — [EXAMPLES.md](docs/EXAMPLES.md), [SAFETY.md](docs/SAFETY.md), [STAND.md](docs/STAND.md), [STATUS.md](docs/STATUS.md), [ON_A_UNIT.md](docs/ON_A_UNIT.md), [SOURCES.md](docs/SOURCES.md), [LEGAL_NOTES.md](docs/LEGAL_NOTES.md)
@@ -23,6 +23,8 @@ Useful commands:
 - `python -m lab404 verify-knowledge FILE` — verify SHA-256 byte checks against a local `APP1` image
 
 ## Testing & Local Directories
+
+After `build` and `check` succeed, offer to open the new candidate in DM-404 with `python -m lab404 gui <output-dir>/SP404MKII_APP1.bin`. Use the APP1 path from the completed build. Add `--project PATH` if the user wants to test it with a local project or sample folder. See [desktop preview setup](docs/STAND.md#native-2d-preview).
 
 - Quick suite (no DM-404 boot): `python tools/run_tests.py --quick`
 - Full suite (includes DM-404 tests): `python tools/run_tests.py`

@@ -29,7 +29,7 @@ Supported `mod.json` patch mechanisms:
 - **Audio & display comparisons:** Pad audio comparison in DM-404 uses coarse peak matching, not bit-exact PCM. The START/END screen varies between boots (`PICTURE_VARIES`) and is skipped during replay comparison.
 - **`quick_system` state:** Tracks `HOLD` from observed events; a missed release event leaves it armed, and calling `0x800DA598` is not verified across every firmware state.
 - **Project drive fingerprinting:** `inputs/project-drive.img` is fingerprinted by size, mtime, and the first 16 MB.
-- **Platforms:** Full test suite (including DM-404) runs on Linux. CI runs `--quick` on Linux, macOS, and Windows. DM-404 (`tools/setup_dm404.sh`) requires Linux (WSL on Windows) and is untested on macOS.
+- **Platforms.** The full test suite, including DM-404, runs on Linux. CI runs `--quick` on Linux, macOS, and Windows. The [desktop preview](STAND.md#native-2d-preview) is verified on Linux. Native macOS and Windows setups are experimental.
 - **Orphaned QEMU processes:** Interrupted emulator runs may leave `qemu-system-arm` processes running (identifiable by `lab404-unit-` in the command line).
 
 ## Directory Map
