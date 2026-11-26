@@ -8,27 +8,6 @@ Open knowledge base with SHA-256 verifiable facts and CLI toolchain (`lab404`) f
 
 Early research toolchain: 404Lab **ships no firmware** (bring your own `SP404MKII_APP1.bin`) and is **not affiliated** with or endorsed by Roland. Example mods are verified on the emulator; one `quick_system` build (DOOM OS 0.7.4) has been tested on a physical **unit**, whereas builds produced through `package` have not been run on hardware. See [Hardware Findings](docs/ON_A_UNIT.md) and [Status](docs/STATUS.md).
 
-## Desktop firmware preview
-
-`lab404 gui` boots a local APP1 image in DM-404. Use the panel or keyboard to try a mod's controls and watch the OLED and pad LEDs. **Import Project** opens a project or sample folder. **Restart** boots the same image and project from a clean session.
-
-![404Lab preview window with the control panel, OLED view and firmware and project controls](docs/screenshots/preview.svg)
-
-Install DM-404 and Tk for your Python, then launch the preview from the repository root. See the [desktop setup instructions](docs/STAND.md#native-2d-preview).
-
-```bash
-python -m lab404 gui SP404MKII_APP1.bin
-```
-
-For a fresh build, pass the APP1 from its output directory. Run `python -m lab404 gui` to reopen the last session or choose an image with **Load APP1**. Pass `--project PATH` to open a folder or an existing disk image at launch.
-
-<details>
-<summary>Keyboard and mouse controls</summary>
-
-![The 404Lab keyboard and mouse reference](docs/screenshots/keys.svg)
-
-</details>
-
 ## How it works
 
 ```mermaid
@@ -123,6 +102,27 @@ Preview `quick_system` on DM-404 (requires `tools/setup_dm404.sh`; see [docs/EXA
 ```bash
 python -m lab404 preview mods/quick_system SP404MKII_APP1.bin
 ```
+
+## Desktop firmware preview
+
+Optional interactive companion view: `lab404 gui` boots a local APP1 image in DM-404 so you can exercise a mod's controls from the panel or keyboard and watch the OLED and pad LEDs. **Import Project** opens a project or sample folder; **Restart** boots the same image and project from a clean session.
+
+Install DM-404 and Tk for your Python, then launch the preview from the repository root. See the [desktop setup instructions](docs/STAND.md#native-2d-preview).
+
+```bash
+python -m lab404 gui SP404MKII_APP1.bin
+```
+
+For a fresh build, pass the APP1 from its output directory. Run `python -m lab404 gui` to reopen the last session or choose an image with **Load APP1**. Pass `--project PATH` to open a folder or an existing disk image at launch.
+
+<details>
+<summary>Screenshot and keyboard/mouse controls</summary>
+
+![404Lab preview window with the control panel, OLED view and firmware and project controls](docs/screenshots/preview.svg)
+
+![The 404Lab keyboard and mouse reference](docs/screenshots/keys.svg)
+
+</details>
 
 ## Related projects
 
