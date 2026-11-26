@@ -67,78 +67,105 @@ def _windows_scan_code():
     return lambda keycode: scan(keycode, 4, layout(0)) or (0x10000 | keycode)
 
 
-# World-space XY bounds from an orthographic top projection of the local
-# Blender model, normalized to a body width of 372. Each tuple is kind,
-# center X/Y, width and height. Pads are squared around their measured
-# centers and the mini OLED uses an integer scale at its measured center.
-PANEL_WIDTH, PANEL_HEIGHT = 372, 562.11
+# Proportions adapted from the SP-404MKII front panel, scaled to 496 x 696 so
+# every primary cap label and SHIFT silkscreen sub-label fits without clipping.
+# Each tuple is kind, center X/Y, width and height.
+PANEL_WIDTH, PANEL_HEIGHT = 496, 696
 PANEL_LAYOUT = {
-    'VOLUME': ('knob', 74.24, 66.56, 39.81, 39.81),
-    'CTRL1': ('knob', 147.45, 66.56, 39.81, 39.81),
-    'CTRL2': ('knob', 223.63, 66.56, 39.81, 39.81),
-    'CTRL3': ('knob', 298.74, 66.56, 39.81, 39.81),
-    'OLED': ('oled', 184.55, 166.27, 128.00, 64.00),
-    'FILTER+DRIVE': ('key', 88.76, 131.01, 50.82, 25.53),
-    'RESONATOR': ('key', 81.19, 164.41, 42.57, 25.61),
-    'DELAY': ('key', 88.76, 197.89, 50.82, 25.53),
-    'ISOLATOR': ('key', 283.24, 131.01, 50.82, 25.53),
-    'DJFX LOOPER': ('key', 290.81, 164.41, 42.57, 25.61),
-    'MFX': ('key', 283.24, 197.89, 50.82, 25.53),
-    'VALUE': ('value', 309.12, 245.47, 27.48, 27.48),
-    'PATTERN SELECT': ('key', 63.80, 248.75, 27.66, 19.22),
-    'PATTERN EDIT': ('key', 100.59, 248.75, 27.66, 19.22),
-    'RECORD SETTING': ('key', 137.38, 248.75, 27.66, 19.22),
-    'START/END': ('key', 186.38, 249.02, 26.32, 17.97),
-    'PITCH/SPEED': ('key', 223.50, 249.02, 26.32, 17.97),
-    'MARK': ('key', 260.61, 249.02, 26.32, 17.97),
-    'DEL': ('key', 63.80, 282.05, 27.66, 19.22),
-    'REC': ('key', 100.59, 282.05, 27.66, 19.22),
-    'RESAMPLE': ('key', 137.38, 282.05, 27.66, 19.22),
-    'BPM SYNC': ('key', 173.21, 281.35, 18.19, 19.19),
-    'GATE': ('key', 201.22, 281.35, 18.19, 19.19),
-    'LOOP': ('key', 233.54, 281.60, 26.32, 17.97),
-    'REVERSE': ('key', 270.92, 281.60, 26.32, 17.97),
-    'ROLL': ('key', 308.29, 281.60, 26.32, 17.97),
-    'EXIT': ('key', 63.80, 315.34, 27.66, 19.22),
-    'COPY': ('key', 100.59, 315.34, 27.66, 19.22),
-    'REMAIN': ('key', 137.38, 315.34, 27.66, 19.22),
-    'BANK A/F': ('key', 173.78, 314.30, 16.72, 17.57),
-    'BANK B/G': ('key', 201.71, 314.30, 16.72, 17.57),
-    'BANK C/H': ('key', 229.63, 314.30, 16.72, 17.57),
-    'BANK D/I': ('key', 257.55, 314.30, 16.72, 17.57),
-    'BANK E/J': ('key', 285.47, 314.30, 16.72, 17.57),
-    'SHIFT': ('key', 313.39, 314.30, 16.72, 17.57),
-    'PAD1': ('pad', 71.92, 358.19, 43.10, 43.10),
-    'PAD2': ('pad', 129.24, 358.19, 43.10, 43.10),
-    'PAD3': ('pad', 186.55, 358.19, 43.10, 43.10),
-    'PAD4': ('pad', 243.87, 358.19, 43.10, 43.10),
-    'BUS FX': ('key', 301.19, 358.19, 43.10, 35.70),
-    'PAD5': ('pad', 71.92, 408.37, 43.10, 43.10),
-    'PAD6': ('pad', 129.24, 408.37, 43.10, 43.10),
-    'PAD7': ('pad', 186.55, 408.37, 43.10, 43.10),
-    'PAD8': ('pad', 243.87, 408.37, 43.10, 43.10),
-    'HOLD': ('key', 301.19, 408.37, 43.10, 35.70),
-    'PAD9': ('pad', 71.92, 458.55, 43.10, 43.10),
-    'PAD10': ('pad', 129.24, 458.55, 43.10, 43.10),
-    'PAD11': ('pad', 186.55, 458.55, 43.10, 43.10),
-    'PAD12': ('pad', 243.87, 458.55, 43.10, 43.10),
-    'EXT SOURCE': ('key', 301.19, 458.55, 43.10, 35.70),
-    'PAD13': ('pad', 71.92, 508.73, 43.10, 43.10),
-    'PAD14': ('pad', 129.24, 508.73, 43.10, 43.10),
-    'PAD15': ('pad', 186.55, 508.73, 43.10, 43.10),
-    'PAD16': ('pad', 243.87, 508.73, 43.10, 43.10),
-    'SUB PAD': ('key', 301.19, 508.73, 43.10, 35.70),
+    'VOLUME': ('knob', 80.0, 50.0, 44.0, 44.0),
+    'CTRL1': ('knob', 190.0, 50.0, 44.0, 44.0),
+    'CTRL2': ('knob', 306.0, 50.0, 44.0, 44.0),
+    'CTRL3': ('knob', 416.0, 50.0, 44.0, 44.0),
+    'OLED': ('oled', 248.0, 184.0, 128.0, 64.0),
+    'FILTER+DRIVE': ('key', 88.0, 136.0, 102.0, 34.0),
+    'RESONATOR': ('key', 80.0, 184.0, 102.0, 34.0),
+    'DELAY': ('key', 88.0, 232.0, 102.0, 34.0),
+    'ISOLATOR': ('key', 408.0, 136.0, 102.0, 34.0),
+    'DJFX LOOPER': ('key', 416.0, 184.0, 102.0, 34.0),
+    'MFX': ('key', 408.0, 232.0, 102.0, 34.0),
+    'VALUE': ('value', 442.0, 288.0, 40.0, 40.0),
+    'PATTERN SELECT': ('key', 51.0, 288.0, 54.0, 28.0),
+    'PATTERN EDIT': ('key', 114.0, 288.0, 54.0, 28.0),
+    'RECORD SETTING': ('key', 177.0, 288.0, 54.0, 28.0),
+    'START/END': ('key', 246.0, 288.0, 54.0, 28.0),
+    'PITCH/SPEED': ('key', 309.0, 288.0, 54.0, 28.0),
+    'MARK': ('key', 372.0, 288.0, 54.0, 28.0),
+    'DEL': ('key', 51.0, 340.0, 54.0, 28.0),
+    'REC': ('key', 114.0, 340.0, 54.0, 28.0),
+    'RESAMPLE': ('key', 177.0, 340.0, 54.0, 28.0),
+    'BPM SYNC': ('key', 242.0, 340.0, 45.0, 28.0),
+    'GATE': ('key', 294.0, 340.0, 45.0, 28.0),
+    'LOOP': ('key', 346.0, 340.0, 45.0, 28.0),
+    'REVERSE': ('key', 398.0, 340.0, 45.0, 28.0),
+    'ROLL': ('key', 450.0, 340.0, 45.0, 28.0),
+    'EXIT': ('key', 51.0, 392.0, 54.0, 28.0),
+    'COPY': ('key', 114.0, 392.0, 54.0, 28.0),
+    'REMAIN': ('key', 177.0, 392.0, 54.0, 28.0),
+    'BANK A/F': ('key', 238.0, 392.0, 37.0, 28.0),
+    'BANK B/G': ('key', 281.0, 392.0, 37.0, 28.0),
+    'BANK C/H': ('key', 324.0, 392.0, 37.0, 28.0),
+    'BANK D/I': ('key', 367.0, 392.0, 37.0, 28.0),
+    'BANK E/J': ('key', 410.0, 392.0, 37.0, 28.0),
+    'SHIFT': ('key', 453.0, 392.0, 37.0, 28.0),
+    'PAD1': ('pad', 60.0, 464.0, 72.0, 42.0),
+    'PAD2': ('pad', 148.0, 464.0, 72.0, 42.0),
+    'PAD3': ('pad', 236.0, 464.0, 72.0, 42.0),
+    'PAD4': ('pad', 324.0, 464.0, 72.0, 42.0),
+    'BUS FX': ('key', 436.0, 464.0, 72.0, 42.0),
+    'PAD5': ('pad', 60.0, 522.0, 72.0, 42.0),
+    'PAD6': ('pad', 148.0, 522.0, 72.0, 42.0),
+    'PAD7': ('pad', 236.0, 522.0, 72.0, 42.0),
+    'PAD8': ('pad', 324.0, 522.0, 72.0, 42.0),
+    'HOLD': ('key', 436.0, 522.0, 72.0, 42.0),
+    'PAD9': ('pad', 60.0, 580.0, 72.0, 42.0),
+    'PAD10': ('pad', 148.0, 580.0, 72.0, 42.0),
+    'PAD11': ('pad', 236.0, 580.0, 72.0, 42.0),
+    'PAD12': ('pad', 324.0, 580.0, 72.0, 42.0),
+    'EXT SOURCE': ('key', 436.0, 580.0, 72.0, 42.0),
+    'PAD13': ('pad', 60.0, 638.0, 72.0, 42.0),
+    'PAD14': ('pad', 148.0, 638.0, 72.0, 42.0),
+    'PAD15': ('pad', 236.0, 638.0, 72.0, 42.0),
+    'PAD16': ('pad', 324.0, 638.0, 72.0, 42.0),
+    'SUB PAD': ('key', 436.0, 638.0, 72.0, 42.0),
 }
 
-BG = '#101216'
-CASE = '#16181D'
-CONTROL = '#22262F'
-EDGE = '#343A46'
-LIGHT = '#E6F0FF'
-MUTED_TEXT = '#A5B0C2'
-BLACK = '#06080C'
+# Hardware silkscreen secondary labels (SHIFT and control parameters) printed below controls.
+SUB_LABELS = {
+    'CTRL1': 'CUTOFF', 'CTRL2': 'RESONANCE', 'CTRL3': 'DRIVE',
+    'PATTERN SELECT': 'UNDO', 'START/END': 'CHOP', 'PITCH/SPEED': 'ENVELOPE',
+    'LOOP': 'PING-PONG', 'ROLL': 'ROLL SET', 'EXIT': 'PATTERN STOP', 'REMAIN': 'CURRENT PAD',
+    'BUS FX': 'MUTE BUS', 'HOLD': 'PAUSE', 'EXT SOURCE': 'INPUT SETTING', 'SUB PAD': 'PROJECT',
+    'PAD1': 'FIXED VELOCITY', 'PAD2': '16 VELOCITY', 'PAD3': 'CUE', 'PAD4': 'CHROMATIC',
+    'PAD5': 'EXCHANGE', 'PAD6': 'INIT PARAM', 'PAD7': 'PAD LINK', 'PAD8': 'MUTE GROUPS',
+    'PAD9': 'METRONOME', 'PAD10': 'COUNT-IN', 'PAD11': 'TAP TEMPO', 'PAD12': 'GAIN',
+    'PAD13': 'UTILITY', 'PAD14': 'IMPORT/EXPORT', 'PAD15': 'PAD SETTING', 'PAD16': 'EFX SETTING',
+}
+
+BG = '#0F1116'
+CASE = '#171A21'
+WELL = '#0D0F14'
+CONTROL = '#242934'
+EDGE = '#3A4150'
+LIGHT = '#EEF2FA'
+MUTED_TEXT = '#94A0B5'
+SILK = '#8F9BB0'
+ACCENT = '#E8743B'
+BLACK = '#05070B'
 AMBER = '#FFCB73'
 BLUE = '#9AD8FF'
+
+
+def _ui_font(root=None):
+    if root is not None:
+        try:
+            from tkinter import font as tkfont
+            families = set(tkfont.families(root))
+            for candidate in ('SF Pro Text', 'Segoe UI', 'Noto Sans', 'Adwaita Sans', 'Liberation Sans', 'DejaVu Sans'):
+                if candidate in families:
+                    return candidate
+        except Exception:
+            pass
+    return 'TkDefaultFont'
 
 
 def label_for(name):
@@ -316,40 +343,64 @@ def _key_label(name):
             'DJFX LOOPER': 'DJFX\nLOOPER', 'FILTER+DRIVE': 'FILTER+\nDRIVE'}.get(name, name)
 
 
-FX_TOP, FX_BOTTOM = 113, 219
+FX_TOP, FX_BOTTOM, PADS_TOP = 108, 262, 430
+
+
+def _knob_ticks(x, y, width):
+    radius = width / 2 + 5
+    for step in range(9):
+        angle = math.radians(-135 + step * 33.75)
+        dx, dy = math.sin(angle), -math.cos(angle)
+        inner, outer = radius, radius + (3 if step in (0, 4, 8) else 2)
+        yield x + dx * inner, y + dy * inner, x + dx * outer, y + dy * outer
 
 
 def _panel_shapes():
     """Shared vector primitives for the live Canvas and the neutral SVG."""
     yield '', 'body', 'rect', (0, 0, PANEL_WIDTH, PANEL_HEIGHT), CASE, EDGE, ''
-    for y in (FX_TOP, FX_BOTTOM, 336):
-        yield '', 'divider', 'line', (39, y, 333, y), '#292D36', '', ''
+    yield '', 'accent', 'line', (28, 12, 468, 12), ACCENT, '', ''
+    for y in (FX_TOP, FX_BOTTOM, PADS_TOP):
+        yield '', 'divider', 'line', (28, y, 468, y), '#272C37', '', ''
     for name, (kind, x, y, w, h) in PANEL_LAYOUT.items():
         if kind == 'oled':
-            yield name, 'bezel', 'rect', _box(x, y, w+10, h+12), '#11151C', EDGE, ''
-            yield name, 'cap', 'rect', _box(x, y, w, h), BLACK, '', ''
+            yield name, 'bezel', 'rect', _box(x, y, w+16, h+16), WELL, EDGE, ''
+            yield name, 'cap', 'rect', _box(x, y, w, h), BLACK, '#2A3140', ''
             continue
         if kind in ('knob', 'value'):
-            yield name, 'rim', 'oval', _box(x, y, w+6, h+6), '#11141A', EDGE, ''
+            if kind == 'knob':
+                for coords in _knob_ticks(x, y, w):
+                    yield '', 'tick', 'line', coords, '#4C5568', '', ''
+            yield name, 'rim', 'oval', _box(x, y, w+8, h+8), WELL, '#2B313E', ''
             yield name, 'cap', 'oval', _box(x, y, w, h), CONTROL, EDGE, ''
             angle = math.radians(135) if name == 'VOLUME' else 0
             yield name, 'marker', 'line', _knob_marker(x, y, w, angle), LIGHT, '', ''
-            label_y = y + h/2 + (8 if name == 'VALUE' else 9)
-            yield name, 'label', 'text', (x, label_y, 8 if name == 'VALUE' else 10), LIGHT, '', label_for(name)
+            label_y = y + h/2 + 11
+            yield name, 'label', 'text', (x, label_y, 9 if name == 'VALUE' else 10), LIGHT, '', label_for(name)
             if name == 'VOLUME':
-                yield name, 'percent', 'text', (x, y+h/2+19, 8), MUTED_TEXT, '', '100%'
+                yield '', 'sub', 'text', (x-24, y+h/2+23, 7), SILK, '', 'MIN'
+                yield name, 'percent', 'text', (x, y+h/2+23, 8), MUTED_TEXT, '', '100%'
+                yield '', 'sub', 'text', (x+24, y+h/2+23, 7), SILK, '', 'MAX'
+            elif name in SUB_LABELS:
+                yield '', 'sub', 'text', (x, y+h/2+23, 8), SILK, '', SUB_LABELS[name]
             continue
+        yield '', 'well', 'rect', _box(x, y, w+4, h+4), WELL, '', ''
         yield name, 'cap', 'rect', _box(x, y, w, h), CONTROL, EDGE, ''
         if kind == 'pad':
             yield name, 'light', 'rect', _box(x, y, w-8, h-8), CONTROL, '', ''
-            yield name, 'label', 'text', (x, y, 15), LIGHT, '', name[3:]
+            yield name, 'label', 'text', (x, y, 16), LIGHT, '', name[3:]
+            if name in SUB_LABELS:
+                yield '', 'sub', 'text', (x, y+h/2+9, 8), SILK, '', SUB_LABELS[name]
         else:
-            yield name, 'light', 'rect', _box(x, y-h/2+3, min(w-8, 17), 2), '#383F4D', '', ''
-            size = (5 if name in ('BPM SYNC', 'SHIFT') else
-                    6 if name in ('PATTERN SELECT', 'PATTERN EDIT', 'RECORD SETTING',
-                                  'RESAMPLE', 'RESONATOR', 'REVERSE',
-                                  'BANK A/F', 'BANK B/G', 'BANK C/H', 'BANK D/I', 'BANK E/J') else 8)
-            yield name, 'label', 'text', (x, y+1.5, size), LIGHT, '', _key_label(name)
+            led_color = '#5C3A2B' if name == 'SHIFT' else '#383F4D'
+            yield name, 'light', 'rect', _box(x, y-h/2+4, min(w-12, 22), 2.5), led_color, '', ''
+            size = (7 if name in ('PATTERN SELECT', 'PATTERN EDIT', 'RECORD SETTING',
+                                  'BPM SYNC', 'RESAMPLE', 'RESONATOR', 'REVERSE', 'SHIFT') else 8.5)
+            yield name, 'label', 'text', (x, y+2, size), LIGHT, '', _key_label(name)
+            if name in SUB_LABELS:
+                yield '', 'sub', 'text', (x, y+h/2+9, 7), SILK, '', SUB_LABELS[name]
+    yield '', 'bracket', 'line', (220, 414, 286, 414), '#3A4252', '', ''
+    yield '', 'bracket', 'line', (362, 414, 428, 414), '#3A4252', '', ''
+    yield '', 'sub', 'text', (324, 414, 7), SILK, '', 'BANK VOLUME'
 
 
 def panel_svg():
@@ -379,8 +430,8 @@ def panel_svg():
             element.set('data-control', name)
             ET.SubElement(element, 'title').text = label_for(name)
         if shape == 'text':
-            element.set('font-family', 'system-ui, sans-serif')
-            element.set('font-weight', '600')
+            element.set('font-family', 'SF Pro Text, Segoe UI, Noto Sans, system-ui, sans-serif')
+            element.set('font-weight', '500' if role == 'sub' else '600')
             element.set('text-anchor', 'middle')
             element.set('dominant-baseline', 'central')
             lines = copy.splitlines()
@@ -533,6 +584,7 @@ class PreviewWindow:
         self.keyboard = KeyboardState(self.controls, self._turn, self._cycle, self.controls.release_all,
                                       positions=positions)
         self.windows_scan = _windows_scan_code() if self.windowing == 'win32' else None
+        self.font_family = _ui_font(root)
         self._widgets()
         self._bind()
         self._refresh_frame(bytes(FRAME_BYTES))
@@ -552,42 +604,47 @@ class PreviewWindow:
         style = ttk.Style(root)
         style.theme_use('clam')
         style.configure('Preview.TButton', background=CONTROL, foreground=LIGHT, bordercolor=EDGE,
-                        lightcolor=CONTROL, darkcolor=CONTROL, focuscolor=BLUE, padding=(9, 3))
-        style.map('Preview.TButton', background=[('pressed', '#343C4A'), ('active', '#2C3441')],
+                        lightcolor=CONTROL, darkcolor=CONTROL, focuscolor=BLUE,
+                        font=(self.font_family, 9), padding=(10, 5))
+        style.map('Preview.TButton', background=[('pressed', '#343C4A'), ('active', '#2D3544')],
                   foreground=[('disabled', '#748093')])
-        style.configure('Primary.Preview.TButton', padding=(10, 6))
+        style.configure('Primary.Preview.TButton', font=(self.font_family, 9, 'bold'), padding=(12, 7))
 
-        display = tk.Frame(root, background='#1D2330', padx=1, pady=1)
-        display.grid(row=0, column=1, padx=16, pady=(12, 4))
+        display_outer = tk.Frame(root, background='#262C39', padx=1, pady=1)
+        display_outer.grid(row=0, column=1, padx=16, pady=(12, 6))
+        display = tk.Frame(display_outer, background='#0B0D12', padx=6, pady=6)
+        display.pack()
         self.display = tk.Label(display, background=BLACK, borderwidth=0, padx=0, pady=0, highlightthickness=0)
         self.display.pack()
 
-        status = tk.Frame(root, background='#171B23', padx=9, pady=5)
-        status.grid(row=1, column=1, sticky='ew', padx=16, pady=(3, 7))
+        status = tk.Frame(root, background='#161A22', highlightbackground='#262C39',
+                          highlightthickness=1, padx=12, pady=8)
+        status.grid(row=1, column=1, sticky='ew', padx=16, pady=(2, 8))
         status.grid_columnconfigure(0, weight=1, uniform='status')
         status.grid_columnconfigure(1, weight=1, uniform='status')
-        self.pressed = self._label(status, '', background='#171B23', foreground=BLUE, wraplength=240)
+        self.pressed = self._label(status, '', background='#161A22', foreground=BLUE, wraplength=240)
         self.pressed.grid(row=0, column=0, sticky='ew')
-        self.latched = self._label(status, '', background='#171B23', foreground=AMBER, wraplength=240)
-        self.latched.grid(row=1, column=0, sticky='ew')
-        self.status = self._label(status, self.firmware, background='#171B23', foreground=LIGHT,
+        self.latched = self._label(status, '', background='#161A22', foreground=AMBER, wraplength=240)
+        self.latched.grid(row=1, column=0, sticky='ew', pady=(2, 0))
+        self.status = self._label(status, self.firmware, background='#161A22', foreground=LIGHT,
+                                  font=(self.font_family, 9, 'bold'),
                                   justify='right', anchor='e', wraplength=240)
         self.status.grid(row=0, column=1, rowspan=2, sticky='ew')
 
         self.panel = tk.Canvas(root, bg=BG, borderwidth=0, highlightthickness=0,
                                takefocus=True, width=PANEL_WIDTH, height=math.ceil(PANEL_HEIGHT)+1)
-        self.panel.grid(row=0, column=0, rowspan=4, padx=(16, 10), pady=12)
+        self.panel.grid(row=0, column=0, rowspan=4, padx=(14, 10), pady=10)
         self._draw_panel()
 
         footer = tk.Frame(root, background=BG)
-        footer.grid(row=3, column=1, sticky='ew', padx=16, pady=(7, 8))
+        footer.grid(row=3, column=1, sticky='ew', padx=16, pady=(8, 10))
         primary = tk.Frame(footer, background=BG)
         primary.pack(fill='x')
         specifications = (('Restart', self._restart), ('Import Project', self._import), ('Load APP1', self._load))
         for i, (label, command) in enumerate(specifications):
             primary.grid_columnconfigure(i, weight=1, uniform='primary')
             btn = ttk.Button(primary, text=label, command=command, style='Primary.Preview.TButton')
-            btn.grid(row=0, column=i, sticky='ew', padx=(0 if i == 0 else 3, 0))
+            btn.grid(row=0, column=i, sticky='ew', padx=(0 if i == 0 else 4, 0))
             if label == 'Restart':
                 self.restart = btn
                 btn.state(['disabled'])
@@ -596,22 +653,22 @@ class PreviewWindow:
             else:
                 self.load_button = btn
         secondary = tk.Frame(footer, background=BG)
-        secondary.pack(fill='x', pady=(4, 0))
+        secondary.pack(fill='x', pady=(5, 0))
         for i, (label, command) in enumerate((
                 ('Latch: Off', self._cycle), ('Release All', self.controls.release_all),
                 (self._audio_label(), self._toggle_audio), ('? Keys', self._show_keys))):
             secondary.grid_columnconfigure(i, weight=1)
             btn = ttk.Button(secondary, text=label, command=command, style='Preview.TButton')
-            btn.grid(row=0, column=i, sticky='ew', padx=(0 if i == 0 else 3, 0))
+            btn.grid(row=0, column=i, sticky='ew', padx=(0 if i == 0 else 4, 0))
             if i == 0:
                 self.latch_button = btn
             elif i == 2:
                 self.audio_button = btn
-        self.notice_label = self._label(status, self.notice, background='#171B23', wraplength=490)
-        self.notice_label.grid(row=2, column=0, columnspan=2, sticky='ew')
+        self.notice_label = self._label(status, self.notice, background='#161A22', wraplength=490)
+        self.notice_label.grid(row=2, column=0, columnspan=2, sticky='ew', pady=(4, 0))
 
     def _label(self, parent, text, **options):
-        style = dict(background=BG, foreground=MUTED_TEXT, font=('TkDefaultFont', 9), anchor='w', justify='left')
+        style = dict(background=BG, foreground=MUTED_TEXT, font=(self.font_family, 9), anchor='w', justify='left')
         return self.tk.Label(parent, text=text, **(style | options))
 
     def _draw_panel(self):
@@ -629,7 +686,8 @@ class PreviewWindow:
             if shape == 'text':
                 x, y, size = coords
                 coords = x, y
-                options.update(text=copy, justify='center', font=('TkDefaultFont', -size, 'bold'))
+                weight = 'normal' if role == 'sub' else 'bold'
+                options.update(text=copy, justify='center', font=(self.font_family, -round(size), weight))
             self.items[name, role] = primitives[shape](*coords, **options)
             if role == 'cap' and name != 'OLED':
                 self.hit_boxes[name] = coords
@@ -958,7 +1016,7 @@ class PreviewWindow:
         top.title('404Lab — Keys')
         top.transient(self.root)
         top.bind('<Escape>', lambda _event: top.destroy())
-        self._label(top, 'Keyboard and mouse', font=('TkDefaultFont', 13, 'bold'),
+        self._label(top, 'Keyboard and mouse', font=(self.font_family, 13, 'bold'),
                     foreground=LIGHT).pack(fill='x', padx=16, pady=(14, 6))
         text = ('Pads 1–16: 1 2 3 4 / Q W E R / A S D F / Z X C V\n'
                 'Banks A/F–E/J: 5 6 7 8 9\n'
