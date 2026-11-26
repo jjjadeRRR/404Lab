@@ -67,66 +67,66 @@ def _windows_scan_code():
     return lambda keycode: scan(keycode, 4, layout(0)) or (0x10000 | keycode)
 
 
-# Proportions adapted from the SP-404MKII front panel, scaled to 496 x 696 so
-# every primary cap label and SHIFT silkscreen sub-label fits without clipping.
-# Each tuple is kind, center X/Y, width and height.
-PANEL_WIDTH, PANEL_HEIGHT = 496, 696
+# Orthographic top-projection bounds measured from the SP-404MKII 3D model
+# (uniformly scaled to 444 x 724 so pads keep their hardware proportions and
+# sub-label silkscreen rows fit cleanly beneath controls).
+PANEL_WIDTH, PANEL_HEIGHT = 444, 724
 PANEL_LAYOUT = {
-    'VOLUME': ('knob', 80.0, 50.0, 44.0, 44.0),
-    'CTRL1': ('knob', 190.0, 50.0, 44.0, 44.0),
-    'CTRL2': ('knob', 306.0, 50.0, 44.0, 44.0),
-    'CTRL3': ('knob', 416.0, 50.0, 44.0, 44.0),
-    'OLED': ('oled', 248.0, 184.0, 128.0, 64.0),
-    'FILTER+DRIVE': ('key', 88.0, 136.0, 102.0, 34.0),
-    'RESONATOR': ('key', 80.0, 184.0, 102.0, 34.0),
-    'DELAY': ('key', 88.0, 232.0, 102.0, 34.0),
-    'ISOLATOR': ('key', 408.0, 136.0, 102.0, 34.0),
-    'DJFX LOOPER': ('key', 416.0, 184.0, 102.0, 34.0),
-    'MFX': ('key', 408.0, 232.0, 102.0, 34.0),
-    'VALUE': ('value', 442.0, 288.0, 40.0, 40.0),
-    'PATTERN SELECT': ('key', 51.0, 288.0, 54.0, 28.0),
-    'PATTERN EDIT': ('key', 114.0, 288.0, 54.0, 28.0),
-    'RECORD SETTING': ('key', 177.0, 288.0, 54.0, 28.0),
-    'START/END': ('key', 246.0, 288.0, 54.0, 28.0),
-    'PITCH/SPEED': ('key', 309.0, 288.0, 54.0, 28.0),
-    'MARK': ('key', 372.0, 288.0, 54.0, 28.0),
-    'DEL': ('key', 51.0, 340.0, 54.0, 28.0),
-    'REC': ('key', 114.0, 340.0, 54.0, 28.0),
-    'RESAMPLE': ('key', 177.0, 340.0, 54.0, 28.0),
-    'BPM SYNC': ('key', 242.0, 340.0, 45.0, 28.0),
-    'GATE': ('key', 294.0, 340.0, 45.0, 28.0),
-    'LOOP': ('key', 346.0, 340.0, 45.0, 28.0),
-    'REVERSE': ('key', 398.0, 340.0, 45.0, 28.0),
-    'ROLL': ('key', 450.0, 340.0, 45.0, 28.0),
-    'EXIT': ('key', 51.0, 392.0, 54.0, 28.0),
-    'COPY': ('key', 114.0, 392.0, 54.0, 28.0),
-    'REMAIN': ('key', 177.0, 392.0, 54.0, 28.0),
-    'BANK A/F': ('key', 238.0, 392.0, 37.0, 28.0),
-    'BANK B/G': ('key', 281.0, 392.0, 37.0, 28.0),
-    'BANK C/H': ('key', 324.0, 392.0, 37.0, 28.0),
-    'BANK D/I': ('key', 367.0, 392.0, 37.0, 28.0),
-    'BANK E/J': ('key', 410.0, 392.0, 37.0, 28.0),
-    'SHIFT': ('key', 453.0, 392.0, 37.0, 28.0),
-    'PAD1': ('pad', 60.0, 464.0, 72.0, 42.0),
-    'PAD2': ('pad', 148.0, 464.0, 72.0, 42.0),
-    'PAD3': ('pad', 236.0, 464.0, 72.0, 42.0),
-    'PAD4': ('pad', 324.0, 464.0, 72.0, 42.0),
-    'BUS FX': ('key', 436.0, 464.0, 72.0, 42.0),
-    'PAD5': ('pad', 60.0, 522.0, 72.0, 42.0),
-    'PAD6': ('pad', 148.0, 522.0, 72.0, 42.0),
-    'PAD7': ('pad', 236.0, 522.0, 72.0, 42.0),
-    'PAD8': ('pad', 324.0, 522.0, 72.0, 42.0),
-    'HOLD': ('key', 436.0, 522.0, 72.0, 42.0),
-    'PAD9': ('pad', 60.0, 580.0, 72.0, 42.0),
-    'PAD10': ('pad', 148.0, 580.0, 72.0, 42.0),
-    'PAD11': ('pad', 236.0, 580.0, 72.0, 42.0),
-    'PAD12': ('pad', 324.0, 580.0, 72.0, 42.0),
-    'EXT SOURCE': ('key', 436.0, 580.0, 72.0, 42.0),
-    'PAD13': ('pad', 60.0, 638.0, 72.0, 42.0),
-    'PAD14': ('pad', 148.0, 638.0, 72.0, 42.0),
-    'PAD15': ('pad', 236.0, 638.0, 72.0, 42.0),
-    'PAD16': ('pad', 324.0, 638.0, 72.0, 42.0),
-    'SUB PAD': ('key', 436.0, 638.0, 72.0, 42.0),
+    'VOLUME': ('knob', 71.02, 78.04, 53.42, 53.42),
+    'CTRL1': ('knob', 169.26, 78.04, 53.42, 53.42),
+    'CTRL2': ('knob', 271.50, 78.04, 53.42, 53.42),
+    'CTRL3': ('knob', 372.29, 78.04, 53.42, 53.42),
+    'OLED': ('oled', 219.06, 211.84, 128.00, 64.00),
+    'FILTER+DRIVE': ('key', 90.51, 164.52, 74.00, 34.26),
+    'RESONATOR': ('key', 80.36, 209.35, 64.00, 34.36),
+    'DELAY': ('key', 90.51, 254.27, 74.00, 34.26),
+    'ISOLATOR': ('key', 351.49, 164.52, 74.00, 34.26),
+    'DJFX LOOPER': ('key', 361.64, 209.35, 64.00, 34.36),
+    'MFX': ('key', 351.49, 254.27, 74.00, 34.26),
+    'VALUE': ('value', 386.22, 318.12, 36.88, 36.88),
+    'PATTERN SELECT': ('key', 57.01, 322.53, 43.00, 25.79),
+    'PATTERN EDIT': ('key', 106.38, 322.53, 43.00, 25.79),
+    'RECORD SETTING': ('key', 155.75, 322.53, 43.00, 25.79),
+    'START/END': ('key', 221.52, 322.89, 43.00, 24.12),
+    'PITCH/SPEED': ('key', 271.32, 322.89, 43.00, 24.12),
+    'MARK': ('key', 321.12, 322.89, 43.00, 24.12),
+    'DEL': ('key', 57.01, 367.21, 43.00, 25.79),
+    'REC': ('key', 106.38, 367.21, 43.00, 25.79),
+    'RESAMPLE': ('key', 155.75, 367.21, 43.00, 25.79),
+    'BPM SYNC': ('key', 203.83, 366.28, 29.00, 25.76),
+    'GATE': ('key', 241.43, 366.28, 29.00, 25.76),
+    'LOOP': ('key', 284.80, 366.61, 43.00, 24.12),
+    'REVERSE': ('key', 334.95, 366.61, 43.00, 24.12),
+    'ROLL': ('key', 385.11, 366.61, 43.00, 24.12),
+    'EXIT': ('key', 57.01, 411.90, 43.00, 25.79),
+    'COPY': ('key', 106.38, 411.90, 43.00, 25.79),
+    'REMAIN': ('key', 155.75, 411.90, 43.00, 25.79),
+    'BANK A/F': ('key', 204.61, 410.48, 29.00, 23.58),
+    'BANK B/G': ('key', 242.08, 410.48, 29.00, 23.58),
+    'BANK C/H': ('key', 279.54, 410.48, 29.00, 23.58),
+    'BANK D/I': ('key', 317.01, 410.48, 29.00, 23.58),
+    'BANK E/J': ('key', 354.48, 410.48, 29.00, 23.58),
+    'SHIFT': ('key', 391.96, 410.48, 29.00, 23.58),
+    'PAD1': ('pad', 67.91, 469.39, 57.83, 47.90),
+    'PAD2': ('pad', 144.83, 469.39, 57.83, 47.90),
+    'PAD3': ('pad', 221.74, 469.39, 57.83, 47.90),
+    'PAD4': ('pad', 298.66, 469.39, 57.83, 47.90),
+    'BUS FX': ('key', 375.58, 469.39, 57.83, 47.90),
+    'PAD5': ('pad', 67.91, 536.73, 57.83, 47.90),
+    'PAD6': ('pad', 144.83, 536.73, 57.83, 47.90),
+    'PAD7': ('pad', 221.74, 536.73, 57.83, 47.90),
+    'PAD8': ('pad', 298.66, 536.73, 57.83, 47.90),
+    'HOLD': ('key', 375.58, 536.73, 57.83, 47.90),
+    'PAD9': ('pad', 67.91, 604.06, 57.83, 47.90),
+    'PAD10': ('pad', 144.83, 604.06, 57.83, 47.90),
+    'PAD11': ('pad', 221.74, 604.06, 57.83, 47.90),
+    'PAD12': ('pad', 298.66, 604.06, 57.83, 47.90),
+    'EXT SOURCE': ('key', 375.58, 604.06, 57.83, 47.90),
+    'PAD13': ('pad', 67.91, 671.40, 57.83, 47.90),
+    'PAD14': ('pad', 144.83, 671.40, 57.83, 47.90),
+    'PAD15': ('pad', 221.74, 671.40, 57.83, 47.90),
+    'PAD16': ('pad', 298.66, 671.40, 57.83, 47.90),
+    'SUB PAD': ('key', 375.58, 671.40, 57.83, 47.90),
 }
 
 # Hardware silkscreen secondary labels (SHIFT and control parameters) printed below controls.
@@ -142,13 +142,18 @@ SUB_LABELS = {
 }
 
 BG = '#0F1116'
-CASE = '#171A21'
-WELL = '#0D0F14'
-CONTROL = '#242934'
-EDGE = '#3A4150'
+CASE = '#13161C'
+FACE = '#1F232C'
+WELL = '#0B0D12'
+CONTROL = '#20242E'
+EDGE = '#3B4252'
 LIGHT = '#EEF2FA'
+KEY_INK = '#E69B45'
+RED_CAP = '#4D2028'
+RED_TEXT = '#FFDCE0'
+AMBER_CAP = '#2D251C'
 MUTED_TEXT = '#94A0B5'
-SILK = '#8F9BB0'
+SILK = '#A7B1C4'
 ACCENT = '#E8743B'
 BLACK = '#05070B'
 AMBER = '#FFCB73'
@@ -343,7 +348,7 @@ def _key_label(name):
             'DJFX LOOPER': 'DJFX\nLOOPER', 'FILTER+DRIVE': 'FILTER+\nDRIVE'}.get(name, name)
 
 
-FX_TOP, FX_BOTTOM, PADS_TOP = 108, 262, 430
+FX_TOP = 122
 
 
 def _knob_ticks(x, y, width):
@@ -355,52 +360,83 @@ def _knob_ticks(x, y, width):
         yield x + dx * inner, y + dy * inner, x + dx * outer, y + dy * outer
 
 
+def _key_colors(name):
+    if name in ('REC', 'RESAMPLE'):
+        return RED_CAP, RED_TEXT
+    if name.startswith('BANK ') or name == 'SHIFT':
+        return AMBER_CAP, KEY_INK
+    return CONTROL, KEY_INK
+
+
 def _panel_shapes():
     """Shared vector primitives for the live Canvas and the neutral SVG."""
     yield '', 'body', 'rect', (0, 0, PANEL_WIDTH, PANEL_HEIGHT), CASE, EDGE, ''
-    yield '', 'accent', 'line', (28, 12, 468, 12), ACCENT, '', ''
-    for y in (FX_TOP, FX_BOTTOM, PADS_TOP):
-        yield '', 'divider', 'line', (28, y, 468, y), '#272C37', '', ''
+    yield '', 'face', 'rect', (12, 12, PANEL_WIDTH - 12, PANEL_HEIGHT - 10), FACE, '#323846', ''
+    yield '', 'accent', 'line', (28, 22, PANEL_WIDTH - 28, 22), ACCENT, '', ''
+    for sx, sy in ((22, 22), (PANEL_WIDTH - 22, 22), (22, PANEL_HEIGHT - 20), (PANEL_WIDTH - 22, PANEL_HEIGHT - 20)):
+        yield '', 'screw', 'oval', (sx - 3.5, sy - 3.5, sx + 3.5, sy + 3.5), '#2C323F', '#4E576B', ''
+    # Recessed display & FX cluster backdrop
+    yield '', 'fx_backdrop', 'oval', (133, 126, 305, 298), '#141820', '#2E3544', ''
+    yield '', 'divider', 'line', (28, FX_TOP, PANEL_WIDTH - 28, FX_TOP), '#2D3340', '', ''
     for name, (kind, x, y, w, h) in PANEL_LAYOUT.items():
         if kind == 'oled':
-            yield name, 'bezel', 'rect', _box(x, y, w+16, h+16), WELL, EDGE, ''
+            yield name, 'bezel', 'rect', _box(x, y, w + 16, h + 16), WELL, '#384052', ''
             yield name, 'cap', 'rect', _box(x, y, w, h), BLACK, '#2A3140', ''
             continue
         if kind in ('knob', 'value'):
             if kind == 'knob':
                 for coords in _knob_ticks(x, y, w):
-                    yield '', 'tick', 'line', coords, '#4C5568', '', ''
-            yield name, 'rim', 'oval', _box(x, y, w+8, h+8), WELL, '#2B313E', ''
+                    yield '', 'tick', 'line', coords, '#555F75', '', ''
+            yield name, 'rim', 'oval', _box(x, y, w + 8, h + 8), WELL, '#2E3442', ''
             yield name, 'cap', 'oval', _box(x, y, w, h), CONTROL, EDGE, ''
             angle = math.radians(135) if name == 'VOLUME' else 0
             yield name, 'marker', 'line', _knob_marker(x, y, w, angle), LIGHT, '', ''
-            label_y = y + h/2 + 11
-            yield name, 'label', 'text', (x, label_y, 9 if name == 'VALUE' else 10), LIGHT, '', label_for(name)
+            if name == 'VALUE':
+                yield '', 'sub', 'text', (x, y - h/2 - 9, 6.5), SILK, '', 'PUSH ENTER'
+                yield name, 'label', 'text', (x, y + h/2 + 9, 8.5), LIGHT, '', label_for(name)
+            else:
+                yield name, 'label', 'text', (x, y - h/2 - 11, 9), LIGHT, '', label_for(name)
             if name == 'VOLUME':
-                yield '', 'sub', 'text', (x-24, y+h/2+23, 7), SILK, '', 'MIN'
-                yield name, 'percent', 'text', (x, y+h/2+23, 8), MUTED_TEXT, '', '100%'
-                yield '', 'sub', 'text', (x+24, y+h/2+23, 7), SILK, '', 'MAX'
+                yield '', 'sub', 'text', (x - 24, y + h/2 + 12, 6.5), SILK, '', 'MIN'
+                yield name, 'percent', 'text', (x, y + h/2 + 12, 7.5), MUTED_TEXT, '', '100%'
+                yield '', 'sub', 'text', (x + 24, y + h/2 + 12, 6.5), SILK, '', 'MAX'
             elif name in SUB_LABELS:
-                yield '', 'sub', 'text', (x, y+h/2+23, 8), SILK, '', SUB_LABELS[name]
+                yield '', 'sub', 'text', (x, y + h/2 + 12, 7), SILK, '', SUB_LABELS[name]
             continue
-        yield '', 'well', 'rect', _box(x, y, w+4, h+4), WELL, '', ''
-        yield name, 'cap', 'rect', _box(x, y, w, h), CONTROL, EDGE, ''
+        yield '', 'well', 'rect', _box(x, y, w + 4, h + 4), WELL, '', ''
         if kind == 'pad':
-            yield name, 'light', 'rect', _box(x, y, w-8, h-8), CONTROL, '', ''
+            yield name, 'cap', 'rect', _box(x, y, w, h), CONTROL, EDGE, ''
+            yield name, 'light', 'rect', _box(x, y, w - 8, h - 8), CONTROL, '', ''
             yield name, 'label', 'text', (x, y, 16), LIGHT, '', name[3:]
             if name in SUB_LABELS:
-                yield '', 'sub', 'text', (x, y+h/2+9, 8), SILK, '', SUB_LABELS[name]
+                yield '', 'pill', 'rect', _box(x, y + h/2 + 9.5, w + 13, 12), '#171B22', '#525C70', ''
+                yield '', 'sub', 'text', (x, y + h/2 + 9.5, 6), LIGHT, '', SUB_LABELS[name]
         else:
-            led_color = '#5C3A2B' if name == 'SHIFT' else '#383F4D'
-            yield name, 'light', 'rect', _box(x, y-h/2+4, min(w-12, 22), 2.5), led_color, '', ''
-            size = (7 if name in ('PATTERN SELECT', 'PATTERN EDIT', 'RECORD SETTING',
-                                  'BPM SYNC', 'RESAMPLE', 'RESONATOR', 'REVERSE', 'SHIFT') else 8.5)
-            yield name, 'label', 'text', (x, y+2, size), LIGHT, '', _key_label(name)
+            cap_fill, ink = _key_colors(name)
+            yield name, 'cap', 'rect', _box(x, y, w, h), cap_fill, EDGE, ''
+            led_color = '#6E4C2E' if name == 'SHIFT' else '#7C323B' if name in ('REC', 'RESAMPLE') else '#3A4252'
+            yield name, 'light', 'rect', _box(x, y - h/2 + 3.5, min(w - 10, 20), 2.5), led_color, '', ''
+            size = (5.5 if name in ('BPM SYNC', 'SHIFT') else
+                    6 if name in ('PATTERN SELECT', 'PATTERN EDIT', 'RECORD SETTING',
+                                  'RESAMPLE', 'RESONATOR', 'REVERSE',
+                                  'BANK A/F', 'BANK B/G', 'BANK C/H', 'BANK D/I', 'BANK E/J') else
+                    7.5 if name in ('FILTER+DRIVE', 'DJFX LOOPER', 'EXT SOURCE') else 8)
+            yield name, 'label', 'text', (x, y + 1.5, size), ink, '', _key_label(name)
             if name in SUB_LABELS:
-                yield '', 'sub', 'text', (x, y+h/2+9, 7), SILK, '', SUB_LABELS[name]
-    yield '', 'bracket', 'line', (220, 414, 286, 414), '#3A4252', '', ''
-    yield '', 'bracket', 'line', (362, 414, 428, 414), '#3A4252', '', ''
-    yield '', 'sub', 'text', (324, 414, 7), SILK, '', 'BANK VOLUME'
+                if name in ('BUS FX', 'HOLD', 'EXT SOURCE', 'SUB PAD'):
+                    yield '', 'pill', 'rect', _box(x, y + h/2 + 9.5, w + 13, 12), '#171B22', '#525C70', ''
+                    yield '', 'sub', 'text', (x, y + h/2 + 9.5, 6), LIGHT, '', SUB_LABELS[name]
+                else:
+                    yield '', 'sub', 'text', (x, y + h/2 + 7.5, 6), SILK, '', SUB_LABELS[name]
+    # Group silkscreen headers and brackets matching the SP-404MKII faceplate
+    yield '', 'sub', 'text', (106.38, 300, 6), SILK, '', 'PATTERN SEQUENCER'
+    yield '', 'sub', 'text', (271.32, 300, 6), SILK, '', 'SAMPLE EDIT'
+    yield '', 'sub', 'text', (131.06, 344, 6), SILK, '', 'SAMPLING'
+    yield '', 'sub', 'text', (334.95, 344, 6), SILK, '', 'SAMPLE MODE'
+    yield '', 'sub', 'text', (335.75, 388.5, 6), SILK, '', 'BANK'
+    yield '', 'sub', 'text', (335.75, 430.5, 6), SILK, '', 'DJ MODE'
+    yield '', 'sub', 'text', (106.37, 438, 6), SILK, '', 'CH1'
+    yield '', 'sub', 'text', (260.20, 438, 6), SILK, '', 'CH2'
 
 
 def panel_svg():
@@ -1060,7 +1096,7 @@ class PreviewWindow:
                 continue
             outline = AMBER if name in latched else BLUE if name in physical or name in timed else EDGE
             self._paint((name, 'cap'), outline=outline, width=1 if outline == EDGE else 2)
-            label_color = LIGHT
+            label_color = LIGHT if kind in ('pad', 'value') else _key_colors(name)[1]
             if kind == 'pad':
                 base = 3*(int(name[3:])-1)
                 r, g, b = (leds.get(base+i, 0) for i in range(3))
@@ -1069,7 +1105,7 @@ class PreviewWindow:
                 label_color = BLACK if 0.21*r+0.72*g+0.07*b > 130 else LIGHT
             elif name in KEY_LEDS:
                 level = leds.get(KEY_LEDS[name], 0)
-                color = '#%02x%02x%02x' % (level, level, level) if level else '#383F4D'
+                color = '#%02x%02x%02x' % (level, level, level) if level else _key_colors(name)[0] if name in ('REC', 'RESAMPLE') else '#383F4D'
                 self._paint((name, 'light'), fill=color)
             label = (f'{max(0, timed[name]-now):.1f}s' if name in timed else
                      name[3:] if kind == 'pad' else name if kind == 'value' else _key_label(name))
